@@ -16,7 +16,7 @@ import android.widget.ListView;
 
 public class DatabaseInfoFragment extends Fragment {
 
-	ListView list;
+	public ListView list;
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {

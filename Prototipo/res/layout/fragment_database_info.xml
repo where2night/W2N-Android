@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:baselineAligned="false"
     android:id="@+id/fragmentDatabaseInfo" 
+    android:background="@color/textcolor"
    >
 
     <ListView
