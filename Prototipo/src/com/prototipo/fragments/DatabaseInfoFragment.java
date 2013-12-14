@@ -41,7 +41,7 @@ public class DatabaseInfoFragment extends Fragment {
 		ArrayList<String> countries = new ArrayList<String>(Arrays.asList(array_countries));
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
-				android.R.layout.simple_list_item_1,countries);
+				R.layout.custom_list_item,countries);
 		list.setAdapter(adapter);
 		
 	}
