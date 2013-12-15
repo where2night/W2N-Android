@@ -7,6 +7,7 @@
     <string name="LogIn">Iniciar Sesion</string>
     <string name="drawer_open">Abrir</string>
     <string name="drawer_close">Cerrar</string>
+
     <string-array name="drawer_options">
         <item>Inicio</item>
         <item>Mi Perfil</item>
@@ -14,7 +15,15 @@
         <item>Fotos</item>
         <item>Amigos</item>
         <item>Locales</item>
-        <item>DJs</item>   
+        <item>DJs</item>
     </string-array>
+
+    <string name="title_activity_local_view">LocalViewActivity</string>
+    
+    <string name="btn_local_map">Mapa</string>
+    <string name="btn_local_events">Eventos</string>
+    <string name="btn_local_lists">Listas</string>
+    <string name="btn_local_attendees">Asistentes</string>
+    <string name="btn_local_jukebox">Gramola</string>
 
 </resources>

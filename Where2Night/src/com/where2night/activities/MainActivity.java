@@ -34,7 +34,7 @@ public class MainActivity extends FragmentActivity  {
 	private ListView drawerList;
     private String[] drawerOptions;
     private DrawerLayout drawerLayout;
-    private int lastIndex = 1;
+    private int lastIndex = 0;
     private ActionBarDrawerToggle drawerToggle;
     private Fragment[] fragments = new Fragment[]{new HomeFragment(),
     									  new ProfileFragment(),
@@ -83,8 +83,19 @@ public class MainActivity extends FragmentActivity  {
         		.add(R.id.contentFrame, fragments[4])
         		.add(R.id.contentFrame, fragments[5])
         		.add(R.id.contentFrame, fragments[6])
-        	    .commit();	 
-        setContent(0);		
+        	    .commit();	
+        
+        manager.beginTransaction().hide(fragments[1])
+				        		  .hide(fragments[2])
+				        		  .hide(fragments[3])
+				        		  .hide(fragments[4])
+				        		  .hide(fragments[5])
+				        		  .hide(fragments[6])
+				        		  .commit();
+        
+        setContent(0);
+    
+        
     }
     
     @Override

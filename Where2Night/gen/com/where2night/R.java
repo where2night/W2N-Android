@@ -33,33 +33,55 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0004;
-        public static final int contentFrame=0x7f0a0001;
-        public static final int drawerLayout=0x7f0a0000;
-        public static final int leftDrawer=0x7f0a0002;
-        public static final int textView1=0x7f0a0003;
+        public static final int action_settings=0x7f0a0011;
+        public static final int btnLocalAttendees=0x7f0a000f;
+        public static final int btnLocalEvents=0x7f0a000d;
+        public static final int btnLocalJukebox=0x7f0a0010;
+        public static final int btnLocalLists=0x7f0a000e;
+        public static final int btnLocalMap=0x7f0a000c;
+        public static final int contentFrame=0x7f0a0002;
+        public static final int drawerLayout=0x7f0a0001;
+        public static final int fragment1=0x7f0a0000;
+        public static final int imgLocal=0x7f0a0006;
+        public static final int leftDrawer=0x7f0a0003;
+        public static final int placeholder=0x7f0a000a;
+        public static final int scroll_view=0x7f0a0005;
+        public static final int sticky=0x7f0a000b;
+        public static final int textView1=0x7f0a0004;
+        public static final int txtLocalFollowers=0x7f0a0009;
+        public static final int txtLocalHorary=0x7f0a0008;
+        public static final int txtLocalName=0x7f0a0007;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int drawer_list_item=0x7f030001;
-        public static final int fragment_djs=0x7f030002;
-        public static final int fragment_events=0x7f030003;
-        public static final int fragment_friends=0x7f030004;
-        public static final int fragment_home=0x7f030005;
-        public static final int fragment_locals=0x7f030006;
-        public static final int fragment_photos=0x7f030007;
-        public static final int fragment_profile=0x7f030008;
+        public static final int activity_local_view=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int drawer_list_item=0x7f030002;
+        public static final int fragment_djs=0x7f030003;
+        public static final int fragment_events=0x7f030004;
+        public static final int fragment_friends=0x7f030005;
+        public static final int fragment_home=0x7f030006;
+        public static final int fragment_local_view=0x7f030007;
+        public static final int fragment_locals=0x7f030008;
+        public static final int fragment_photos=0x7f030009;
+        public static final int fragment_profile=0x7f03000a;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
+        public static final int local_view=0x7f090000;
+        public static final int main=0x7f090001;
     }
     public static final class string {
         public static final int LogIn=0x7f060003;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
+        public static final int btn_local_attendees=0x7f06000a;
+        public static final int btn_local_events=0x7f060008;
+        public static final int btn_local_jukebox=0x7f06000b;
+        public static final int btn_local_lists=0x7f060009;
+        public static final int btn_local_map=0x7f060007;
         public static final int drawer_close=0x7f060005;
         public static final int drawer_open=0x7f060004;
         public static final int hello_world=0x7f060002;
+        public static final int title_activity_local_view=0x7f060006;
     }
     public static final class style {
         /** 
