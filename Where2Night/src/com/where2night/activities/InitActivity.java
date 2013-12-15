@@ -37,11 +37,12 @@ public class InitActivity extends Activity {
         
                 authButton.setSessionStatusCallback(new Session.StatusCallback() {
                            
-                           @Override
+                           @SuppressWarnings("deprecation")
+						@Override
                            public void call(Session session, SessionState state, Exception exception) {
                             
                             if (session.isOpened()) {                                      
-                                      Request.newMeRequest(session,
+                                      Request.executeMeRequestAsync(session,
                                               new Request.GraphUserCallback() {
                                                   @Override
                                                   public void onCompleted(GraphUser user,Response response) {

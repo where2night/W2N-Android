@@ -1,12 +1,9 @@
 package com.where2night.activities;
 
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,7 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView; 
+import android.widget.ListView;
+
 import com.where2night.R;
 import com.where2night.fragments.DJsFragment;
 import com.where2night.fragments.EventsFragment;
@@ -57,8 +55,10 @@ public class MainActivity extends FragmentActivity  {
         drawerList.setAdapter(new ArrayAdapter<String>(this,
                                                        R.layout.drawer_list_item, 
                                                        drawerOptions));
-        drawerList.setItemChecked(0, true);
+        
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
+        
+        drawerList.setItemChecked(0, true);
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close){
             
@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity  {
             	invalidateOptionsMenu();
             }
 
-            public void onDrawerOpened(View drawerView) {
+        	public void onDrawerOpened(View drawerView) {
             	invalidateOptionsMenu();
             }
         };
@@ -132,7 +132,6 @@ public class MainActivity extends FragmentActivity  {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setTitle(drawerOptions[index]);
 		drawerList.setItemChecked(index, true);
-	    drawerList.setItemChecked(index, true);
 	    drawerLayout.closeDrawer(drawerList);	
     }
 
