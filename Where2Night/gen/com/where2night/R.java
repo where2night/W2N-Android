@@ -9,11 +9,7 @@ package com.where2night;
 
 public final class R {
     public static final class array {
-<<<<<<< HEAD
         public static final int drawer_options=0x7f090000;
-=======
-        public static final int drawer_options=0x7f070000;
->>>>>>> fe28ab69556609dfa864e2f5a04f6c4ca717e93f
     }
     public static final class attr {
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
@@ -165,11 +161,10 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment_connected_shadow_color=0x7f060004;
         public static final int com_facebook_usersettingsfragment_connected_text_color=0x7f060003;
         public static final int com_facebook_usersettingsfragment_not_connected_text_color=0x7f060005;
-    }
-    public static final class color {
         public static final int default_color=0x7f040001;
         public static final int pressed_color=0x7f040000;
     }
+
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
@@ -177,7 +172,6 @@ containing a value of this type.
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-<<<<<<< HEAD
         public static final int activity_horizontal_margin=0x7f05000d;
         public static final int activity_vertical_margin=0x7f05000e;
         public static final int com_facebook_loginview_compound_drawable_padding=0x7f050008;
@@ -263,23 +257,13 @@ containing a value of this type.
         public static final int small=0x7f040000;
         public static final int textView1=0x7f04001d;
         public static final int txtSaludo=0x7f040003;
-=======
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050001;
-    }
-    public static final class drawable {
         public static final int bg_key=0x7f020000;
         public static final int ic_drawer=0x7f020001;
         public static final int ic_launcher=0x7f020002;
     }
-    public static final class id {
-        public static final int action_settings=0x7f0a0004;
-        public static final int contentFrame=0x7f0a0001;
-        public static final int drawerLayout=0x7f0a0000;
-        public static final int leftDrawer=0x7f0a0002;
-        public static final int textView1=0x7f0a0003;
->>>>>>> fe28ab69556609dfa864e2f5a04f6c4ca717e93f
-    }
+   
     public static final class layout {
         public static final int activity_init=0x7f030000;
         public static final int activity_main=0x7f030001;
@@ -307,7 +291,6 @@ containing a value of this type.
         public static final int fragment_profile=0x7f030017;
     }
     public static final class menu {
-<<<<<<< HEAD
         public static final int init=0x7f0a0000;
         public static final int main=0x7f0a0001;
     }
@@ -349,18 +332,9 @@ containing a value of this type.
         public static final int login_google=0x7f070022;
         public static final int login_salir=0x7f070023;
         public static final int title_activity_init=0x7f070024;
-=======
         public static final int main=0x7f090000;
     }
-    public static final class string {
-        public static final int LogIn=0x7f060003;
-        public static final int action_settings=0x7f060001;
-        public static final int app_name=0x7f060000;
-        public static final int drawer_close=0x7f060005;
-        public static final int drawer_open=0x7f060004;
-        public static final int hello_world=0x7f060002;
->>>>>>> fe28ab69556609dfa864e2f5a04f6c4ca717e93f
-    }
+ 
     public static final class style {
         /** 
         Base application theme, dependent on API level. This theme is replaced
@@ -383,22 +357,17 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-<<<<<<< HEAD
         public static final int AppBaseTheme=0x7f080002;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080003;
         public static final int com_facebook_loginview_default_style=0x7f080000;
         public static final int com_facebook_loginview_silver_style=0x7f080001;
-=======
-        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f080001;
         public static final int Drawer=0x7f080002;
->>>>>>> fe28ab69556609dfa864e2f5a04f6c4ca717e93f
     }
     public static final class styleable {
         /** Attributes that can be used with a com_facebook_friend_picker_fragment.
