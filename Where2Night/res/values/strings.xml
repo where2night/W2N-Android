@@ -2,11 +2,17 @@
 <resources>
 
     <string name="app_name">Where2Night</string>
+    <string name="app_id">424508544315541</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="LogIn">Iniciar Sesion</string>
     <string name="drawer_open">Abrir</string>
     <string name="drawer_close">Cerrar</string>
+    <string name="bienvenido">¡Bienvenido!</string>
+    <string name="login_fb">LogIn con Facebook</string>
+    <string name="login_google">LogIn con Google+</string>
+    <string name="login_salir">Salir</string>
+
     <string-array name="drawer_options">
         <item>Inicio</item>
         <item>Mi Perfil</item>
@@ -14,7 +20,9 @@
         <item>Fotos</item>
         <item>Amigos</item>
         <item>Locales</item>
-        <item>DJs</item>   
+        <item>DJs</item>
     </string-array>
+
+    <string name="title_activity_init">InitActivity</string>
 
 </resources>
