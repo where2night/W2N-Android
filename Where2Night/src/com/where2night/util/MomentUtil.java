@@ -18,6 +18,7 @@ package com.where2night.util;
 
 import com.google.android.gms.plus.model.moments.ItemScope;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
