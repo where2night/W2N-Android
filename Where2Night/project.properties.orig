@@ -12,5 +12,10 @@
 
 # Project target.
 target=android-19
+<<<<<<< HEAD
+android.library.reference.1=facebook
+android.library.reference.2=../../../../AndroidSDK/extras/android/support/v7/appcompat
+=======
 android.library.reference.1=..\\..\\..\\..\\Android\\google-play-services_lib
 android.library.reference.2=..\\..\\..\\..\\Desktop\\facebook-android-sdk-3.6.0\\facebook
+>>>>>>> origin/Rama-de-Alvaro
