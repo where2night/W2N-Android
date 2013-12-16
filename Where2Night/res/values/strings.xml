@@ -11,11 +11,12 @@
     <string name="bienvenido">¡Bienvenido!</string>
     <string name="login_fb">LogIn con Facebook</string>
     <string name="login_google">LogIn con Google+</string>
+    <string name="login_email">LogIn con Email</string>
     <string name="login_salir">Salir</string>
-    
+    <string name="registro">Registro</string>
     <string name="sign_out_button_name">Sign out</string>
     <string name="revoke_access_button_name">Revoke access</string>
-    <string name="default_status"/>
+    <string name="default_status" />
     <string name="signing_in_status">Signing in with Google+.</string>
     <string name="signed_in_status">Signed in as \"%s\".</string>
     <string name="unknown_person">Unknown</string>
@@ -23,6 +24,15 @@
     <string name="revoke_access_status">Revoked access.</string>
     <string name="revoke_access_error_status">Unable to revoke access.</string>
     <string name="signed_out_status">Signed out.</string>
+    
+    <string name="email">Email</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="enviar">Enviar</string>
+    <string name="sinRegistro">¿No tienes cuenta? ¡Registrate! </string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="enviar">Enviar</string>
+    <string name="conCuenta">¿Ya tienes cuenta? ¡Accede!</string>
 
     <string-array name="drawer_options">
         <item>Inicio</item>
@@ -41,5 +51,7 @@
     <string name="btn_local_lists">Listas</string>
     <string name="btn_local_attendees">Asistentes</string>
     <string name="btn_local_jukebox">Gramola</string>
+    <string name="title_activity_registro">RegistroActivity</string>
+    <string name="title_activity_login_email">LoginEmailActivity</string>
 
 </resources>

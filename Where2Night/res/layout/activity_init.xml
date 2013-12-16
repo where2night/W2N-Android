@@ -58,9 +58,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_fb_button"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="18dp"
         android:layout_toRightOf="@+id/sign_out_button"
         android:text="@string/login_google" >
     </com.google.android.gms.common.SignInButton>
+
+    <Button
+        android:id="@+id/login_email_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_gplus_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="@string/login_email" />
+
+    <Button
+        android:id="@+id/registro_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_email_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/registro" />
 
 </RelativeLayout>

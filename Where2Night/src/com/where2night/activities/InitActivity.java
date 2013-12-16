@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.util.Log;
 import android.view.Menu;
@@ -29,8 +30,6 @@ import com.facebook.widget.LoginButton.OnErrorListener;
 import com.google.android.gms.common.*;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
-import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.PlusClient.OnAccessRevokedListener;
 import com.google.android.gms.common.ConnectionResult;
@@ -39,149 +38,8 @@ import com.where2night.R;
 import com.where2night.util.MomentUtil;
 
 public class InitActivity extends Activity implements View.OnClickListener, ConnectionCallbacks, OnConnectionFailedListener{
-/*
-	private static final int REQUEST_CODE_RESOLVE_ERR = 9000;
-	private static final String TAG = "ExampleActivity";
-
-    private ProgressDialog mConnectionProgressDialog;
-    private PlusClient mPlusClient;
-    private ConnectionResult mConnectionResult;
-    
-    private SignInButton btnSignIn;
-	
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_init);
-                
-                //Google+
-                btnSignIn = (SignInButton)findViewById(R.id.login_gplus_button);
-                
-                mPlusClient = new PlusClient.Builder(this, this, this)
-                	.setActions("http://schemas.google.com/AddActivity","http://schemas.google.org/BuyActivity")
-                    .build();
-                
-                mConnectionProgressDialog = new ProgressDialog(this);
-                mConnectionProgressDialog.setMessage("Conectando...");
-         
-                btnSignIn.setOnClickListener(new OnClickListener() {
-                	 
-                    @Override
-                    public void onClick(View view)
-                    {
-                    	if (view.getId() == R.id.login_gplus_button && !mPlusClient.isConnected()) {
-                            if (mConnectionResult == null) {
-                                mConnectionProgressDialog.show();
-                            } else {
-                                try {
-                                    mConnectionResult.startResolutionForResult(InitActivity.this, REQUEST_CODE_RESOLVE_ERR);
-                                } catch (SendIntentException e) {
-                                    // Try connecting again.
-                                    mConnectionResult = null;
-                                    mPlusClient.connect();
-                                }
-                            }
-                        }
-                    }
-                });
-            
-                //FaceBook
-                final TextView txtSaludo = (TextView)findViewById(R.id.txtSaludo);
-                
-                LoginButton authButton = (LoginButton) findViewById(R.id.login_fb_button);
-                  authButton.setOnErrorListener(new OnErrorListener() {
-                   
-                   @Override
-                   public void onError(FacebookException error) {
-                           
-                   }
-                });
-                  
-                authButton.setReadPermissions(Arrays.asList("basic_info","email"));
-        
-                authButton.setSessionStatusCallback(new Session.StatusCallback() {
-                           
-                           @SuppressWarnings("deprecation")
-						@Override
-                           public void call(Session session, SessionState state, Exception exception) {
-                            
-                            if (session.isOpened()) {                                      
-                                      Request.executeMeRequestAsync(session,
-                                              new Request.GraphUserCallback() {
-                                                  @Override
-                                                  public void onCompleted(GraphUser user,Response response) {
-                                                      if (user != null) {
-                                                              txtSaludo.setText(R.id.txtSaludo + " " + user.getName());                                                              
-                                                      }
-                                                  }
-                                              });
-                            }else if(session.isClosed()) {
-                            	txtSaludo.setText("¡Hola!");
-                            }
-                           }
-                          });
-                
-        }
-        
-        @Override
-        public void onConnected(Bundle connectionHint) {
-        	//String accountName = mPlusClient.getAccountName();
-            Toast.makeText(this, " is connected.", Toast.LENGTH_LONG).show();
-        }
-        
-        @Override
-         public void onActivityResult(int requestCode, int responseCode, Intent data) {
-                super.onActivityResult(requestCode, resultCode, data);
-                Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-        	if (requestCode == REQUEST_CODE_RESOLVE_ERR && responseCode == RESULT_OK) {
-                mConnectionResult = null;
-                mPlusClient.connect();
-            }
-                
-         }
-
-		@Override
-		public void onConnectionFailed(ConnectionResult result) {
-			if (mConnectionProgressDialog.isShowing()) {
-	               // The user clicked the sign-in button already. Start to resolve
-	               // connection errors. Wait until onConnected() to dismiss the
-	               // connection dialog.
-	               if (result.hasResolution()) {
-	                       try {
-	                               result.startResolutionForResult(this, REQUEST_CODE_RESOLVE_ERR);
-	                       } catch (SendIntentException e) {
-	                               mPlusClient.connect();
-	                       }
-	               }
-	       }
-
-	       // Save the intent so that we can start an activity when the user clicks
-	       // the sign-in button.
-	       mConnectionResult = result;
-			
-		}
-		
-		 @Override
-		    protected void onStart() {
-		        super.onStart();
-		        mPlusClient.connect();
-		    }
-
-		    @Override
-		    protected void onStop() {
-		        super.onStop();
-		        mPlusClient.disconnect();
-		    }
-		 
-
-		@Override
-		public void onDisconnected() {
-			Log.d(TAG, "disconnected");
-			
-		}*/
 	
 	private static final int DIALOG_GET_GOOGLE_PLAY_SERVICES = 1;
-
     private static final int REQUEST_CODE_SIGN_IN = 1;
     private static final int REQUEST_CODE_GET_GOOGLE_PLAY_SERVICES = 2;
 
@@ -191,6 +49,8 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
     private View mSignOutButton;
     private View mRevokeAccessButton;
     private ConnectionResult mConnectionResult;
+    private Button btnLoginEmail;
+    private Button btnRegistro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,8 +70,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
         mRevokeAccessButton = findViewById(R.id.revoke_access_button);
         mRevokeAccessButton.setOnClickListener(this);
         
-        //Facebook
-      //FaceBook
+        //FaceBook
         final TextView txtSaludo = (TextView)findViewById(R.id.txtSaludo);
         
         LoginButton authButton = (LoginButton) findViewById(R.id.login_fb_button);
@@ -246,6 +105,30 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
                     }
                    }
                   });
+        
+        //Login Email
+        btnLoginEmail = (Button) findViewById(R.id.login_email_button);
+        btnLoginEmail.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent itemIntent = new Intent(InitActivity.this, LoginEmailActivity.class);
+				InitActivity.this.startActivity(itemIntent);
+				
+			}
+		});
+        
+        //Registro
+        btnRegistro = (Button) findViewById(R.id.registro_button);
+        btnRegistro.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent itemIntent = new Intent(InitActivity.this, RegistroActivity.class);
+				InitActivity.this.startActivity(itemIntent);
+				
+			}
+		});
     }
 
 
