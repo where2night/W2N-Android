@@ -248,6 +248,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
                   });
     }
 
+
     @Override
     public void onStart() {
         super.onStart();

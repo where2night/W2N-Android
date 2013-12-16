@@ -18,24 +18,15 @@
         android:layout_marginTop="134dp"
         android:text="@string/bienvenido"
         android:textSize="30sp" />
-    
+        
     <com.facebook.widget.LoginButton 
         android:id="@+id/login_fb_button"
-        android:layout_width="wrap_content"
-       	android:layout_height="wrap_content"
-       	android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        fb:login_text="@string/login_fb"
-        fb:logout_text="@string/login_salir" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/login_gplus_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login_fb_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp" 
-        android:text="@string/login_google"/>
+       	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:layout_centerHorizontal="true"
+       	android:layout_centerVertical="true"
+       	fb:login_text="@string/login_fb"
+       	fb:logout_text="@string/login_salir"/>
     
     <Button
         android:id="@+id/sign_out_button"
@@ -61,5 +52,15 @@
         android:layout_toRightOf="@+id/sign_out_button"
         android:enabled="false"
         android:text="@string/revoke_access_button_name" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/login_gplus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_fb_button"
+        android:layout_marginTop="32dp"
+        android:layout_toRightOf="@+id/sign_out_button"
+        android:text="@string/login_google" >
+    </com.google.android.gms.common.SignInButton>
 
 </RelativeLayout>
