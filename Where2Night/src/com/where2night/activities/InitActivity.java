@@ -52,7 +52,7 @@ public class InitActivity extends Activity {
                                                   }
                                               });
                             }else if(session.isClosed()) {
-                        txtSaludo.setText("¡Hola!");
+                            	txtSaludo.setText("¡Hola!");
                             }
                            }
                           });
