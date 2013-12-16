@@ -24,5 +24,11 @@
     </string-array>
 
     <string name="title_activity_init">InitActivity</string>
+    <string name="title_activity_local_view">LocalViewActivity</string>
+    <string name="btn_local_map">Mapa</string>
+    <string name="btn_local_events">Eventos</string>
+    <string name="btn_local_lists">Listas</string>
+    <string name="btn_local_attendees">Asistentes</string>
+    <string name="btn_local_jukebox">Gramola</string>
 
 </resources>
