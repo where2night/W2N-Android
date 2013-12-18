@@ -29,7 +29,7 @@ import com.where2night.fragments.ProfileFragment;
  * In this Activity is implemented the navigation drawer
  */
 
-public class MainActivity extends FragmentActivity  {
+public class MainActivity extends FragmentActivity{ 
 
 	private ListView drawerList;
     private String[] drawerOptions;
