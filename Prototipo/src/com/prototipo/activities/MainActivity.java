@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -39,6 +40,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 	Button btnConexion;
 	DatabaseInfoFragment fragment;
 	RequestQueue requestQueue;
+	JSONObject respuesta = null;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +72,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     void apiCall()
     {
     	requestQueue = Volley.newRequestQueue(this); 
-		String url = Helper.getRecentUrl();
+		String url = "http://192.168.1.46:3000/users.json";
 		HashMap<String, String> params = new HashMap<String, String>();
-		params.put("email",  "misma@email.com");
-		params.put("name",  "Isma");
-		params.put("password",  "123456");
-		params.put("password_confirmation",  "123456");
+		//params.put("email",  "misma@email.com");
+		params.put("first_name",  "Isma");
+		params.put("last_name",  "Isma");
+	//	params.put("password",  "123456");
+	//	params.put("password_confirmation",  "123456");
 		
 		
 		Response.Listener<JSONObject> listener = 
@@ -95,9 +98,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 						Log.e("RESPONSE", "Error Response code: " + e.getMessage());
 					}
 	    };
-	  //  JSONObject objeto = new JSONObject(params);
-		JsonObjectRequest request = new JsonObjectRequest(url, null , listener, errorListener);
-	//	Log.e("Objeto",objeto.toString());
+	    JSONObject objeto = new JSONObject(params);
+		JsonObjectRequest request = new JsonObjectRequest(url, null, listener, errorListener);
+		//Log.e("Objeto",objeto.toString());
 		requestQueue.add(request);	
 	/*	try {
 			String element = (String) objeto.get("name");
@@ -106,8 +109,14 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 			// TODO Auto-generated catch block
 			Log.e("ERROR", "Error code: " + e.toString());
 		}*/
-    	
-    	
+		try {
+		    Thread.sleep(15000);
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		
+		
+		objeto = new JSONObject(params);
     }
     
 	@Override
