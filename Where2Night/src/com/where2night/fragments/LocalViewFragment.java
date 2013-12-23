@@ -16,22 +16,29 @@
 
 package com.where2night.fragments;
 
-import com.where2night.R;
-import com.where2night.utilities.ObservableScrollView;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-public class LocalViewFragment extends Fragment implements ObservableScrollView.Callbacks {
+import com.where2night.R;
+import com.where2night.utilities.ObservableScrollView;
+
+public class LocalViewFragment extends Fragment implements ObservableScrollView.Callbacks, OnClickListener {
     private LinearLayout mStickyView;
     private View mPlaceholderView;
     private ObservableScrollView mObservableScrollView;
+    private Button btnLocalMap;
+    private Button btnLocalEvents;
+    private Button btnLocalLists;
+    private Button btnLocalAttendees;
+    private Button btnLocalJukebox;
+    private Button anterior;
 
     public LocalViewFragment() {
     }
@@ -56,6 +63,23 @@ public class LocalViewFragment extends Fragment implements ObservableScrollView.
                     }
                 });
 
+        
+        btnLocalMap = (Button)rootView.findViewById(R.id.btnLocalMap);
+        btnLocalEvents = (Button)rootView.findViewById(R.id.btnLocalEvents);
+        btnLocalLists = (Button)rootView.findViewById(R.id.btnLocalLists);
+        btnLocalAttendees = (Button)rootView.findViewById(R.id.btnLocalAttendees);
+        btnLocalJukebox = (Button)rootView.findViewById(R.id.btnLocalJukebox);
+        
+        anterior = btnLocalMap;
+        
+        btnLocalMap.setOnClickListener(this);
+        btnLocalEvents.setOnClickListener(this);
+        btnLocalLists.setOnClickListener(this);
+        btnLocalAttendees.setOnClickListener(this);
+        btnLocalJukebox.setOnClickListener(this);
+        
+        
+        
         return rootView;
     }
 
@@ -71,4 +95,25 @@ public class LocalViewFragment extends Fragment implements ObservableScrollView.
     @Override
     public void onUpOrCancelMotionEvent() {
     }
+
+	@Override
+	public void onClick(View v) {
+		anterior.setBackgroundResource(R.drawable.no_activo);
+		if (v.getId() == btnLocalMap.getId()){
+			btnLocalMap.setBackgroundResource(R.drawable.activo);
+			anterior = btnLocalMap;
+		} else if (v.getId() == btnLocalEvents.getId()){
+			btnLocalEvents.setBackgroundResource(R.drawable.activo);
+			anterior = btnLocalEvents;
+		} else if (v.getId() == btnLocalLists.getId()){
+			btnLocalLists.setBackgroundResource(R.drawable.activo);
+			anterior = btnLocalLists;
+		} else if (v.getId() == btnLocalAttendees.getId()){
+			btnLocalAttendees.setBackgroundResource(R.drawable.activo);
+			anterior = btnLocalAttendees;
+		} else if (v.getId() == btnLocalJukebox.getId()){
+			btnLocalJukebox.setBackgroundResource(R.drawable.activo);
+			anterior = btnLocalJukebox;
+		} 
+	}
 }

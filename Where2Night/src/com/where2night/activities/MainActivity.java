@@ -1,7 +1,10 @@
 package com.where2night.activities;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -29,7 +32,7 @@ import com.where2night.fragments.ProfileFragment;
  * In this Activity is implemented the navigation drawer
  */
 
-public class MainActivity extends FragmentActivity  {
+public class MainActivity extends FragmentActivity{ 
 
 	private ListView drawerList;
     private String[] drawerOptions;
@@ -44,7 +47,8 @@ public class MainActivity extends FragmentActivity  {
     									  new LocalsFragment(),
     									  new DJsFragment()};
 	
-    @Override
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -58,21 +62,28 @@ public class MainActivity extends FragmentActivity  {
         
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
         
+        drawerList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         drawerList.setItemChecked(0, true);
-
+        
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close){
             
         	public void onDrawerClosed(View view) {
             	invalidateOptionsMenu();
+            	getActionBar().setIcon(R.drawable.logo7);
+            	getActionBar().setTitle(drawerOptions[lastIndex]);
             }
 
         	public void onDrawerOpened(View drawerView) {
             	invalidateOptionsMenu();
+            	getActionBar().setTitle("");
+            	getActionBar().setIcon(R.drawable.open_drawer);
             }
         };
         
         drawerLayout.setDrawerListener(drawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+      //  getActionBar().setBackgroundDrawable(getResources().getDrawable(android.R.color.white));
+        
         
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
@@ -95,19 +106,20 @@ public class MainActivity extends FragmentActivity  {
         
         setContent(0);
     
-        
+        getActionBar().setIcon(R.drawable.logo7);
     }
     
-    @Override
+	@Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
     }
 
-    @Override
+	@Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
+        
     }
 
     @Override

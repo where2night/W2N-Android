@@ -2,4 +2,10 @@
 <resources>
     <color name="pressed_color">#000</color>
     <color name="default_color">#555</color>
+    <color name="app_orange_color">#ffa500</color>
+    <color name="app_checked_color2">#ffe1aa</color>
+    <color name="app_checked_color">#ffe0c1</color>
+    <color name="app_checked_color3">#7a4f00</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>

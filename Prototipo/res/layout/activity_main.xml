@@ -65,4 +65,12 @@
         android:layout_below="@+id/btnSend"
         android:textColor="@color/textcolor" />
 
+    <Button
+        android:id="@+id/btnConexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editPassword"
+        android:layout_below="@+id/editPassword"
+        android:text="Conexion" />
+
 </RelativeLayout>
