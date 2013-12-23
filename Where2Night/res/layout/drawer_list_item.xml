@@ -9,7 +9,7 @@
     android:textColor="@color/app_orange_color"
     android:textSize="20sp"
     android:minHeight="48dp"   
-    android:background="@drawable/bg_key"
+    android:background="@drawable/text_view_style"
     
     />
 
