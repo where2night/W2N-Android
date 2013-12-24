@@ -72,11 +72,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     void apiCall()
     {
     	requestQueue = Volley.newRequestQueue(this); 
-		String url = "http://192.168.1.46:3000/users.json";
+		String url = "http://192.168.173.1:3000/users.json";
 		HashMap<String, String> params = new HashMap<String, String>();
 		//params.put("email",  "misma@email.com");
-		params.put("first_name",  "Isma");
-		params.put("last_name",  "Isma");
+		params.put("first_name",  "Isma33");
+		params.put("last_name",  "Isma33");
 	//	params.put("password",  "123456");
 	//	params.put("password_confirmation",  "123456");
 		
@@ -99,7 +99,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 					}
 	    };
 	    JSONObject objeto = new JSONObject(params);
-		JsonObjectRequest request = new JsonObjectRequest(url, null, listener, errorListener);
+		JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, listener, errorListener);
 		//Log.e("Objeto",objeto.toString());
 		requestQueue.add(request);	
 	/*	try {
@@ -109,11 +109,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 			// TODO Auto-generated catch block
 			Log.e("ERROR", "Error code: " + e.toString());
 		}*/
-		try {
-		    Thread.sleep(15000);
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}
 		
 		
 		objeto = new JSONObject(params);
