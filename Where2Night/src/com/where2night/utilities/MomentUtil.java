@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.where2night.util;
+package com.where2night.utilities;
 
 import com.google.android.gms.plus.model.moments.ItemScope;
 

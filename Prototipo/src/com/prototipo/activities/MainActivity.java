@@ -1,11 +1,9 @@
 package com.prototipo.activities;
 
 import java.util.HashMap;
+import java.util.Map;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -19,11 +17,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.prototipo.Helper;
 import com.prototipo.R;
@@ -72,15 +69,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     void apiCall()
     {
     	requestQueue = Volley.newRequestQueue(this); 
-		String url = "http://192.168.173.1:3000/users.json";
-		HashMap<String, String> params = new HashMap<String, String>();
-		//params.put("email",  "misma@email.com");
-		params.put("first_name",  "Isma33");
-		params.put("last_name",  "Isma33");
-	//	params.put("password",  "123456");
-	//	params.put("password_confirmation",  "123456");
+		String url = Helper.getUrl();
 		
 		
+		/*
 		Response.Listener<JSONObject> listener = 
 	    		new Response.Listener<JSONObject>() {
 		            @Override
@@ -99,19 +91,41 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 					}
 	    };
 	    JSONObject objeto = new JSONObject(params);
-		JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, listener, errorListener);
-		//Log.e("Objeto",objeto.toString());
+		JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, objeto, listener, errorListener);
+		*/
+		
+		StringRequest request = new StringRequest(Request.Method.POST, url, 
+			    new Response.Listener<String>() 
+			    {
+			        @Override
+			        public void onResponse(String response) {
+			            // response
+			            Log.d("Response", response);
+			        }
+			    }, 
+			    new Response.ErrorListener() 
+			    {
+			         @Override
+			         public void onErrorResponse(VolleyError error) {
+			             // error
+			             Log.d("Error.Response", error.getMessage());
+			       }
+			    }
+			) {     
+			    @Override
+			    protected Map<String, String> getParams() 
+			    {  
+			    	HashMap<String, String> params = new HashMap<String, String>();
+					params.put("email",  "isma@gmail.com");
+					params.put("password",  "123456");
+			             
+			            return params;  
+			    }
+			};
+		
 		requestQueue.add(request);	
-	/*	try {
-			String element = (String) objeto.get("name");
-			element += "...";
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Log.e("ERROR", "Error code: " + e.toString());
-		}*/
 		
 		
-		objeto = new JSONObject(params);
     }
     
 	@Override

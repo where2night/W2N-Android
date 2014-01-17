@@ -1,21 +1,19 @@
 package com.where2night.activities;
 
 import java.util.Arrays;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.IntentSender.SendIntentException;
+import android.database.SQLException;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookException;
@@ -26,16 +24,15 @@ import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.facebook.widget.LoginButton.OnErrorListener;
-
-import com.google.android.gms.common.*;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.PlusClient;
-import com.google.android.gms.plus.PlusClient.OnAccessRevokedListener;
-import com.google.android.gms.common.ConnectionResult;
-
 import com.where2night.R;
-import com.where2night.util.MomentUtil;
+import com.where2night.utilities.DataManager;
+import com.where2night.utilities.MomentUtil;
 
 public class InitActivity extends Activity implements View.OnClickListener, ConnectionCallbacks, OnConnectionFailedListener{
 	
@@ -52,10 +49,24 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
     private Button btnLoginEmail;
     private Button btnRegistro;
 
-    @Override
+    @SuppressLint("NewApi")
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
+        getActionBar().hide();
+        
+        /* Check if user is already loged in */
+        DataManager dm = new DataManager(getApplicationContext());
+        try{
+        	if (dm.checkLogin()){
+        		Intent i = new Intent(getApplicationContext(), MainActivity.class);
+				startActivity(i);
+        	}
+        } catch(SQLException e){
+        	Toast.makeText(getApplicationContext(), "Se ha producido un error al hacer Login", Toast.LENGTH_SHORT).show();
+        }
+        
         
         //Google
         mPlusClient = new PlusClient.Builder(this, this, this)

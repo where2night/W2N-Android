@@ -56,6 +56,10 @@
             android:name="com.where2night.activities.LoginEmailActivity"
             android:label="@string/title_activity_login_email" >
         </activity>
+        <activity
+            android:name="com.where2night.activities.EditProfileActivity"
+            android:label="@string/title_activity_edit_profile" >
+        </activity>
     </application>
 
 </manifest>

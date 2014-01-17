@@ -1,68 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent" android:padding="20dip" android:orientation="vertical">
-         
-         <EditText 
-             android:id="@+id/txtName" 
-             android:layout_height="wrap_content" 
-             android:layout_width="fill_parent" 
-             android:hint="@string/nombre" 
-             android:inputType="text" />
-         
-         <EditText 
-             android:id="@+id/txtSurname" 
-             android:layout_height="wrap_content" 
-             android:layout_width="fill_parent" 
-             android:hint="@string/apellidos" 
-             android:inputType="text" />
-         
-         <EditText 
-             android:id="@+id/txtEmail" 
-             android:layout_marginTop="15dip" 
-             android:layout_height="wrap_content"
-             android:layout_width="fill_parent" 
-             android:hint="@string/email" 
-             android:inputType="textEmailAddress" />
-         
-         <EditText 
-             android:id="@+id/txtPass" 
-             android:layout_height="wrap_content" 
-             android:layout_width="fill_parent" 
-             android:hint="@string/contrasena" 
-             android:inputType="textPassword"
-             android:layout_marginTop="15dip" 
-             android:layout_marginBottom="30dip" />
-         
-         
-         <Button 
-             android:id="@+id/btnRegister" 
-             android:layout_height="wrap_content" 
-             android:layout_width="wrap_content" 
-             android:text="@string/enviar"
-             android:layout_gravity="center_horizontal" 
-             android:paddingLeft="15dip" 
-             android:paddingRight="15dip" />
-         
-         <TextView 
-             android:id="@+id/link_to_login"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="40dip"
-             android:layout_marginBottom="40dip"
-             android:text="@string/conCuenta"
-             android:gravity="center"
-             android:textSize="20sp"
-             android:textColor="#0b84aa"/>
-         
-         <TextView 
-             android:id="@+id/register_error"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="40dip"
-             android:layout_marginBottom="40dip"
-             android:gravity="center"
-             android:textSize="20sp"
-             android:textColor="#0b84aa"/>
-     
-    
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+    android:padding="20dip" 
+    >
+	<RelativeLayout 
+	      	android:layout_width="wrap_content"
+	        android:layout_height="wrap_content">
+	    	
+	    	 <ImageView
+	             android:id="@+id/imgApp"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_alignParentLeft="true"
+	             android:layout_alignParentTop="true"
+	             android:padding="10dp"
+	             android:layout_margin="5dip" 
+	             android:contentDescription="@string/app_name_description"	             
+	             android:src="@drawable/open_drawer" />
+	    
+	         <EditText 
+	             android:id="@+id/txtName" 
+	             android:layout_height="wrap_content" 
+	             android:layout_width="fill_parent" 
+	             android:layout_below="@id/imgApp"
+	             android:hint="@string/nombre"
+	             android:padding="10dp" 
+	             android:layout_margin="5dip" 
+	             android:inputType="text" />
+	         
+	         <EditText 
+	             android:id="@+id/txtSurname" 
+	             android:layout_height="wrap_content" 
+	             android:layout_width="fill_parent" 
+	             android:layout_below="@id/txtName"
+	             android:hint="@string/apellidos" 
+	             android:padding="10dp" 
+	             android:layout_margin="5dip" 
+	             android:inputType="text" />
+	     <!--   
+	          <Spinner
+	              android:id="@+id/spDay"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_alignRight="@+id/btnRegister"
+	              android:layout_below="@id/txtSurname"
+	              android:layout_margin="5dip"
+	              android:padding="10dp" />
+	          
+	          <Spinner
+	              android:id="@+id/spMonth"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_below="@id/txtSurname"
+	              android:layout_marginTop="5dip"
+	              android:layout_marginBottom="5dip"
+	              android:layout_marginRight="5dip"
+	              android:layout_marginLeft="20dip"
+	              android:padding="10dp" />
+	          
+	           <Spinner
+	              android:id="@+id/spYear"
+	              android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:layout_below="@id/txtSurname"
+	              android:layout_marginTop="5dip"
+	              android:layout_marginBottom="5dip"
+	              android:layout_marginRight="5dip"
+	              android:layout_marginLeft="20dip"
+	              android:padding="10dp" />
+	         -->   
+	         <EditText 
+	             android:id="@+id/txtEmail" 
+	             android:layout_height="wrap_content"
+	             android:layout_width="fill_parent" 
+	             android:layout_below="@id/txtSurname"
+	             android:hint="@string/email" 
+	             android:padding="10dp" 
+	             android:layout_margin="5dip" 
+	             android:inputType="textEmailAddress" />
+	         
+	         <EditText 
+	             android:id="@+id/txtPass" 
+	             android:layout_height="wrap_content" 
+	             android:layout_width="fill_parent" 
+	             android:hint="@string/contrasena" 
+	             android:layout_below="@id/txtEmail"
+	             android:inputType="textPassword"
+	             android:layout_margin="5dip" 
+	             android:padding="10dp"  />
+	         
+	         <Button
+	             android:id="@+id/btnRegister"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_alignRight="@+id/link_to_login"
+	             android:layout_below="@+id/txtPass"
+	             android:layout_margin="5dip"
+	             android:layout_marginRight="23dp"
+	             android:padding="10dp"
+	             android:text="@string/register" />
+	         
+	         <TextView 
+	             android:id="@+id/link_to_login"
+	             android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:layout_below="@id/btnRegister"
+	             android:padding="10dp" 
+	             android:text="@string/conCuenta"
+	             android:gravity="center"
+	             android:textSize="20sp"
+	             android:layout_margin="5dip" 
+	             android:textColor="#0b84aa"/>
+	         
+	         <TextView 
+	             android:id="@+id/register_error"
+	             android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:layout_below="@id/link_to_login"
+	             android:padding="10dp" 
+	             android:gravity="center"
+	             android:textSize="20sp"
+	             android:layout_margin="5dip" 
+	             android:textColor="#0b84aa"/>
+
+	         <DatePicker
+	             android:id="@+id/datePicker1"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_below="@id/register_error"
+	             android:layout_centerHorizontal="true" />
+	         
+	</RelativeLayout>   
+</ScrollView>

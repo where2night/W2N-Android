@@ -24,14 +24,13 @@
     <string name="revoke_access_status">Revoked access.</string>
     <string name="revoke_access_error_status">Unable to revoke access.</string>
     <string name="signed_out_status">Signed out.</string>
-    
     <string name="email">Email</string>
     <string name="contrasena">Contraseña</string>
     <string name="enviar">Enviar</string>
     <string name="sinRegistro">¿No tienes cuenta? ¡Registrate! </string>
     <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
-    <string name="enviar">Enviar</string>
+    <string name="register">EMPIEZA LA FIESTA</string>
     <string name="conCuenta">¿Ya tienes cuenta? ¡Accede!</string>
 
     <string-array name="drawer_options">
@@ -53,5 +52,7 @@
     <string name="btn_local_jukebox">Gramola</string>
     <string name="title_activity_registro">RegistroActivity</string>
     <string name="title_activity_login_email">LoginEmailActivity</string>
+    <string name="title_activity_edit_profile">Editar Perfil</string>
+    <string name="app_name_description">Nombre de la app</string>
 
 </resources>
