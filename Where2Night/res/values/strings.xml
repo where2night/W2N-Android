@@ -54,5 +54,8 @@
     <string name="title_activity_login_email">LoginEmailActivity</string>
     <string name="title_activity_edit_profile">Editar Perfil</string>
     <string name="app_name_description">Nombre de la app</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

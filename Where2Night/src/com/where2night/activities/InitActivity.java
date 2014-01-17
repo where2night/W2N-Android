@@ -1,6 +1,11 @@
 package com.where2night.activities;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,12 +15,17 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.FacebookException;
 import com.facebook.Request;
 import com.facebook.Response;
@@ -31,7 +41,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.PlusClient;
 import com.where2night.R;
+import com.where2night.util.LoginFB;
 import com.where2night.utilities.DataManager;
+import com.where2night.utilities.Helper;
 import com.where2night.utilities.MomentUtil;
 
 public class InitActivity extends Activity implements View.OnClickListener, ConnectionCallbacks, OnConnectionFailedListener{
@@ -48,8 +60,8 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
     private ConnectionResult mConnectionResult;
     private Button btnLoginEmail;
     private Button btnRegistro;
+    private String email;
 
-    @SuppressLint("NewApi")
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,15 +69,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
         getActionBar().hide();
         
         /* Check if user is already loged in */
-        DataManager dm = new DataManager(getApplicationContext());
-        try{
-        	if (dm.checkLogin()){
-        		Intent i = new Intent(getApplicationContext(), MainActivity.class);
-				startActivity(i);
-        	}
-        } catch(SQLException e){
-        	Toast.makeText(getApplicationContext(), "Se ha producido un error al hacer Login", Toast.LENGTH_SHORT).show();
-        }
+       
         
         
         //Google
@@ -97,7 +101,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 
         authButton.setSessionStatusCallback(new Session.StatusCallback() {
                    
-                   @SuppressWarnings("deprecation")
+                @SuppressWarnings("deprecation")
 				@Override
                    public void call(Session session, SessionState state, Exception exception) {
                     
@@ -107,7 +111,13 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
                                           @Override
                                           public void onCompleted(GraphUser user,Response response) {
                                               if (user != null) {
-                                                      txtSaludo.setText(R.id.txtSaludo + " " + user.getName());                                                              
+                                            	      email  = (String) user.getProperty("email");
+                                            	      LoginFB lfb = new LoginFB(email, getApplicationContext());
+                                            	      boolean success = lfb.connection();
+                                            	      if (success){
+                                            	    	  Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                            	    	  startActivity(i);
+                                            	      }
                                               }
                                           }
                                       });
@@ -282,4 +292,8 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
             mRevokeAccessButton.setEnabled(false);
         }
     }
+    
+    
+	
+    
 }

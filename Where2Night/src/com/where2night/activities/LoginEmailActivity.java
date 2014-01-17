@@ -69,7 +69,7 @@ public class LoginEmailActivity extends Activity {
 								{
 									DataManager dm = new DataManager(getApplicationContext());
 									try{
-										dm.login(token);
+										dm.login(token,-1);
 									}catch(SQLException e){
 										
 									}
