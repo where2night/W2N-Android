@@ -10,14 +10,14 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.where2night.R;
-import com.where2night.R.layout;
 import com.where2night.utilities.DataManager;
 
 public class SplashActivity extends Activity
 {
-    private static final long DELAY = 3000;
+    private static final long DELAY = 2000;
     private boolean scheduled = false;
     private Timer splashTimer;
+    Activity act;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,20 +25,19 @@ public class SplashActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getActionBar().hide();
+        act = this;
         splashTimer = new Timer();
         splashTimer.schedule(new TimerTask()
         {
             @Override
             public void run()
             {
-            	
             	 DataManager dm = new DataManager(getApplicationContext());
                  try{
                  	if (dm.checkLogin()){
                  		Intent i = new Intent(SplashActivity.this, MainActivity.class);
          				startActivity(i);
-                 	}
-                 	else{
+                 	}else{
                  		SplashActivity.this.finish();
                         startActivity(new Intent(SplashActivity.this, InitActivity.class));
                  	}
@@ -59,4 +58,5 @@ public class SplashActivity extends Activity
             splashTimer.cancel();
         splashTimer.purge();
     }
+    
 }

@@ -31,10 +31,10 @@ public class DataManager {
 			return logedin;
 	}
 	
-	public void login(String token, int type){		
+	public void login(String email, String token, int type){		
 		SQLiteDatabase db = dbm.getWritableDatabase();
-		db.execSQL("INSERT INTO UserLogin (token, type) " +
-            	"VALUES (\'" + token + "\'," + type + ")");
+		db.execSQL("INSERT INTO UserLogin (email,token,type) " +
+            	"VALUES (\'" + email + "\',\'" + token + "\'," + type + ")");
 		db.close();
 	}
 	

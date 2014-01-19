@@ -1,16 +1,21 @@
 package com.where2night.activities;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.ActionBar;
 import android.content.res.Configuration;
-import android.os.Build;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +23,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 import com.where2night.fragments.DJsFragment;
 import com.where2night.fragments.EventsFragment;
@@ -26,6 +37,8 @@ import com.where2night.fragments.HomeFragment;
 import com.where2night.fragments.LocalsFragment;
 import com.where2night.fragments.PhotosFragment;
 import com.where2night.fragments.ProfileFragment;
+import com.where2night.utilities.DataManager;
+import com.where2night.utilities.Helper;
 
 /*
  * Main Activity
@@ -34,11 +47,17 @@ import com.where2night.fragments.ProfileFragment;
 
 public class MainActivity extends FragmentActivity{ 
 
+	protected static final String EMAIL = "email";
+	protected static final String TYPE = "type";
 	private ListView drawerList;
     private String[] drawerOptions;
     private DrawerLayout drawerLayout;
     private int lastIndex = 0;
     private ActionBarDrawerToggle drawerToggle;
+    private String type;
+    private String email;
+    private RequestQueue requestQueue;
+    private JSONObject respuesta = null;
     private Fragment[] fragments = new Fragment[]{new HomeFragment(),
     									  new ProfileFragment(),
     									  new EventsFragment(),
@@ -47,11 +66,19 @@ public class MainActivity extends FragmentActivity{
     									  new LocalsFragment(),
     									  new DJsFragment()};
 	
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        email = getIntent().getStringExtra(EMAIL);
+        type = getIntent().getStringExtra(TYPE);
+        
+        getDataFromServer(email, type);
+        
+        
+        
+        
         
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         drawerList = (ListView) findViewById(R.id.leftDrawer);
@@ -68,6 +95,7 @@ public class MainActivity extends FragmentActivity{
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close){
             
         	public void onDrawerClosed(View view) {
+        		
             	invalidateOptionsMenu();
             	getActionBar().setIcon(R.drawable.logo7);
             	getActionBar().setTitle(drawerOptions[lastIndex]);
@@ -158,13 +186,13 @@ public class MainActivity extends FragmentActivity{
 	    drawerLayout.closeDrawer(drawerList);	
     }
 
-private class DrawerItemClickListener implements ListView.OnItemClickListener {
-	
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    	setContent(position);
-    }
-}	
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		
+	    @Override
+	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	    	setContent(position);
+	    }
+	}	
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,5 +200,61 @@ private class DrawerItemClickListener implements ListView.OnItemClickListener {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    
+    private void getDataFromServer(final String email,final String type){
+    	final DataManager dm = new DataManager(getApplicationContext());
+    	
+    	if (type.equals("0") && !dm.checkLogin()){
+    		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
+    		String url = Helper.getLoginFBUrl();
+    		
+    		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+    	    {
+    	        @Override
+    	        public void onResponse(String response) {
+    	            // response
+    	        	Log.e("Response", response);
+    	            try {
+    		            respuesta = new JSONObject(response);
+    					String token = respuesta.getString("Token");
+    					if (!(token.equals("0")))
+    					{
+    						try{
+    							dm.login(email,token,0);
+    						}catch(SQLException e){}
+    					}else{}
+    	            } catch(JSONException e) {}
+    	        }
+    	    };
+    	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+    	    {
+    	         @Override
+    	         public void onErrorResponse(VolleyError error) {
+    	             // error
+    	             Log.e("Error.Response", error.toString());
+    	       }
+    	    };
+    		
+    		StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener) 
+    		{     
+    			    @Override
+    			    protected Map<String, String> getParams() 
+    			    {  
+    			    	HashMap<String, String> params = new HashMap<String, String>();
+    					params.put("email", email);
+    			        return params;  
+    			    }
+    			};
+    		
+    		requestQueue.add(request);	
+    		
+    		
+    		
+    		
+    		}
+    		
+    	}
+    	
+    
     
 }

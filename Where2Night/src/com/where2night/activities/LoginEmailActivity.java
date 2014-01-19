@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 import com.where2night.utilities.DataManager;
 import com.where2night.utilities.Helper;
+import com.where2night.utilities.SHA1;
 
 public class LoginEmailActivity extends Activity {
 
@@ -51,7 +52,6 @@ public class LoginEmailActivity extends Activity {
 					email = txtEmail.getText().toString();
 					pass = txtPass.getText().toString();
 					
-					
 					btnLoginEmail.setEnabled(false);
 					requestQueue = Volley.newRequestQueue(getApplicationContext()); 
 					String url = Helper.getLoginUrl();
@@ -69,11 +69,13 @@ public class LoginEmailActivity extends Activity {
 								{
 									DataManager dm = new DataManager(getApplicationContext());
 									try{
-										dm.login(token,-1);
+										dm.login(email,token,-1);
 									}catch(SQLException e){
 										
 									}
 									Intent i = new Intent(getApplicationContext(), MainActivity.class);
+									i.putExtra(MainActivity.EMAIL, email);
+									i.putExtra(MainActivity.TYPE, "-1");
 									startActivity(i);
 								}
 								else{
