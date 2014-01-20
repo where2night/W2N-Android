@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,7 +24,6 @@ import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 import com.where2night.utilities.DataManager;
 import com.where2night.utilities.Helper;
-import com.where2night.utilities.SHA1;
 
 public class LoginEmailActivity extends Activity {
 
@@ -68,14 +66,11 @@ public class LoginEmailActivity extends Activity {
 								if (!(token.equals("0")))
 								{
 									DataManager dm = new DataManager(getApplicationContext());
-									try{
-										dm.login(email,token,-1);
-									}catch(SQLException e){
-										
-									}
+									dm.login(email,token,-1);
 									Intent i = new Intent(getApplicationContext(), MainActivity.class);
 									i.putExtra(MainActivity.EMAIL, email);
 									i.putExtra(MainActivity.TYPE, "-1");
+									i.putExtra(MainActivity.PARENT, "0");
 									startActivity(i);
 								}
 								else{

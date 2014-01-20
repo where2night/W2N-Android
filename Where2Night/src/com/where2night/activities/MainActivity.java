@@ -1,6 +1,5 @@
 package com.where2night.activities;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -8,7 +7,6 @@ import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.content.res.Configuration;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -29,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.where2night.R;
 import com.where2night.fragments.DJsFragment;
 import com.where2night.fragments.EventsFragment;
@@ -49,6 +48,7 @@ public class MainActivity extends FragmentActivity{
 
 	protected static final String EMAIL = "email";
 	protected static final String TYPE = "type";
+	protected static final String PARENT = "parent";
 	private ListView drawerList;
     private String[] drawerOptions;
     private DrawerLayout drawerLayout;
@@ -71,10 +71,12 @@ public class MainActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        email = getIntent().getStringExtra(EMAIL);
-        type = getIntent().getStringExtra(TYPE);
         
-        getDataFromServer(email, type);
+        if (getIntent().getStringExtra(PARENT).equals("1") || getIntent().getStringExtra(PARENT).equals("2")){
+	        email = getIntent().getStringExtra(EMAIL);
+	        type = getIntent().getStringExtra(TYPE);
+	        getDataFromServer(email, type);
+        }
         
         
         
@@ -196,7 +198,6 @@ public class MainActivity extends FragmentActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -219,9 +220,7 @@ public class MainActivity extends FragmentActivity{
     					String token = respuesta.getString("Token");
     					if (!(token.equals("0")))
     					{
-    						try{
-    							dm.login(email,token,0);
-    						}catch(SQLException e){}
+    						dm.login(email,token,0);
     					}else{}
     	            } catch(JSONException e) {}
     	        }
@@ -240,11 +239,9 @@ public class MainActivity extends FragmentActivity{
     			    @Override
     			    protected Map<String, String> getParams() 
     			    {  
-    			    	HashMap<String, String> params = new HashMap<String, String>();
-    					params.put("email", email);
-    			        return params;  
+    			        return dm.getUser(email);  
     			    }
-    			};
+    		};
     		
     		requestQueue.add(request);	
     		

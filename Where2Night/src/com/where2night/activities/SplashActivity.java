@@ -36,6 +36,7 @@ public class SplashActivity extends Activity
                  try{
                  	if (dm.checkLogin()){
                  		Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                 		i.putExtra(MainActivity.PARENT, "3");
          				startActivity(i);
                  	}else{
                  		SplashActivity.this.finish();

@@ -1,7 +1,6 @@
 package com.where2night.utilities;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -30,6 +29,35 @@ public class DataManager {
 			}
 			return logedin;
 	}
+	
+	public HashMap<String,String> getUser(String email){
+		HashMap<String, String> data = new HashMap<String, String>();
+		SQLiteDatabase db = dbm.getWritableDatabase();
+		String[] rows = {"name","surnames","birthday","gender"};
+		Cursor c = db.query("User",rows,null,null,null,null,null);
+		try {
+			if (c.moveToFirst()) {
+				data.put("email",email);
+	            data.put("name", c.getString(0));
+	            data.put("surnames", c.getString(1));
+	            data.put("birthday", c.getString(2));
+	            data.put("gender", c.getString(3));
+	        }
+		} finally {
+			c.close();
+	        db.close();
+	    }
+		return data;
+	}
+	
+	public void setUser(String email, String name, String surnames, String birthday, String gender){
+		SQLiteDatabase db = dbm.getWritableDatabase();
+		db.execSQL("INSERT INTO User (email,name,surnames,birthday,gender) " +
+            	"VALUES (\'" + email + "\',\'" + name + "\',\'" + surnames + "\',\'" + 
+				birthday + "\',\'" + gender + "\')");
+		db.close();
+	}
+	
 	
 	public void login(String email, String token, int type){		
 		SQLiteDatabase db = dbm.getWritableDatabase();

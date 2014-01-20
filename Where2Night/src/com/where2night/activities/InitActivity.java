@@ -28,6 +28,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.PlusClient;
 import com.where2night.R;
+import com.where2night.utilities.DataManager;
 import com.where2night.utilities.MomentUtil;
 
 public class InitActivity extends Activity implements View.OnClickListener, ConnectionCallbacks, OnConnectionFailedListener{
@@ -75,7 +76,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
            }
         });
           
-        authButton.setReadPermissions(Arrays.asList("basic_info","email"));
+        authButton.setReadPermissions(Arrays.asList("basic_info","email","user_birthday"));
         authButton.setSessionStatusCallback(new Session.StatusCallback() {
                    
 	    @SuppressWarnings("deprecation")
@@ -88,9 +89,16 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 							public void onCompleted(GraphUser user, Response response) {
 								if (user != null) {
 									String email = user.getProperty("email").toString();
+									String name = user.getFirstName();
+									String surnames = user.getLastName();
+									String gender = user.getProperty("gender").toString();
+									String birthday = user.getBirthday();
+									DataManager dm = new DataManager(getApplicationContext());
+									dm.setUser(email, name, surnames, birthday, gender);
 									Intent i = new Intent(getApplicationContext(), MainActivity.class);
 									i.putExtra(MainActivity.EMAIL, email);
 									i.putExtra(MainActivity.TYPE, "0");
+									i.putExtra(MainActivity.PARENT, "1");
 									startActivity(i);
 					              }
 								
