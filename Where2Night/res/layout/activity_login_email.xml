@@ -5,16 +5,7 @@
     android:orientation="vertical"
     android:background="@drawable/background"
     android:padding="20dip" >
-  
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="60dp"
-        android:contentDescription="@string/app_name_description"
-        android:src="@drawable/open_drawer" />
+
 
     <EditText
         android:id="@+id/txtEmail"
@@ -22,6 +13,7 @@
         android:layout_height="wrap_content"
         android:textColorHint="#ffa500"
         android:textColor="#ffa500" 
+        android:layout_marginTop="100dp"
         android:padding="20dp"
         android:textCursorDrawable="@null"
         android:hint="@string/email"

@@ -92,9 +92,9 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 									String name = user.getFirstName();
 									String surnames = user.getLastName();
 									String gender = user.getProperty("gender").toString();
-									String birthday = user.getBirthday();
+									String birthdate = user.getBirthday();
 									DataManager dm = new DataManager(getApplicationContext());
-									dm.setUser(email, name, surnames, birthday, gender);
+									dm.setUser(email, name, surnames, birthdate, gender);
 									Intent i = new Intent(getApplicationContext(), MainActivity.class);
 									i.putExtra(MainActivity.EMAIL, email);
 									i.putExtra(MainActivity.TYPE, "0");
