@@ -9,6 +9,8 @@
     <color name="app_checked_color3">#7a4f00</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="background">#000000</color>
     <color name="black_overlay">#66000000</color>
+     <color name="where2night_color">#ffa500</color>
 
 </resources>

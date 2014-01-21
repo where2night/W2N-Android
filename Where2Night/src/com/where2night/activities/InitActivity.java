@@ -110,7 +110,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
           });
         
         //Login Email
-        btnLoginEmail = (Button) findViewById(R.id.login_email_button);
+        btnLoginEmail = (Button) findViewById(R.id.btnLoginEmail);
         btnLoginEmail.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -122,7 +122,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 		});
         
         //Registro
-        btnRegistro = (Button) findViewById(R.id.registro_button);
+        btnRegistro = (Button) findViewById(R.id.btnRegister);
         btnRegistro.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

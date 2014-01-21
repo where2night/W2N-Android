@@ -3,34 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/background"
+    android:background="@color/background"
     tools:context=".InitActivity" >
     
-    <TextView
-        android:id="@+id/txtSaludo"
+    <ImageView
+        android:id="@+id/imgTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="134dp"
-        android:text="@string/bienvenido"
-        android:textSize="30sp" />
-        
-    <com.facebook.widget.LoginButton
-        android:id="@+id/login_fb_button"
-       	android:layout_width="wrap_content"
-      	android:layout_height="wrap_content"
-      	android:layout_centerHorizontal="true"
-       	android:layout_centerVertical="true"
-       	fb:login_text="@string/login_fb"
-       	fb:logout_text="@string/login_salir"/>
+        android:layout_marginTop="70dp"
+        android:src="@drawable/topimage" />
     
     <Button
         android:id="@+id/sign_out_button"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_out_button_name"
@@ -38,6 +23,7 @@
         android:enabled="false" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/sign_in_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,6 +31,7 @@
 
     <Button
         android:id="@+id/revoke_access_button"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/sign_out_button"
@@ -54,32 +41,65 @@
         android:enabled="false"
         android:text="@string/revoke_access_button_name" />
 
+    <com.facebook.widget.LoginButton
+        android:id="@+id/login_fb_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgTop"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+	    android:layout_marginRight="20dp"
+	    android:layout_marginBottom="10dp"
+        fb:login_text="@string/login_fb"
+        fb:logout_text="@string/login_salir" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/login_gplus_button"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_fb_button"
-        android:layout_marginTop="18dp"
-        android:layout_toRightOf="@+id/sign_out_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+	    android:layout_marginRight="20dp"
+	    android:layout_marginBottom="10dp"
         android:text="@string/login_google" >
     </com.google.android.gms.common.SignInButton>
 
     <Button
-        android:id="@+id/login_email_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnLoginEmail"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_gplus_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:text="@string/login_email" />
+        android:background="@drawable/button_style"
+        android:layout_marginLeft="20dp"
+	    android:layout_marginRight="20dp"
+	    android:layout_marginBottom="10dp"
+        android:text="@string/login_email"
+        android:textColor="@color/white" />
 
     <Button
-        android:id="@+id/registro_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnRegister"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_email_button"
+        android:layout_below="@+id/btnLoginEmail"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:text="@string/registro" />
+        android:layout_marginLeft="20dp"
+	    android:layout_marginRight="20dp"
+	    android:layout_marginBottom="10dp"
+        android:layout_marginTop="63dp"
+        android:background="@drawable/button_style"
+        android:text="@string/registro"
+        android:textColor="@color/white" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/btnLoginEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_marginTop="22dp"
+        android:background="#ffa500" />
 
 </RelativeLayout>

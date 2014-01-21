@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +31,8 @@ public class LoginEmailActivity extends Activity {
 
 	private EditText txtEmail;
 	private EditText txtPass;
+	private TextView txtLoginError;
+	private ProgressBar pgLoginEmail;
 	String email, pass;
 	RequestQueue requestQueue;
 	JSONObject respuesta = null;
@@ -41,15 +45,18 @@ public class LoginEmailActivity extends Activity {
 		 getActionBar().hide();
 		  
 		 btnLoginEmail = (Button) findViewById(R.id.btnLogin);
-		 txtEmail = (EditText) findViewById(R.id.txtEmail);
-		 txtPass = (EditText) findViewById(R.id.txtPass);
+		 txtEmail = (EditText) findViewById(R.id.txtLoginEmail);
+		 txtPass = (EditText) findViewById(R.id.txtLoginPass);
+		 pgLoginEmail = (ProgressBar) findViewById(R.id.pgLoginEmail);
+		 txtLoginError = (TextView) findViewById(R.id.login_error);
+		 
 	     btnLoginEmail.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					
 					email = txtEmail.getText().toString();
 					pass = txtPass.getText().toString();
-					
+					pgLoginEmail.setVisibility(View.VISIBLE);
 					btnLoginEmail.setEnabled(false);
 					requestQueue = Volley.newRequestQueue(getApplicationContext()); 
 					String url = Helper.getLoginUrl();
@@ -61,6 +68,7 @@ public class LoginEmailActivity extends Activity {
 				            // response
 				            Log.e("Response", response);
 				            try {
+				            	pgLoginEmail.setVisibility(View.GONE);
 					            respuesta = new JSONObject(response);
 								String token = respuesta.getString("Token");
 								if (!(token.equals("0")))
@@ -71,9 +79,11 @@ public class LoginEmailActivity extends Activity {
 									i.putExtra(MainActivity.EMAIL, email);
 									i.putExtra(MainActivity.TYPE, "-1");
 									i.putExtra(MainActivity.PARENT, "0");
+									btnLoginEmail.setEnabled(true);
 									startActivity(i);
 								}
 								else{
+									txtLoginError.setText(getResources().getString(R.string.login_error));
 									btnLoginEmail.setEnabled(true);									
 								}
 				            } catch(JSONException e) {}
@@ -85,6 +95,8 @@ public class LoginEmailActivity extends Activity {
 				         public void onErrorResponse(VolleyError error) {
 				             // error
 				             Log.e("Error.Response", error.toString());
+				             txtLoginError.setText(getResources().getString(R.string.login_error_connection));
+				             btnLoginEmail.setEnabled(true);
 				       }
 				    };
 					

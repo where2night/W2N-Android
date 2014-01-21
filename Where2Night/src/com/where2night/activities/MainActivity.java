@@ -112,7 +112,6 @@ public class MainActivity extends FragmentActivity{
         
         drawerLayout.setDrawerListener(drawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-      //  getActionBar().setBackgroundDrawable(getResources().getDrawable(android.R.color.white));
         
         
         FragmentManager manager = getSupportFragmentManager();
