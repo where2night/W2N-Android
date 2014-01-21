@@ -27,6 +27,9 @@
     <string name="revoke_access_error_status">Unable to revoke access.</string>
     <string name="signed_out_status">Signed out.</string>
     <string name="email">Email</string>
+    <string name="male">Hombre</string>
+    <string name="female">Mujer</string>
+    <string name="date">Fecha de nacimiento (dd/mm/aaaa)</string>
     <string name="contrasena">Contraseña</string>
     <string name="enviar">Enviar</string>
     <string name="sinRegistro">¿No tienes cuenta? ¡Registrate! </string>

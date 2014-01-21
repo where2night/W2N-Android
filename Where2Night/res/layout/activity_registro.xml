@@ -1,158 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" 
-    android:layout_height="fill_parent" 
-    android:background="@color/background"
-    >
-	<RelativeLayout 
-	      	android:layout_width="wrap_content"
-	        android:layout_height="wrap_content">
-	    	
-	    	<ImageView
-	             android:id="@+id/imgTop"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
-	             android:layout_alignParentTop="true"
-	             android:layout_centerHorizontal="true"
-	             android:layout_marginTop="70dp"
-	             android:src="@drawable/topimage" />
-	    
-	         <EditText 
-	             android:layout_below="@id/imgTop"
-	             android:id="@+id/txtRegisterName" 
-	             android:layout_height="wrap_content" 
-	             android:layout_width="fill_parent" 
-	             android:hint="@string/nombre"
-	             android:padding="20dp" 
-	             android:layout_marginLeft="20dp"
-	             android:layout_marginRight="20dp"
-	             android:layout_marginBottom="10dp"
-	             android:layout_marginTop="30dp"
-	             android:textColorHint="#ffa500"
-       			 android:textColor="#ffa500" 
-       			 android:textCursorDrawable="@null"
-	             android:inputType="text" />
-	         
-	         <EditText 
-	             android:id="@+id/txtRegisterSurname" 
-	             android:layout_height="wrap_content" 
-	             android:layout_width="fill_parent" 
-	             android:layout_below="@id/txtRegisterName"
-	             android:hint="@string/apellidos" 
-	             android:layout_marginLeft="20dp"
-	             android:layout_marginRight="20dp"
-	             android:layout_marginBottom="10dp"
-	             android:padding="20dp" 
-	             android:textColorHint="#ffa500"
-       			 android:textColor="#ffa500" 
-       			 android:textCursorDrawable="@null"
-	             android:inputType="text" />
-	     <!--   
-	          <Spinner
-	              android:id="@+id/spDay"
-	              android:layout_width="wrap_content"
-	              android:layout_height="wrap_content"
-	              android:layout_alignRight="@+id/btnRegister"
-	              android:layout_below="@id/txtSurname"
-	              android:layout_margin="5dip"
-	              android:padding="10dp" />
-	          
-	          <Spinner
-	              android:id="@+id/spMonth"
-	              android:layout_width="wrap_content"
-	              android:layout_height="wrap_content"
-	              android:layout_below="@id/txtSurname"
-	              android:layout_marginTop="5dip"
-	              android:layout_marginBottom="5dip"
-	              android:layout_marginRight="5dip"
-	              android:layout_marginLeft="20dip"
-	              android:padding="10dp" />
-	          
-	           <Spinner
-	              android:id="@+id/spYear"
-	              android:layout_width="wrap_content"
-	              android:layout_height="wrap_content"
-	              android:layout_below="@id/txtSurname"
-	              android:layout_marginTop="5dip"
-	              android:layout_marginBottom="5dip"
-	              android:layout_marginRight="5dip"
-	              android:layout_marginLeft="20dip"
-	              android:padding="10dp" />
-	         -->   
-	         <EditText 
-	             android:id="@+id/txtRegisterEmail" 
-	             android:layout_height="wrap_content"
-	             android:layout_width="fill_parent" 
-	             android:layout_below="@id/txtRegisterSurname"
-        		 android:textColorHint="#ffa500"
-       			 android:textColor="#ffa500" 
-       			 android:layout_marginLeft="20dp"
-	             android:layout_marginRight="20dp"
-	             android:layout_marginBottom="10dp"
-       			 android:padding="20dp"
-       			 android:textCursorDrawable="@null"
-       			 android:hint="@string/email"
-	             android:inputType="textEmailAddress" />
-	         
-	         <EditText 
-	             android:id="@+id/txtRegisterPass" 
-	             android:layout_height="wrap_content" 
-	             android:layout_width="fill_parent" 
-	             android:hint="@string/contrasena" 
-	             android:layout_below="@id/txtRegisterEmail"
-	             android:inputType="textPassword"
-	             android:textColorHint="#ffa500"
-	             android:layout_marginLeft="20dp"
-	             android:layout_marginRight="20dp"
-	             android:layout_marginBottom="10dp"
-	             android:textColor="#ffa500" 
-       			 android:textCursorDrawable="@null"
-	             android:padding="20dp"  />
-	         
-	         <Button
-	             android:id="@+id/btnRegister"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
-	             android:layout_alignRight="@+id/link_to_login"
-	             android:layout_below="@+id/txtRegisterPass"
-	             android:layout_margin="20dip"
-	             android:layout_marginRight="23dp"
-	             android:padding="10dp"
-	             android:textColor="@color/white"
-	             android:background="@drawable/button_style"
-	             android:text="@string/register" />
-	         
-	         <TextView 
-	             android:id="@+id/link_to_login"
-	             android:layout_width="fill_parent"
-	             android:layout_height="wrap_content"
-	             android:layout_below="@id/btnRegister"
-	             android:padding="10dp" 
-	             android:text="@string/conCuenta"
-	             android:gravity="center"
-	             android:layout_margin="25dip" 
-	             android:textColor="#ffa500"
-        		 android:textSize="20sp"/>
-	         
-	         <TextView 
-	             android:id="@+id/register_error"
-	             android:layout_width="fill_parent"
-	             android:layout_height="wrap_content"
-	             android:layout_below="@id/link_to_login"
-	             android:padding="10dp" 
-	             android:gravity="center"
-	             android:textSize="20sp"
-	             android:layout_margin="25dip" 
-	             android:textColor="#ffa500"/>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background" >
 
-	         <DatePicker
-	             android:id="@+id/datePicker1"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
-	             android:layout_below="@id/register_error"
-	             android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
-	         
-	         
-	</RelativeLayout>   
+        <ImageView
+            android:id="@+id/imgTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/topimage" />
+
+        <EditText
+            android:id="@+id/txtRegisterName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgTop"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/nombre"
+            android:inputType="text"
+            android:padding="20dp"
+            android:textColor="#ffa500"
+            android:textColorHint="#ffa500"
+            android:textCursorDrawable="@null" />
+
+        <EditText
+            android:id="@+id/txtRegisterSurname"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtRegisterName"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/apellidos"
+            android:inputType="text"
+            android:padding="20dp"
+            android:textColor="#ffa500"
+            android:textColorHint="#ffa500"
+            android:textCursorDrawable="@null" />
+
+        <EditText
+            android:id="@+id/etRegisterDate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtRegisterSurname"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/date"
+            android:inputType="date"
+            android:padding="20dp"
+            android:textColor="#ffa500"
+            android:textColorHint="#ffa500"
+            android:textCursorDrawable="@null" />
+        
+        
+        <RadioGroup
+            android:id="@+id/rgGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/etRegisterDate"
+	        android:layout_alignRight="@+id/btnRegister"
+            android:orientation="horizontal" >
+
+            <RadioButton
+	            android:id="@+id/rdFemale"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/female"
+	            android:textColor="#ffa500"
+	            android:textSize="20sp" />
+
+            <RadioButton
+	            android:id="@+id/rdMale"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/male"
+	            android:textColor="#ffa500"
+	            android:textSize="20sp" />
+
+         
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/txtRegisterEmail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rgGender"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:padding="20dp"
+            android:textColor="#ffa500"
+            android:textColorHint="#ffa500"
+            android:textCursorDrawable="@null" />
+
+        <EditText
+            android:id="@+id/txtRegisterPass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtRegisterEmail"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/contrasena"
+            android:inputType="textPassword"
+            android:padding="20dp"
+            android:textColor="#ffa500"
+            android:textColorHint="#ffa500"
+            android:textCursorDrawable="@null" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/link_to_login"
+            android:layout_below="@+id/txtRegisterPass"
+            android:layout_margin="20dip"
+            android:layout_marginRight="23dp"
+            android:background="@drawable/button_style"
+            android:padding="10dp"
+            android:text="@string/register"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/link_to_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnRegister"
+            android:layout_margin="25dip"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/conCuenta"
+            android:textColor="#ffa500"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/register_error"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/link_to_login"
+            android:layout_margin="25dip"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="#ffa500"
+            android:textSize="20sp" />
+
+        
+
+        
+
+       	
+
+    </RelativeLayout>
+
 </ScrollView>
