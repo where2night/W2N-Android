@@ -6,13 +6,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class RegistroActivity extends Activity {
 	private RadioButton rdMale;
 	private Button btnRegister;
 	private TextView register_error;
+	private ProgressBar pgRegister;
 	
 	private String name;
 	private String surnames;
@@ -68,18 +70,21 @@ public class RegistroActivity extends Activity {
 		rdFemale = (RadioButton) findViewById(R.id.rdFemale);
 		rdMale = (RadioButton) findViewById(R.id.rdMale);
 		btnRegister = (Button) findViewById(R.id.btnRegister);
+		pgRegister = (ProgressBar) findViewById(R.id.pgRegister);
 		register_error = (TextView) findViewById(R.id.register_error);
 		
 		btnRegister.setOnClickListener(new View.OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
+				pgRegister.setVisibility(View.VISIBLE);
+				btnRegister.setEnabled(false);
 				name = etRegisterName.getText().toString();
 				surnames = etRegisterSurname.getText().toString();
 				birthdate = etRegisterDate.getText().toString();
 				email = etRegisterEmail.getText().toString();
 				pass = etRegisterPass.getText().toString();
-				pass = etRegisterPass2.getText().toString();
+				pass2 = etRegisterPass2.getText().toString();
 				if (rdFemale.isChecked()){
 					gender = "female";
 				}else if(rdMale.isChecked()){
@@ -120,11 +125,18 @@ public class RegistroActivity extends Activity {
 	            // response
 	        	Log.e("Response", response);
 	            try {
+	            	pgRegister.setVisibility(View.GONE);
+	            	btnRegister.setEnabled(true);
 		            respuesta = new JSONObject(response);
 					String token = respuesta.getString("Token");
 					if (!(token.equals("0")))
 					{
-						dm.login(email,token,0);
+						dm.login(email,token,-1);
+						Intent i = new Intent(getApplicationContext(), MainActivity.class);
+						i.putExtra(MainActivity.EMAIL, email);
+						i.putExtra(MainActivity.TYPE, "-1");
+						i.putExtra(MainActivity.PARENT, "0");
+						startActivity(i);
 					}else{}
 	            } catch(JSONException e) {}
 	        }
@@ -134,6 +146,8 @@ public class RegistroActivity extends Activity {
 	         @Override
 	         public void onErrorResponse(VolleyError error) {
 	             // error
+	        	 pgRegister.setVisibility(View.GONE);
+	        	 btnRegister.setEnabled(true);
 	             Log.e("Error.Response", error.toString());
 	       }
 	    };
@@ -154,6 +168,8 @@ public class RegistroActivity extends Activity {
 	}
 	
 	private void setErrorMsg(String string){
+		pgRegister.setVisibility(View.GONE);
+		btnRegister.setEnabled(true);
 		register_error.setText(string);
 	}
 

@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -37,6 +38,7 @@ import com.where2night.fragments.LocalsFragment;
 import com.where2night.fragments.PhotosFragment;
 import com.where2night.fragments.ProfileFragment;
 import com.where2night.utilities.DataManager;
+import com.where2night.utilities.FbManagement;
 import com.where2night.utilities.Helper;
 
 /*
@@ -154,13 +156,18 @@ public class MainActivity extends FragmentActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-          	 
             if (drawerLayout.isDrawerOpen(drawerList)) {
             	drawerLayout.closeDrawer(drawerList);
             } else {
             	drawerLayout.openDrawer(drawerList);
             }
             return true;
+        }else if (item.getItemId() == R.id.action_logout){
+        	DataManager dm = new DataManager(getApplicationContext());
+			dm.logout();
+			FbManagement.callFacebookLogout(getApplicationContext());
+			Intent i = new Intent(getApplicationContext(), InitActivity.class);
+			startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
@@ -193,7 +200,9 @@ public class MainActivity extends FragmentActivity{
 	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 	    	setContent(position);
 	    }
-	}	
+	}
+	
+	
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

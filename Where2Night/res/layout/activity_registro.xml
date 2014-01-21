@@ -174,11 +174,14 @@
             android:textColor="@color/app_color"
             android:textSize="20sp" />
 
-        
-
-        
-
-       	
+        <ProgressBar
+            android:id="@+id/pgRegister"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/rgGender"
+            android:layout_alignTop="@+id/btnRegister"
+            android:layout_marginRight="38dp" />
 
     </RelativeLayout>
 

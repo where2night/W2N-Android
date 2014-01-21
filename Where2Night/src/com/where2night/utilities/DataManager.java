@@ -68,7 +68,8 @@ public class DataManager {
 	
 	public void logout(){		
 		SQLiteDatabase db = dbm.getWritableDatabase();
-		db.execSQL("DELETE * FROM UserLogin");
+		db.delete("UserLogin",null,null);
+		db.delete("User",null,null);
 		db.close();
 	}
 	
