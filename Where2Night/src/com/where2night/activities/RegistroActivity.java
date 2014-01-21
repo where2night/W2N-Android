@@ -1,20 +1,160 @@
 package com.where2night.activities;
 
-import com.where2night.R;
-import com.where2night.R.layout;
-import com.where2night.R.menu;
+import java.util.Map;
 
-import android.os.Bundle;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.where2night.R;
+import com.where2night.utilities.DataManager;
+import com.where2night.utilities.Helper;
 
 public class RegistroActivity extends Activity {
 
+	
+	private EditText etRegisterName;
+	private EditText etRegisterSurname;
+	private EditText etRegisterDate;
+	private EditText etRegisterEmail;
+	private EditText etRegisterPass;
+	private EditText etRegisterPass2;
+	private RadioButton rdFemale;
+	private RadioButton rdMale;
+	private Button btnRegister;
+	private TextView register_error;
+	
+	private String name;
+	private String surnames;
+	private String birthdate;
+	private String email;
+	private String pass;
+	private String pass2;
+	private String gender;
+	
+	private RequestQueue requestQueue;
+    private JSONObject respuesta = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registro);
 		getActionBar().hide();
+		
+		
+		
+		etRegisterName = (EditText) findViewById(R.id.etRegisterName);
+		etRegisterSurname = (EditText) findViewById(R.id.etRegisterSurname);
+		etRegisterDate = (EditText) findViewById(R.id.etRegisterDate);
+		etRegisterEmail = (EditText) findViewById(R.id.etRegisterEmail);
+		etRegisterPass = (EditText) findViewById(R.id.etRegisterPass);
+		etRegisterPass2 = (EditText) findViewById(R.id.etRegisterPass2);
+		rdFemale = (RadioButton) findViewById(R.id.rdFemale);
+		rdMale = (RadioButton) findViewById(R.id.rdMale);
+		btnRegister = (Button) findViewById(R.id.btnRegister);
+		register_error = (TextView) findViewById(R.id.register_error);
+		
+		btnRegister.setOnClickListener(new View.OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				name = etRegisterName.getText().toString();
+				surnames = etRegisterSurname.getText().toString();
+				birthdate = etRegisterDate.getText().toString();
+				email = etRegisterEmail.getText().toString();
+				pass = etRegisterPass.getText().toString();
+				pass = etRegisterPass2.getText().toString();
+				if (rdFemale.isChecked()){
+					gender = "female";
+				}else if(rdMale.isChecked()){
+					gender = "male";
+				}
+				
+				if (pass.equals(pass2)){
+					DataManager dm = new DataManager(getApplicationContext());
+					dm.setUser(email, name, surnames, birthdate, gender);
+					registerCall();
+				}else{
+					setErrorMsg(getResources().getString(R.string.registerErrorPasswords));
+				}
+					
+				
+			
+			}
+
+			
+			
+		});
+		
+		
+	}
+	
+	
+	private void registerCall() {
+		
+		final DataManager dm = new DataManager(getApplicationContext());
+		
+		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
+		String url = Helper.getLoginFBUrl();
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            try {
+		            respuesta = new JSONObject(response);
+					String token = respuesta.getString("Token");
+					if (!(token.equals("0")))
+					{
+						dm.login(email,token,0);
+					}else{}
+	            } catch(JSONException e) {}
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener) 
+		{     
+			    @Override
+			    protected Map<String, String> getParams() 
+			    {  
+			    	Map<String, String> info = dm.getUser(email);
+			    	info.put("pass", pass);
+			        return info;
+			    }
+		};
+		
+		requestQueue.add(request);
+		
+	}
+	
+	private void setErrorMsg(String string){
+		register_error.setText(string);
 	}
 
 	@Override

@@ -18,7 +18,7 @@
             android:src="@drawable/topimage" />
 
         <EditText
-            android:id="@+id/txtRegisterName"
+            android:id="@+id/etRegisterName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/imgTop"
@@ -29,30 +29,30 @@
             android:hint="@string/nombre"
             android:inputType="text"
             android:padding="20dp"
-            android:textColor="#ffa500"
-            android:textColorHint="#ffa500"
+            android:textColor="@color/app_color"
+            android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
 
         <EditText
-            android:id="@+id/txtRegisterSurname"
+            android:id="@+id/etRegisterSurname"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtRegisterName"
+            android:layout_below="@id/etRegisterName"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:hint="@string/apellidos"
             android:inputType="text"
             android:padding="20dp"
-            android:textColor="#ffa500"
-            android:textColorHint="#ffa500"
+            android:textColor="@color/app_color"
+            android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
 
         <EditText
             android:id="@+id/etRegisterDate"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtRegisterSurname"
+            android:layout_below="@id/etRegisterSurname"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
@@ -60,8 +60,8 @@
             android:hint="@string/date"
             android:inputType="date"
             android:padding="20dp"
-            android:textColor="#ffa500"
-            android:textColorHint="#ffa500"
+            android:textColor="@color/app_color"
+            android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
         
         
@@ -79,7 +79,7 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="@string/female"
-	            android:textColor="#ffa500"
+	            android:textColor="@color/app_color"
 	            android:textSize="20sp" />
 
             <RadioButton
@@ -87,14 +87,14 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="@string/male"
-	            android:textColor="#ffa500"
+	            android:textColor="@color/app_color"
 	            android:textSize="20sp" />
 
          
         </RadioGroup>
 
         <EditText
-            android:id="@+id/txtRegisterEmail"
+            android:id="@+id/etRegisterEmail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rgGender"
@@ -104,23 +104,38 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="20dp"
-            android:textColor="#ffa500"
-            android:textColorHint="#ffa500"
+            android:textColor="@color/app_color"
+            android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
 
         <EditText
-            android:id="@+id/txtRegisterPass"
+            android:id="@+id/etRegisterPass"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtRegisterEmail"
+            android:layout_below="@id/etRegisterEmail"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:hint="@string/contrasena"
             android:inputType="textPassword"
             android:padding="20dp"
-            android:textColor="#ffa500"
-            android:textColorHint="#ffa500"
+            android:textColor="@color/app_color"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
+        
+        <EditText
+            android:id="@+id/etRegisterPass2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etRegisterPass"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/contrasena"
+            android:inputType="textPassword"
+            android:padding="20dp"
+            android:textColor="@color/app_color"
+            android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
 
         <Button
@@ -128,7 +143,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/link_to_login"
-            android:layout_below="@+id/txtRegisterPass"
+            android:layout_below="@+id/etRegisterPass2"
             android:layout_margin="20dip"
             android:layout_marginRight="23dp"
             android:background="@drawable/button_style"
@@ -145,7 +160,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/conCuenta"
-            android:textColor="#ffa500"
+            android:textColor="@color/app_color"
             android:textSize="20sp" />
 
         <TextView
@@ -156,7 +171,7 @@
             android:layout_margin="25dip"
             android:gravity="center"
             android:padding="10dp"
-            android:textColor="#ffa500"
+            android:textColor="@color/app_color"
             android:textSize="20sp" />
 
         

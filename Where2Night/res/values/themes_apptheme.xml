@@ -6,7 +6,8 @@
   <style name="AppTheme" parent="Theme.AppCompat">
 
     <item name="android:editTextStyle">@style/EditTextAppTheme</item>
-
+	<item name="android:radioButtonStyle">@style/RadioButtonAppTheme</item>
+    
   </style>
 
 </resources>

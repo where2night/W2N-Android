@@ -15,6 +15,7 @@
     <string name="login_google">LogIn con Google+</string>
     <string name="login_email">Iniciar sesión</string>
     <string name="login_salir">Cerrar sesión</string>
+    <string name="registerErrorPasswords">Las contraseñas no coinciden</string>
     <string name="registro">Registro</string>
     <string name="sign_out_button_name">Sign out</string>
     <string name="revoke_access_button_name">Revoke access</string>

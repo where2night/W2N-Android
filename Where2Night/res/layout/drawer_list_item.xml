@@ -6,7 +6,7 @@
     android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:textColor="@color/app_orange_color"
+    android:textColor="@color/app_color"
     android:textSize="20sp"
     android:minHeight="48dp"   
     android:background="@drawable/text_view_style"
