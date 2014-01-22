@@ -69,5 +69,6 @@
     <string name="drink">Bebida Favorita</string>
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
+    <string name="search">Buscar</string>
 
 </resources>

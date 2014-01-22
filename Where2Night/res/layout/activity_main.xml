@@ -17,7 +17,7 @@
     	android:choiceMode="singleChoice"
     	android:divider="@color/app_color"
     	android:dividerHeight="0.03dp"
-    	android:background="@color/white"
+    	android:background="@drawable/drawer_style"
     	android:id="@+id/leftDrawer"/>
     
     

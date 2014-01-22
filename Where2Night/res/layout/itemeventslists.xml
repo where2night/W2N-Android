@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"  >
+    
+    <ImageView
+        android:id="@+id/Eventpicture"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ic_launcher"
+        android:cropToPadding="true"
+        android:scaleType="center" />
+
+    <!-- Event Name -->
+    <TextView
+        android:id="@+id/txtEventName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtEventClub"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/Eventpicture"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <!-- Club name -->
+    <TextView
+         android:id="@+id/txtEventClub"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/Eventpicture"
+         android:layout_alignLeft="@+id/txtEventName"
+         android:textAppearance="?android:attr/textAppearanceMedium" />
+ 
+    <!-- Date -->
+     <TextView
+         android:id="@+id/txtEventDate"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/Eventpicture"
+         android:layout_alignParentRight="true"
+         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>
