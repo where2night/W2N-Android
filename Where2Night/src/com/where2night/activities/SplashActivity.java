@@ -37,10 +37,13 @@ public class SplashActivity extends Activity
                  	if (dm.checkLogin()){
                  		Intent i = new Intent(SplashActivity.this, MainActivity.class);
                  		i.putExtra(MainActivity.PARENT, "3");
+                 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
          				startActivity(i);
                  	}else{
                  		SplashActivity.this.finish();
-                        startActivity(new Intent(SplashActivity.this, InitActivity.class));
+                 		Intent i = new Intent(SplashActivity.this, InitActivity.class);
+                 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+         				startActivity(i);
                  	}
                  } catch(SQLException e){
                  	Toast.makeText(getApplicationContext(), "Se ha producido un error al hacer Login", Toast.LENGTH_SHORT).show();

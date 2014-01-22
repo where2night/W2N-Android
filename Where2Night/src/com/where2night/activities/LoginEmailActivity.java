@@ -80,6 +80,7 @@ public class LoginEmailActivity extends Activity {
 									i.putExtra(MainActivity.TYPE, "-1");
 									i.putExtra(MainActivity.PARENT, "0");
 									btnLoginEmail.setEnabled(true);
+									i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 									startActivity(i);
 								}
 								else{

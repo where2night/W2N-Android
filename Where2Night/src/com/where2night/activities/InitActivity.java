@@ -96,6 +96,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 									DataManager dm = new DataManager(getApplicationContext());
 									dm.setUser(email, name, surnames, birthdate, gender);
 									Intent i = new Intent(getApplicationContext(), MainActivity.class);
+									i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 									i.putExtra(MainActivity.EMAIL, email);
 									i.putExtra(MainActivity.TYPE, "0");
 									i.putExtra(MainActivity.PARENT, "1");

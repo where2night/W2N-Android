@@ -136,6 +136,7 @@ public class RegistroActivity extends Activity {
 						i.putExtra(MainActivity.EMAIL, email);
 						i.putExtra(MainActivity.TYPE, "-1");
 						i.putExtra(MainActivity.PARENT, "0");
+						i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 						startActivity(i);
 					}else{}
 	            } catch(JSONException e) {}
