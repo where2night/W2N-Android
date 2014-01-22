@@ -19,13 +19,9 @@ public class FbManagement {
 	            //clear your preferences if saved
 	        }
 	    } else {
-
 	        session = new Session(context);
 	        Session.setActiveSession(session);
-
 	        session.closeAndClearTokenInformation();
-	            //clear your preferences if saved
-
 	    }
 
 	}

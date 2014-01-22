@@ -56,7 +56,7 @@ public class RegistroActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_registro);
+		setContentView(R.layout.activity_register);
 		getActionBar().hide();
 		
 		
@@ -116,7 +116,7 @@ public class RegistroActivity extends Activity {
 		final DataManager dm = new DataManager(getApplicationContext());
 		
 		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
-		String url = Helper.getLoginFBUrl();
+		String url = Helper.getRegisterUrl();
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
 	    {

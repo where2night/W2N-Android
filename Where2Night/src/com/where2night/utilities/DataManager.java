@@ -5,6 +5,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DataManager {
 	
@@ -16,7 +17,7 @@ public class DataManager {
 	
 	public boolean checkLogin(){		
 			SQLiteDatabase db = dbm.getWritableDatabase();
-			String[] rows = {"token"};	
+			String[] rows = {"email"};	
 			boolean logedin = false;
 			Cursor c = db.query("UserLogin",rows,null,null,null,null,null);
 			try{
@@ -50,19 +51,39 @@ public class DataManager {
 		return data;
 	}
 	
+	public HashMap<String,String> getEmail(){
+		HashMap<String, String> data = new HashMap<String, String>();
+		SQLiteDatabase db = dbm.getWritableDatabase();
+		String[] rows = {"email"};
+		Cursor c = db.query("User",rows,null,null,null,null,null);
+		try {
+			if (c.moveToFirst()) {
+				data.put("email",c.getString(0));
+	        }
+		} finally {
+			c.close();
+	        db.close();
+	    }
+		return data;
+	}
+	
 	public void setUser(String email, String name, String surnames, String birthday, String gender){
 		SQLiteDatabase db = dbm.getWritableDatabase();
-		db.execSQL("INSERT INTO User (email,name,surnames,birthdate,gender) " +
-            	"VALUES (\'" + email + "\',\'" + name + "\',\'" + surnames + "\',\'" + 
-				birthday + "\',\'" + gender + "\')");
+		try{
+			db.execSQL("INSERT INTO User (email,name,surnames,birthdate,gender) " +
+	            	"VALUES (\'" + email + "\',\'" + name + "\',\'" + surnames + "\',\'" + 
+					birthday + "\',\'" + gender + "\')");
+		}catch (Exception e){}
 		db.close();
 	}
 	
 	
 	public void login(String email, String token, int type){		
 		SQLiteDatabase db = dbm.getWritableDatabase();
-		db.execSQL("INSERT INTO UserLogin (email,token,type) " +
-            	"VALUES (\'" + email + "\',\'" + token + "\'," + type + ")");
+		try{
+			db.execSQL("INSERT INTO UserLogin (email,token,type) " +
+	            	"VALUES (\'" + email + "\',\'" + token + "\'," + type + ")");
+		}catch (Exception e){}
 		db.close();
 	}
 	
@@ -70,6 +91,7 @@ public class DataManager {
 		SQLiteDatabase db = dbm.getWritableDatabase();
 		db.delete("UserLogin",null,null);
 		db.delete("User",null,null);
+		Log.e("db","Borrado");
 		db.close();
 	}
 	

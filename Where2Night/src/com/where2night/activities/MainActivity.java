@@ -164,9 +164,12 @@ public class MainActivity extends FragmentActivity{
             return true;
         }else if (item.getItemId() == R.id.action_logout){
         	DataManager dm = new DataManager(getApplicationContext());
-			dm.logout();
+ 			dm.logout();
 			FbManagement.callFacebookLogout(getApplicationContext());
 			Intent i = new Intent(getApplicationContext(), InitActivity.class);
+			startActivity(i);
+        }else if (item.getItemId() == R.id.action_edit_profile){
+        	Intent i = new Intent(getApplicationContext(), EditProfileActivity.class);
 			startActivity(i);
         }
 
