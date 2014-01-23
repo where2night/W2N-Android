@@ -55,7 +55,7 @@ public class DataManager {
 		HashMap<String, String> data = new HashMap<String, String>();
 		SQLiteDatabase db = dbm.getWritableDatabase();
 		String[] rows = {"email"};
-		Cursor c = db.query("User",rows,null,null,null,null,null);
+		Cursor c = db.query("UserLogin",rows,null,null,null,null,null);
 		try {
 			if (c.moveToFirst()) {
 				data.put("email",c.getString(0));

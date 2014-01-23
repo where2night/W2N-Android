@@ -91,12 +91,12 @@ public class RegistroActivity extends Activity {
 					gender = "male";
 				}
 				
-				if (pass.equals(pass2)){
+				if (checkFields()){
 					DataManager dm = new DataManager(getApplicationContext());
 					dm.setUser(email, name, surnames, birthdate, gender);
 					registerCall();
 				}else{
-					setErrorMsg(getResources().getString(R.string.registerErrorPasswords));
+					
 				}
 					
 				
@@ -104,10 +104,45 @@ public class RegistroActivity extends Activity {
 			}
 
 			
+
+			
 			
 		});
 		
 		
+	}
+	
+	private boolean checkFields() {
+		
+		if(name.isEmpty()){
+			setErrorMsg("Rellena tu nombre por favor");
+			return false;
+		}else if(surnames.isEmpty()){
+			setErrorMsg("Rellena tus apellidos por favor");
+			return false;	
+		}else if(birthdate.isEmpty()){
+			setErrorMsg("Rellena tu fecha de nacimiento por favor");
+			return false;
+		}else if(gender.isEmpty()){
+			setErrorMsg("Indica tu sexo por favor");
+			return false;
+		}else if(email.isEmpty()){
+			setErrorMsg("Rellena tu email por favor");
+			return false;
+		}else if(pass.isEmpty()){
+			setErrorMsg("Introduce una contraseña por favor");
+			return false;
+		}else if(pass2.isEmpty()){
+			setErrorMsg("Repite la contraseña por favor");
+			return false;
+		}else if(pass.length() < 6){
+			setErrorMsg("Por favor introduce una contraseña de al menos 6 letras y/o números");
+			return false;
+		}else if(!pass.equals(pass2)){
+			setErrorMsg(getResources().getString(R.string.registerErrorPasswords));
+			return false;
+		} 
+		return true;
 	}
 	
 	
@@ -132,7 +167,7 @@ public class RegistroActivity extends Activity {
 					if (!(token.equals("0")))
 					{
 						dm.login(email,token,-1);
-						Intent i = new Intent(getApplicationContext(), MainActivity.class);
+						Intent i = new Intent(getApplicationContext(), EditProfileActivity.class);
 						i.putExtra(MainActivity.EMAIL, email);
 						i.putExtra(MainActivity.TYPE, "-1");
 						i.putExtra(MainActivity.PARENT, "0");
