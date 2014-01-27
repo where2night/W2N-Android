@@ -246,7 +246,6 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
                 : getString(R.string.unknown_person);
         mSignInStatus.setText(getString(R.string.signed_in_status, currentPersonName));
         updateButtons(true /* isSignedIn */);
-        connectionProgressDialog.dismiss();
 
         Toast.makeText(this, "Conectado!", 
                         Toast.LENGTH_LONG).show();
