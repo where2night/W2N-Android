@@ -229,9 +229,10 @@ public class MainActivity extends FragmentActivity{
     	            try {
     		            respuesta = new JSONObject(response);
     					String token = respuesta.getString("Token");
+    					String idProfile = respuesta.getString("id");
     					if (!(token.equals("0")))
     					{
-    						dm.login(email,token,0);
+    						dm.login(email,idProfile,token,0);
     					}else{}
     	            } catch(JSONException e) {}
     	        }

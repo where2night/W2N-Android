@@ -93,7 +93,7 @@ public class RegistroActivity extends Activity {
 				
 				if (checkFields()){
 					DataManager dm = new DataManager(getApplicationContext());
-					dm.setUser(email, name, surnames, birthdate, gender);
+					dm.setUser(email,"",name, surnames, birthdate, gender);
 					registerCall();
 				}else{
 					
@@ -164,9 +164,10 @@ public class RegistroActivity extends Activity {
 	            	btnRegister.setEnabled(true);
 		            respuesta = new JSONObject(response);
 					String token = respuesta.getString("Token");
+					String idProfile = respuesta.getString("id");
 					if (!(token.equals("0")))
 					{
-						dm.login(email,token,-1);
+						dm.login(email,idProfile,token,-1);
 						Intent i = new Intent(getApplicationContext(), EditProfileActivity.class);
 						i.putExtra(MainActivity.EMAIL, email);
 						i.putExtra(MainActivity.TYPE, "-1");

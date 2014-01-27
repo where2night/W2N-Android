@@ -3,7 +3,6 @@ package com.where2night.activities;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -14,7 +13,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -23,15 +21,19 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
+import com.where2night.utilities.BitmapLRUCache;
 import com.where2night.utilities.DataManager;
 import com.where2night.utilities.Helper;
 
 public class EditProfileActivity extends Activity {
 
-	private ImageView imgEditProfile;
+	private NetworkImageView imgEditProfile;
+	private ImageLoader imageLoader;
 	private EditText etEditName;
 	private EditText etEditSurname;
 	private EditText etEditDate;
@@ -46,6 +48,7 @@ public class EditProfileActivity extends Activity {
 	private Button btnEditCancel;
 	private ProgressBar pgEdit;
 	
+	private String pictureUrl;	
 	private String idProfile;
 	
 	private RequestQueue requestQueue;
@@ -57,7 +60,9 @@ public class EditProfileActivity extends Activity {
 		setContentView(R.layout.activity_edit_profile);
 		getActionBar().setIcon(R.drawable.logo7);
 		
-		imgEditProfile = (ImageView) findViewById(R.id.imgEditProfile);
+		
+		
+		imgEditProfile = (NetworkImageView) findViewById(R.id.imgEditProfile);
 		etEditName = (EditText) findViewById(R.id.etEditName);
 		etEditSurname = (EditText) findViewById(R.id.etEditSurname);
 		etEditDate = (EditText) findViewById(R.id.etEditDate);
@@ -98,10 +103,14 @@ public class EditProfileActivity extends Activity {
 
 	private void fillData() {
 		
+		
+		
 		final DataManager dm = new DataManager(getApplicationContext());
 		
 		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
 		String url = Helper.getProfileUrl();
+		
+		imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
 	    {
@@ -126,8 +135,14 @@ public class EditProfileActivity extends Activity {
 		            }else{
 		            	rdEditFemale.setChecked(true);
 		            }
+		            
+		          
+		            pictureUrl = respuesta.getString("picture");
+		            imgEditProfile.setImageUrl(pictureUrl, imageLoader);
 		            idProfile = respuesta.getString("idProfile");
-	            } catch(JSONException e) {}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 	        }
 	    };
 	    Response.ErrorListener errorListener = new Response.ErrorListener() 
@@ -190,6 +205,7 @@ public class EditProfileActivity extends Activity {
 			    {  
 			    	HashMap<String, String> info = new HashMap<String, String>();
 			    	info.put("idProfile", idProfile);
+			    	info.put("picture", pictureUrl);
 			    	info.put("name", etEditName.getText().toString());
 			    	info.put("surnames", etEditSurname.getText().toString());
 			    	info.put("birthdate", etEditDate.getText().toString());
@@ -221,5 +237,4 @@ public class EditProfileActivity extends Activity {
 		getMenuInflater().inflate(R.menu.edit_profile, menu);
 		return true;
 	}
-
 }

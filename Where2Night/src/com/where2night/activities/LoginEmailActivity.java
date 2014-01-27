@@ -71,10 +71,11 @@ public class LoginEmailActivity extends Activity {
 				            	pgLoginEmail.setVisibility(View.GONE);
 					            respuesta = new JSONObject(response);
 								String token = respuesta.getString("Token");
+								String idProfile = respuesta.getString("id");
 								if (!(token.equals("0")))
 								{
 									DataManager dm = new DataManager(getApplicationContext());
-									dm.login(email,token,-1);
+									dm.login(email,idProfile,token,-1);
 									Intent i = new Intent(getApplicationContext(), MainActivity.class);
 									i.putExtra(MainActivity.EMAIL, email);
 									i.putExtra(MainActivity.TYPE, "-1");

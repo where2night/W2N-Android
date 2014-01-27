@@ -93,8 +93,10 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 									String surnames = user.getLastName();
 									String gender = user.getProperty("gender").toString();
 									String birthdate = user.getBirthday();
+									String fbId = user.getId();
+									String picture = "http://graph.facebook.com/" + fbId + "/picture?type=large";
 									DataManager dm = new DataManager(getApplicationContext());
-									dm.setUser(email, name, surnames, birthdate, gender);
+									dm.setUser(email,picture,name,surnames, birthdate, gender);
 									Intent i = new Intent(getApplicationContext(), MainActivity.class);
 									i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 									i.putExtra(MainActivity.EMAIL, email);

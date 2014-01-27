@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBManager extends SQLiteOpenHelper {
 
-	String sqlCreateUserLogin = "CREATE TABLE UserLogin (email TEXT PRIMARY KEY, token TEXT , type INT)";
-	String sqlCreateUser = "CREATE TABLE User (email TEXT PRIMARY KEY, name TEXT, surnames TEXT, birthdate TEXT, gender TEXT)";
+	String sqlCreateUserLogin = "CREATE TABLE UserLogin (email TEXT PRIMARY KEY,idProfile TEXT, token TEXT , type INT)";
+	String sqlCreateUser = "CREATE TABLE User (email TEXT PRIMARY KEY,picture TEXT, name TEXT, surnames TEXT, birthdate TEXT, gender TEXT)";
 	public DBManager(Context context) {
 		super(context, "Where2Night", null, 1);
 	}
