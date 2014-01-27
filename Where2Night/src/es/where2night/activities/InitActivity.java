@@ -1,10 +1,11 @@
-package com.where2night.activities;
+package es.where2night.activities;
 
 import java.util.Arrays;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -28,12 +29,14 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.PlusClient;
 import com.where2night.R;
-import com.where2night.utilities.DataManager;
-import com.where2night.utilities.MomentUtil;
+
+import es.where2night.utilities.DataManager;
+import es.where2night.utilities.MomentUtil;
 
 public class InitActivity extends Activity implements View.OnClickListener, ConnectionCallbacks, OnConnectionFailedListener{
 	
 	private static final int DIALOG_GET_GOOGLE_PLAY_SERVICES = 1;
+	private static final int REQUEST_CODE_RESOLVE_ERR = 9000;
     private static final int REQUEST_CODE_SIGN_IN = 1;
     private static final int REQUEST_CODE_GET_GOOGLE_PLAY_SERVICES = 2;
 
@@ -45,6 +48,8 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
     private ConnectionResult mConnectionResult;
     private Button btnLoginEmail;
     private Button btnRegistro;
+    
+    private ProgressDialog connectionProgressDialog;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +59,8 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
         
         //Google
         mPlusClient = new PlusClient.Builder(this, this, this)
-                .setActions(MomentUtil.ACTIONS)
-                .build();
+        					.setActions(MomentUtil.ACTIONS)
+        					.build();
 
         mSignInStatus = (TextView) findViewById(R.id.sign_in_status);
         mSignInButton = (SignInButton) findViewById(R.id.login_gplus_button);
@@ -178,7 +183,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
             case R.id.revoke_access_button:
                 if (mPlusClient.isConnected()) {
                     //mPlusClient.revokeAccessAndDisconnect(this);
-                    updateButtons(false /* isSignedIn */);
+                    updateButtons(false /* isSignedIn*/);
                 }
                 break;
         }
@@ -241,6 +246,10 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
                 : getString(R.string.unknown_person);
         mSignInStatus.setText(getString(R.string.signed_in_status, currentPersonName));
         updateButtons(true /* isSignedIn */);
+        connectionProgressDialog.dismiss();
+
+        Toast.makeText(this, "Conectado!", 
+                        Toast.LENGTH_LONG).show();
         Toast.makeText(getApplicationContext(), "Conectado", Toast.LENGTH_SHORT).show();
     }
 
