@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment1"
-        android:name="com.where2night.fragments.LocalViewFragment"
+        android:name="es.where2night.fragments.LocalViewFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_local_view" />

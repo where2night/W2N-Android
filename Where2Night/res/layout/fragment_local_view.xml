@@ -14,7 +14,7 @@
   limitations under the License.
 -->
 
-<com.where2night.utilities.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<es.where2night.utilities.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -138,4 +138,4 @@
         
     </FrameLayout>
 
-</com.where2night.utilities.ObservableScrollView>
+</es.where2night.utilities.ObservableScrollView>
