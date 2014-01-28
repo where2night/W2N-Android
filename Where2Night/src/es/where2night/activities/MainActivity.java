@@ -48,7 +48,7 @@ import es.where2night.utilities.Helper;
  * In this Activity is implemented the navigation drawer
  */
 
-public class MainActivity extends FragmentActivity{ 
+public class MainActivity extends FragmentActivity { 
 
 	protected static final String EMAIL = "email";
 	protected static final String TYPE = "type";
@@ -78,13 +78,23 @@ public class MainActivity extends FragmentActivity{
         setContentView(R.layout.activity_main);
         
         
-        if (getIntent().getStringExtra(PARENT).equals("1") || getIntent().getStringExtra(PARENT).equals("2")){
+        if (getIntent().getStringExtra(PARENT).equals("1")){
 	        email = getIntent().getStringExtra(EMAIL);
 	        type = getIntent().getStringExtra(TYPE);
 	        connectionProgressDialog = new ProgressDialog(this);
 	        connectionProgressDialog.setMessage("Cargando tu perfil...");
 	        getDataFromServer(email, type);
         }
+        
+        if (getIntent().getStringExtra(PARENT).equals("2")){
+	        
+	        email = getIntent().getStringExtra(EMAIL);
+	        type = getIntent().getStringExtra(TYPE);
+	        connectionProgressDialog = new ProgressDialog(this);
+	        connectionProgressDialog.setMessage("Cargando tu perfil...");
+	        getDataFromServer(email, type);
+        }
+        
         
         
         
@@ -172,7 +182,9 @@ public class MainActivity extends FragmentActivity{
         	DataManager dm = new DataManager(getApplicationContext());
  			dm.logout();
 			FbManagement.callFacebookLogout(getApplicationContext());
+			
 			Intent i = new Intent(getApplicationContext(), InitActivity.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			startActivity(i);
         }else if (item.getItemId() == R.id.action_edit_profile){
         	Intent i = new Intent(getApplicationContext(), EditProfileActivity.class);
@@ -220,11 +232,18 @@ public class MainActivity extends FragmentActivity{
     }
     
     private void getDataFromServer(final String email,final String type){
+    	
+    	
     	final DataManager dm = new DataManager(getApplicationContext());
     	
-    	if (type.equals("0") && !dm.checkLogin()){
+    	if (!type.equals("-1")  && dm.checkLogin() == -2){
     		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
-    		String url = Helper.getLoginFBUrl();
+    		String url = "";
+    		
+    		if (type.equals("0"))
+    				url = Helper.getLoginFBUrl();
+    		else
+    				url = Helper.getLoginGPUrl();
     		
     		Response.Listener<String> succeedListener = new Response.Listener<String>() 
     	    {
@@ -237,8 +256,8 @@ public class MainActivity extends FragmentActivity{
     					String token = respuesta.getString("Token");
     					String idProfile = respuesta.getString("id");
     					if (!(token.equals("0")))
-    					{
-    						dm.login(email,idProfile,token,0);
+    					{ 
+    						dm.login(email,idProfile,token,type);
     						connectionProgressDialog.dismiss();
     					}else{}
     	            } catch(JSONException e) {}
@@ -271,6 +290,7 @@ public class MainActivity extends FragmentActivity{
     		}
     		
     	}
+
     	
     
     

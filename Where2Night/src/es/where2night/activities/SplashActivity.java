@@ -9,15 +9,16 @@ import android.database.SQLException;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.android.gms.plus.PlusClient;
 import com.where2night.R;
 
 import es.where2night.utilities.DataManager;
 
-public class SplashActivity extends Activity
-{
+public class SplashActivity extends Activity {
     private static final long DELAY = 2000;
     private boolean scheduled = false;
     private Timer splashTimer;
+    
     Activity act;
 
     @Override
@@ -28,6 +29,7 @@ public class SplashActivity extends Activity
         getActionBar().hide();
         act = this;
         splashTimer = new Timer();
+ 		
         splashTimer.schedule(new TimerTask()
         {
             @Override
@@ -35,9 +37,16 @@ public class SplashActivity extends Activity
             {
             	 DataManager dm = new DataManager(getApplicationContext());
                  try{
-                 	if (dm.checkLogin()){
+                	 int logedin = dm.checkLogin();
+                 	if (logedin != -2){
                  		Intent i = new Intent(SplashActivity.this, MainActivity.class);
                  		i.putExtra(MainActivity.PARENT, "3");
+                 		if (logedin == 1){
+                 			i.putExtra(MainActivity.PARENT, "4");
+                 		}
+                 		
+                 		
+                 		
                  		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
          				startActivity(i);
                  	}else{

@@ -15,14 +15,14 @@ public class DataManager {
 		dbm = new DBManager(context);
 	}
 	
-	public boolean checkLogin(){		
+	public int checkLogin(){		
 			SQLiteDatabase db = dbm.getWritableDatabase();
-			String[] rows = {"email"};	
-			boolean logedin = false;
+			String[] rows = {"type"};	
+			int logedin = -2;
 			Cursor c = db.query("UserLogin",rows,null,null,null,null,null);
 			try{
 				if (c.moveToFirst()){
-					logedin = true;
+					logedin = Integer.parseInt(c.getString(0));
 				}
 			} finally {
 				 c.close();
@@ -79,7 +79,7 @@ public class DataManager {
 	}
 	
 	
-	public void login(String email,String idProfile, String token, int type){		
+	public void login(String email,String idProfile, String token, String type){		
 		SQLiteDatabase db = dbm.getWritableDatabase();
 		try{
 			db.execSQL("INSERT INTO UserLogin (email,idProfile,token,type) " +

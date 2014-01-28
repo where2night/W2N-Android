@@ -168,7 +168,7 @@ public class RegistroActivity extends Activity {
 					String idProfile = respuesta.getString("id");
 					if (!(token.equals("0")))
 					{
-						dm.login(email,idProfile,token,-1);
+						dm.login(email,idProfile,token,"-1");
 						Intent i = new Intent(getApplicationContext(), EditProfileActivity.class);
 						i.putExtra(MainActivity.EMAIL, email);
 						i.putExtra(MainActivity.TYPE, "-1");

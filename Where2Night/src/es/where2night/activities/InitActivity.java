@@ -28,6 +28,7 @@ import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailed
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.PlusClient;
+import com.google.android.gms.plus.model.people.Person;
 import com.where2night.R;
 
 import es.where2night.utilities.DataManager;
@@ -36,7 +37,6 @@ import es.where2night.utilities.MomentUtil;
 public class InitActivity extends Activity implements View.OnClickListener, ConnectionCallbacks, OnConnectionFailedListener{
 	
 	private static final int DIALOG_GET_GOOGLE_PLAY_SERVICES = 1;
-	private static final int REQUEST_CODE_RESOLVE_ERR = 9000;
     private static final int REQUEST_CODE_SIGN_IN = 1;
     private static final int REQUEST_CODE_GET_GOOGLE_PLAY_SERVICES = 2;
 
@@ -49,7 +49,6 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
     private Button btnLoginEmail;
     private Button btnRegistro;
     
-    private ProgressDialog connectionProgressDialog;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,12 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
         mPlusClient = new PlusClient.Builder(this, this, this)
         					.setActions(MomentUtil.ACTIONS)
         					.build();
-
+        
+        if (mPlusClient.isConnected()) {
+            mPlusClient.clearDefaultAccount();
+            mPlusClient.disconnect();
+        }
+        
         mSignInStatus = (TextView) findViewById(R.id.sign_in_status);
         mSignInButton = (SignInButton) findViewById(R.id.login_gplus_button);
         mSignInButton.setOnClickListener(this);
@@ -143,10 +147,10 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
     }
 
 
-    @Override
+	@Override
     public void onStart() {
         super.onStart();
-        mPlusClient.connect();
+        
     }
 
     @Override
@@ -159,7 +163,8 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.login_gplus_button:
-                int available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+            	mPlusClient.connect();
+               /* int available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
                 if (available != ConnectionResult.SUCCESS) {
                     showDialog(DIALOG_GET_GOOGLE_PLAY_SERVICES);
                     return;
@@ -171,7 +176,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
                 } catch (IntentSender.SendIntentException e) {
                     // Fetch a new result to start.
                     mPlusClient.connect();
-                }
+                }*/
                 break;
             case R.id.sign_out_button:
                 if (mPlusClient.isConnected()) {
@@ -241,15 +246,27 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        String currentPersonName = mPlusClient.getCurrentPerson() != null
-                ? mPlusClient.getCurrentPerson().getDisplayName()
-                : getString(R.string.unknown_person);
-        mSignInStatus.setText(getString(R.string.signed_in_status, currentPersonName));
-        updateButtons(true /* isSignedIn */);
-
-        Toast.makeText(this, "Conectado!", 
-                        Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(), "Conectado", Toast.LENGTH_SHORT).show();
+        if (mPlusClient.getCurrentPerson() != null){
+	    	Person person = mPlusClient.getCurrentPerson();
+	    	String email = mPlusClient.getAccountName();
+			String name = person.getName().getGivenName();
+			String surnames = person.getName().getFamilyName();
+			String gender = "";
+			if (person.getGender() == 0)
+				gender = "male";
+			else if (person.getGender() == 1)
+				gender = "female";
+			String birthdate = person.getBirthday();
+			String picture = person.getImage().getUrl();
+			DataManager dm = new DataManager(getApplicationContext());
+			dm.setUser(email,picture,name,surnames, birthdate, gender);
+			Intent i = new Intent(getApplicationContext(), MainActivity.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			i.putExtra(MainActivity.EMAIL, email);
+			i.putExtra(MainActivity.TYPE, "1");
+			i.putExtra(MainActivity.PARENT, "2");
+			startActivity(i);
+        }
     }
 
     @Override

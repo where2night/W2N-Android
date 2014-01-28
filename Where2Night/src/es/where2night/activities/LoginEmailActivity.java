@@ -76,7 +76,7 @@ public class LoginEmailActivity extends Activity {
 								if (!(token.equals("0")))
 								{
 									DataManager dm = new DataManager(getApplicationContext());
-									dm.login(email,idProfile,token,-1);
+									dm.login(email,idProfile,token,"-1");
 									Intent i = new Intent(getApplicationContext(), MainActivity.class);
 									i.putExtra(MainActivity.EMAIL, email);
 									i.putExtra(MainActivity.TYPE, "-1");
