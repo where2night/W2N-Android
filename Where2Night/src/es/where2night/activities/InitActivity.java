@@ -163,20 +163,19 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.login_gplus_button:
-            	mPlusClient.connect();
-               /* int available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+            //	mPlusClient.connect();
+                int available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
                 if (available != ConnectionResult.SUCCESS) {
                     showDialog(DIALOG_GET_GOOGLE_PLAY_SERVICES);
                     return;
                 }
 
                 try {
-                    mSignInStatus.setText(getString(R.string.signing_in_status));
                     mConnectionResult.startResolutionForResult(this, REQUEST_CODE_SIGN_IN);
-                } catch (IntentSender.SendIntentException e) {
+                } catch (Exception e) {
                     // Fetch a new result to start.
                     mPlusClient.connect();
-                }*/
+                }
                 break;
             case R.id.sign_out_button:
                 if (mPlusClient.isConnected()) {
