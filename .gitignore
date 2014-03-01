@@ -28,6 +28,8 @@ local.properties
 # PDT-specific
 .buildpath
 
+BuildConfig.java
+R.java
 
 #################
 ## Visual Studio
