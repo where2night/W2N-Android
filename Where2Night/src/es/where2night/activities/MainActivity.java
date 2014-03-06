@@ -202,6 +202,8 @@ public class MainActivity extends FragmentActivity {
 		toShow = fragments[index];
 		lastIndex = index;
 		
+		if (index == 5) ((LocalsFragment)toShow).fill();
+		
 		FragmentManager manager = getSupportFragmentManager();
 		
 		manager.beginTransaction()
