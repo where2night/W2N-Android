@@ -100,8 +100,8 @@ public class MainActivity extends FragmentActivity {
         
         
         
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        drawerList = (ListView) findViewById(R.id.leftDrawer);
+        drawerLayout = (DrawerLayout) this.findViewById(R.id.drawerLayout);
+        drawerList = (ListView) this.findViewById(R.id.leftDrawer);
         drawerOptions = getResources().getStringArray(R.array.drawer_options);
         drawerList.setAdapter(new ArrayAdapter<String>(this,
                                                        R.layout.drawer_list_item, 
@@ -202,7 +202,7 @@ public class MainActivity extends FragmentActivity {
 		toShow = fragments[index];
 		lastIndex = index;
 		
-		if (index == 5) ((LocalsFragment)toShow).fill();
+		
 		
 		FragmentManager manager = getSupportFragmentManager();
 		
@@ -215,6 +215,8 @@ public class MainActivity extends FragmentActivity {
 		actionBar.setTitle(drawerOptions[index]);
 		drawerList.setItemChecked(index, true);
 	    drawerLayout.closeDrawer(drawerList);	
+	    
+	    if (index == 5) ((LocalsFragment)toShow).fill();
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {

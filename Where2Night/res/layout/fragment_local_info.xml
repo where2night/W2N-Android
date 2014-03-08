@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageButton
+        android:id="@+id/btnLocalFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00ffffff"
+        android:src="@drawable/btn_fav_style" />
+
+    <ImageView
+        android:id="@+id/imgLocal"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/local" />
+
+    <TextView
+        android:id="@+id/txtLocalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgLocal"
+        android:layout_centerHorizontal="true"
+        android:text="Pacha" />
+
+    <TextView
+        android:id="@+id/txtLocalHorary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtLocalName"
+        android:text="Abierto de 00:00 a 06:00" />
+
+    <TextView
+        android:id="@+id/txtLocalFollowers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtLocalHorary"
+        android:text="Nº Seguidores: 123" />
+
+    <FrameLayout
+        android:id="@+id/LocalInfoMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/txtLocalFollowers"
+        tools:layout="@layout/fragment_map" />
+
+</RelativeLayout>

@@ -33,6 +33,20 @@ public class EventsFragment extends Fragment {
 	    arraydir.add(evento1);
 	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
 	    arraydir.add(evento1);
+	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
+	    arraydir.add(evento1);
+	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
+	    arraydir.add(evento1);
+	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
+	    arraydir.add(evento1);
+	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
+	    arraydir.add(evento1);
+	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
+	    arraydir.add(evento1);
+	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
+	    arraydir.add(evento1);
+	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
+	    arraydir.add(evento1);
 	        
 	    AdapterItemEvent adapter = new AdapterItemEvent(getActivity(), arraydir);
 	    list.setAdapter(adapter);

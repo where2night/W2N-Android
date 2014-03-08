@@ -1,22 +1,8 @@
-/*
- * Copyright 2013 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package es.where2night.activities;
 
-import android.content.Intent;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -24,30 +10,22 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 
 import com.where2night.R;
 
-import es.where2night.fragments.LocalsFragment;
-import es.where2night.fragments.MapFragment;
-import es.where2night.utilities.ObservableScrollView;
+import es.where2night.fragments.EventsFragment;
+import es.where2night.fragments.localdetail.LocalInfoFragment;
 
-public class LocalViewActivity extends FragmentActivity implements ObservableScrollView.Callbacks, OnClickListener {
+public class LocalViewActivity extends FragmentActivity implements OnClickListener, ActionBar.TabListener  {
    
-	private LinearLayout mStickyView;
-    private View mPlaceholderView;
-    private ObservableScrollView mObservableScrollView;
-    private Button btnLocalMap;
-    private Button btnLocalEvents;
-    private Button btnLocalLists;
-    private Button btnLocalAttendees;
-    private Button btnLocalJukebox;
-    private Button anterior;
+    private Button btnIGo;
     private int lastIndex = 0;
+    private String[] tabs = { "Info", "Eventos", "Listas", "Asistentes", "Gramola"}; //modificar a @strings
     
-    private Fragment[] fragments = new Fragment[]{ new MapFragment() };
+    private Fragment[] fragments = new Fragment[]{ new LocalInfoFragment(),
+    											   new EventsFragment()};
     
     
 	@Override
@@ -55,40 +33,34 @@ public class LocalViewActivity extends FragmentActivity implements ObservableScr
         super.onCreate(savedInstanceState);
     	
         setContentView(R.layout.activity_local_view);
-
-        mObservableScrollView = (ObservableScrollView) findViewById(R.id.scroll_view);
-        mObservableScrollView.setCallbacks(this);
-
-        mStickyView = (LinearLayout) findViewById(R.id.sticky);
-        mPlaceholderView = findViewById(R.id.placeholder);
-
-        mObservableScrollView.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        onScrollChanged(mObservableScrollView.getScrollY());
-                    }
-                });
-
         
-        btnLocalMap = (Button)findViewById(R.id.btnLocalMap);
-        btnLocalEvents = (Button)findViewById(R.id.btnLocalEvents);
-        btnLocalLists = (Button)findViewById(R.id.btnLocalLists);
-        btnLocalAttendees = (Button)findViewById(R.id.btnLocalAttendees);
-        btnLocalJukebox = (Button)findViewById(R.id.btnLocalJukebox);
+        final ActionBar actionBar = getActionBar();
+        actionBar.setIcon(R.drawable.logo7);
+        actionBar.setTitle("Pacha");
+        actionBar.setHomeButtonEnabled(true);
         
-        anterior = btnLocalMap;
+        // Specify that we will be displaying tabs in the action bar.
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         
-        btnLocalMap.setOnClickListener(this);
-        btnLocalEvents.setOnClickListener(this);
-        btnLocalLists.setOnClickListener(this);
-        btnLocalAttendees.setOnClickListener(this);
-        btnLocalJukebox.setOnClickListener(this);
+        btnIGo = (Button) findViewById(R.id.btnIGo);
+        
+        btnIGo.setOnClickListener(this);
+        
+        
+        for (int i = 0; i<tabs.length; i++)
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setText(tabs[i])
+                        .setTabListener(this));
         
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
         	    .add(R.id.selectedTabFragment, fragments[0])
-        	    .commit();
+        	    .add(R.id.selectedTabFragment, fragments[1])
+        	    .commit();	
+        
+        manager.beginTransaction().hide(fragments[1])
+				        		  .commit();
         
         setContent(0);
         
@@ -109,8 +81,6 @@ public class LocalViewActivity extends FragmentActivity implements ObservableScr
 		toShow =  fragments[index];
 		lastIndex = index;
 		
-		
-		
 		FragmentManager manager = getSupportFragmentManager();
 		
 		manager.beginTransaction()
@@ -120,37 +90,25 @@ public class LocalViewActivity extends FragmentActivity implements ObservableScr
     }
     
 
-    @Override
-    public void onScrollChanged(int scrollY) {
-        mStickyView.setTranslationY(Math.max(mPlaceholderView.getTop(), scrollY));
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-    }
-
-    @Override
-    public void onUpOrCancelMotionEvent() {
-    }
-
 	@Override
 	public void onClick(View v) {
-		anterior.setBackgroundResource(R.drawable.no_activo);
-		if (v.getId() == btnLocalMap.getId()){
-			btnLocalMap.setBackgroundResource(R.drawable.activo);
-			anterior = btnLocalMap;
-		} else if (v.getId() == btnLocalEvents.getId()){
-			btnLocalEvents.setBackgroundResource(R.drawable.activo);
-			anterior = btnLocalEvents;
-		} else if (v.getId() == btnLocalLists.getId()){
-			btnLocalLists.setBackgroundResource(R.drawable.activo);
-			anterior = btnLocalLists;
-		} else if (v.getId() == btnLocalAttendees.getId()){
-			btnLocalAttendees.setBackgroundResource(R.drawable.activo);
-			anterior = btnLocalAttendees;
-		} else if (v.getId() == btnLocalJukebox.getId()){
-			btnLocalJukebox.setBackgroundResource(R.drawable.activo);
-			anterior = btnLocalJukebox;
-		} 
+		 if (v.getId() == btnIGo.getId()){
+			btnIGo.setSelected(true);
+		 }
+	}
+
+	@Override
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+		
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		setContent(tab.getPosition());
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		
 	}
 }
