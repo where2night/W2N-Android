@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import com.where2night.R;
 
 import es.where2night.fragments.EventsFragment;
+import es.where2night.fragments.localdetail.LocalDiscountListFragment;
 import es.where2night.fragments.localdetail.LocalInfoFragment;
 
 public class LocalViewActivity extends FragmentActivity implements OnClickListener, ActionBar.TabListener  {
@@ -25,7 +26,8 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     private String[] tabs = { "Info", "Eventos", "Listas", "Asistentes", "Gramola"}; //modificar a @strings
     
     private Fragment[] fragments = new Fragment[]{ new LocalInfoFragment(),
-    											   new EventsFragment()};
+    											   new EventsFragment(),
+    											   new LocalDiscountListFragment()};
     
     
 	@Override
@@ -57,9 +59,11 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         manager.beginTransaction()
         	    .add(R.id.selectedTabFragment, fragments[0])
         	    .add(R.id.selectedTabFragment, fragments[1])
+        	    .add(R.id.selectedTabFragment, fragments[2])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
+        						  .hide(fragments[2])
 				        		  .commit();
         
         setContent(0);

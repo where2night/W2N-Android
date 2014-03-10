@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<es.where2night.utilities.NowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@color/black"
+    android:orientation="vertical">
+
+	<RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:padding="10dp"
+        style="@style/nowCardStyle" >
+	
+	    <TextView
+	        android:id="@+id/txtDay"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:text="Large Text"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <TextView
+	        android:id="@+id/txtSignEnd"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/btnSignMeIn"
+	        android:layout_marginTop="36dp"
+	        android:text="Te puedes apuntar hasta: " />
+	
+	    <Button
+	        android:id="@+id/btnSignMeIn"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:text="Apuntame!" />
+
+	    <TextView
+	        android:id="@+id/txtExpireDate"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/txtSignEnd"
+	        android:layout_alignBottom="@+id/txtSignEnd"
+	        android:layout_marginLeft="17dp"
+	        android:layout_toRightOf="@+id/txtSignEnd"
+	        android:text="TextView" />
+	
+	</RelativeLayout>
+
+</es.where2night.utilities.NowLayout>

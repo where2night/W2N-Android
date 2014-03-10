@@ -14,5 +14,6 @@
     <color name="black_overlay">#66000000</color>
     <color name="where2night_color">#ffa500</color>
     <color name="transparent">#00ffffff</color>
+    <color name="grey">#232323</color>
 
 </resources>
