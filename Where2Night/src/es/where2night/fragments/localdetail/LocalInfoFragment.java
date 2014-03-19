@@ -3,7 +3,6 @@ package es.where2night.fragments.localdetail;
 import com.where2night.R;
 
 import es.where2night.fragments.MapFragment;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
