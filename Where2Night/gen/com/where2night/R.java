@@ -1432,7 +1432,7 @@ containing a value of this type.
         public static final int yuli=0x7f0200c9;
     }
     public static final class id {
-        public static final int Eventpicture=0x7f050093;
+        public static final int Eventpicture=0x7f050094;
         public static final int LocalInfoMap=0x7f05008c;
         public static final int action_bar=0x7f050021;
         public static final int action_bar_activity_content=0x7f050017;
@@ -1442,12 +1442,12 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f050028;
         public static final int action_bar_title=0x7f050027;
         public static final int action_context_bar=0x7f050022;
-        public static final int action_edit_profile=0x7f05009b;
-        public static final int action_logout=0x7f05009c;
+        public static final int action_edit_profile=0x7f05009c;
+        public static final int action_logout=0x7f05009d;
         public static final int action_menu_divider=0x7f050018;
         public static final int action_menu_presenter=0x7f050019;
         public static final int action_mode_close_button=0x7f050029;
-        public static final int action_settings=0x7f05009a;
+        public static final int action_settings=0x7f05009b;
         public static final int activity_chooser_view_content=0x7f05002a;
         public static final int always=0x7f05000d;
         public static final int beginning=0x7f050013;
@@ -1458,7 +1458,7 @@ containing a value of this type.
         public static final int btnLogin=0x7f05005d;
         public static final int btnLoginEmail=0x7f050056;
         public static final int btnRegister=0x7f050057;
-        public static final int btnSignMeIn=0x7f050091;
+        public static final int btnSignMeIn=0x7f050092;
         public static final int checkbox=0x7f050032;
         public static final int collapseActionView=0x7f05000f;
         public static final int com_facebook_login_activity_progress_bar=0x7f050072;
@@ -1510,7 +1510,7 @@ containing a value of this type.
         public static final int home=0x7f050016;
         public static final int homeAsUp=0x7f050007;
         public static final int hybrid=0x7f05001e;
-        public static final int iEventSearch=0x7f05009d;
+        public static final int iEventSearch=0x7f05009e;
         public static final int icon=0x7f05002f;
         public static final int ifRoom=0x7f05000c;
         public static final int image=0x7f05002c;
@@ -1523,12 +1523,13 @@ containing a value of this type.
         public static final int link_to_register=0x7f05005f;
         public static final int listMode=0x7f050003;
         public static final int list_item=0x7f05002e;
+        public static final int localListTab=0x7f05008e;
         public static final int login_error=0x7f05005e;
         public static final int login_fb_button=0x7f050054;
         public static final int login_gplus_button=0x7f050055;
-        public static final int map=0x7f05008e;
+        public static final int map=0x7f05008f;
         public static final int middle=0x7f050014;
-        public static final int name=0x7f050098;
+        public static final int name=0x7f050099;
         public static final int never=0x7f05000b;
         public static final int none=0x7f050012;
         public static final int normal=0x7f050001;
@@ -1536,7 +1537,7 @@ containing a value of this type.
         public static final int pgLoginEmail=0x7f050060;
         public static final int pgRegister=0x7f05006f;
         public static final int picker_subtitle=0x7f05007f;
-        public static final int picture=0x7f050097;
+        public static final int picture=0x7f050098;
         public static final int progress_circular=0x7f05001a;
         public static final int progress_horizontal=0x7f05001b;
         public static final int radio=0x7f050034;
@@ -1574,18 +1575,18 @@ containing a value of this type.
         public static final int textView1=0x7f050087;
         public static final int title=0x7f050030;
         public static final int top_action_bar=0x7f050025;
-        public static final int txtDay=0x7f05008f;
-        public static final int txtEventClub=0x7f050096;
-        public static final int txtEventDate=0x7f050094;
-        public static final int txtEventName=0x7f050095;
-        public static final int txtExpireDate=0x7f050092;
+        public static final int txtDay=0x7f050090;
+        public static final int txtEventClub=0x7f050097;
+        public static final int txtEventDate=0x7f050095;
+        public static final int txtEventName=0x7f050096;
+        public static final int txtExpireDate=0x7f050093;
         public static final int txtLocalFollowers=0x7f05008b;
         public static final int txtLocalHorary=0x7f05008a;
         public static final int txtLocalName=0x7f050088;
         public static final int txtLoginEmail=0x7f05005b;
         public static final int txtLoginPass=0x7f05005c;
-        public static final int txtSignEnd=0x7f050090;
-        public static final int ubication=0x7f050099;
+        public static final int txtSignEnd=0x7f050091;
+        public static final int ubication=0x7f05009a;
         public static final int up=0x7f050026;
         public static final int useLogo=0x7f050005;
         public static final int view1=0x7f050058;
