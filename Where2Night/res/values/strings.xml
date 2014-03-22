@@ -38,6 +38,7 @@
     <string name="apellidos">Apellidos</string>
     <string name="register">Empieza la Fiesta!</string>
     <string name="conCuenta">¿Ya tienes cuenta? ¡Accede!</string>
+
     <string-array name="drawer_options">
         <item>Inicio</item>
         <item>Mi Perfil</item>
@@ -47,6 +48,7 @@
         <item>Locales</item>
         <item>DJs</item>
     </string-array>
+
     <string name="title_activity_init">InitActivity</string>
     <string name="title_activity_local_view">LocalViewActivity</string>
     <string name="btn_local_map">Mapa</string>
@@ -70,5 +72,23 @@
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
     <string name="search">Buscar</string>
+    <string name="animo">¿Con qué animo sales hoy?</string>
+    <string name="title_activity_dj_view_activty">DjViewActivty</string>
+    
+    <string name="NameAndSurnameDj">Nombre: </string>
+    <string name="Birthday">Cumpleaños: </string>
+    <string name="MusicDj">Estilo Musical: </string>
+    <string name="AboutMeDj">Sobre mí: </string>
+    <string name="FollowMe">Sígueme</string>
+    
+    <string-array name="mode_array">
+        <item>De tranquis</item>
+        <item>Hoy no me lio</item>
+        <item>Lo que surja</item>
+        <item>Lo daré todo</item>
+        <item>Destroyer</item>
+        <item>Yo me llamo Ralph</item>
+    </string-array>
+    
 
 </resources>

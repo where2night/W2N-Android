@@ -14,23 +14,27 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <!-- PERMISOS MAPA -->
-    
+
     <permission
-         android:name="com.where2night.permission.MAPS_RECEIVE"
-         android:protectionLevel="signature"/>
-	<uses-permission  android:name="com.where2night.permission.MAPS_RECEIVE"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-	<!-- The following two permissions are not required to use
-	     Google Maps Android API v2, but are recommended. -->
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	 <uses-feature
+        android:name="com.where2night.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.where2night.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <!--
+         The following two permissions are not required to use
+	     Google Maps Android API v2, but are recommended.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
     <!-- FIN PERMISOS MAPA -->
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -80,22 +84,26 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_edit_profile" >
         </activity>
-        
         <activity
             android:name="es.where2night.activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" 
+            android:label="@string/app_name"
             android:theme="@style/FullscreenTheme" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-     <meta-data
+
+        <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyA8ip8--0dzvrSq5ic6PbZ-LjkudXtPekk"/>
+            android:value="AIzaSyA8ip8--0dzvrSq5ic6PbZ-LjkudXtPekk" />
+
+        <activity
+            android:name="es.where2night.activities.DjViewActivty"
+            android:label="@string/title_activity_dj_view_activty" >
+        </activity>
     </application>
 
 </manifest>

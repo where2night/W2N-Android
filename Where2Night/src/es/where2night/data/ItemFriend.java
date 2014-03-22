@@ -2,11 +2,10 @@ package es.where2night.data;
 
 import android.graphics.drawable.Drawable;
 
-public class ItemFriend {
+public class ItemFriend extends Item{
 	protected Drawable picture;
 	protected String name;
 	protected String ubication;
-	protected long id;
 	
 
 	public ItemFriend (Drawable picture, String name, String ubication){

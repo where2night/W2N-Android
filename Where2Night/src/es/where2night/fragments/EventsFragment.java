@@ -18,16 +18,21 @@ import es.where2night.data.ItemEvent;
 
 public class EventsFragment extends Fragment {
 	
+	private ListView list;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_events, container, false);
+		list = (ListView) view.findViewById(R.id.eventList);
+		return view;
+	}
+	
+	public void fill(){
 		
-		ListView list = (ListView) view.findViewById(R.id.eventList);
 	    ArrayList<ItemEvent> arraydir = new ArrayList<ItemEvent>();
 	    ItemEvent evento1 = new ItemEvent(getResources().getDrawable(R.drawable.copernico), "Chicas gratis hasta la 1:30", "Copernico", "24/01/214");
 	    arraydir.add(evento1);
-	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.orangecafe), "2x1 en todas las copas", "Orange Cafe", "25/01/214");
+	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.orangecafe), "2x1 en todas las copas", "Orange Cafe", "25/01/2014");
 	    arraydir.add(evento1);
 	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.kapital), "Karaoke para todos!", "Kapital", "25/01/214");
 	    arraydir.add(evento1);
@@ -50,7 +55,6 @@ public class EventsFragment extends Fragment {
 	        
 	    AdapterItemEvent adapter = new AdapterItemEvent(getActivity(), arraydir);
 	    list.setAdapter(adapter);
-		return view;
 	}
 	
 	

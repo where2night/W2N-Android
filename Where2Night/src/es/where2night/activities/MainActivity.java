@@ -216,7 +216,8 @@ public class MainActivity extends FragmentActivity {
 		drawerList.setItemChecked(index, true);
 	    drawerLayout.closeDrawer(drawerList);	
 	    
-	    if (index == 5) actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);;
+	    if (index == 5) actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	    if (index == 2) ((EventsFragment) toShow).fill();
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {

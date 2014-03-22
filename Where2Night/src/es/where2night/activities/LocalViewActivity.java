@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.where2night.R;
 
@@ -21,9 +20,10 @@ import es.where2night.fragments.localdetail.LocalInfoFragment;
 
 public class LocalViewActivity extends FragmentActivity implements OnClickListener, ActionBar.TabListener  {
    
-    private Button btnIGo;
+    public static final String ID = "id";
+	private Button btnIGo;
     private int lastIndex = 0;
-    private String[] tabs = { "Info", "Eventos", "Listas", "Asistentes", "Gramola"}; //modificar a @strings
+    private String[] tabs = { "Info", "Eventos", "Listas", "Asistentes", "Gramola"}; //TODO modificar a @strings
     
     private Fragment[] fragments = new Fragment[]{ new LocalInfoFragment(),
     											   new EventsFragment(),
@@ -59,11 +59,9 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         manager.beginTransaction()
         	    .add(R.id.selectedTabFragment, fragments[0])
         	    .add(R.id.selectedTabFragment, fragments[1])
-        	    .add(R.id.selectedTabFragment, fragments[2])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
-        						  .hide(fragments[2])
 				        		  .commit();
         
         setContent(0);
@@ -91,13 +89,18 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 				.hide(toHide)
 				.show(toShow)
 				.commit();
+		
+		if (index == 1) ((EventsFragment) toShow).fill();
     }
     
 
 	@Override
 	public void onClick(View v) {
 		 if (v.getId() == btnIGo.getId()){
-			btnIGo.setSelected(true);
+			 if (btnIGo.isSelected())
+				 btnIGo.setSelected(false);
+			 else
+				 btnIGo.setSelected(true);
 		 }
 	}
 

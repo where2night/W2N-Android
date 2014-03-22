@@ -126,7 +126,9 @@ public class EditProfileActivity extends Activity {
 		            respuesta = new JSONObject(response);
 		            etEditName.setText(respuesta.getString("name"));
 		            etEditSurname.setText(respuesta.getString("surnames"));
-		            etEditDate.setText(respuesta.getString("birthdate"));
+		            // FIXME This must be done by the server
+		            String[] date = respuesta.getString("birthdate").split("-");
+		            etEditDate.setText(date[2] + "/" + date[1] + "/" + date[0]);
 		            etEditMusic.setText(respuesta.getString("music"));
 		            etEditDrink.setText(respuesta.getString("drink"));
 		            etEditCivilState.setText(respuesta.getString("civil_state"));

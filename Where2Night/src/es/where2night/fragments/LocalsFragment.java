@@ -19,7 +19,7 @@ import es.where2night.fragments.localdetail.LocalInfoFragment;
 public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 	
 	private Fragment[] fragments = new Fragment[]{ new MapFragment(),
-			   									   new EventsFragment()};
+			   									   new LocalsListFragment()};
 	private int lastIndex = 0;
 	
 	@Override
