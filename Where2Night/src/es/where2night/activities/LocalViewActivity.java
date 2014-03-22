@@ -59,9 +59,11 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         manager.beginTransaction()
         	    .add(R.id.selectedTabFragment, fragments[0])
         	    .add(R.id.selectedTabFragment, fragments[1])
+        	    .add(R.id.selectedTabFragment, fragments[2])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
+        						  .hide(fragments[2])
 				        		  .commit();
         
         setContent(0);
