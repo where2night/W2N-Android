@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:layout_marginLeft="10dp">
+    
+
+    <TextView
+        android:id="@+id/txtDjName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgDj"
+        android:layout_centerHorizontal="true"
+        android:text="Dj Tiësto" />
+
+    <TextView
+        android:id="@+id/txtNameAndSurnameDj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtDjName"
+        android:text="Nombre: Tijs Michiel Verwest" />
+
+    <TextView
+        android:id="@+id/txtBirthdayDj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtNameAndSurnameDj"
+        android:text="Cumpleaños: 17/01/1969" />
+    
+   <TextView
+        android:id="@+id/txtMusicDj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtBirthdayDj"
+        android:text="Estilo Musical: Trance" />
+   
+   <TextView
+        android:id="@+id/txtAboutMeDj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtMusicDj"
+        android:text="Sobre mí: "/>
+   
+   <TextView
+        android:id="@+id/txtDescriptionDj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtAboutMeDj"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:text="Tijs Michiel Verwest (nacido en Breda, Países Bajos el 17 de enero de 1969)1 mejor conocido como Tiësto, es un DJ y Productor holandés. A pesar de que ha utilizado muchos alias en el pasado, es más conocido por su trabajo como DJ Tiësto o simplemente como Tiësto, un alias que proviene de su sobrenombre de la infancia." />
+
+   <ImageView
+        android:id="@+id/imgDj"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/tiesto" />
+
+   <Button
+       android:id="@+id/btnFollowMe"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/txtDescriptionDj"
+       android:layout_alignRight="@+id/txtDescriptionDj"
+       android:layout_margin="15dp"
+       android:layout_marginRight="14dp"
+       android:background="@drawable/btn_igo_style"
+       android:text="@string/FollowMe" />
+
+</RelativeLayout>
