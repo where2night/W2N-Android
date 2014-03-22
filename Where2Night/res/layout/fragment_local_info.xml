@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+	<RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/txtLocalName"
@@ -29,9 +31,8 @@
     <FrameLayout
         android:id="@+id/LocalInfoMap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/txtLocalFollowers"
-        tools:layout="@layout/fragment_map" />
+        android:layout_height="350dp"
+        android:layout_below="@id/txtLocalFollowers" />
 
     <ImageView
         android:id="@+id/imgLocal"
@@ -52,3 +53,4 @@
         android:src="@drawable/btn_fav_style" />
 
 </RelativeLayout>
+</ScrollView>
