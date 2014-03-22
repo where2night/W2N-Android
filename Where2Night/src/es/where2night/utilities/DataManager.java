@@ -31,6 +31,23 @@ public class DataManager {
 			return logedin;
 	}
 	
+	public String[] getCred(){
+		SQLiteDatabase db = dbm.getWritableDatabase();
+		String[] rows = {"idProfile,token"};	
+		String[] aux = new String[2];
+		Cursor c = db.query("UserLogin",rows,null,null,null,null,null);
+		try{
+			if (c.moveToFirst()){
+				 aux[0] = c.getString(0);
+				 aux[1] = c.getString(1);
+			}
+		} finally {
+			 c.close();
+			 db.close();
+		}
+		return aux;
+	}
+	
 	public HashMap<String,String> getUser(String email){
 		HashMap<String, String> data = new HashMap<String, String>();
 		SQLiteDatabase db = dbm.getWritableDatabase();

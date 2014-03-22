@@ -107,9 +107,10 @@ public class EditProfileActivity extends Activity {
 		
 		
 		final DataManager dm = new DataManager(getApplicationContext());
-		
+		String[] cred = dm.getCred();
+		idProfile = cred[0];
 		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
-		String url = Helper.getProfileUrl();
+		String url = Helper.getProfileUrl() + "/" + cred[0] + "/" + cred[1];
 		
 		imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
 		
@@ -140,7 +141,6 @@ public class EditProfileActivity extends Activity {
 		          
 		            pictureUrl = respuesta.getString("picture");
 		            imgEditProfile.setImageUrl(pictureUrl, imageLoader);
-		            idProfile = respuesta.getString("idProfile");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -157,22 +157,17 @@ public class EditProfileActivity extends Activity {
 	       }
 	    };
 		
-		StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener) 
-		{     
-			    @Override
-			    protected Map<String, String> getParams() 
-			    {  
-			        return dm.getEmail();
-			    }
-		};
+		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
 		
 		requestQueue.add(request);
 	}
 	
 	private void sendData() {
 		
+		final DataManager dm = new DataManager(getApplicationContext());
+		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
-		String url = Helper.getProfileUrl();
+		String url = Helper.getProfileUrl() + "/" + cred[0] + "/" + cred[1];
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
 	    {
