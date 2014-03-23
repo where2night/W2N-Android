@@ -215,3 +215,7 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+Where2Night/gen/com/where2night/R.java
+Where2Night/gen/com/google/android/gms/R.java
+Where2Night/gen/com/facebook/android/R.java
+Where2Night/gen/com/where2night/BuildConfig.java

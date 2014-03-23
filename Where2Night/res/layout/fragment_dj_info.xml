@@ -4,21 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
     android:layout_marginLeft="10dp">
+   
+    <ImageView
+        android:id="@+id/imgDj"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/tiesto" />
     
-
-    <TextView
-        android:id="@+id/txtDjName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imgDj"
-        android:layout_centerHorizontal="true"
-        android:text="Dj Tiësto" />
-
     <TextView
         android:id="@+id/txtNameAndSurnameDj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtDjName"
+        android:layout_below="@id/imgDj"
         android:text="Nombre: Tijs Michiel Verwest" />
 
     <TextView
@@ -50,14 +49,6 @@
         android:layout_margin="5dp"
         android:padding="10dp"
         android:text="Tijs Michiel Verwest (nacido en Breda, Países Bajos el 17 de enero de 1969)1 mejor conocido como Tiësto, es un DJ y Productor holandés. A pesar de que ha utilizado muchos alias en el pasado, es más conocido por su trabajo como DJ Tiësto o simplemente como Tiësto, un alias que proviene de su sobrenombre de la infancia." />
-
-   <ImageView
-        android:id="@+id/imgDj"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/tiesto" />
 
    <Button
        android:id="@+id/btnFollowMe"

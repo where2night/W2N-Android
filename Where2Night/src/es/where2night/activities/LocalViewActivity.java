@@ -23,7 +23,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     public static final String ID = "id";
 	private Button btnIGo;
     private int lastIndex = 0;
-    private String[] tabs = { "Info", "Eventos", "Listas", "Asistentes", "Gramola"}; //TODO modificar a @strings
     
     private Fragment[] fragments = new Fragment[]{ new LocalInfoFragment(),
     											   new EventsFragment(),
@@ -48,6 +47,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         
         btnIGo.setOnClickListener(this);
         
+        String[] tabs = getResources().getStringArray(R.array.local_tabs);
         
         for (int i = 0; i<tabs.length; i++)
         actionBar.addTab(

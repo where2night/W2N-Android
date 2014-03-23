@@ -80,6 +80,14 @@
     <string name="MusicDj">Estilo Musical: </string>
     <string name="AboutMeDj">Sobre mí: </string>
     <string name="FollowMe">Sígueme</string>
+    <string name="Followers">Seguidores: </string>
+    
+    <string name="MusicLocal">Tipo de Musica: </string>
+    <string name="EntryPrice">Precio de la entrada: </string>
+    <string name="DrinkPrice">Precio medio por copa: </string>
+    <string name="OpeningHour">Hora de apertura: </string>
+    <string name="ClosingHour">Hora de cierre: </string>
+    <string name="Ubication">Ubicación </string>
     
     <string-array name="mode_array">
         <item>De tranquis</item>
@@ -88,6 +96,19 @@
         <item>Lo daré todo</item>
         <item>Destroyer</item>
         <item>Yo me llamo Ralph</item>
+    </string-array>
+    
+    <string-array name="local_tabs">
+        <item>Info</item>
+        <item>Eventos</item>
+        <item>Listas</item>
+        <item>Asistentes</item>
+        <item>Gramola</item>
+    </string-array>
+    
+    <string-array name="dj_tabs">
+        <item>Info</item>
+        <item>Eventos</item>
     </string-array>
     
 

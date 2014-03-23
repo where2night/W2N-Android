@@ -11,10 +11,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.where2night.R;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-
 import es.where2night.fragments.EventsFragment;
 import es.where2night.fragments.djdetail.DJInfoFragment;
 
@@ -23,7 +23,6 @@ public class DjViewActivty extends FragmentActivity implements ActionBar.TabList
 	public static final String ID = "id";
 	
     private int lastIndex = 0;
-    private String[] tabs = { "Info", "Eventos"}; //TODO modificar a @strings
     
     
     private Fragment[] fragments = new Fragment[] {new DJInfoFragment(),
@@ -44,7 +43,7 @@ public class DjViewActivty extends FragmentActivity implements ActionBar.TabList
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         
         
-        
+        String[] tabs = getResources().getStringArray(R.array.dj_tabs);
         
         for (int i = 0; i<tabs.length; i++)
         actionBar.addTab(
