@@ -197,6 +197,7 @@ public class RegistroActivity extends Activity {
 			    {  
 			    	Map<String, String> info = dm.getUser(email);
 			    	info.put("pass", pass);
+			    	info.put("mobile", "1");
 			        return info;
 			    }
 		};

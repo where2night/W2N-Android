@@ -283,7 +283,9 @@ public class MainActivity extends FragmentActivity {
     			    @Override
     			    protected Map<String, String> getParams() 
     			    {  
-    			        return dm.getUser(email);  
+    			    	Map<String,String> info = dm.getUser(email);
+    			    	info.put("mobile", "1");
+    			        return info;   
     			    }
     		};
     		
