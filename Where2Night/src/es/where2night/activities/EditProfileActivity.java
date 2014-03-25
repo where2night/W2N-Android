@@ -127,7 +127,7 @@ public class EditProfileActivity extends Activity {
 		            etEditName.setText(respuesta.getString("name"));
 		            etEditSurname.setText(respuesta.getString("surnames"));
 		            // FIXME This must be done by the server
-		            String[] date = respuesta.getString("birthdate").split("-");
+		            String[] date = respuesta.getString("birthdate").split("/");
 		            etEditDate.setText(date[2] + "/" + date[1] + "/" + date[0]);
 		            etEditMusic.setText(respuesta.getString("music"));
 		            etEditDrink.setText(respuesta.getString("drink"));

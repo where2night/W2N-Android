@@ -15,7 +15,12 @@ public class Helper {
 	public static String getRegisterUrl(){
 		return BASE_API_URL + "register/user.php"; 
 	}
+	
 	public static String getProfileUrl(){
 		return BASE_API_URL + "update/user.php"; 
+	}
+	
+	public static String getLocalUrl(){
+		return BASE_API_URL + "update/local.php";
 	}
 }

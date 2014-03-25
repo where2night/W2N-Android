@@ -16,6 +16,7 @@ import com.where2night.R;
 
 import es.where2night.fragments.EventsFragment;
 import es.where2night.fragments.localdetail.LocalDiscountListFragment;
+import es.where2night.fragments.localdetail.LocalEventsFragment;
 import es.where2night.fragments.localdetail.LocalInfoFragment;
 
 public class LocalViewActivity extends FragmentActivity implements OnClickListener, ActionBar.TabListener  {
@@ -23,9 +24,11 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     public static final String ID = "id";
 	private Button btnIGo;
     private int lastIndex = 0;
+    private Bundle bundle;
+    private String localId = "";
     
     private Fragment[] fragments = new Fragment[]{ new LocalInfoFragment(),
-    											   new EventsFragment(),
+    											   new LocalEventsFragment(),
     											   new LocalDiscountListFragment()};
     
     
@@ -35,9 +38,11 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     	
         setContentView(R.layout.activity_local_view);
         
+        // Getting localId from the caller object
+        localId = getIntent().getStringExtra(ID);
+        
         final ActionBar actionBar = getActionBar();
         actionBar.setIcon(R.drawable.logo7);
-        actionBar.setTitle("Pacha");
         actionBar.setHomeButtonEnabled(true);
         
         // Specify that we will be displaying tabs in the action bar.
@@ -49,11 +54,15 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         
         String[] tabs = getResources().getStringArray(R.array.local_tabs);
         
-        for (int i = 0; i<tabs.length; i++)
+        for (int i = 0; i</*tabs.length*/3; i++){
         actionBar.addTab(
                 actionBar.newTab()
                         .setText(tabs[i])
                         .setTabListener(this));
+        bundle = new Bundle();
+		bundle.putString(ID, localId);
+		fragments[i].setArguments(bundle);
+        }
         
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
@@ -87,12 +96,18 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		
 		FragmentManager manager = getSupportFragmentManager();
 		
+			/* We send local Id to the fragments */
+			
+		
+		
 		manager.beginTransaction()
 				.hide(toHide)
 				.show(toShow)
 				.commit();
 		
-		if (index == 1) ((EventsFragment) toShow).fill();
+		
+		
+		if (index == 1) ((LocalEventsFragment) toShow).fill();
     }
     
 

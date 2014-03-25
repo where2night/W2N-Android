@@ -1,4 +1,4 @@
-package es.where2night.fragments;
+package es.where2night.fragments.localdetail;
 
 import java.util.ArrayList;
 
@@ -17,9 +17,9 @@ import es.where2night.activities.LocalViewActivity;
 import es.where2night.adapters.AdapterItemEvent;
 import es.where2night.data.ItemEvent;
 
-public class EventsFragment extends Fragment {
+public class LocalEventsFragment extends Fragment {
 	
-	
+	private String localId;
 	
 	private ListView list;
 	@Override
@@ -28,7 +28,7 @@ public class EventsFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_events, container, false);
 		list = (ListView) view.findViewById(R.id.eventList);
 		
-		
+		localId = getArguments().getString(LocalViewActivity.ID);
 		
 		return view;
 	}
