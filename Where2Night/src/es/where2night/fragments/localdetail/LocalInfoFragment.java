@@ -41,10 +41,8 @@ public class LocalInfoFragment extends Fragment implements OnClickListener{
 	private TextView txtDrinkPrice;
 	private Button btnFollowMe;
 	private ProgressBar pgLocalView;
-	private int following = 0;
 	private String latitude, longitude;
 	
-	private String idProfile;
 	
 	private RequestQueue requestQueue;
     private JSONObject respuesta = null;
@@ -140,15 +138,6 @@ private void fillData() {
 		    			btnFollowMe.setSelected(true);
 		    		
 		    		imgLocal.setImageUrl(pictureUrl, imageLoader);
-		    		
-		    		
-		    		
-		    		/*Bundle bundle = new Bundle();
-		    		bundle.putString(MapFragment.LAT, latitude);
-		    		bundle.putString(MapFragment.LONG, longitude);
-		    		bundle.putString(MapFragment.NAME, localName );
-		    		mapFragment.setArguments(bundle);*/
-		    		
 		    		
 		            mapFragment.fillMap(latitude,longitude,localName);
 				} catch (Exception e) {

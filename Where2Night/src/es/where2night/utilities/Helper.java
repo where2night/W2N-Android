@@ -23,4 +23,18 @@ public class Helper {
 	public static String getLocalUrl(){
 		return BASE_API_URL + "update/local.php";
 	}
+	
+	public static String getDJUrl(){
+		return BASE_API_URL + "update/dj.php";
+	}
+	
+	public static String getDefaultProfilePictureUrl(){
+		return "http://www.where2night.es/images/profile.jpg";
+	}
+	
+	public static String getProfilePictureUrl(){
+		return "http://www.where2night.es/profilesImages/";
+	}
+	
+	
 }

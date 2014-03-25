@@ -4,39 +4,36 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-
-import com.where2night.R;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.where2night.R;
+
 import es.where2night.fragments.EventsFragment;
+import es.where2night.fragments.djdetail.DJEventsFragment;
 import es.where2night.fragments.djdetail.DJInfoFragment;
 
 public class DjViewActivty extends FragmentActivity implements ActionBar.TabListener  {
 
 	public static final String ID = "id";
-	
+	private Bundle bundle;
+    private String djId = "";
     private int lastIndex = 0;
     
     
     private Fragment[] fragments = new Fragment[] {new DJInfoFragment(),
-    											   new EventsFragment()};
+    											   new DJEventsFragment()};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    	
         setContentView(R.layout.activity_dj_view);
-        
+        djId = getIntent().getStringExtra(ID);
         final ActionBar actionBar = getActionBar();
         actionBar.setIcon(R.drawable.logo7);
-        actionBar.setTitle("DJ Tiësto");
         actionBar.setHomeButtonEnabled(true);
         
         // Specify that we will be displaying tabs in the action bar.
@@ -45,11 +42,15 @@ public class DjViewActivty extends FragmentActivity implements ActionBar.TabList
         
         String[] tabs = getResources().getStringArray(R.array.dj_tabs);
         
-        for (int i = 0; i<tabs.length; i++)
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setText(tabs[i])
-                        .setTabListener(this));
+        for (int i = 0; i<tabs.length; i++){
+	        actionBar.addTab(
+	                actionBar.newTab()
+	                        .setText(tabs[i])
+	                        .setTabListener(this));
+	        bundle = new Bundle();
+			bundle.putString(ID, djId);
+			fragments[i].setArguments(bundle);
+        }
         
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
@@ -110,7 +111,7 @@ public class DjViewActivty extends FragmentActivity implements ActionBar.TabList
 				.show(toShow)
 				.commit();
 		
-		if (index == 1) ((EventsFragment) toShow).fill();
+		if (index == 1) ((DJEventsFragment) toShow).fill();
     }
 
 	@Override
