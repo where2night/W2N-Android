@@ -1,15 +1,14 @@
 package es.where2night.data;
 
-import android.graphics.drawable.Drawable;
 
-public class ItemLocal{
+public class ItemLocalAndDJ{
 	
 	private String name;
-	private Drawable picture;
+	private String picture;
 	private long id;
 	
 	
-	public ItemLocal (Drawable picture, String name, long id){
+	public ItemLocalAndDJ (String picture, String name, long id){
 		this.picture = picture;
 		this.name = name;
 		this.id = id;
@@ -21,10 +20,10 @@ public class ItemLocal{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Drawable getPicture() {
+	public String getPicture() {
 		return picture;
 	}
-	public void setPicture(Drawable picture) {
+	public void setPicture(String picture) {
 		this.picture = picture;
 	}
 

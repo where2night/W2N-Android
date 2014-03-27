@@ -13,16 +13,21 @@ import android.widget.ListView;
 
 import com.where2night.R;
 
+import es.where2night.activities.LocalViewActivity;
 import es.where2night.adapters.AdapterItemDiscountList;
 import es.where2night.data.ItemDiscountList;
 import es.where2night.data.ItemEvent;
 
 public class LocalDiscountListFragment extends Fragment {
 	
+	private String localId;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_events, container, false);
+		
+		localId = getArguments().getString(LocalViewActivity.ID);
 		
 		ListView list = (ListView) view.findViewById(R.id.eventList);
 	    ArrayList<ItemDiscountList> arraydir = new ArrayList<ItemDiscountList>();

@@ -52,20 +52,20 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 		
         ItemFriend friend = new ItemFriend(getResources().getDrawable(R.drawable.bea), "Beatriz Ortega de Pedro", "Está en Penelope.");
 	    arraydir.add(friend);
-	    ItemEvent evento1 = new ItemEvent(getResources().getDrawable(R.drawable.copernico), "Chicas gratis hasta la 1:30", "Copernico", "24/01/214");
-	    arraydir.add(evento1);
+//	    ItemEvent evento1 = new ItemEvent(getResources().getDrawable(R.drawable.copernico), "Chicas gratis hasta la 1:30", "Copernico", "24/01/214");
+//	    arraydir.add(evento1);
 	    friend  = new ItemFriend(getResources().getDrawable(R.drawable.cristina), "Cristina Pedroche", " Va a ir a Pacha.");
 	    arraydir.add(friend);
-	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.orangecafe), "2x1 en todas las copas", "Orange Cafe", "25/01/214");
-	    arraydir.add(evento1);
+//	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.orangecafe), "2x1 en todas las copas", "Orange Cafe", "25/01/214");
+//	    arraydir.add(evento1);
 	    friend  = new ItemFriend(getResources().getDrawable(R.drawable.isma), "Ismael Requena Andreu", "No tiene decidido nada.");
 	    arraydir.add(friend);
-	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.kapital), "Karaoke para todos!", "Kapital", "25/01/214");
-	    arraydir.add(evento1);
+	//    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.kapital), "Karaoke para todos!", "Kapital", "25/01/214");
+//	    arraydir.add(evento1);
 	    friend  = new ItemFriend(getResources().getDrawable(R.drawable.jennifer), "Jennifer Lawrence", "Va a ir a Moma.");
 	    arraydir.add(friend); 
-	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
-	    arraydir.add(evento1);
+//	    evento1  = new ItemEvent(getResources().getDrawable(R.drawable.penelope), "1 copa por 6€ y 2 por 10€", "Penelope", "24/01/214");
+//	    arraydir.add(evento1);
 	    friend  = new ItemFriend(getResources().getDrawable(R.drawable.juan), "Juan Brugera Monedero", " Va a ir a Cats.");
 	    arraydir.add(friend);
 	    friend  = new ItemFriend(getResources().getDrawable(R.drawable.sergio), "Sergio Primo Galan", "Va a ir a Moma.");

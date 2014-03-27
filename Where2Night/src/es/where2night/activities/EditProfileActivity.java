@@ -1,5 +1,7 @@
 package es.where2night.activities;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +9,13 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -33,6 +41,8 @@ import es.where2night.utilities.Helper;
 
 public class EditProfileActivity extends Activity {
 
+	private static int RESULT_LOAD_IMAGE = 1;
+	
 	private NetworkImageView imgEditProfile;
 	private ImageLoader imageLoader;
 	private EditText etEditName;
@@ -51,6 +61,9 @@ public class EditProfileActivity extends Activity {
 	
 	private String pictureUrl;	
 	private String idProfile;
+	private String picturePath;
+	
+	String encodedImage = "";
 	
 	private RequestQueue requestQueue;
     private JSONObject respuesta = null;
@@ -100,7 +113,58 @@ public class EditProfileActivity extends Activity {
 				
 			}
 		});
+		
+		imgEditProfile.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(
+						Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);				
+				startActivityForResult(i, RESULT_LOAD_IMAGE);
+			}
+		});
 	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+         
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+ 
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            picturePath = cursor.getString(columnIndex);
+            cursor.close();
+             
+            imgEditProfile.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+
+            options.inSampleSize = 4;
+            options.inPurgeable = true;
+            Bitmap bm = BitmapFactory.decodeFile(picturePath);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            bm.compress(Bitmap.CompressFormat.JPEG,40,baos); 
+
+
+            // bitmap object
+
+            byte[] byteImage_photo = baos.toByteArray();
+
+                        //generate base64 string of image
+
+            encodedImage =Base64.encodeToString(byteImage_photo,Base64.DEFAULT);
+            
+        }
+     }
+	
 
 	private void fillData() {
 		
@@ -126,8 +190,7 @@ public class EditProfileActivity extends Activity {
 		            respuesta = new JSONObject(response);
 		            etEditName.setText(respuesta.getString("name"));
 		            etEditSurname.setText(respuesta.getString("surnames"));
-		            // FIXME This must be done by the server
-		            String[] date = respuesta.getString("birthdate").split("-");
+		            String[] date = respuesta.getString("birthdate").split("/");
 		            etEditDate.setText(date[2] + "/" + date[1] + "/" + date[0]);
 		            etEditMusic.setText(respuesta.getString("music"));
 		            etEditDrink.setText(respuesta.getString("drink"));
@@ -140,8 +203,11 @@ public class EditProfileActivity extends Activity {
 		            	rdEditFemale.setChecked(true);
 		            }
 		            
-		          
 		            pictureUrl = respuesta.getString("picture");
+		            
+		            if (pictureUrl.equals(""))
+		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
+		            
 		            imgEditProfile.setImageUrl(pictureUrl, imageLoader);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -202,11 +268,18 @@ public class EditProfileActivity extends Activity {
 			    protected Map<String, String> getParams() 
 			    {  
 			    	HashMap<String, String> info = new HashMap<String, String>();
+			    	
 			    	info.put("idProfile", idProfile);
-			    	info.put("picture", pictureUrl);
+			    	if (encodedImage.equals(""))
+			    		info.put("picture", pictureUrl);
+			    	else{
+			    		info.put("picture", encodedImage);
+			    		info.put("uploading", "true");
+			    	}
 			    	info.put("name", etEditName.getText().toString());
 			    	info.put("surnames", etEditSurname.getText().toString());
-			    	info.put("birthdate", etEditDate.getText().toString());
+			    	String[] date = etEditDate.getText().toString().split("/");
+			    	info.put("birthdate", date[2] + "/" + date[1] + "/" + date[0]);
 			    	info.put("city", etEditCity.getText().toString());
 			    	info.put("music", etEditMusic.getText().toString());
 			    	info.put("civil_state", etEditCivilState.getText().toString());

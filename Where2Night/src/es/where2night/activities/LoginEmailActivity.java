@@ -111,6 +111,7 @@ public class LoginEmailActivity extends Activity {
 						    	HashMap<String, String> params = new HashMap<String, String>();
 								params.put("email", email);
 								params.put("password", pass);
+								params.put("mobile", "1");
 						        return params;  
 						    }
 						};

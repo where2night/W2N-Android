@@ -1,36 +1,38 @@
 package es.where2night.data;
 
-import android.graphics.drawable.Drawable;
 
 public class ItemEvent extends Item{
-	private Drawable picture;
+	private String picture;
 	private String name;
-	private String club;
+	private String title;
+	private String text;
 	private String date;
+	private String start;
+	private String close;
+	private String idCreator;
+	private long id;
 	
 
-public ItemEvent(Drawable picture, String name, String club, String date){
 
-		this.picture = picture;
-		this.name = name;
-		this.club = club;
-		this.date = date;
-}
 
-public ItemEvent(Drawable picture, String name, String club, String date, long id){
+public ItemEvent(String picture, String name,String title, String text, String date, String start, String close, String idCreator, long id){
 
 	this.picture = picture;
 	this.name = name;
-	this.club = club;
+	this.text = text;
+	this.title = title;
 	this.date = date;
+	this.start = start;
+	this.close = close;
+	this.idCreator = idCreator;
 	this.id = id;
 }
 
-public Drawable getPicture() {
+public String getPicture() {
 	return picture;
 }
 
-public void setPicture(Drawable picture) {
+public void setPicture(String picture) {
 	this.picture = picture;
 }
 
@@ -42,12 +44,12 @@ public void setName(String name) {
 	this.name = name;
 }
 
-public String getClub() {
-	return club;
+public String getTitle() {
+	return title;
 }
 
-public void setClub(String club) {
-	this.club = club;
+public void setTitle(String title) {
+	this.title = title;
 }
 
 public String getDate() {
@@ -64,6 +66,38 @@ public long getId() {
 
 public void setId(long id) {
 	this.id = id;
+}
+
+public String getText() {
+	return text;
+}
+
+public void setText(String text) {
+	this.text = text;
+}
+
+public String getStart() {
+	return start;
+}
+
+public void setStart(String start) {
+	this.start = start;
+}
+
+public String getClose() {
+	return close;
+}
+
+public void setClose(String close) {
+	this.close = close;
+}
+
+public String getIdCreator() {
+	return idCreator;
+}
+
+public void setIdCreator(String idCreator) {
+	this.idCreator = idCreator;
 }
 
 }

@@ -2,55 +2,96 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+        
 	<RelativeLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="match_parent" >
-
-    <TextView
-        android:id="@+id/txtLocalName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imgLocal"
-        android:layout_centerHorizontal="true"
-        android:text="Pacha" />
-
-    <TextView
-        android:id="@+id/txtLocalHorary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtLocalName"
-        android:text="Abierto de 00:00 a 06:00" />
-
-    <TextView
-        android:id="@+id/txtLocalFollowers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtLocalHorary"
-        android:text="Nº Seguidores: 123" />
-
+	    android:layout_height="wrap_content"
+	    android:layout_margin="10dp" >
+ 
+		 <com.android.volley.toolbox.NetworkImageView
+	        android:id="@+id/imgLocal"
+	        android:layout_width="150dp"
+	        android:layout_height="150dp"
+	        android:layout_marginRight="15dp"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:src="@drawable/local" />
+		 
+	    <TextView
+	        android:id="@+id/txtLocalFollowers"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/imgLocal"
+	        android:text="@string/Followers" />
+	    
+	    <TextView
+	        android:id="@+id/txtOpening"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/txtLocalFollowers"
+	        android:layout_toRightOf="@id/imgLocal"
+	        android:text="@string/OpeningHour" />
+	    <TextView
+	        android:id="@+id/txtClosing"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/txtOpening"
+	        android:layout_toRightOf="@id/imgLocal"
+	        android:text="@string/ClosingHour" />
+	    <TextView
+	        android:id="@+id/txtMusicType"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/txtClosing"
+	        android:layout_toRightOf="@id/imgLocal"
+	        android:text="@string/MusicLocal" />
+	    <TextView
+	        android:id="@+id/txtEntryPrice"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/txtMusicType"
+	        android:layout_toRightOf="@id/imgLocal"
+	        android:text="@string/EntryPrice" />
+	    <TextView
+	        android:id="@+id/txtDrinkPrice"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/txtEntryPrice"
+	        android:layout_toRightOf="@id/imgLocal"
+	        android:text="@string/DrinkPrice" />
+	    
     <FrameLayout
-        android:id="@+id/LocalInfoMap"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_below="@id/txtLocalFollowers" />
+	        android:id="@+id/LocalInfoMap"
+	        android:layout_width="match_parent"
+	        android:layout_height="350dp"
+	        android:layout_below="@id/btnFollowMe" />
+        
 
-    <ImageView
-        android:id="@+id/imgLocal"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/local" />
+        <ProgressBar
+            android:id="@+id/pgLocalView"
+             android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/txtClosing"
+            android:layout_alignLeft="@+id/txtUbication" />
 
-    <ImageButton
-        android:id="@+id/btnLocalFollow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_above="@id/LocalInfoMap"
-        android:layout_margin="15dp"
-        android:background="#00ffffff"
-        android:src="@drawable/btn_fav_style" />
+        <Button
+            android:id="@+id/btnFollowMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgLocal"
+            android:layout_margin="15dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_igo_style"
+            android:text="@string/FollowMe" />
+
+        <TextView
+            android:id="@+id/txtUbication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnFollowMe"
+            android:layout_centerHorizontal="true"
+            android:text="@string/Ubication" />
 
 </RelativeLayout>
 </ScrollView>

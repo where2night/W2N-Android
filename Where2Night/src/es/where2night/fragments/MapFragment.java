@@ -15,9 +15,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.where2night.R;
 
+import es.where2night.activities.LocalViewActivity;
+
 public class MapFragment extends Fragment implements OnMapClickListener {
 	
-	private final LatLng UPV = new LatLng(39.481106, -0.340987);
+	public static final String LAT = "latitude";
+	public static final String LONG = "longitude";
+	public static final String NAME = "localName";
+	
+	LatLng position;
 	private GoogleMap mapa;
 	
 	public MapFragment(){}
@@ -30,21 +36,31 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 		mapa = ((SupportMapFragment) getActivity().getSupportFragmentManager()
 	            .findFragmentById(R.id.map)).getMap();
 		
-		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(UPV, 15));
+		return view;
+	}
+	
+	public void fillMap(String latitude2, String longitude2, String localName){
+		
+		float latitude = Float.valueOf(latitude2);
+		float longitude = Float.valueOf(longitude2);
+		String title = localName;
+		
+		position = new LatLng(latitude, longitude);
+		
+		
+		
+		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
 	      mapa.setMyLocationEnabled(true);
 	      mapa.getUiSettings().setZoomControlsEnabled(false);
 	      mapa.getUiSettings().setCompassEnabled(true);
 	      mapa.addMarker(new MarkerOptions()
-	            .position(UPV)
-	            .title("UPV")
-	            .snippet("Universidad Politécnica de Valencia")
+	            .position(position)
+	            .title(title)
 	            .anchor(0.5f, 0.5f));
-		
-		return view;
 	}
 	
 	 public void moveCamera(View view) {
-         mapa.moveCamera(CameraUpdateFactory.newLatLng(UPV));
+         mapa.moveCamera(CameraUpdateFactory.newLatLng(position));
    }
  
    public void animateCamera(View view) {

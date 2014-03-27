@@ -7,7 +7,7 @@ import com.where2night.R;
 import es.where2night.data.Item;
 import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemFriend;
-import es.where2night.data.ItemLocal;
+import es.where2night.data.ItemLocalAndDJ;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -49,7 +49,7 @@ public class AdapterItemNews extends BaseAdapter{
         View v = convertView;
         ItemFriend dir = null;
         ItemEvent eve = null;
-        ItemLocal loc = null;
+        ItemLocalAndDJ loc = null;
         Item i = new Item();
  
         //Asociamos el layout de la lista que hemos creado
@@ -73,7 +73,7 @@ public class AdapterItemNews extends BaseAdapter{
  	        picture.setImageDrawable(dir.getPicture());
  	        //Rellenamos el name
  	        TextView name = (TextView) v.findViewById(R.id.name);
- 	        name.setText(dir.getName());
+ 	        name.setText(dir.getTitle());
  	        //Rellenamos el ubication
  	        TextView club = (TextView) v.findViewById(R.id.ubication);
  	        club.setText(dir.getUbication());
@@ -81,13 +81,14 @@ public class AdapterItemNews extends BaseAdapter{
         else if(i.getClass() == ItemEvent.class){
         	//Rellenamos la picturegrafía
             ImageView picture = (ImageView) v.findViewById(R.id.Eventpicture);
-            picture.setImageDrawable(eve.getPicture());
+            //TODO Cambiar imageview por volleyimageview 
+            //  picture.setImageDrawable(eve.getPicture());
             //Rellenamos el name
-            TextView name = (TextView) v.findViewById(R.id.txtEventName);
-            name.setText(eve.getName());
+            TextView name = (TextView) v.findViewById(R.id.txtEventTitle);
+            name.setText(dir.getTitle());
             //Rellenamos el club
             TextView club = (TextView) v.findViewById(R.id.txtEventClub);
-            club.setText(eve.getClub());
+            club.setText(dir.getTitle());
             //Rellenamos el date
             TextView date = (TextView) v.findViewById(R.id.txtEventDate);
             date.setText(eve.getDate());

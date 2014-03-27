@@ -15,7 +15,38 @@ public class Helper {
 	public static String getRegisterUrl(){
 		return BASE_API_URL + "register/user.php"; 
 	}
+	
 	public static String getProfileUrl(){
 		return BASE_API_URL + "update/user.php"; 
 	}
+	
+	public static String getLocalUrl(){
+		return BASE_API_URL + "update/local.php";
+	}
+	
+	public static String getDJUrl(){
+		return BASE_API_URL + "update/dj.php";
+	}
+	
+	public static String getEventsUrl(){
+		return BASE_API_URL + "read/events.php";
+	}
+	
+	public static String getAllLocalsUrl(){
+		return BASE_API_URL + "read/locals.php";
+	}
+	
+	public static String getAllDjsUrl(){
+		return BASE_API_URL + "read/djs.php";
+	}
+	
+	public static String getDefaultProfilePictureUrl(){
+		return "http://www.where2night.es/images/profile.jpg";
+	}
+	
+	public static String getProfilePictureUrl(){
+		return "http://www.where2night.es/profilesImages/";
+	}
+	
+	
 }

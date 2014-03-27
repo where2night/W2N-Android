@@ -86,5 +86,9 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 				.hide(toHide)
 				.show(toShow)
 				.commit();
+		
+		if (index == 1) {
+			((LocalsListFragment) toShow).fill();
+		}
     }
 }
