@@ -64,7 +64,7 @@ public class LocalEventsFragment extends Fragment {
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getEventsUrl() + "/" + cred[0] + "/" + cred[1] + "/46"/* + localId*/;
+		String url = Helper.getEventsUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId;
 		
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
