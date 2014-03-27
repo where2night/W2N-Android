@@ -13,23 +13,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
 import es.where2night.activities.LocalViewActivity;
 import es.where2night.adapters.AdapterItemLocal;
-import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemLocalAndDJ;
+import es.where2night.data.LocalListData;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
@@ -52,13 +51,18 @@ public class LocalsListFragment  extends Fragment {
 		return view;
 	}
 	
-	public void fill(){
+	public void fill(ArrayList<LocalListData> localListData){
+		
 		arraydir = new ArrayList<ItemLocalAndDJ>();
+		
+		for (LocalListData local: localListData){
+			arraydir.add(new ItemLocalAndDJ(local.getPicture(), local.getName(), local.getIdProfile()));
+		}
+		
 	    adapter = new AdapterItemLocal(getActivity(), arraydir);
 	    list.setAdapter(adapter);
 	    
 	    list.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position,
 					long arg3) {
@@ -68,7 +72,6 @@ public class LocalsListFragment  extends Fragment {
 			}
 			
 		});
-	    fillData();
 	}
 	
 	private void fillData() {
