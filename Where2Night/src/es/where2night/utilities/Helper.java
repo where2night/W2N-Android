@@ -36,6 +36,10 @@ public class Helper {
 		return BASE_API_URL + "read/locals.php";
 	}
 	
+	public static String getAllDjsUrl(){
+		return BASE_API_URL + "read/djs.php";
+	}
+	
 	public static String getDefaultProfilePictureUrl(){
 		return "http://www.where2night.es/images/profile.jpg";
 	}

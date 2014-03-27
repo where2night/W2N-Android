@@ -22,7 +22,6 @@
             android:layout_below="@+id/txtEventClub"
             android:layout_marginTop="28dp"
             android:adjustViewBounds="true"
-            android:background="@drawable/ic_launcher"
             android:cropToPadding="true"
             android:scaleType="center" />
 
@@ -32,17 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="Event Date"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-        
-        
-        
-        <TextView
-            android:id="@+id/txtEventText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/txtEventTitle"
-            android:text="Event Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -71,6 +59,16 @@
             android:layout_alignRight="@+id/txtEventDate"
             android:layout_alignTop="@+id/Eventpicture"
             android:text="Event Time"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/txtEventText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtEventTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Event Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </RelativeLayout>

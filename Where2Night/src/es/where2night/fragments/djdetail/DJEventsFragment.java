@@ -62,6 +62,7 @@ public class DJEventsFragment extends Fragment {
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
 		String url = Helper.getEventsUrl() + "/" + cred[0] + "/" + cred[1] + "/" + djId;
 		
+		Log.e("url", url);
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
 	    {

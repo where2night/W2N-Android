@@ -218,6 +218,7 @@ public class MainActivity extends FragmentActivity {
 	    
 	    if (index == 5) actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	    if (index == 2) ((EventsFragment) toShow).fill();
+	    if (index == 6) ((DJsFragment) toShow).fill();
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
