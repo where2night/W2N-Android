@@ -103,6 +103,7 @@ public class DJsFragment extends Fragment {
 		            
 		    		
 				} catch (Exception e) {
+					pgLocalsList.setVisibility(View.GONE);
 					e.printStackTrace();
 				}
 	        }

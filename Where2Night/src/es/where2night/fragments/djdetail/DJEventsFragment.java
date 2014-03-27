@@ -93,6 +93,7 @@ public class DJEventsFragment extends Fragment {
 		            pgEventList.setVisibility(View.GONE);
 		    		
 				} catch (Exception e) {
+					pgEventList.setVisibility(View.GONE);
 					e.printStackTrace();
 				}
 	        }
@@ -102,6 +103,7 @@ public class DJEventsFragment extends Fragment {
 	         @Override
 	         public void onErrorResponse(VolleyError error) {
 	             // error
+	        	 pgEventList.setVisibility(View.GONE);
 	             Log.e("Error.Response", error.toString());
 	       }
 	    };

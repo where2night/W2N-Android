@@ -87,7 +87,7 @@ private void fillData() {
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getDJUrl() + "/" + cred[0] + "/" + cred[1] + "/41"/* + djId*/;
+		String url = Helper.getDJUrl() + "/" + cred[0] + "/" + cred[1] + "/" + djId;
 		
 		imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
 		
@@ -138,6 +138,7 @@ private void fillData() {
 	         @Override
 	         public void onErrorResponse(VolleyError error) {
 	             // error
+	        	 pgDJView.setVisibility(View.GONE);
 	             Log.e("Error.Response", error.toString());
 	       }
 	    };
