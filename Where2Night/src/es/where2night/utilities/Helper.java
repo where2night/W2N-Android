@@ -52,5 +52,9 @@ public class Helper {
 		return BASE_API_URL + "actions/follow.php";
 	}
 	
+	public static String getMyEventsUrl(){
+		return BASE_API_URL + "actions/myEvents.php";
+	}
+	
 	
 }
