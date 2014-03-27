@@ -6,14 +6,13 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/nwLEvent"
+        style="@style/nowCardStyleLocals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:padding="10dp"
-    	android:id="@+id/nwLEvent"
-        style="@style/nowCardStyleLocals" >
-        
-        
+        android:padding="10dp" >
+
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/Eventpicture"
             android:layout_width="100dp"
@@ -51,7 +50,6 @@
             android:text="Event Title"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-
         <TextView
             android:id="@+id/txtEventTime"
             android:layout_width="wrap_content"
@@ -70,6 +68,17 @@
             android:layout_marginTop="10dp"
             android:text="Event Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/btnSignMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtEventTime"
+            android:layout_alignBottom="@+id/txtEventTime"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="15dp"
+            android:background="@drawable/btn_igo_style"
+            android:text="@string/SignMe" />
 
     </RelativeLayout>
 

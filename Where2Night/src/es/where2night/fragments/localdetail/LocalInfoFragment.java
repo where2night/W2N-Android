@@ -89,17 +89,19 @@ public class LocalInfoFragment extends Fragment implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		 if (v.getId() == btnFollowMe.getId()){
-			 if (btnFollowMe.isSelected())
-				 btnFollowMe.setSelected(false);
-			 else
+			 if (btnFollowMe.isSelected()){
+				btnFollowMe.setSelected(false);
+			 	follow(true);
+			 }
+			 else{
 				 btnFollowMe.setSelected(true);
+				 follow(false);
+			 }
 		 }
 	}
 	
-private void fillData() {
-		
-		
-		
+
+private void fillData() {		
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
@@ -145,6 +147,7 @@ private void fillData() {
 				}
 	        }
 	    };
+	    
 	    Response.ErrorListener errorListener = new Response.ErrorListener() 
 	    {
 	         @Override
@@ -158,6 +161,44 @@ private void fillData() {
 		
 		requestQueue.add(request);
 	}
-	
-	
+
+	private void follow(boolean unfollow){
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+		String url = Helper.getFollowUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId;
+		 
+		 
+		Response.Listener<String> succeedListener = new Response.Listener<String>(){
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            try {}
+	            catch (Exception e) {
+					e.printStackTrace();
+				}
+	        
+	        }
+		};
+		Response.ErrorListener errorListener = new Response.ErrorListener(){
+			@Override
+			public void onErrorResponse(VolleyError error) {
+             // error
+				Log.e("Error.Response", error.toString());
+			}
+		};
+		
+		StringRequest request;
+		
+		if(unfollow){
+			request = new StringRequest(Request.Method.DELETE, url, succeedListener, errorListener); 
+		}
+		else{
+			request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+
+		}
+		requestQueue.add(request);
+	}
+		
 }

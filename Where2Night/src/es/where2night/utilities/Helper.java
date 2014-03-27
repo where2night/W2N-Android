@@ -48,5 +48,9 @@ public class Helper {
 		return "http://www.where2night.es/profilesImages/";
 	}
 	
+	public static String getFollowUrl(){
+		return BASE_API_URL + "actions/follow.php";
+	}
+	
 	
 }
