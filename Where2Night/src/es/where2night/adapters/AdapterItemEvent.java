@@ -23,8 +23,6 @@ public class AdapterItemEvent extends BaseAdapter{
  
     protected Activity activity;
     protected ArrayList<ItemEvent> items;
-    TextView text;
-    TextView time;
     ViewHolder holder;
     private ImageLoader imageLoader;
  
@@ -75,9 +73,9 @@ public class AdapterItemEvent extends BaseAdapter{
         // Creamos un objeto ItemEvent
         ItemEvent dir = items.get(position);
         //Rellenamos la picturegrafía
-        holder.picture.setImageUrl(dir.getPicture(), imageLoader);
-        //TODO Cambiar imageview por volleyimageview 
-        //picture.setImageDrawable(dir.getPicture());
+        if (!dir.getPicture().equals("")){
+        	holder.picture.setImageUrl(dir.getPicture(), imageLoader);
+        }
         //Rellenamos el name
         holder.txtTitle.setText(dir.getTitle());
         //Rellenamos el club

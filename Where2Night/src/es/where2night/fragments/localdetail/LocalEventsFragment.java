@@ -38,14 +38,16 @@ public class LocalEventsFragment extends Fragment {
     private AdapterItemEvent adapter;
 	private ProgressBar pgEventList;
 	private ListView list;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		localId = getArguments().getString(LocalViewActivity.ID);
+		
 		View view = inflater.inflate(R.layout.fragment_events, container, false);
 		list = (ListView) view.findViewById(R.id.eventList);
 		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
-		
-		localId = getArguments().getString(LocalViewActivity.ID);
 		
 		return view;
 	}
@@ -65,7 +67,7 @@ public class LocalEventsFragment extends Fragment {
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
 		String url = Helper.getEventsUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId;
-		
+		Log.e("url", url);
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
 	    {

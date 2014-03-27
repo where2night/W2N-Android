@@ -103,7 +103,7 @@ private void fillData() {
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getLocalUrl() + "/" + cred[0] + "/" + cred[1] + "/46"/* + localId*/;
+		String url = Helper.getLocalUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId;
 		
 		imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
 		

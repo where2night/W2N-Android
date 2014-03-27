@@ -7,7 +7,7 @@ import com.where2night.R;
 import es.where2night.data.Item;
 import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemFriend;
-import es.where2night.data.ItemLocal;
+import es.where2night.data.ItemLocalAndDJ;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -49,7 +49,7 @@ public class AdapterItemNews extends BaseAdapter{
         View v = convertView;
         ItemFriend dir = null;
         ItemEvent eve = null;
-        ItemLocal loc = null;
+        ItemLocalAndDJ loc = null;
         Item i = new Item();
  
         //Asociamos el layout de la lista que hemos creado

@@ -53,14 +53,15 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         btnIGo.setOnClickListener(this);
         
         String[] tabs = getResources().getStringArray(R.array.local_tabs);
-        
+       
+        bundle = new Bundle();
+		bundle.putString(ID, localId);
         for (int i = 0; i</*tabs.length*/3; i++){
         actionBar.addTab(
                 actionBar.newTab()
                         .setText(tabs[i])
                         .setTabListener(this));
-        bundle = new Bundle();
-		bundle.putString(ID, localId);
+       
 		fragments[i].setArguments(bundle);
         }
         

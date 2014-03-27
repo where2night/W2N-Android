@@ -16,8 +16,8 @@
         
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/Eventpicture"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignLeft="@+id/txtEventText"
             android:layout_below="@+id/txtEventClub"
             android:layout_marginTop="28dp"

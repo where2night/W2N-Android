@@ -10,8 +10,9 @@
  
 		 <com.android.volley.toolbox.NetworkImageView
 	        android:id="@+id/imgLocal"
-	        android:layout_width="match_parent"
+	        android:layout_width="150dp"
 	        android:layout_height="150dp"
+	        android:layout_marginRight="15dp"
 	        android:layout_alignParentLeft="true"
 	        android:layout_alignParentTop="true"
 	        android:src="@drawable/local" />
@@ -20,7 +21,7 @@
 	        android:id="@+id/txtLocalFollowers"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/imgLocal"
+	        android:layout_toRightOf="@id/imgLocal"
 	        android:text="@string/Followers" />
 	    
 	    <TextView
@@ -28,60 +29,43 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/txtLocalFollowers"
+	        android:layout_toRightOf="@id/imgLocal"
 	        android:text="@string/OpeningHour" />
 	    <TextView
 	        android:id="@+id/txtClosing"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/txtOpening"
+	        android:layout_toRightOf="@id/imgLocal"
 	        android:text="@string/ClosingHour" />
 	    <TextView
 	        android:id="@+id/txtMusicType"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/txtClosing"
+	        android:layout_toRightOf="@id/imgLocal"
 	        android:text="@string/MusicLocal" />
 	    <TextView
 	        android:id="@+id/txtEntryPrice"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/txtMusicType"
+	        android:layout_toRightOf="@id/imgLocal"
 	        android:text="@string/EntryPrice" />
 	    <TextView
 	        android:id="@+id/txtDrinkPrice"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/txtEntryPrice"
+	        android:layout_toRightOf="@id/imgLocal"
 	        android:text="@string/DrinkPrice" />
-    
-
-
-
-	    <Button
-	        android:id="@+id/btnFollowMe"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_above="@+id/txtEntryPrice"
-	        android:layout_alignParentRight="true"
-	        android:layout_margin="15dp"
-       		android:layout_marginRight="14dp"
-	        android:background="@drawable/btn_igo_style"
-	        android:text="@string/FollowMe" />
-
-	    <TextView
-	        android:id="@+id/txtUbication"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/txtDrinkPrice"
-	        android:layout_centerHorizontal="true"
-	        android:text="@string/Ubication" />
 	    
-    
-        <FrameLayout
+    <FrameLayout
 	        android:id="@+id/LocalInfoMap"
 	        android:layout_width="match_parent"
 	        android:layout_height="350dp"
-	        android:layout_below="@id/txtUbication" />
+	        android:layout_below="@id/btnFollowMe" />
+        
 
         <ProgressBar
             android:id="@+id/pgLocalView"
@@ -90,6 +74,24 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/txtClosing"
             android:layout_alignLeft="@+id/txtUbication" />
+
+        <Button
+            android:id="@+id/btnFollowMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgLocal"
+            android:layout_margin="15dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_igo_style"
+            android:text="@string/FollowMe" />
+
+        <TextView
+            android:id="@+id/txtUbication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnFollowMe"
+            android:layout_centerHorizontal="true"
+            android:text="@string/Ubication" />
 
 </RelativeLayout>
 </ScrollView>
