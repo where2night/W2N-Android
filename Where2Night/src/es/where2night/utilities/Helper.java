@@ -27,6 +27,9 @@ public class Helper {
 	public static String getDJUrl(){
 		return BASE_API_URL + "update/dj.php";
 	}
+	public static String getEventsUrl(){
+		return BASE_API_URL + "read/events.php";
+	}
 	
 	public static String getDefaultProfilePictureUrl(){
 		return "http://www.where2night.es/images/profile.jpg";

@@ -33,11 +33,11 @@ public void setPicture(Drawable picture) {
 	this.picture = picture;
 }
 
-public String getName() {
+public String getTitle() {
 	return name;
 }
 
-public void setName(String name) {
+public void setTitle(String name) {
 	this.name = name;
 }
 

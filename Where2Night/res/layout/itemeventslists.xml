@@ -10,12 +10,17 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:padding="10dp"
-        style="@style/nowCardStyle" >
-
-        <ImageView
+    	android:id="@+id/nwLEvent"
+        style="@style/nowCardStyleLocals" >
+        
+        
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/Eventpicture"
             android:layout_width="75dp"
             android:layout_height="75dp"
+            android:layout_alignLeft="@+id/txtEventText"
+            android:layout_below="@+id/txtEventClub"
+            android:layout_marginTop="28dp"
             android:adjustViewBounds="true"
             android:background="@drawable/ic_launcher"
             android:cropToPadding="true"
@@ -26,27 +31,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:text="Event Date"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
+        
+        
+        
         <TextView
-            android:id="@+id/txtEventName"
-            android:layout_width="match_parent"
+            android:id="@+id/txtEventText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/Eventpicture"
-            android:text="Event Name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_below="@+id/txtEventTitle"
+            android:text="Event Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/txtEventClub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtEventDate"
-            android:layout_marginTop="14dp"
-            android:layout_toRightOf="@+id/Eventpicture"
+            android:layout_alignLeft="@+id/Eventpicture"
+            android:layout_alignParentTop="true"
             android:text="Event Club"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/txtEventTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Eventpicture"
+            android:layout_centerHorizontal="true"
+            android:text="Event Title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+        <TextView
+            android:id="@+id/txtEventTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/txtEventDate"
+            android:layout_alignTop="@+id/Eventpicture"
+            android:text="Event Time"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </RelativeLayout>

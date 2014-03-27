@@ -59,7 +59,7 @@ public class AdapterItemFriend extends BaseAdapter{
         picture.setImageDrawable(dir.getPicture());
         //Rellenamos el name
         TextView name = (TextView) v.findViewById(R.id.name);
-        name.setText(dir.getName());
+        name.setText(dir.getTitle());
         //Rellenamos el ubication
         TextView club = (TextView) v.findViewById(R.id.ubication);
         club.setText(dir.getUbication());
