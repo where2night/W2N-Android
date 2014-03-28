@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -56,6 +57,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         final ActionBar actionBar = getActionBar();
         actionBar.setIcon(R.drawable.logo7);
         actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         
         // Specify that we will be displaying tabs in the action bar.
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -195,5 +197,11 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		
+	}
+	
+	@Override
+	public Intent getParentActivityIntent() {
+		Intent intent = new Intent(this, MainActivity.class);
+		return intent;
 	}
 }

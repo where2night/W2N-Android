@@ -73,7 +73,9 @@ public class EditProfileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_profile);
 		getActionBar().setIcon(R.drawable.logo7);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		
 		imgEditProfile = (NetworkImageView) findViewById(R.id.imgEditProfile);
@@ -308,4 +310,13 @@ public class EditProfileActivity extends Activity {
 		getMenuInflater().inflate(R.menu.edit_profile, menu);
 		return true;
 	}
+
+	@Override
+	public Intent getParentActivityIntent() {
+		Intent intent = new Intent(this, MainActivity.class);
+		return intent;
+	}
+	
+	
+	
 }

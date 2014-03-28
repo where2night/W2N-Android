@@ -3,6 +3,7 @@ package es.where2night.activities;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -35,6 +36,7 @@ public class DjViewActivty extends FragmentActivity implements ActionBar.TabList
         final ActionBar actionBar = getActionBar();
         actionBar.setIcon(R.drawable.logo7);
         actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         
         // Specify that we will be displaying tabs in the action bar.
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -119,9 +121,12 @@ public class DjViewActivty extends FragmentActivity implements ActionBar.TabList
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
+	
+	@Override
+	public Intent getParentActivityIntent() {
+		Intent intent = new Intent(this, MainActivity.class);
+		return intent;
+	}
 	
 
 }
