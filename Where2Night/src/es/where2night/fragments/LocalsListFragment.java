@@ -51,13 +51,10 @@ public class LocalsListFragment  extends Fragment {
 		return view;
 	}
 	
-	public void fill(ArrayList<LocalListData> localListData){
+	public void fill(){
 		
 		arraydir = new ArrayList<ItemLocalAndDJ>();
 		
-		/*for (LocalListData local: localListData){
-			arraydir.add(new ItemLocalAndDJ(local.getPicture(), local.getName(), local.getIdProfile()));
-		}*/
 		
 	    adapter = new AdapterItemLocal(getActivity(), arraydir);
 	    list.setAdapter(adapter);
@@ -94,6 +91,7 @@ public class LocalsListFragment  extends Fragment {
 		            		JSONObject aux = root.getJSONObject(i);
 			            	long idProfile = Long.valueOf(aux.getString("idProfile"));
 			            	String picture = aux.getString("picture");
+			            	picture = picture.replace("\\", "");
 			            	String name = aux.getString("localName");
 			            	ItemLocalAndDJ local = new ItemLocalAndDJ(picture,name,idProfile);
 			            	arraydir.add(local);

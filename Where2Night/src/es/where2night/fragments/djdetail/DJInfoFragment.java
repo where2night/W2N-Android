@@ -129,6 +129,7 @@ private void fillData() {
 		    		
 		    		if (pictureUrl.equals(""))
 		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
+		    			pictureUrl = pictureUrl.replace("\\", "");
 		    			imgDj.setImageUrl(pictureUrl, imageLoader);
 		    		
 		    		

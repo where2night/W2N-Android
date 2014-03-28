@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -122,6 +123,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		
 		
 		if (index == 1) ((LocalEventsFragment) toShow).fill();
+		if (index == 2) Toast.makeText(getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
     }
     
 

@@ -95,6 +95,7 @@ public class DJsFragment extends Fragment {
 			            	long idProfile = Long.valueOf(aux.getString("idProfile"));
 			            	String picture = aux.getString("picture");
 			            	String name = aux.getString("nameDJ");
+			            	picture = picture.replace("\\", "");
 			            	ItemLocalAndDJ local = new ItemLocalAndDJ(picture,name,idProfile);
 			            	arraydir.add(local);
 		            	}

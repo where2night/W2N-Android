@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,7 +30,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.where2night.R;
 
 import es.where2night.fragments.DJsFragment;
@@ -219,6 +219,7 @@ public class MainActivity extends FragmentActivity {
 	    if (index == 5) actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	    if (index == 2) ((EventsFragment) toShow).fill();
 	    if (index == 6) ((DJsFragment) toShow).fill();
+	    if (index == 4) Toast.makeText(getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {

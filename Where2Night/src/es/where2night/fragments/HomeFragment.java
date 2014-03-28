@@ -10,7 +10,6 @@ import es.where2night.adapters.AdapterItemNews;
 import es.where2night.data.Item;
 import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemFriend;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 		ListView lista = (ListView) view.findViewById(R.id.newsList);
         ArrayList<Item> arraydir = new ArrayList<Item>();
 
+        Toast.makeText(getActivity().getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
 		
         ItemFriend friend = new ItemFriend(getResources().getDrawable(R.drawable.bea), "Beatriz Ortega de Pedro", "Está en Penelope.");
 	    arraydir.add(friend);

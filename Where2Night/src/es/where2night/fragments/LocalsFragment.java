@@ -34,15 +34,13 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 	private Fragment[] fragments = new Fragment[]{ new MapFragment(),
 			   									   new LocalsListFragment()};
 	private int lastIndex = 0;
-	private RequestQueue requestQueue;
-	private ArrayList<LocalListData> localListData = new ArrayList<LocalListData>();
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_locals, container, false);// -- linea original
 		
-		getAllInfoFromServer();
 		
 		
 		final ActionBar actionBar = getActivity().getActionBar();
@@ -67,59 +65,13 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 				        		  .commit();
         
         
-        setContent(0);
+       // setContent(0);
         
 		return view;
 	}
 	
 
-	private void getAllInfoFromServer() {
-		
-		final DataManager dm = new DataManager(getActivity().getApplicationContext());
-		String[] cred = dm.getCred();
-		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getAllLocalsUrl() + "/" + cred[0] + "/" + cred[1];
-		
-		
-		Response.Listener<String> succeedListener = new Response.Listener<String>() 
-	    {
-	        @Override
-	        public void onResponse(String response) {
-	            // response
-	        	Log.e("Response", response);
-	            try {
-		            	JSONArray root = new JSONArray(response);
-		            	for (int i = 0; i < root.length(); i++){
-		            		JSONObject aux = root.getJSONObject(i);
-			            	long idProfile = Long.valueOf(aux.getString("idProfile"));
-			            	String picture = aux.getString("picture");
-			            	String name = aux.getString("localName");
-			            	String latitude = aux.getString("latitude");
-			            	String longitude = aux.getString("longitude");
-			            	LocalListData local = new LocalListData(idProfile,name,picture,latitude,longitude);
-			            	localListData.add(local);
-		            	}
-		            	
-		            
-		    		
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-	        }
-	    };
-	    Response.ErrorListener errorListener = new Response.ErrorListener() 
-	    {
-	         @Override
-	         public void onErrorResponse(VolleyError error) {
-	             // error
-	             Log.e("Error.Response", error.toString());
-	       }
-	    };
-		
-		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
-		
-		requestQueue.add(request);
-	}
+	
 
 
 	@Override
@@ -155,10 +107,10 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 				.commit();
 		
 		if (index == 0){
-			((MapFragment)toShow).allLocals(localListData);
+			((MapFragment)toShow).fill();
 		}
 		if (index == 1) {
-			((LocalsListFragment) toShow).fill(localListData);
+			((LocalsListFragment) toShow).fill();
 		}
     }
 }
