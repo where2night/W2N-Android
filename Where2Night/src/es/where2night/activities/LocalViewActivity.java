@@ -24,7 +24,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
-import es.where2night.fragments.EventsFragment;
 import es.where2night.fragments.localdetail.LocalDiscountListFragment;
 import es.where2night.fragments.localdetail.LocalEventsFragment;
 import es.where2night.fragments.localdetail.LocalInfoFragment;
@@ -34,7 +33,7 @@ import es.where2night.utilities.Helper;
 public class LocalViewActivity extends FragmentActivity implements OnClickListener, ActionBar.TabListener  {
    
     public static final String ID = "id";
-	private Button btnIGo;
+    public static Button btnIGo;
     private int lastIndex = 0;
     private Bundle bundle;
     private String localId = "";
@@ -126,13 +125,18 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     }
     
 
-	@Override
+    @Override
 	public void onClick(View v) {
 		 if (v.getId() == btnIGo.getId()){
-			 if (btnIGo.isSelected())
-				 goingTo(false);
-			 else
+			 if (btnIGo.isSelected()){
+				 btnIGo.setSelected(false);
+				 btnIGo.setText(getResources().getString(R.string.IGo));
 				 goingTo(true);
+			 }else{
+				 btnIGo.setSelected(true);
+				 btnIGo.setText(getResources().getString(R.string.Going));
+				 goingTo(false);
+			 }
 		 }
 	}
 	
@@ -141,7 +145,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getApplicationContext());
 		String url = Helper.getGoToLocalUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId;
-		 
+		Log.e("GoToPub", url);
 		 
 		Response.Listener<String> succeedListener = new Response.Listener<String>(){
 	        @Override
@@ -150,13 +154,15 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	        	Log.e("Response", response);
 	            try {
 	            	respuesta = new JSONObject(response);
-            	if (respuesta.getString("goToPub").equals("true")){
-            		btnIGo.setSelected(true);
-            		btnIGo.setText(getResources().getString(R.string.Going));
-            	}else if (respuesta.getString("goToPub").equals("false")){
-            		btnIGo.setSelected(false);
-            		btnIGo.setText(getResources().getString(R.string.IGo));
-            	}
+	            	if (respuesta.getString("goToPub").equals("error")){
+	            		if (btnIGo.isSelected()){
+	            			btnIGo.setSelected(false);
+	       				 	btnIGo.setText(getResources().getString(R.string.IGo));
+	            		}else{
+	            			btnIGo.setSelected(true);
+	        				btnIGo.setText(getResources().getString(R.string.Going));
+	            		}
+	            	}
             	}
 	            catch (Exception e) {
 					e.printStackTrace();
