@@ -103,6 +103,8 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 									String surnames = user.getLastName();
 									String gender = user.getProperty("gender").toString();
 									String birthdate = user.getBirthday();
+									String[] date = birthdate.split("/");
+									birthdate = date[1] + "/" + date[0] + "/" + date[2];
 									String fbId = user.getId();
 									String picture = "http://graph.facebook.com/" + fbId + "/picture?type=large";
 									DataManager dm = new DataManager(getApplicationContext());
