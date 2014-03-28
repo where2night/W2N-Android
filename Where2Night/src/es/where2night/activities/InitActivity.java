@@ -260,6 +260,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 				gender = "female";
 			String birthdate = person.getBirthday();
 			String picture = person.getImage().getUrl();
+			picture = picture.replace("sz=50", "sz=150");
 			DataManager dm = new DataManager(getApplicationContext());
 			dm.setUser(email,picture,name,surnames, birthdate, gender);
 			Intent i = new Intent(getApplicationContext(), MainActivity.class);

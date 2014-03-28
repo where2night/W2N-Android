@@ -206,7 +206,7 @@ public class EditProfileActivity extends Activity {
 		            }
 		            
 		            pictureUrl = respuesta.getString("picture");
-		            
+		            pictureUrl = pictureUrl.replace("\\", "");
 		            if (pictureUrl.equals(""))
 		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
 		            
