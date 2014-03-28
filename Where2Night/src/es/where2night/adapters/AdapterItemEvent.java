@@ -86,8 +86,8 @@ public class AdapterItemEvent extends BaseAdapter{
 				public void onClick(View v) {
 					long eventId = dir.getId();
 					if (holder.btnSignMe.isSelected()){
-						goToEvent(eventId,false);
 						holder.btnSignMe.setSelected(false);
+						goToEvent(eventId,false);
 					}else{
 						 holder.btnSignMe.setSelected(true);
 						 goToEvent(eventId,true);
