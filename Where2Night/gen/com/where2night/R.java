@@ -1746,21 +1746,22 @@ containing a value of this type.
     public static final class string {
         public static final int AboutMeDj=0x7f07007f;
         public static final int Birthday=0x7f07007d;
-        public static final int ClosingHour=0x7f070088;
-        public static final int DrinkPrice=0x7f070086;
-        public static final int EntryPrice=0x7f070085;
+        public static final int ClosingHour=0x7f070089;
+        public static final int DrinkPrice=0x7f070087;
+        public static final int EntryPrice=0x7f070086;
         public static final int FollowMe=0x7f070080;
         public static final int Followers=0x7f070082;
         public static final int Following=0x7f070081;
-        public static final int Going=0x7f07008b;
-        public static final int IGo=0x7f07008a;
+        public static final int Going=0x7f07008c;
+        public static final int IGo=0x7f07008b;
         public static final int LogIn=0x7f070046;
         public static final int MusicDj=0x7f07007e;
-        public static final int MusicLocal=0x7f070084;
+        public static final int MusicLocal=0x7f070085;
         public static final int NameAndSurnameDj=0x7f07007c;
-        public static final int OpeningHour=0x7f070087;
+        public static final int OpeningHour=0x7f070088;
         public static final int SignMe=0x7f070083;
-        public static final int Ubication=0x7f070089;
+        public static final int Signed=0x7f070084;
+        public static final int Ubication=0x7f07008a;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f070034;

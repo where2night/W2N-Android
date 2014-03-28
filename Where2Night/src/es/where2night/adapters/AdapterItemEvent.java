@@ -30,7 +30,7 @@ import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
  
-public class AdapterItemEvent extends BaseAdapter{
+public class AdapterItemEvent extends BaseAdapter implements OnClickListener{
  
     protected Activity activity;
     protected ArrayList<ItemEvent> items;
@@ -80,22 +80,27 @@ public class AdapterItemEvent extends BaseAdapter{
             holder.txtTime = (TextView) v.findViewById(R.id.txtEventTime);
             holder.btnSignMe = (Button) v.findViewById(R.id.btnSignMe);
             
-            OnClickListener listener = new OnClickListener() {
+                     
+            holder.btnSignMe.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
 					long eventId = dir.getId();
-					if (holder.btnSignMe.isSelected()){
-						holder.btnSignMe.setSelected(false);
-						goToEvent(eventId,false);
+					if (v.isSelected()){
+				//		holder.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+						v.setSelected(false);
+						Button b = (Button) v.findViewById(v.getId());
+						b.setText(activity.getResources().getString(R.string.SignMe));
+						goToEvent(eventId,true);
 					}else{
-						 holder.btnSignMe.setSelected(true);
-						 goToEvent(eventId,true);
+					//	holder.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+						Button b = (Button) v.findViewById(v.getId());
+						b.setText(activity.getResources().getString(R.string.Signed));
+						v.setSelected(true);
+						goToEvent(eventId,false);
 					}
 				}
-			};
-            
-            holder.btnSignMe.setOnClickListener(listener);
+			});
             
             v.setTag(holder);
         } else {
@@ -115,9 +120,6 @@ public class AdapterItemEvent extends BaseAdapter{
         holder.txtDate.setText(dir.getDate());
         holder.txtText.setText(dir.getText());
         holder.txtTime.setText(dir.getStart() + " - " + dir.getClose());
-        
-        
-        
         // Retornamos la vista
         return v;
     }
@@ -147,12 +149,12 @@ public class AdapterItemEvent extends BaseAdapter{
 	            // response
 	        	Log.e("Response", response);
 	            try {
-	            	JSONObject respuesta = new JSONObject(response);
+	            	/*JSONObject respuesta = new JSONObject(response);
 	            	if (respuesta.getString("goto").equals("true")){
 	            		
 	            	}else if (respuesta.getString("goto").equals("false")){
 	            		
-	            	}
+	            	}*/
             	}
 	            catch (Exception e) {
 					e.printStackTrace();
@@ -178,6 +180,12 @@ public class AdapterItemEvent extends BaseAdapter{
 
 		}
 		requestQueue.add(request);
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		
 	}
 
 	
