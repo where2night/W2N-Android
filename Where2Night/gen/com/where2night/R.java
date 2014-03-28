@@ -1742,20 +1742,23 @@ containing a value of this type.
         public static final int registro=0x7f0d0007;
     }
     public static final class string {
-        public static final int AboutMeDj=0x7f080081;
-        public static final int Birthday=0x7f08007f;
-        public static final int ClosingHour=0x7f080089;
-        public static final int DrinkPrice=0x7f080087;
-        public static final int EntryPrice=0x7f080086;
-        public static final int FollowMe=0x7f080082;
-        public static final int Followers=0x7f080083;
+        public static final int AboutMeDj=0x7f08007f;
+        public static final int Birthday=0x7f08007d;
+        public static final int ClosingHour=0x7f080088;
+        public static final int DrinkPrice=0x7f080086;
+        public static final int EntryPrice=0x7f080085;
+        public static final int FollowMe=0x7f080080;
+        public static final int Followers=0x7f080082;
+        public static final int Following=0x7f080081;
+        public static final int Going=0x7f08008b;
+        public static final int IGo=0x7f08008a;
         public static final int LogIn=0x7f080046;
-        public static final int MusicDj=0x7f080080;
-        public static final int MusicLocal=0x7f080085;
-        public static final int NameAndSurnameDj=0x7f08007e;
-        public static final int OpeningHour=0x7f080088;
-        public static final int SignMe=0x7f080084;
-        public static final int Ubication=0x7f08008a;
+        public static final int MusicDj=0x7f08007e;
+        public static final int MusicLocal=0x7f080084;
+        public static final int NameAndSurnameDj=0x7f08007c;
+        public static final int OpeningHour=0x7f080087;
+        public static final int SignMe=0x7f080083;
+        public static final int Ubication=0x7f080089;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f080034;
@@ -1796,9 +1799,9 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f08003e;
-        public static final int about=0x7f080074;
+        public static final int about=0x7f080072;
         public static final int action_settings=0x7f080044;
-        public static final int animo=0x7f08007c;
+        public static final int animo=0x7f08007a;
         public static final int apellidos=0x7f080062;
         public static final int app_id=0x7f080041;
         public static final int app_name=0x7f080040;
@@ -1832,9 +1835,9 @@ containing a value of this type.
         public static final int btn_local_jukebox=0x7f08006b;
         public static final int btn_local_lists=0x7f080069;
         public static final int btn_local_map=0x7f080067;
-        public static final int cancel=0x7f08007a;
-        public static final int city=0x7f080075;
-        public static final int civil_state=0x7f080076;
+        public static final int cancel=0x7f080078;
+        public static final int city=0x7f080073;
+        public static final int civil_state=0x7f080074;
         public static final int com_facebook_choose_friends=0x7f08000f;
         public static final int com_facebook_dialogloginactivity_ok_button=0x7f080000;
         public static final int com_facebook_internet_permission_error_message=0x7f080013;
@@ -1937,10 +1940,8 @@ containing a value of this type.
         public static final int default_status=0x7f080052;
         public static final int drawer_close=0x7f080048;
         public static final int drawer_open=0x7f080047;
-        public static final int drink=0x7f080078;
-        public static final int dummy_button=0x7f080071;
-        public static final int dummy_content=0x7f080072;
-        public static final int edit_profile=0x7f080073;
+        public static final int drink=0x7f080076;
+        public static final int edit_profile=0x7f080071;
         public static final int email=0x7f08005a;
         public static final int enviar=0x7f08005f;
         public static final int female=0x7f08005c;
@@ -1953,7 +1954,7 @@ containing a value of this type.
         public static final int login_google=0x7f08004b;
         public static final int login_salir=0x7f08004d;
         public static final int male=0x7f08005b;
-        public static final int music=0x7f080077;
+        public static final int music=0x7f080075;
         public static final int nombre=0x7f080061;
         public static final int register=0x7f080063;
         public static final int registerErrorPasswords=0x7f08004e;
@@ -1961,14 +1962,14 @@ containing a value of this type.
         public static final int revoke_access_button_name=0x7f080051;
         public static final int revoke_access_error_status=0x7f080058;
         public static final int revoke_access_status=0x7f080057;
-        public static final int save=0x7f080079;
-        public static final int search=0x7f08007b;
+        public static final int save=0x7f080077;
+        public static final int search=0x7f080079;
         public static final int sign_out_button_name=0x7f080050;
         public static final int signed_in_status=0x7f080054;
         public static final int signed_out_status=0x7f080059;
         public static final int signing_in_status=0x7f080053;
         public static final int sinRegistro=0x7f080060;
-        public static final int title_activity_dj_view_activty=0x7f08007d;
+        public static final int title_activity_dj_view_activty=0x7f08007b;
         public static final int title_activity_edit_profile=0x7f08006e;
         public static final int title_activity_init=0x7f080065;
         public static final int title_activity_local_view=0x7f080066;

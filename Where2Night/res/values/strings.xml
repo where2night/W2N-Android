@@ -49,20 +49,18 @@
         <item>DJs</item>
     </string-array>
 
-    <string name="title_activity_init">InitActivity</string>
-    <string name="title_activity_local_view">LocalViewActivity</string>
+    <string name="title_activity_init"></string>
+    <string name="title_activity_local_view"></string>
     <string name="btn_local_map">Mapa</string>
     <string name="btn_local_events">Eventos</string>
     <string name="btn_local_lists">Listas</string>
     <string name="btn_local_attendees">Asistentes</string>
     <string name="btn_local_jukebox">Gramola</string>
-    <string name="title_activity_registro">RegistroActivity</string>
-    <string name="title_activity_login_email">LoginEmailActivity</string>
+    <string name="title_activity_registro">Registro</string>
+    <string name="title_activity_login_email">Login</string>
     <string name="title_activity_edit_profile">Editar Perfil</string>
-    <string name="app_name_description">Nombre de la app</string>
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="app_name_description">Where2Night</string>
+    <string name="title_activity_splash"></string>
     <string name="edit_profile">Editar Perfil</string>
     <string name="about">Acerca de ti</string>
     <string name="city">Ciudad Actual</string>
@@ -80,6 +78,7 @@
     <string name="MusicDj">Estilo Musical: </string>
     <string name="AboutMeDj">Sobre mí: </string>
     <string name="FollowMe">Sígueme</string>
+    <string name="Following">Siguiendo</string>
     <string name="Followers">Seguidores: </string>
     <string name="SignMe">Apuntame</string>
     
@@ -89,6 +88,8 @@
     <string name="OpeningHour">Hora de apertura: </string>
     <string name="ClosingHour">Hora de cierre: </string>
     <string name="Ubication">Ubicación </string>
+    <string name="IGo">Quiero ir </string>
+    <string name="Going">Voy a ir </string>
     
     <string-array name="mode_array">
         <item>De tranquis</item>

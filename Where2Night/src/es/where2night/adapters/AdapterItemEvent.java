@@ -2,22 +2,33 @@ package es.where2night.adapters;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
 import es.where2night.data.ItemEvent;
 import es.where2night.utilities.BitmapLRUCache;
+import es.where2night.utilities.DataManager;
+import es.where2night.utilities.Helper;
  
 public class AdapterItemEvent extends BaseAdapter{
  
@@ -25,11 +36,12 @@ public class AdapterItemEvent extends BaseAdapter{
     protected ArrayList<ItemEvent> items;
     ViewHolder holder;
     private ImageLoader imageLoader;
+    RequestQueue requestQueue;
  
     public AdapterItemEvent(Activity activity, ArrayList<ItemEvent> items) {
         this.activity = activity;
         this.items = items;
-        RequestQueue requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
+        requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
         this.imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
       }
  
@@ -53,7 +65,8 @@ public class AdapterItemEvent extends BaseAdapter{
  
         // Generamos una convertView por motivos de eficiencia
         View v = convertView;
- 
+        // Creamos un objeto ItemEvent
+        final ItemEvent dir = items.get(position);
         //Asociamos el layout de la lista que hemos creado
         if(convertView == null){
         	holder = new ViewHolder();
@@ -65,13 +78,28 @@ public class AdapterItemEvent extends BaseAdapter{
             holder.txtDate = (TextView) v.findViewById(R.id.txtEventDate);
             holder.txtText = (TextView) v.findViewById(R.id.txtEventText);
             holder.txtTime = (TextView) v.findViewById(R.id.txtEventTime);
+            holder.btnSignMe = (Button) v.findViewById(R.id.btnSignMe);
+            
+            OnClickListener listener = new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					long eventId = dir.getId();
+					if (holder.btnSignMe.isSelected())
+						goToEvent(eventId,false);
+					 else
+						 goToEvent(eventId,true);
+				}
+			};
+            
+            holder.btnSignMe.setOnClickListener(listener);
+            
             v.setTag(holder);
         } else {
         	holder = (ViewHolder) convertView.getTag();
         }
  
-        // Creamos un objeto ItemEvent
-        ItemEvent dir = items.get(position);
+        
         //Rellenamos la picturegrafía
         if (!dir.getPicture().equals("")){
         	holder.picture.setImageUrl(dir.getPicture(), imageLoader);
@@ -85,12 +113,12 @@ public class AdapterItemEvent extends BaseAdapter{
         holder.txtText.setText(dir.getText());
         holder.txtTime.setText(dir.getStart() + " - " + dir.getClose());
         
+        
+        
         // Retornamos la vista
         return v;
     }
     
-    public void onClickedOnce(ViewHolder holder){
-    }
     
     static class ViewHolder {
 		public NetworkImageView picture;
@@ -99,6 +127,54 @@ public class AdapterItemEvent extends BaseAdapter{
 		public TextView txtDate;
 		public TextView txtText;
 		public TextView txtTime;
+		public Button btnSignMe;
+	}
+    
+
+	private void goToEvent(long eventId,boolean notGoing){
+		final DataManager dm = new DataManager(activity.getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
+		String url = Helper.getGoToEventUrl() + "/" + cred[0] + "/" + cred[1] + "/" + eventId;
+		Log.e("AdapterURl", url); 
+		 
+		Response.Listener<String> succeedListener = new Response.Listener<String>(){
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            try {
+	            	JSONObject respuesta = new JSONObject(response);
+	            	if (respuesta.getString("goto").equals("true")){
+	            		holder.btnSignMe.setSelected(true);
+	            	}else if (respuesta.getString("goto").equals("false")){
+	            		holder.btnSignMe.setSelected(false);
+	            	}
+            	}
+	            catch (Exception e) {
+					e.printStackTrace();
+				}
+	        
+	        }
+		};
+		Response.ErrorListener errorListener = new Response.ErrorListener(){
+			@Override
+			public void onErrorResponse(VolleyError error) {
+             // error
+				Log.e("Error.Response", error.toString());
+			}
+		};
+		
+		StringRequest request;
+		
+		if(notGoing){
+			request = new StringRequest(Request.Method.DELETE, url, succeedListener, errorListener); 
+		}
+		else{
+			request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+
+		}
+		requestQueue.add(request);
 	}
 
 	
