@@ -78,7 +78,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         
         
-        if (getIntent().getStringExtra(PARENT).equals("1")){
+        if (getIntent().hasExtra(PARENT) && getIntent().getStringExtra(PARENT).equals("1")){
 	        email = getIntent().getStringExtra(EMAIL);
 	        type = getIntent().getStringExtra(TYPE);
 	        connectionProgressDialog = new ProgressDialog(this);
@@ -86,7 +86,7 @@ public class MainActivity extends FragmentActivity {
 	        getDataFromServer(email, type);
         }
         
-        if (getIntent().getStringExtra(PARENT).equals("2")){
+        if (getIntent().hasExtra(PARENT) && getIntent().getStringExtra(PARENT).equals("2")){
 	        
 	        email = getIntent().getStringExtra(EMAIL);
 	        type = getIntent().getStringExtra(TYPE);

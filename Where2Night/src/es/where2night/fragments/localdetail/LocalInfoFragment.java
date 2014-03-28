@@ -50,7 +50,7 @@ public class LocalInfoFragment extends Fragment implements OnClickListener{
     private ImageLoader imageLoader;
     
     private MapFragment mapFragment;
-	
+	int followers = 0;
 	public LocalInfoFragment(){}
 	
 	@Override
@@ -91,10 +91,14 @@ public class LocalInfoFragment extends Fragment implements OnClickListener{
 		 if (v.getId() == btnFollowMe.getId()){
 			 if (btnFollowMe.isSelected()){
 				btnFollowMe.setSelected(false);
+         		btnFollowMe.setText(getResources().getString(R.string.FollowMe));
+         		followers--;
 			 	follow(true);
 			 }
 			 else{
 				 btnFollowMe.setSelected(true);
+         		 btnFollowMe.setText(getResources().getString(R.string.Following));
+         		 followers++;
 				 follow(false);
 			 }
 		 }
@@ -128,7 +132,7 @@ private void fillData() {
 		    		txtMusicType.setText(getResources().getString(R.string.MusicLocal) + respuesta.getString("music"));
 		    		txtEntryPrice.setText(getResources().getString(R.string.EntryPrice) + respuesta.getString("entryPrice"));
 		    		txtDrinkPrice.setText(getResources().getString(R.string.DrinkPrice) + respuesta.getString("drinkPrice"));
-		    		
+		    		followers = Integer.valueOf(respuesta.getString("followers"));
 		    		String pictureUrl = respuesta.getString("picture");
 		    		
 		    		latitude = respuesta.getString("latitude");
@@ -140,7 +144,10 @@ private void fillData() {
 		    			btnFollowMe.setSelected(true);
 		    		
 		    		imgLocal.setImageUrl(pictureUrl, imageLoader);
-		    		
+		    		if (respuesta.getString("goto").equals("1")){
+		    			LocalViewActivity.btnIGo.setSelected(true);
+		    			LocalViewActivity.btnIGo.setText(getResources().getString(R.string.Going));
+		    		}
 		            mapFragment.fillMap(latitude,longitude,localName);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -174,7 +181,22 @@ private void fillData() {
 	        public void onResponse(String response) {
 	            // response
 	        	Log.e("Response", response);
-	            try {}
+	            try {
+	            	respuesta = new JSONObject(response);
+            	 if (respuesta.getString("follow").equals("error")){
+            		if (btnFollowMe.isSelected()){
+            			btnFollowMe.setSelected(false);
+                 		btnFollowMe.setText(getResources().getString(R.string.FollowMe));
+                 		followers--;
+            		}else {
+            			btnFollowMe.setSelected(true);
+                		btnFollowMe.setText(getResources().getString(R.string.Following));
+                		followers++;
+            		}
+            	}
+            	txtLocalFollowers.setText(getResources().getString(R.string.Followers) + 
+		            					String.valueOf(followers));
+            	}
 	            catch (Exception e) {
 					e.printStackTrace();
 				}

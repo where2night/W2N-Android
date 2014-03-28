@@ -81,7 +81,7 @@ public class LocalEventsFragment extends Fragment {
 		            	String name = root.getString("name");
 		            	String picture = root.getString("pictureC");
 		            	
-		            	for (int i = 0; i < root.length() - 2; i++){
+		            	for (int i = 0; i < root.length() - 3; i++){
 			            	JSONObject aux = root.getJSONObject(String.valueOf(i));
 			            	String title = aux.getString("title");
 			            	String text = aux.getString("text");

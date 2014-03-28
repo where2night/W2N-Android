@@ -55,9 +55,9 @@ public class LocalsListFragment  extends Fragment {
 		
 		arraydir = new ArrayList<ItemLocalAndDJ>();
 		
-		for (LocalListData local: localListData){
+		/*for (LocalListData local: localListData){
 			arraydir.add(new ItemLocalAndDJ(local.getPicture(), local.getName(), local.getIdProfile()));
-		}
+		}*/
 		
 	    adapter = new AdapterItemLocal(getActivity(), arraydir);
 	    list.setAdapter(adapter);
@@ -72,6 +72,7 @@ public class LocalsListFragment  extends Fragment {
 			}
 			
 		});
+	    fillData();
 	}
 	
 	private void fillData() {
