@@ -85,10 +85,13 @@ public class AdapterItemEvent extends BaseAdapter{
 				@Override
 				public void onClick(View v) {
 					long eventId = dir.getId();
-					if (holder.btnSignMe.isSelected())
+					if (holder.btnSignMe.isSelected()){
 						goToEvent(eventId,false);
-					 else
+						holder.btnSignMe.setSelected(false);
+					}else{
+						 holder.btnSignMe.setSelected(true);
 						 goToEvent(eventId,true);
+					}
 				}
 			};
             
@@ -146,9 +149,9 @@ public class AdapterItemEvent extends BaseAdapter{
 	            try {
 	            	JSONObject respuesta = new JSONObject(response);
 	            	if (respuesta.getString("goto").equals("true")){
-	            		holder.btnSignMe.setSelected(true);
+	            		
 	            	}else if (respuesta.getString("goto").equals("false")){
-	            		holder.btnSignMe.setSelected(false);
+	            		
 	            	}
             	}
 	            catch (Exception e) {

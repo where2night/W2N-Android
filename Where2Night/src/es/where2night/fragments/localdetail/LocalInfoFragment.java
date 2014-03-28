@@ -91,10 +91,14 @@ public class LocalInfoFragment extends Fragment implements OnClickListener{
 		 if (v.getId() == btnFollowMe.getId()){
 			 if (btnFollowMe.isSelected()){
 				btnFollowMe.setSelected(false);
+         		btnFollowMe.setText(getResources().getString(R.string.FollowMe));
+         		followers--;
 			 	follow(true);
 			 }
 			 else{
 				 btnFollowMe.setSelected(true);
+         		 btnFollowMe.setText(getResources().getString(R.string.Following));
+         		 followers++;
 				 follow(false);
 			 }
 		 }
@@ -140,7 +144,10 @@ private void fillData() {
 		    			btnFollowMe.setSelected(true);
 		    		
 		    		imgLocal.setImageUrl(pictureUrl, imageLoader);
-		    		
+		    		if (respuesta.getString("goto").equals("1")){
+		    			LocalViewActivity.btnIGo.setSelected(true);
+		    			LocalViewActivity.btnIGo.setText(getResources().getString(R.string.Going));
+		    		}
 		            mapFragment.fillMap(latitude,longitude,localName);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -176,14 +183,16 @@ private void fillData() {
 	        	Log.e("Response", response);
 	            try {
 	            	respuesta = new JSONObject(response);
-            	if (respuesta.getString("follow").equals("true")){
-            		btnFollowMe.setSelected(true);
-            		btnFollowMe.setText(getResources().getString(R.string.Following));
-            		followers++;
-            	}else if (respuesta.getString("follow").equals("false")){
-            		btnFollowMe.setSelected(false);
-            		btnFollowMe.setText(getResources().getString(R.string.FollowMe));
-            		followers--;
+            	 if (respuesta.getString("follow").equals("error")){
+            		if (btnFollowMe.isSelected()){
+            			btnFollowMe.setSelected(false);
+                 		btnFollowMe.setText(getResources().getString(R.string.FollowMe));
+                 		followers--;
+            		}else {
+            			btnFollowMe.setSelected(true);
+                		btnFollowMe.setText(getResources().getString(R.string.Following));
+                		followers++;
+            		}
             	}
             	txtLocalFollowers.setText(getResources().getString(R.string.Followers) + 
 		            					String.valueOf(followers));
