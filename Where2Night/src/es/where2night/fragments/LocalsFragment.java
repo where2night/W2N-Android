@@ -99,6 +99,7 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 			            	LocalListData local = new LocalListData(idProfile,name,picture,latitude,longitude);
 			            	localListData.add(local);
 		            	}
+		            	
 		            
 		    		
 				} catch (Exception e) {
@@ -153,6 +154,9 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 				.show(toShow)
 				.commit();
 		
+		if (index == 0){
+			((MapFragment)toShow).allLocals(localListData);
+		}
 		if (index == 1) {
 			((LocalsListFragment) toShow).fill(localListData);
 		}

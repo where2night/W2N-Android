@@ -1,5 +1,7 @@
 package es.where2night.fragments;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.where2night.R;
 
 import es.where2night.activities.LocalViewActivity;
+import es.where2night.data.LocalListData;
 
 public class MapFragment extends Fragment implements OnMapClickListener {
 	
@@ -39,7 +42,19 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 		return view;
 	}
 	
-	public void fillMap(String latitude2, String longitude2, String localName){
+	public void allLocals(ArrayList<LocalListData> localListData){
+		for (LocalListData local: localListData){
+			String latitude = local.getLatitude();
+			String longitude = local.getLongitude();
+			try{
+				fillMap(latitude,longitude,local.getName());
+			}catch(NumberFormatException e){}
+			
+		}
+	}
+	
+	public void fillMap(String latitude2, String longitude2, String localName) throws NumberFormatException
+	{
 		
 		float latitude = Float.valueOf(latitude2);
 		float longitude = Float.valueOf(longitude2);
