@@ -13,7 +13,6 @@ import android.view.MenuItem;
 
 import com.where2night.R;
 
-import es.where2night.fragments.EventsFragment;
 import es.where2night.fragments.djdetail.DJEventsFragment;
 import es.where2night.fragments.djdetail.DJInfoFragment;
 

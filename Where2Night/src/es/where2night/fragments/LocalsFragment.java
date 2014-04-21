@@ -1,38 +1,27 @@
 package es.where2night.fragments;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.where2night.R;
-
-import es.where2night.data.ItemLocalAndDJ;
-import es.where2night.data.LocalListData;
-import es.where2night.utilities.DataManager;
-import es.where2night.utilities.Helper;
 
 public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 	
-	private Fragment[] fragments = new Fragment[]{ new MapFragment(),
-			   									   new LocalsListFragment()};
+	private Fragment[] fragments = new Fragment[]{ 	new MapFragment(),
+													new LocalsListFragment()};
 	private int lastIndex = 0;
 	
 	
@@ -42,7 +31,8 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 		View view = inflater.inflate(R.layout.fragment_locals, container, false);// -- linea original
 		
 		
-		
+		setHasOptionsMenu(true);
+
 		final ActionBar actionBar = getActivity().getActionBar();
 		// Specify that we will be displaying tabs in the action bar.
         actionBar.addTab(
@@ -113,4 +103,35 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 			((LocalsListFragment) toShow).fill();
 		}
     }
+
+
+
+
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.search_menu, menu);
+		// Get the SearchView and set the searchable configuration
+	    SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+	    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+	    // Assumes current activity is the searchable activity
+	    searchView.setSearchableInfo(searchManager.getSearchableInfo( getActivity().getComponentName()));
+	    searchView.setIconifiedByDefault(true); // Do not iconify the widget; expand it by default
+		 
+		
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+	
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_search:
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+	
+	
 }

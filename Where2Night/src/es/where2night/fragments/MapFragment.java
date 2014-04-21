@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +33,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.where2night.R;
 
-import es.where2night.activities.LocalViewActivity;
 import es.where2night.data.LocalListData;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
@@ -39,6 +44,7 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 	public static final String NAME = "localName";
 	
 	LatLng position;
+	DataManager dm;
 	private GoogleMap mapa;
 	private RequestQueue requestQueue;
 	private ArrayList<LocalListData> localListData = new ArrayList<LocalListData>();
@@ -57,6 +63,7 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 	}
 	
 	public void allLocals(ArrayList<LocalListData> localListData){
+		mapa.setMyLocationEnabled(true);
 		for (LocalListData local: localListData){
 			String latitude = local.getLatitude();
 			String longitude = local.getLongitude();
@@ -65,11 +72,34 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 			}catch(NumberFormatException e){}
 			
 		}
+		LocationManager lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+		if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+		      !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+		  // Build the alert dialog
+		  AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		  builder.setTitle("¿Que hay a tu alrededor?");
+		  builder.setMessage("Para saber que hay cerca de ti puedes activar la localización");
+		  builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialogInterface, int i) {
+		    // Show location settings when the user acknowledges the alert dialog
+		    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+		    startActivity(intent);
+		    }
+		  });
+		  builder.setNegativeButton("Cancelar",null);
+		  Dialog alertDialog = builder.create();
+		  alertDialog.setCanceledOnTouchOutside(false);
+		  alertDialog.show();
+		}
+		 mapa.animateCamera(CameraUpdateFactory.newLatLngZoom(
+		            new LatLng( mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude()), 15));
+		 
 	}
-	
+
 private void getAllInfoFromServer() {
 		
-		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+	try{
+		dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
 		String url = Helper.getAllLocalsUrl() + "/" + cred[0] + "/" + cred[1];
@@ -114,6 +144,9 @@ private void getAllInfoFromServer() {
 		
 		requestQueue.add(request);
 	}
+		catch (Exception e){
+	}
+	}
 	
 	public void fillMap(String latitude2, String longitude2, String localName) throws NumberFormatException
 	{
@@ -127,7 +160,7 @@ private void getAllInfoFromServer() {
 		
 		
 		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
-	      mapa.setMyLocationEnabled(true);
+	     
 	      mapa.getUiSettings().setZoomControlsEnabled(false);
 	      mapa.getUiSettings().setCompassEnabled(true);
 	      mapa.addMarker(new MarkerOptions()

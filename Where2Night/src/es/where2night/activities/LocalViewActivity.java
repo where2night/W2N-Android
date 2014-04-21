@@ -207,9 +207,10 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		
 	}
 	
-	@Override
-	public Intent getParentActivityIntent() {
-		Intent intent = new Intent(this, MainActivity.class);
-		return intent;
-	}
+	 @Override
+	 public Intent getParentActivityIntent() {
+			Intent intent = new Intent(this, MainActivity.class);
+		//	intent.putExtra(MainActivity.OPTION, "5");
+			return intent;
+	 }
 }

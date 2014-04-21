@@ -18,12 +18,13 @@ import com.where2night.R;
 
 import es.where2night.data.ItemLocalAndDJ;
 import es.where2night.utilities.BitmapLRUCache;
+import es.where2night.utilities.Helper;
 
 public class AdapterItemLocal extends BaseAdapter{
  
     protected Activity activity;
     protected ArrayList<ItemLocalAndDJ> items;
-    private ViewHolder holder;
+    
     private ImageLoader imageLoader;
  
     public AdapterItemLocal(Activity activity, ArrayList<ItemLocalAndDJ> items) {
@@ -54,7 +55,7 @@ public class AdapterItemLocal extends BaseAdapter{
 	 public View getView(int position, View convertView, ViewGroup parent) {
 		 // Generamos una convertView por motivos de eficiencia
         View v = convertView;
- 
+        ViewHolder holder;
         //Asociamos el layout de la lista que hemos creado
         if(convertView == null){
         	holder = new ViewHolder();
@@ -72,6 +73,8 @@ public class AdapterItemLocal extends BaseAdapter{
         //Rellenamos la picturegrafía
         if (!dir.getPicture().equals("") && !dir.getPicture().equals("null")){
         	holder.picture.setImageUrl(dir.getPicture(), imageLoader); //FIXME
+        }else{
+        	holder.picture.setImageUrl(Helper.getDefaultProfilePictureUrl(), imageLoader); //FIXME
         }
         //Rellenamos el name
         holder.txtname.setText(dir.getName());

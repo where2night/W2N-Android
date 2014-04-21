@@ -47,7 +47,6 @@ public class LocalsListFragment  extends Fragment {
 		list = (ListView) view.findViewById(R.id.ListFragment);
 		pgLocalsList = (ProgressBar) view.findViewById(R.id.pgLocalsList);
 		
-	    
 		return view;
 	}
 	

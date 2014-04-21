@@ -53,6 +53,7 @@ public class MainActivity extends FragmentActivity {
 	protected static final String EMAIL = "email";
 	protected static final String TYPE = "type";
 	protected static final String PARENT = "parent";
+	protected static final String OPTION = "option";
 	private ListView drawerList;
     private String[] drawerOptions;
     private DrawerLayout drawerLayout;
@@ -67,8 +68,7 @@ public class MainActivity extends FragmentActivity {
     									  new EventsFragment(),
     									  new PhotosFragment(),
     									  new FriendsFragment(),    									  
-    									  new LocalsFragment(),
-    									  new DJsFragment()};
+    									  new LocalsFragment()};
 	
     private ProgressDialog connectionProgressDialog;
     
@@ -94,8 +94,10 @@ public class MainActivity extends FragmentActivity {
 	        connectionProgressDialog.setMessage("Cargando tu perfil...");
 	        getDataFromServer(email, type);
         }
-        
-        
+        int option = 0;
+        if (getIntent().hasExtra(OPTION)){
+        	option = Integer.parseInt(getIntent().getStringExtra(OPTION));
+        }
         
         
         
@@ -140,7 +142,6 @@ public class MainActivity extends FragmentActivity {
         		.add(R.id.contentFrame, fragments[3])
         		.add(R.id.contentFrame, fragments[4])
         		.add(R.id.contentFrame, fragments[5])
-        		.add(R.id.contentFrame, fragments[6])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
@@ -148,10 +149,9 @@ public class MainActivity extends FragmentActivity {
 				        		  .hide(fragments[3])
 				        		  .hide(fragments[4])
 				        		  .hide(fragments[5])
-				        		  .hide(fragments[6])
 				        		  .commit();
         
-        setContent(0);
+        setContent(option);
     
         getActionBar().setIcon(R.drawable.logo7);
     }

@@ -25,7 +25,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <!--
          The following two permissions are not required to use
-	     Google Maps Android API v2, but are recommended.
+	     Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -102,8 +102,31 @@
 
         <activity
             android:name="es.where2night.activities.DjViewActivty"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_dj_view_activty" >
         </activity>
+
+        <!-- Search results activity -->
+        <activity
+            android:name="es.where2night.activities.LocalsSearchResultsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
+        </activity>
+
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="es.where2night.activities.SearchResultsActivity" />
+
+        <activity
+            android:name="es.where2night.activities.SearchResultsActivity"
+            android:label="@string/title_activity_search_results" >
+             <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+             <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable_locals" />
+        </activity>
+        
     </application>
 
 </manifest>

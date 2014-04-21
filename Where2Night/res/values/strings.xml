@@ -46,7 +46,6 @@
         <item>Fotos</item>
         <item>Amigos</item>
         <item>Locales</item>
-        <item>DJs</item>
     </string-array>
 
     <string name="title_activity_init"></string>
@@ -72,7 +71,6 @@
     <string name="search">Buscar</string>
     <string name="animo">¿Con qué animo sales hoy?</string>
     <string name="title_activity_dj_view_activty">DjViewActivty</string>
-    
     <string name="NameAndSurnameDj">Nombre: </string>
     <string name="Birthday">Cumpleaños: </string>
     <string name="MusicDj">Estilo Musical: </string>
@@ -82,7 +80,6 @@
     <string name="Followers">Seguidores: </string>
     <string name="SignMe">Apuntame</string>
     <string name="Signed">Apuntado</string>
-    
     <string name="MusicLocal">Tipo de Musica: </string>
     <string name="EntryPrice">Precio de la entrada: </string>
     <string name="DrinkPrice">Precio medio por copa: </string>
@@ -91,7 +88,7 @@
     <string name="Ubication">Ubicación </string>
     <string name="IGo">Quiero ir </string>
     <string name="Going">Voy a ir </string>
-    
+
     <string-array name="mode_array">
         <item>De tranquis</item>
         <item>Hoy no me lio</item>
@@ -100,7 +97,6 @@
         <item>Destroyer</item>
         <item>Yo me llamo Ralph</item>
     </string-array>
-    
     <string-array name="local_tabs">
         <item>Info</item>
         <item>Eventos</item>
@@ -108,11 +104,13 @@
         <item>Asistentes</item>
         <item>Gramola</item>
     </string-array>
-    
     <string-array name="dj_tabs">
         <item>Info</item>
         <item>Eventos</item>
     </string-array>
-    
+
+    <string name="Search">Search</string>
+    <string name="search_hint_locals">Locales</string>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
 
 </resources>
