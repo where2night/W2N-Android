@@ -4,11 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" xmlns:tools="http://schemas.android.com/tools">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/localListTab"
-        android:name="es.where2night.fragments.EventsFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_events" />
+        android:layout_height="match_parent" />
     
 </FrameLayout>

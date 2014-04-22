@@ -103,7 +103,10 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 									String surnames = user.getLastName();
 									String gender = user.getProperty("gender").toString();
 									String birthdate = user.getBirthday();
+									String[] date = birthdate.split("/");
+									birthdate = date[1] + "/" + date[0] + "/" + date[2];
 									String fbId = user.getId();
+									user.getProperty("picture");
 									String picture = "http://graph.facebook.com/" + fbId + "/picture?type=large";
 									DataManager dm = new DataManager(getApplicationContext());
 									dm.setUser(email,picture,name,surnames, birthdate, gender);
@@ -258,6 +261,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 				gender = "female";
 			String birthdate = person.getBirthday();
 			String picture = person.getImage().getUrl();
+			picture = picture.replace("sz=50", "sz=150");
 			DataManager dm = new DataManager(getApplicationContext());
 			dm.setUser(email,picture,name,surnames, birthdate, gender);
 			Intent i = new Intent(getApplicationContext(), MainActivity.class);

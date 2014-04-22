@@ -2,6 +2,9 @@ package es.where2night.fragments.localdetail;
 
 import org.json.JSONObject;
 
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,6 +23,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -142,7 +147,6 @@ private void fillData() {
 		    		
 		    		if (following.equals("1"))
 		    			btnFollowMe.setSelected(true);
-		    		
 		    		imgLocal.setImageUrl(pictureUrl, imageLoader);
 		    		if (respuesta.getString("goto").equals("1")){
 		    			LocalViewActivity.btnIGo.setSelected(true);
@@ -153,6 +157,8 @@ private void fillData() {
 					e.printStackTrace();
 				}
 	        }
+
+			
 	    };
 	    
 	    Response.ErrorListener errorListener = new Response.ErrorListener() 
@@ -168,6 +174,8 @@ private void fillData() {
 		
 		requestQueue.add(request);
 	}
+
+	
 
 	private void follow(boolean unfollow){
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());

@@ -1,11 +1,23 @@
 package es.where2night.fragments;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
@@ -16,6 +28,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.where2night.R;
 
 import es.where2night.activities.LocalViewActivity;
+import es.where2night.data.LocalListData;
+import es.where2night.utilities.DataManager;
+import es.where2night.utilities.Helper;
 
 public class MapFragment extends Fragment implements OnMapClickListener {
 	
@@ -25,6 +40,8 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 	
 	LatLng position;
 	private GoogleMap mapa;
+	private RequestQueue requestQueue;
+	private ArrayList<LocalListData> localListData = new ArrayList<LocalListData>();
 	
 	public MapFragment(){}
 
@@ -39,7 +56,67 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 		return view;
 	}
 	
-	public void fillMap(String latitude2, String longitude2, String localName){
+	public void allLocals(ArrayList<LocalListData> localListData){
+		for (LocalListData local: localListData){
+			String latitude = local.getLatitude();
+			String longitude = local.getLongitude();
+			try{
+				fillMap(latitude,longitude,local.getName());
+			}catch(NumberFormatException e){}
+			
+		}
+	}
+	
+private void getAllInfoFromServer() {
+		
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+		String url = Helper.getAllLocalsUrl() + "/" + cred[0] + "/" + cred[1];
+		
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            try {
+		            	JSONArray root = new JSONArray(response);
+		            	for (int i = 0; i < root.length(); i++){
+		            		JSONObject aux = root.getJSONObject(i);
+			            	long idProfile = Long.valueOf(aux.getString("idProfile"));
+			            	String picture = aux.getString("picture");
+			            	String name = aux.getString("localName");
+			            	String latitude = aux.getString("latitude");
+			            	String longitude = aux.getString("longitude");
+			            	LocalListData local = new LocalListData(idProfile,name,picture,latitude,longitude);
+			            	localListData.add(local);
+		            	}
+		            	allLocals(localListData);
+		            
+		    		
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		
+		requestQueue.add(request);
+	}
+	
+	public void fillMap(String latitude2, String longitude2, String localName) throws NumberFormatException
+	{
 		
 		float latitude = Float.valueOf(latitude2);
 		float longitude = Float.valueOf(longitude2);
@@ -82,5 +159,10 @@ public class MapFragment extends Fragment implements OnMapClickListener {
          icon(BitmapDescriptorFactory
             .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
    }
+
+public void fill() {
+	getAllInfoFromServer();
+	
+}
 	
 }

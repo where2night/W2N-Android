@@ -13,7 +13,7 @@
         style="@style/nowCardStyle">
 
         <ImageView
-            android:id="@+id/picture"
+            android:id="@+id/Friendpicture"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_gravity="center_vertical"
@@ -22,22 +22,32 @@
             android:scaleType="fitCenter" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/txtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/ubication"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/picture"
+            android:layout_toRightOf="@+id/Friendpicture"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/ubication"
+            android:id="@+id/txtUbicationFriend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/picture"
-            android:layout_below="@+id/picture"
+            android:layout_alignLeft="@+id/Friendpicture"
+            android:layout_below="@+id/txtEstado"
+            android:layout_marginTop="16dp"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/txtEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txtName"
+            android:layout_below="@+id/Friendpicture"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 

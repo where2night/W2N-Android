@@ -76,6 +76,7 @@
             android:layout_alignRight="@+id/txtEventTime"
             android:layout_centerVertical="true"
             android:layout_margin="0dp"
+            android:layout_above="@+id/txtEventTitle"
             android:background="@drawable/btn_igo_style"
             android:text="@string/SignMe" />
 

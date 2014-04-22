@@ -10,7 +10,7 @@ public class ItemEvent extends Item{
 	private String start;
 	private String close;
 	private String idCreator;
-	private long id;
+	public long id;
 	
 
 
@@ -62,10 +62,6 @@ public void setDate(String date) {
 
 public long getId() {
 	return id;
-}
-
-public void setId(long id) {
-	this.id = id;
 }
 
 public String getText() {
