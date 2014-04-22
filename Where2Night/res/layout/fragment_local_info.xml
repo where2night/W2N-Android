@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/txtClosing"
-            android:layout_alignLeft="@+id/txtUbication" />
+            android:layout_alignLeft="@+id/txtUbicationFriend" />
 
         <Button
             android:id="@+id/btnFollowMe"
@@ -85,7 +85,7 @@
             android:text="@string/FollowMe" />
 
         <TextView
-            android:id="@+id/txtUbication"
+            android:id="@+id/txtUbicationFriend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/btnFollowMe"

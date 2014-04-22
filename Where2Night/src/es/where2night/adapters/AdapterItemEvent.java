@@ -34,7 +34,7 @@ public class AdapterItemEvent extends BaseAdapter implements OnClickListener{
  
     protected Activity activity;
     protected ArrayList<ItemEvent> items;
-    ViewHolder holder;
+    ViewHolderEvent holder;
     private ImageLoader imageLoader;
     RequestQueue requestQueue;
  
@@ -69,7 +69,7 @@ public class AdapterItemEvent extends BaseAdapter implements OnClickListener{
         final ItemEvent dir = items.get(position);
         //Asociamos el layout de la lista que hemos creado
         if(convertView == null){
-        	holder = new ViewHolder();
+        	holder = new ViewHolderEvent();
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inf.inflate(R.layout.itemeventslists, null);
             holder.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
@@ -104,7 +104,7 @@ public class AdapterItemEvent extends BaseAdapter implements OnClickListener{
             
             v.setTag(holder);
         } else {
-        	holder = (ViewHolder) convertView.getTag();
+        	holder = (ViewHolderEvent) convertView.getTag();
         }
  
         
@@ -125,7 +125,7 @@ public class AdapterItemEvent extends BaseAdapter implements OnClickListener{
     }
     
     
-    static class ViewHolder {
+    static class ViewHolderEvent {
 		public NetworkImageView picture;
 		public TextView txtTitle;
 		public TextView txtClub;

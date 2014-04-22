@@ -1,11 +1,10 @@
 package es.where2night.data;
 
 
-public class ItemLocalAndDJ{
+public class ItemLocalAndDJ extends Item{
 	
 	private String name;
 	private String picture;
-	private long id;
 	
 	
 	public ItemLocalAndDJ (String picture, String name, long id){
@@ -25,14 +24,6 @@ public class ItemLocalAndDJ{
 	}
 	public void setPicture(String picture) {
 		this.picture = picture;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 }

@@ -26,11 +26,12 @@ public class AdapterItemLocal extends BaseAdapter{
     protected ArrayList<ItemLocalAndDJ> items;
     
     private ImageLoader imageLoader;
+    RequestQueue requestQueue;
  
     public AdapterItemLocal(Activity activity, ArrayList<ItemLocalAndDJ> items) {
         this.activity = activity;
         this.items = items;
-        RequestQueue requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
+        requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
         this.imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
       }
 
@@ -58,14 +59,14 @@ public class AdapterItemLocal extends BaseAdapter{
         ViewHolder holder;
         //Asociamos el layout de la lista que hemos creado
         if(convertView == null){
-        	holder = new ViewHolder();
+        	holder = new ViewHolderLocal();
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inf.inflate(R.layout.itemlocallist, null);
             holder.picture = (NetworkImageView) v.findViewById(R.id.LocalPicture);
             holder.txtname = (TextView) v.findViewById(R.id.txtLocalName);
             v.setTag(holder);
         } else {
-        	holder = (ViewHolder) convertView.getTag();
+        	holder = (ViewHolderLocal) convertView.getTag();
         }
  
         // Creamos un objeto ItemEvent
@@ -83,7 +84,7 @@ public class AdapterItemLocal extends BaseAdapter{
         return v;
 	}
 	
-	static class ViewHolder {
+	static class ViewHolderLocal {
 		public NetworkImageView picture;
 		public TextView txtname;
 		public long id;

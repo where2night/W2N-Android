@@ -64,5 +64,9 @@ public class Helper {
 		return BASE_API_URL + "actions/myEvents.php";
 	}
 	
+	public static String getNewsUrl(){
+		return BASE_API_URL + "read/news.php";
+	}
+	
 	
 }

@@ -36,6 +36,7 @@ import com.where2night.R;
 import es.where2night.data.LocalListData;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
+import es.where2night.utilities.Helper;
 
 public class MapFragment extends Fragment implements OnMapClickListener {
 	
