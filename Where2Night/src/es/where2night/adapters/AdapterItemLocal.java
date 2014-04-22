@@ -56,7 +56,7 @@ public class AdapterItemLocal extends BaseAdapter{
 	 public View getView(int position, View convertView, ViewGroup parent) {
 		 // Generamos una convertView por motivos de eficiencia
         View v = convertView;
-        ViewHolder holder;
+        ViewHolderLocal holder;
         //Asociamos el layout de la lista que hemos creado
         if(convertView == null){
         	holder = new ViewHolderLocal();

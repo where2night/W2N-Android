@@ -1282,8 +1282,8 @@ containing a value of this type.
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f090022;
-        public static final int activity_vertical_margin=0x7f090023;
+        public static final int activity_horizontal_margin=0x7f0a0022;
+        public static final int activity_vertical_margin=0x7f0a0023;
         public static final int com_facebook_loginview_compound_drawable_padding=0x7f0a0008;
         public static final int com_facebook_loginview_padding_bottom=0x7f0a0007;
         public static final int com_facebook_loginview_padding_left=0x7f0a0004;
@@ -1304,7 +1304,7 @@ containing a value of this type.
  The platform's desired fixed height for a dialog along the major axis
          (the screen is in portrait). This may be either a fraction or a dimension.
          */
-        public static final int dialog_fixed_height_major=0x7f090020;
+        public static final int dialog_fixed_height_major=0x7f0a0020;
         /**  The platform's desired fixed height for a dialog along the minor axis
          (the screen is in landscape). This may be either a fraction or a dimension.
  The platform's desired fixed height for a dialog along the minor axis
@@ -1312,7 +1312,7 @@ containing a value of this type.
  The platform's desired fixed height for a dialog along the minor axis
          (the screen is in landscape). This may be either a fraction or a dimension.
          */
-        public static final int dialog_fixed_height_minor=0x7f090021;
+        public static final int dialog_fixed_height_minor=0x7f0a0021;
         /**  The platform's desired fixed width for a dialog along the major axis
          (the screen is in landscape). This may be either a fraction or a dimension.
  The platform's desired fixed width for a dialog along the major axis
@@ -1320,7 +1320,7 @@ containing a value of this type.
  The platform's desired fixed width for a dialog along the major axis
          (the screen is in landscape). This may be either a fraction or a dimension.
          */
-        public static final int dialog_fixed_width_major=0x7f09001e;
+        public static final int dialog_fixed_width_major=0x7f0a001e;
         /**  The platform's desired fixed width for a dialog along the minor axis
          (the screen is in portrait). This may be either a fraction or a dimension.
  The platform's desired fixed width for a dialog along the minor axis
@@ -1328,7 +1328,7 @@ containing a value of this type.
  The platform's desired fixed width for a dialog along the minor axis
          (the screen is in portrait). This may be either a fraction or a dimension.
          */
-        public static final int dialog_fixed_width_minor=0x7f09001f;
+        public static final int dialog_fixed_width_minor=0x7f0a001f;
     }
     public static final class drawable {
         public static final int ab_transparent_example=0x7f020000;
@@ -1540,7 +1540,8 @@ containing a value of this type.
     }
     public static final class id {
         public static final int Eventpicture=0x7f0700a8;
-        public static final int Friendpicture=0x7f0600af;
+        public static final int Friendpicture=0x7f0700af;
+        public static final int ListFragment=0x7f070096;
         public static final int LocalInfoMap=0x7f07009e;
         public static final int LocalPicture=0x7f0700b2;
         public static final int action_bar=0x7f070021;
@@ -1700,7 +1701,8 @@ containing a value of this type.
         public static final int txtDjFollowers=0x7f070086;
         public static final int txtDrinkPrice=0x7f07009d;
         public static final int txtEntryPrice=0x7f07009c;
-        public static final int txtEstado=0x7f060093;
+        public static final int txtEstado=0x7f070093;
+        public static final int txtEventClub=0x7f0700aa;
         public static final int txtEventDate=0x7f0700ab;
         public static final int txtEventText=0x7f0700a9;
         public static final int txtEventTime=0x7f0700ad;
@@ -1712,12 +1714,13 @@ containing a value of this type.
         public static final int txtLoginPass=0x7f07005c;
         public static final int txtMusicDj=0x7f070089;
         public static final int txtMusicType=0x7f07009b;
+        public static final int txtName=0x7f0700b0;
         public static final int txtNameAndSurnameDj=0x7f070087;
-        public static final int txtName=0x7f0600b0;
+        public static final int txtOpening=0x7f070099;
         public static final int txtSignEnd=0x7f0700a4;
-        public static final int txtUbication=0x7f0700a0;
+        public static final int txtUbicationFriend=0x7f0700a0;
         public static final int ubication=0x7f0700b1;
-        public static final int txtUbicationFriend=0x7f0600a0;
+        public static final int up=0x7f070026;
         public static final int useLogo=0x7f070009;
         public static final int view1=0x7f070059;
         public static final int withText=0x7f070012;
@@ -1829,22 +1832,22 @@ containing a value of this type.
     public static final class string {
         public static final int AboutMeDj=0x7f08007f;
         public static final int Birthday=0x7f08007d;
-        public static final int ClosingHour=0x7f070089;
-        public static final int DrinkPrice=0x7f070087;
-        public static final int EntryPrice=0x7f070086;
+        public static final int ClosingHour=0x7f080089;
+        public static final int DrinkPrice=0x7f080087;
+        public static final int EntryPrice=0x7f080086;
         public static final int FollowMe=0x7f080080;
         public static final int Followers=0x7f080082;
         public static final int Following=0x7f080081;
-        public static final int Going=0x7f07008c;
-        public static final int IGo=0x7f07008b;
+        public static final int Going=0x7f08008c;
+        public static final int IGo=0x7f08008b;
         public static final int LogIn=0x7f080046;
         public static final int MusicDj=0x7f08007e;
-        public static final int MusicLocal=0x7f070085;
+        public static final int MusicLocal=0x7f080085;
         public static final int NameAndSurnameDj=0x7f08007c;
-        public static final int OpeningHour=0x7f070088;
+        public static final int OpeningHour=0x7f080088;
         public static final int Search=0x7f08008d;
-        public static final int Signed=0x7f070084;
-        public static final int Ubication=0x7f07008a;
+        public static final int SignMe=0x7f080083;
+        public static final int Signed=0x7f080084;
         public static final int Ubication=0x7f08008a;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
@@ -2092,15 +2095,15 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f0a008d;
+        public static final int AppBaseTheme=0x7f0b008d;
         /**  Application theme. 
          */
-        public static final int AppTheme=0x7f0a008e;
-        public static final int ButtonBar=0x7f0a0091;
-        public static final int EditTextAppTheme=0x7f0a0095;
-        public static final int FullscreenActionBarStyle=0x7f0a0094;
-        public static final int FullscreenTheme=0x7f0a0090;
-        public static final int RadioButtonAppTheme=0x7f0a0096;
+        public static final int AppTheme=0x7f0b008e;
+        public static final int ButtonBar=0x7f0b0091;
+        public static final int EditTextAppTheme=0x7f0b0095;
+        public static final int FullscreenActionBarStyle=0x7f0b0094;
+        public static final int FullscreenTheme=0x7f0b0090;
+        public static final int RadioButtonAppTheme=0x7f0b0096;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0065;
@@ -2164,30 +2167,30 @@ containing a value of this type.
         public static final int Theme_AppCompat=0x7f0b0079;
         /**  Menu/item attributes 
          */
-        public static final int Theme_AppCompat_Base_CompactMenu=0x7f0a0085;
-        public static final int Theme_AppCompat_Base_CompactMenu_Dialog=0x7f0a0086;
+        public static final int Theme_AppCompat_Base_CompactMenu=0x7f0b0085;
+        public static final int Theme_AppCompat_Base_CompactMenu_Dialog=0x7f0b0086;
         /**  Menu/item attributes 
          */
-        public static final int Theme_AppCompat_CompactMenu=0x7f0a007e;
-        public static final int Theme_AppCompat_CompactMenu_Dialog=0x7f0a007f;
-        public static final int Theme_AppCompat_DialogWhenLarge=0x7f0a007c;
+        public static final int Theme_AppCompat_CompactMenu=0x7f0b007e;
+        public static final int Theme_AppCompat_CompactMenu_Dialog=0x7f0b007f;
+        public static final int Theme_AppCompat_DialogWhenLarge=0x7f0b007c;
         /**  Platform-independent theme providing an action bar in a light-themed activity. 
          */
         public static final int Theme_AppCompat_Light=0x7f0b007a;
         /**  Platform-independent theme providing an action bar in a dark-themed activity. 
          */
         public static final int Theme_AppCompat_Light_DarkActionBar=0x7f0b007b;
-        public static final int Theme_AppCompat_Light_DialogWhenLarge=0x7f0a007d;
+        public static final int Theme_AppCompat_Light_DialogWhenLarge=0x7f0b007d;
         /**  Base platform-dependent theme  
          */
-        public static final int Theme_Base=0x7f0a0080;
+        public static final int Theme_Base=0x7f0b0080;
         /**  Base platform-dependent theme providing an action bar in a dark-themed activity. 
  Base platform-dependent theme providing an action bar in a dark-themed activity. 
          */
-        public static final int Theme_Base_AppCompat=0x7f0a0082;
-        public static final int Theme_Base_AppCompat_Dialog_FixedSize=0x7f0a0089;
-        public static final int Theme_Base_AppCompat_Dialog_Light_FixedSize=0x7f0a008a;
-        public static final int Theme_Base_AppCompat_DialogWhenLarge=0x7f0a0087;
+        public static final int Theme_Base_AppCompat=0x7f0b0082;
+        public static final int Theme_Base_AppCompat_Dialog_FixedSize=0x7f0b0089;
+        public static final int Theme_Base_AppCompat_Dialog_Light_FixedSize=0x7f0b008a;
+        public static final int Theme_Base_AppCompat_DialogWhenLarge=0x7f0b0087;
         /** 
         As we have defined the theme in values-large (for compat) and values-large takes precedence
         over values-v14, we need to reset back to the Holo parent in values-large-v14. As the themes
@@ -2195,20 +2198,20 @@ containing a value of this type.
         inherited from in both values-v14 and values-large-v14.
     
          */
-        public static final int Theme_Base_AppCompat_DialogWhenLarge_Base=0x7f0a008b;
+        public static final int Theme_Base_AppCompat_DialogWhenLarge_Base=0x7f0b008b;
         /**  Base platform-dependent theme providing an action bar in a light-themed activity. 
  Base platform-dependent theme providing an action bar in a light-themed activity. 
          */
-        public static final int Theme_Base_AppCompat_Light=0x7f0a0083;
+        public static final int Theme_Base_AppCompat_Light=0x7f0b0083;
         /**  Base platform-dependent theme providing a dark action bar in a light-themed activity. 
  Base platform-dependent theme providing a dark action bar in a light-themed activity. 
          */
-        public static final int Theme_Base_AppCompat_Light_DarkActionBar=0x7f0a0084;
-        public static final int Theme_Base_AppCompat_Light_DialogWhenLarge=0x7f0a0088;
-        public static final int Theme_Base_AppCompat_Light_DialogWhenLarge_Base=0x7f0a008c;
+        public static final int Theme_Base_AppCompat_Light_DarkActionBar=0x7f0b0084;
+        public static final int Theme_Base_AppCompat_Light_DialogWhenLarge=0x7f0b0088;
+        public static final int Theme_Base_AppCompat_Light_DialogWhenLarge_Base=0x7f0b008c;
         /**  Base platform-dependent theme providing a light-themed activity. 
          */
-        public static final int Theme_Base_Light=0x7f0a0081;
+        public static final int Theme_Base_Light=0x7f0b0081;
         /**  Styles in here can be extended for customisation in your application. Each utilises
          one of the Base styles. If Holo themes are available on the current platform version
          they will be used instead of the compat styles. 
@@ -2303,11 +2306,11 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0b000c;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0b000b;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0b0024;
-        public static final int actionBar=0x7f0a008f;
+        public static final int actionBar=0x7f0b008f;
         public static final int com_facebook_loginview_default_style=0x7f0b0000;
         public static final int com_facebook_loginview_silver_style=0x7f0b0001;
-        public static final int nowCardStyle=0x7f0a0092;
-        public static final int nowCardStyleLocals=0x7f0a0093;
+        public static final int nowCardStyle=0x7f0b0092;
+        public static final int nowCardStyleLocals=0x7f0b0093;
     }
     public static final class xml {
         public static final int searchable_locals=0x7f050000;
