@@ -26,12 +26,11 @@ public class AdapterItemLocal extends BaseAdapter{
     protected ArrayList<ItemLocalAndDJ> items;
     
     private ImageLoader imageLoader;
-    RequestQueue requestQueue;
  
     public AdapterItemLocal(Activity activity, ArrayList<ItemLocalAndDJ> items) {
         this.activity = activity;
         this.items = items;
-        requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
         this.imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
       }
 
