@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -37,12 +38,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
-import es.where2night.fragments.DJsFragment;
 import es.where2night.fragments.EventsFragment;
 import es.where2night.fragments.FriendsFragment;
 import es.where2night.fragments.HomeFragment;
 import es.where2night.fragments.LocalsFragment;
-import es.where2night.fragments.PhotosFragment;
 import es.where2night.fragments.ProfileFragment;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.FbManagement;
@@ -250,6 +249,17 @@ public class MainActivity extends FragmentActivity {
 	    searchView.setIconifiedByDefault(true);
 	    actionBarMenu = menu;
 	    
+	    RelativeLayout badgeLayout = (RelativeLayout) actionBarMenu.findItem(R.id.action_notifications).getActionView();
+	    ImageView imgNotifications = (ImageView) badgeLayout.findViewById(R.id.actionbar_notifcation_img);
+	    imgNotifications.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), FriendsRequestActivity.class);
+				startActivity(i);
+				
+			}
+		});
 	    getFriendshipRequest();
         return true;
     }

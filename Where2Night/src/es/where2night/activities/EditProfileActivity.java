@@ -73,7 +73,6 @@ public class EditProfileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_profile);
 		getActionBar().setIcon(R.drawable.logo7);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		

@@ -6,6 +6,7 @@
 
     <!-- Menu Item Image -->
     <ImageView
+        android:id="@+id/actionbar_notifcation_img"
         android:layout_width="48dp"
         android:layout_height="fill_parent"
         android:clickable="true"

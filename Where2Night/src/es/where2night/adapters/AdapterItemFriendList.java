@@ -60,7 +60,7 @@ public class AdapterItemFriendList extends BaseAdapter implements OnClickListene
         // Generamos una convertView por motivos de eficiencia
         View v = convertView;
         // Creamos un objeto ItemFriend
-        final ItemFriend dir = items.get(position);
+        final ItemFriend dir = items.get(position); 
         //Asociamos el layout de la lista que hemos creado
         if(convertView == null){
         	holder = new ViewHolderFriend();
