@@ -176,8 +176,8 @@ public class EditProfileActivity extends Activity {
 		String[] cred = dm.getCred();
 		idProfile = cred[0];
 		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
-		String url = Helper.getProfileUrl() + "/" + cred[0] + "/" + cred[1];
-		
+		String url = Helper.getProfileUrl() + "/" + cred[0] + "/" + cred[1] + "/" + cred[0];
+		Log.e("Edit", url);
 		imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
@@ -303,12 +303,6 @@ public class EditProfileActivity extends Activity {
 	}
 	
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.edit_profile, menu);
-		return true;
-	}
 
 	@Override
 	public Intent getParentActivityIntent() {

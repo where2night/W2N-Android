@@ -54,8 +54,4 @@ public class LocalDiscountListFragment extends Fragment {
 	}
 	
 	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.menu_events_fragment, menu);
-	}
 }

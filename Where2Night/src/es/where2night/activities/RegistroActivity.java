@@ -212,11 +212,5 @@ public class RegistroActivity extends Activity {
 		register_error.setText(string);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.registro, menu);
-		return true;
-	}
 
 }
