@@ -2,7 +2,10 @@ package es.where2night.fragments;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.android.volley.Request;
@@ -17,6 +20,7 @@ import es.where2night.activities.MainActivity;
 import es.where2night.adapters.AdapterItemNews;
 import es.where2night.data.Item;
 import es.where2night.data.ItemEvent;
+import es.where2night.data.ItemEventFriend;
 import es.where2night.data.ItemFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
@@ -29,14 +33,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -44,6 +52,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 public class HomeFragment extends Fragment implements OnItemSelectedListener{
 	
 	private Spinner spinnerAnimo;
+	private TextView txtStatus;
 	int numPagina;
 	
 	private RequestQueue requestQueue;
@@ -54,6 +63,54 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 		spinnerAnimo = (Spinner)view.findViewById(R.id.spinnerAnimo);
+		txtStatus = (TextView)view.findViewById(R.id.txtEstado);
+		txtStatus.setOnEditorActionListener(new OnEditorActionListener(){
+
+			@Override
+			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+				final DataManager dm = new DataManager(getActivity().getApplicationContext());
+				String[] cred = dm.getCred();
+				requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+				String url = Helper.getSetStatusUrl() + "/" + cred[0] + "/" + cred[1];
+				Log.e("url", url);
+				
+				Response.Listener<String> succeedListener = new Response.Listener<String>(){
+			        @Override
+			        public void onResponse(String response) {
+			            // response
+			        	Log.e("Response", response);
+			            try {} 
+			            catch (Exception e) {
+			            	e.printStackTrace();
+			            }
+			        }		
+				};
+				    
+			    Response.ErrorListener errorListener = new Response.ErrorListener() 
+			    {
+			         @Override
+			         public void onErrorResponse(VolleyError error) {
+			             // error
+			             Log.e("Error.Response", error.toString());
+			       }
+			    };
+			    
+			    StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){
+			    	@Override
+				    protected Map<String, String> getParams() 
+				    {  
+				    	Map<String, String> info = new HashMap<String, String>();
+				    	String strStatus = txtStatus.getText().toString();
+				    	info.put("mode", strStatus);
+				        return info;
+				    }
+			    }; 
+				
+				requestQueue.add(request);
+				return true;
+			}
+			
+		});
 		numPagina = 0;
 		fill(view);
 		return view;
@@ -72,14 +129,76 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 		        R.array.mode_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerAnimo.setAdapter(adapter);
-		spinnerAnimo.setOnItemSelectedListener(this);
 		
 		//Pedimos los datos de animo y modo
-		/*final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getLocalUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId;
-*/
+		String urlMode = Helper.getSetModeUrl() + "/" + cred[0] + "/" + cred[1];
+		String urlStatus = Helper.getSetStatusUrl() + "/" + cred[0] + "/" + cred[1];
+
+		Response.Listener<String> succeedListenerMode = new Response.Listener<String>() {
+			        
+			@Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("ResponseMode", response);
+	            try {
+	            	JSONArray aux = new JSONArray(response);
+	            	JSONObject mo = aux.getJSONObject(0);
+	            	String modeString = mo.getString("mode");
+	            	Toast.makeText(getActivity().getApplicationContext(), "Ha entrado", Toast.LENGTH_LONG).show();
+	            	spinnerAnimo.setSelection(Integer.parseInt(modeString));
+	            }
+	            catch (Exception e) {
+					e.printStackTrace();
+				}
+	        }
+	    };
+			    
+	    Response.ErrorListener errorListenerMode = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+	    
+	    Response.Listener<String> succeedListenerStatus = new Response.Listener<String>() {
+	        
+			@Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            try {
+	            	JSONArray aux = new JSONArray(response);
+	            	JSONObject mo = aux.getJSONObject(0);
+	            	String statusString = mo.getString("status");
+	            	txtStatus.setText(statusString);
+	            }
+	            catch (Exception e) {
+					e.printStackTrace();
+				}
+	        }
+	    };
+			    
+	    Response.ErrorListener errorListenerStatus = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+			    
+	    StringRequest request = new StringRequest(Request.Method.GET, urlMode, succeedListenerMode, errorListenerMode); 
+		requestQueue.add(request);
+		StringRequest request2 = new StringRequest(Request.Method.GET, urlStatus, succeedListenerStatus, errorListenerStatus); 
+		requestQueue.add(request2);
+		
+		spinnerAnimo.setOnItemSelectedListener(this);
+
 	}
 
 	private void fillNews(View view) {
@@ -88,9 +207,8 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 		adapterNews = new AdapterItemNews(getActivity(), arraydir);
         lista.setAdapter(adapterNews);
 		
-        Toast.makeText(getActivity().getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity().getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
         
-        //FIXME PEDIR NOVEDADES
         final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
@@ -142,13 +260,13 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 										String pictureAM = aux.getString("picture");
 										String modeAM = aux.getString("mode");
 										ItemFriendMode iFMode = new ItemFriendMode("",nameAM,modeAM);
-										arraydir.add(iFMode);										
+										arraydir.add(iFMode);									
 										break;
 										
 									case 4:
 										//Locales seguidos por amigos
 										String nameL = aux.getString("localName");
-										String nameF = aux.getString("name");
+										String nameF = aux.getString("name") + " " + aux.getString("surnames");
 										String pictureLoc = aux.getString("picture");
 										ItemLocalNews iLocal= new ItemLocalNews(nameL, "", nameF);
 										arraydir.add(iLocal);
@@ -156,7 +274,19 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 										
 									case 5:
 										//Eventos que asisten mis amigos
-										
+										String titleF = aux.getString("title");
+						            	String textF = aux.getString("text");
+						            	String[] dateArrF = aux.getString("date").split("-");
+						            	String dateF = dateArrF[2] + "/" + dateArrF[1] + "/" + dateArrF[0];
+						            	String startF = aux.getString("startHour");
+						            	String closeF = aux.getString("closeHour");
+						            	String idCreatorF = aux.getString("idProfileLocal");
+						            	long idF = Long.valueOf(aux.getString("idEvent"));
+						            	String nameLoc = aux.getString("localName");
+						            	String pictureF = aux.getString("picture");
+						            	String nameFriend = aux.getString("name");
+						            	ItemEventFriend eventFriend = new ItemEventFriend("",nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,idF); //FIXME cargar imagen
+						            	arraydir.add(eventFriend);
 										break;
 	
 									default:
@@ -188,10 +318,49 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
         
 	}
 
+
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
-		// TODO Auto-generated method stub
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+		String url = Helper.getSetModeUrl() + "/" + cred[0] + "/" + cred[1];
+		Log.e("url", url);
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>(){
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            try {} 
+	            catch (Exception e) {
+	            	e.printStackTrace();
+	            }
+	        }		
+		};
+		    
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+	    
+	    StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){
+	    	@Override
+		    protected Map<String, String> getParams() 
+		    {  
+		    	Map<String, String> info = new HashMap<String, String>();
+		    	String strMode = ((Integer)spinnerAnimo.getSelectedItemPosition()).toString();
+		    	info.put("mode", strMode);
+		        return info;
+		    }
+	    }; 
+		
+		requestQueue.add(request);
 		
 	}
 

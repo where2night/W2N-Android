@@ -16,6 +16,7 @@ import es.where2night.adapters.AdapterItemEvent.ViewHolderEvent;
 import es.where2night.adapters.AdapterItemFriend.ViewHolderFriend;
 import es.where2night.data.Item;
 import es.where2night.data.ItemEvent;
+import es.where2night.data.ItemEventFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
 import es.where2night.data.ItemLocalAndDJ;
@@ -44,7 +45,7 @@ public class AdapterItemNews extends BaseAdapter{
     ViewHolderFriendState holderFriendState;
     ViewHolderEvent holderEvent;
     ViewHolderLocalFollow holderLocal;
-    
+    ViewHolderEventFriend holderEventFriend;
     
 	
 	public AdapterItemNews(Activity activity, ArrayList<Item> items){
@@ -76,11 +77,12 @@ public class AdapterItemNews extends BaseAdapter{
         ItemFriendState fri = null;
         ItemEvent eve = null;
         ItemLocalNews loc = null;
-        Item i = new Item();
+        ItemEventFriend eFri = null;
+        Item i = items.get(position);
  
         //Asociamos el layout de la lista que hemos creado
-        if(convertView == null){
-        	i = items.get(position);
+        //if(convertView == null){
+        	
         	if(i.getClass() == ItemFriendMode.class){
         		dir = (ItemFriendMode)i;
         		holderFriendMode = new ViewHolderFriendMode();
@@ -89,15 +91,17 @@ public class AdapterItemNews extends BaseAdapter{
                 holderFriendMode.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
                 holderFriendMode.txtName = (TextView) v.findViewById(R.id.txtName);
                 holderFriendMode.txtMode = (TextView) v.findViewById(R.id.txtNews);
+                v.setTag(holderFriendMode);
         	}
         	else if (i.getClass() == ItemFriendState.class){
         		fri = (ItemFriendState)i;
-        		holderFriendMode = new ViewHolderFriendMode();
+        		holderFriendState = new ViewHolderFriendState();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inf.inflate(R.layout.itemfriendnews, null);
                 holderFriendState.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
                 holderFriendState.txtName = (TextView) v.findViewById(R.id.txtName);
                 holderFriendState.txtState = (TextView) v.findViewById(R.id.txtNews);
+                v.setTag(holderFriendState);
         	}
         	else if(i.getClass() == ItemEvent.class){
         		eve = (ItemEvent)i;
@@ -119,13 +123,13 @@ public class AdapterItemNews extends BaseAdapter{
     				public void onClick(View v) {
     					long eventId = eve.getId();
     					if (v.isSelected()){
-    				//		holder.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+    				//		holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
     						v.setSelected(false);
     						Button b = (Button) v.findViewById(v.getId());
     						b.setText(activity.getResources().getString(R.string.SignMe));
     						goToEvent(eventId,true);
     					}else{
-    					//	holder.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+    					//	holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
     						Button b = (Button) v.findViewById(v.getId());
     						b.setText(activity.getResources().getString(R.string.Signed));
     						v.setSelected(true);
@@ -137,6 +141,7 @@ public class AdapterItemNews extends BaseAdapter{
                 v.setTag(holderEvent);
         	}
         	else if(i.getClass() == ItemLocalNews.class){
+        		loc = (ItemLocalNews)i;
         		holderLocal = new ViewHolderLocalFollow();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inf.inflate(R.layout.itemlocalnews, null);
@@ -145,10 +150,50 @@ public class AdapterItemNews extends BaseAdapter{
                 holderLocal.txtNameFriend = (TextView) v.findViewById(R.id.txtNameFriend);
                 v.setTag(holderLocal);
         	}
-        }
+        	else if(i.getClass() == ItemEventFriend.class){
+        		eFri = (ItemEventFriend)i;
+        		holderEventFriend = new ViewHolderEventFriend();
+        		LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = inf.inflate(R.layout.itemeventfriend, null);
+                holderEventFriend.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
+                holderEventFriend.txtTitle = (TextView) v.findViewById(R.id.txtEventTitle);
+                holderEventFriend.txtClub = (TextView) v.findViewById(R.id.txtEventClub);
+                holderEventFriend.txtDate = (TextView) v.findViewById(R.id.txtEventDate);
+                holderEventFriend.txtText = (TextView) v.findViewById(R.id.txtEventText);
+                holderEventFriend.txtTime = (TextView) v.findViewById(R.id.txtEventTime);
+                holderEventFriend.btnSignMe = (Button) v.findViewById(R.id.btnSignMe);
+        		holderEventFriend.txtFriend = (TextView) v.findViewById(R.id.txtFriend);
+        		v.setTag(holderEventFriend);
+        		
+        		/*         
+                holderEventFriend.btnSignMe.setOnClickListener(new OnClickListener() {
+    				
+    				@Override
+    				public void onClick(View v) {
+    					long eventId = eFri.getId();
+    					if (v.isSelected()){
+    				//		holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+    						v.setSelected(false);
+    						Button b = (Button) v.findViewById(v.getId());
+    						b.setText(activity.getResources().getString(R.string.SignMe));
+    						goToEvent(eventId,true);
+    					}else{
+    					//	holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+    						Button b = (Button) v.findViewById(v.getId());
+    						b.setText(activity.getResources().getString(R.string.Signed));
+    						v.setSelected(true);
+    						goToEvent(eventId,false);
+    					}
+    				}
+    			});*/ //FIXME
+        	}
+       /* }
         else{
         	if(i.getClass() == ItemFriendMode.class){
         		holderFriendMode = (ViewHolderFriendMode) convertView.getTag();
+        	}
+        	else if(i.getClass() == ItemLocalNews.class){
+        		holderLocal = (ViewHolderLocalFollow) convertView.getTag();
         	}
         	else if(i.getClass() == ItemFriendState.class){
         		holderFriendState = (ViewHolderFriendState) convertView.getTag();
@@ -156,14 +201,15 @@ public class AdapterItemNews extends BaseAdapter{
         	else if(i.getClass() == ItemEvent.class){
         		holderEvent = (ViewHolderEvent) convertView.getTag();
         	}
-        	else if(i.getClass() == ItemLocalNews.class){
-        		holderLocal = (ViewHolderLocalFollow) convertView.getTag();
+        	else if(i.getClass() == ItemEventFriend.class){
+        		holderEventFriend = (ViewHolderEventFriend) convertView.getTag();
         	}
-        }
+        }*/
         
         
         //RELLENAMOS
         if(i.getClass() == ItemFriendMode.class){
+        	dir = (ItemFriendMode)i;
         	//Rellenamos la picturegrafía
             if (!dir.getPicture().equals("")){
             	holderFriendMode.picture.setImageUrl(dir.getPicture(), imageLoader);
@@ -196,6 +242,7 @@ public class AdapterItemNews extends BaseAdapter{
             holderFriendMode.txtMode.setText("Ha cambiado su modo de fiesta a " + modeString);
         }
         else if(i.getClass() == ItemFriendState.class){
+        	fri = (ItemFriendState)i;
         	//Rellenamos la picturegrafía
             if (!fri.getPicture().equals("")){
             	holderFriendState.picture.setImageUrl(fri.getPicture(), imageLoader);
@@ -207,6 +254,7 @@ public class AdapterItemNews extends BaseAdapter{
             holderFriendMode.txtMode.setText("Ha cambiado su estado " + state);
         }
         else if(i.getClass() == ItemEvent.class){
+        	eve = (ItemEvent)i;
         	//Rellenamos la picturegrafía
             if (!eve.getPicture().equals("")){
             	holderEvent.picture.setImageUrl(eve.getPicture(), imageLoader);
@@ -221,6 +269,7 @@ public class AdapterItemNews extends BaseAdapter{
             holderEvent.txtTime.setText(eve.getStart() + " - " + eve.getClose());
         }
         else if(i.getClass() == ItemLocalNews.class){
+        	loc = (ItemLocalNews)i;
         	//Rellenamos la picturegrafía
             if (!loc.getPicture().equals("") && !loc.getPicture().equals("null")){
             	holderLocal.picture.setImageUrl(loc.getPicture(), imageLoader); //FIXME
@@ -228,7 +277,23 @@ public class AdapterItemNews extends BaseAdapter{
             //Rellenamos el nameLocal
             holderLocal.txtNameLocal.setText(loc.getNameLocal());
           //Rellenamos el nameFriend
-            holderLocal.txtNameFriend.setText(loc.getNameFriend());
+            holderLocal.txtNameFriend.setText(loc.getNameFriend() + " está siguiendo a:");
+        }
+        else if(i.getClass() == ItemEventFriend.class){
+        	eFri = (ItemEventFriend)i;
+        	//Rellenamos la picturegrafía
+            if (!eFri.getPicture().equals("")){
+            	holderEventFriend.picture.setImageUrl(eFri.getPicture(), imageLoader);
+            }
+            //Rellenamos el name
+            holderEventFriend.txtTitle.setText(eFri.getTitle());
+            //Rellenamos el club
+            holderEventFriend.txtClub.setText(eFri.getNameEvent());
+          //Rellenamos el date
+            holderEventFriend.txtDate.setText(eFri.getDate());
+            holderEventFriend.txtText.setText(eFri.getText());
+            holderEventFriend.txtTime.setText(eFri.getStart() + " - " + eFri.getClose());
+            holderEventFriend.txtFriend.setText(eFri.getNameFriend() + " va a ir a este evento");
         }
 
         return v;
@@ -297,6 +362,17 @@ public class AdapterItemNews extends BaseAdapter{
 		public NetworkImageView picture;
 		public TextView txtNameLocal;
 		public TextView txtNameFriend;
+	}
+	
+	static class ViewHolderEventFriend {
+			public NetworkImageView picture;
+			public TextView txtTitle;
+			public TextView txtClub;
+			public TextView txtDate;
+			public TextView txtText;
+			public TextView txtTime;
+			public Button btnSignMe;
+			public TextView txtFriend;
 	}
 
 }
