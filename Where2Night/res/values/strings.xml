@@ -97,6 +97,14 @@
         <item>Destroyer</item>
         <item>Yo me llamo Ralph</item>
     </string-array>
+    
+    <string name="Detranquis">"De tranquis"</string>
+    <string name="Hoynomelio">"Hoy no me lio"</string>
+    <string name="Loquesurja">"Lo que surja"</string>
+    <string name="Lodaretodo">"Lo daré todo"</string>
+    <string name="Destroyer">"Destroyer"</string>
+    <string name="YomellamoRalph">"Yo me llamo Ralph"</string>
+    
     <string-array name="local_tabs">
         <item>Info</item>
         <item>Eventos</item>

@@ -18,6 +18,9 @@ import es.where2night.adapters.AdapterItemNews;
 import es.where2night.data.Item;
 import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemFriend;
+import es.where2night.data.ItemFriendMode;
+import es.where2night.data.ItemFriendState;
+import es.where2night.data.ItemLocalNews;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 import android.app.Activity;
@@ -126,17 +129,29 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 									
 									case 2:
 										//Estado de amigos
-										
+										String nameAS = aux.getString("name") + " " + aux.getString("surnames");
+										String pictureAS = aux.getString("picture");
+										String stateAS = aux.getString("mode");
+										ItemFriendState iFState = new ItemFriendState("",nameAS,stateAS);
+										arraydir.add(iFState);
 										break;
 										
 									case 3:
 										//Modo de amigos
-										
+										String nameAM = aux.getString("name") + " " + aux.getString("surnames");
+										String pictureAM = aux.getString("picture");
+										String modeAM = aux.getString("mode");
+										ItemFriendMode iFMode = new ItemFriendMode("",nameAM,modeAM);
+										arraydir.add(iFMode);										
 										break;
 										
 									case 4:
-										//Locales favoritos
-										
+										//Locales seguidos por amigos
+										String nameL = aux.getString("localName");
+										String nameF = aux.getString("name");
+										String pictureLoc = aux.getString("picture");
+										ItemLocalNews iLocal= new ItemLocalNews(nameL, "", nameF);
+										arraydir.add(iLocal);
 										break;
 										
 									case 5:

@@ -67,7 +67,7 @@ public class AdapterItemFriend extends BaseAdapter implements OnClickListener{
             v = inf.inflate(R.layout.itemfriendslists, null);
             holder.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
             holder.txtName = (TextView) v.findViewById(R.id.txtName);
-            holder.txtUbication = (TextView) v.findViewById(R.id.txtUbicationFriend);
+            holder.txtUbication = (TextView) v.findViewById(R.id.txtNewsFriend);
             holder.txtEstado = (TextView) v.findViewById(R.id.txtEstado);
             v.setTag(holder);
         }

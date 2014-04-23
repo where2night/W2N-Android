@@ -14,11 +14,12 @@ import com.where2night.R;
 
 import es.where2night.adapters.AdapterItemEvent.ViewHolderEvent;
 import es.where2night.adapters.AdapterItemFriend.ViewHolderFriend;
-import es.where2night.adapters.AdapterItemLocal.ViewHolderLocal;
 import es.where2night.data.Item;
 import es.where2night.data.ItemEvent;
-import es.where2night.data.ItemFriend;
+import es.where2night.data.ItemFriendMode;
+import es.where2night.data.ItemFriendState;
 import es.where2night.data.ItemLocalAndDJ;
+import es.where2night.data.ItemLocalNews;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 import android.app.Activity;
@@ -39,9 +40,10 @@ public class AdapterItemNews extends BaseAdapter{
     protected ArrayList<Item> items;
     private ImageLoader imageLoader;
     RequestQueue requestQueue;
-    ViewHolderFriend holderFriend;
+    ViewHolderFriendMode holderFriendMode;
+    ViewHolderFriendState holderFriendState;
     ViewHolderEvent holderEvent;
-    ViewHolderLocal holderLocal;
+    ViewHolderLocalFollow holderLocal;
     
     
 	
@@ -70,24 +72,32 @@ public class AdapterItemNews extends BaseAdapter{
 		
 		// Generamos una convertView por motivos de eficiencia
         View v = convertView;
-        ItemFriend dir = null;
+        ItemFriendMode dir = null;
+        ItemFriendState fri = null;
         ItemEvent eve = null;
-        final ItemLocalAndDJ loc = null;
+        ItemLocalNews loc = null;
         Item i = new Item();
  
         //Asociamos el layout de la lista que hemos creado
         if(convertView == null){
         	i = items.get(position);
-        	if(i.getClass() == ItemFriend.class){
-        		dir = (ItemFriend)i;
-        		holderFriend = new ViewHolderFriend();
+        	if(i.getClass() == ItemFriendMode.class){
+        		dir = (ItemFriendMode)i;
+        		holderFriendMode = new ViewHolderFriendMode();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = inf.inflate(R.layout.itemfriendslists, null);
-                holderFriend.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
-                holderFriend.txtName = (TextView) v.findViewById(R.id.txtName);
-                holderFriend.txtUbication = (TextView) v.findViewById(R.id.txtUbicationFriend);
-                holderFriend.txtEstado = (TextView) v.findViewById(R.id.txtEstado);
-                v.setTag(holderFriend);
+                v = inf.inflate(R.layout.itemfriendnews, null);
+                holderFriendMode.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
+                holderFriendMode.txtName = (TextView) v.findViewById(R.id.txtName);
+                holderFriendMode.txtMode = (TextView) v.findViewById(R.id.txtNews);
+        	}
+        	else if (i.getClass() == ItemFriendState.class){
+        		fri = (ItemFriendState)i;
+        		holderFriendMode = new ViewHolderFriendMode();
+                LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = inf.inflate(R.layout.itemfriendnews, null);
+                holderFriendState.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
+                holderFriendState.txtName = (TextView) v.findViewById(R.id.txtName);
+                holderFriendState.txtState = (TextView) v.findViewById(R.id.txtNews);
         	}
         	else if(i.getClass() == ItemEvent.class){
         		eve = (ItemEvent)i;
@@ -126,40 +136,75 @@ public class AdapterItemNews extends BaseAdapter{
                 
                 v.setTag(holderEvent);
         	}
-        	else if(i.getClass() == ItemLocalAndDJ.class){
-        		holderLocal = new ViewHolderLocal();
+        	else if(i.getClass() == ItemLocalNews.class){
+        		holderLocal = new ViewHolderLocalFollow();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = inf.inflate(R.layout.itemlocallist, null);
+                v = inf.inflate(R.layout.itemlocalnews, null);
                 holderLocal.picture = (NetworkImageView) v.findViewById(R.id.LocalPicture);
-                holderLocal.txtname = (TextView) v.findViewById(R.id.txtLocalName);
+                holderLocal.txtNameLocal = (TextView) v.findViewById(R.id.txtLocalName);
+                holderLocal.txtNameFriend = (TextView) v.findViewById(R.id.txtNameFriend);
                 v.setTag(holderLocal);
         	}
         }
         else{
-        	if(i.getClass() == ItemFriend.class){
-        		holderFriend = (ViewHolderFriend) convertView.getTag();
+        	if(i.getClass() == ItemFriendMode.class){
+        		holderFriendMode = (ViewHolderFriendMode) convertView.getTag();
+        	}
+        	else if(i.getClass() == ItemFriendState.class){
+        		holderFriendState = (ViewHolderFriendState) convertView.getTag();
         	}
         	else if(i.getClass() == ItemEvent.class){
         		holderEvent = (ViewHolderEvent) convertView.getTag();
         	}
-        	else if(i.getClass() == ItemLocalAndDJ.class){
-        		holderLocal = (ViewHolderLocal) convertView.getTag();
+        	else if(i.getClass() == ItemLocalNews.class){
+        		holderLocal = (ViewHolderLocalFollow) convertView.getTag();
         	}
         }
         
         
         //RELLENAMOS
-        if(i.getClass() == ItemFriend.class){
+        if(i.getClass() == ItemFriendMode.class){
         	//Rellenamos la picturegrafía
             if (!dir.getPicture().equals("")){
-            	holderFriend.picture.setImageUrl(dir.getPicture(), imageLoader);
+            	holderFriendMode.picture.setImageUrl(dir.getPicture(), imageLoader);
             }
             //Rellenamos el name
-            holderFriend.txtName.setText(dir.getTitle());
-            //Rellenamos el ubication
-            holderFriend.txtUbication.setText(dir.getUbication() + " en plan " + dir.getMode());
-            //Rellenamos el estado
-            holderFriend.txtEstado.setText(dir.getEstado());
+            holderFriendMode.txtName.setText(dir.getName());
+            //Rellenamos el mode
+            int modeInt = Integer.parseInt(dir.getMode());
+            String modeString = "";
+            switch (modeInt){
+            	case 0:
+            		modeString = "'De tranquis'";
+            		break;
+            	case 1:
+            		modeString = "'Hoy no me lio'";
+            		break;
+            	case 2:
+            		modeString = "'Lo que surja'";
+            		break;
+            	case 3:
+            		modeString = "'Lo daré todo'";
+            		break;
+            	case 4:
+            		modeString = "'Destroyer'";
+            		break;
+            	case 5:
+            		modeString = "'Yo me llamo Ralph'";
+            		break;
+            }
+            holderFriendMode.txtMode.setText("Ha cambiado su modo de fiesta a " + modeString);
+        }
+        else if(i.getClass() == ItemFriendState.class){
+        	//Rellenamos la picturegrafía
+            if (!fri.getPicture().equals("")){
+            	holderFriendState.picture.setImageUrl(fri.getPicture(), imageLoader);
+            }
+            //Rellenamos el name
+            holderFriendState.txtName.setText(fri.getName());
+            //Rellenamos el mode
+            String state = "'" + fri.getState() + "'";
+            holderFriendMode.txtMode.setText("Ha cambiado su estado " + state);
         }
         else if(i.getClass() == ItemEvent.class){
         	//Rellenamos la picturegrafía
@@ -175,13 +220,15 @@ public class AdapterItemNews extends BaseAdapter{
             holderEvent.txtText.setText(eve.getText());
             holderEvent.txtTime.setText(eve.getStart() + " - " + eve.getClose());
         }
-        else if(i.getClass() == ItemLocalAndDJ.class){
+        else if(i.getClass() == ItemLocalNews.class){
         	//Rellenamos la picturegrafía
             if (!loc.getPicture().equals("") && !loc.getPicture().equals("null")){
             	holderLocal.picture.setImageUrl(loc.getPicture(), imageLoader); //FIXME
             }
-            //Rellenamos el name
-            holderLocal.txtname.setText(loc.getName());
+            //Rellenamos el nameLocal
+            holderLocal.txtNameLocal.setText(loc.getNameLocal());
+          //Rellenamos el nameFriend
+            holderLocal.txtNameFriend.setText(loc.getNameFriend());
         }
 
         return v;
@@ -232,6 +279,24 @@ public class AdapterItemNews extends BaseAdapter{
 
 		}
 		requestQueue.add(request);
+	}
+	
+	static class ViewHolderFriendMode {
+		public NetworkImageView picture;
+		public TextView txtName;
+		public TextView txtMode;
+	}
+	
+	static class ViewHolderFriendState {
+		public NetworkImageView picture;
+		public TextView txtName;
+		public TextView txtState;
+	}
+	
+	static class ViewHolderLocalFollow {
+		public NetworkImageView picture;
+		public TextView txtNameLocal;
+		public TextView txtNameFriend;
 	}
 
 }
