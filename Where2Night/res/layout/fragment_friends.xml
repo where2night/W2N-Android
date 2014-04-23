@@ -3,39 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-<!--  
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/btn_igo_style" >
-        
-        <TextView
-	        android:id="@+id/textFriendRequest"
-	        android:layout_width="wrap_content"
-	        android:layout_height="60dp"
-	        android:paddingTop="20dp"
-	        android:paddingLeft="10dp"
-	        
-	        android:text="@string/FriendRequest"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textNumberFriendRequest"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_alignBaseline="@+id/textFriendRequest"
-            android:layout_alignBottom="@+id/textFriendRequest"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="23dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="20dp"
-            android:text="5"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-        
-    </RelativeLayout> -->
-
-    
 
     <ListView 
 	    android:layout_width="match_parent"

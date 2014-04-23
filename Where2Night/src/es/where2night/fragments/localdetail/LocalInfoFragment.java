@@ -152,7 +152,7 @@ private void fillData() {
 		    			LocalViewActivity.btnIGo.setSelected(true);
 		    			LocalViewActivity.btnIGo.setText(getResources().getString(R.string.Going));
 		    		}
-		            mapFragment.fillMap(latitude,longitude,localName);
+		            mapFragment.fillMap(latitude,longitude,localName,Long.parseLong(localId));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
