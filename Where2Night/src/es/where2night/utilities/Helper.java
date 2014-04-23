@@ -68,5 +68,13 @@ public class Helper {
 		return BASE_API_URL + "read/news.php";
 	}
 	
+	public static String getPartierListUrl(){
+		return BASE_API_URL + "read/partiers.php";
+	}
+	
+	public static String getFriendshipPetUrl(){
+		return BASE_API_URL + "read/petFriendship.php";
+	}
+	
 	
 }

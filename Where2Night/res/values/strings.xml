@@ -43,7 +43,6 @@
         <item>Inicio</item>
         <item>Mi Perfil</item>
         <item>Eventos</item>
-        <item>Fotos</item>
         <item>Amigos</item>
         <item>Locales</item>
     </string-array>
@@ -110,7 +109,9 @@
     </string-array>
 
     <string name="Search">Search</string>
+    <string name="Notifications">Notificaciones</string>
     <string name="search_hint_locals">Locales</string>
     <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="FriendRequest">Peticiones de amistad</string>
 
 </resources>

@@ -7,6 +7,7 @@ public class ItemFriend extends Item{
 	protected String ubication;
 	protected String mode;
 	protected String estado;
+	protected long id;
 	
 
 	public ItemFriend (String picture, String name, String ubication, String mode, String estado){
@@ -18,7 +19,7 @@ public class ItemFriend extends Item{
 		this.estado = estado;
 	}
 
-	public ItemFriend (String picture, String name, String ubication, String date, String mode, String estado, long id){
+	public ItemFriend (String picture, String name, String ubication, String mode, String estado, long id){
 	
 		super();
 		this.picture = picture;
