@@ -94,12 +94,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         
     }
     
-    @Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.local_view, menu);
-		return true;
-	}
     
     public void setContent(int index) {
 	    Fragment toHide = null;

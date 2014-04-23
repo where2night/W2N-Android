@@ -101,11 +101,12 @@
             android:value="AIzaSyA8ip8--0dzvrSq5ic6PbZ-LjkudXtPekk" />
 
         <activity
-            android:name="es.where2night.activities.DjViewActivty"
+            android:name="es.where2night.activities.FriendsRequestActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_dj_view_activty" >
+            android:label="@string/Notifications" >
         </activity>
 
+        
         <!-- Search results activity -->
         <activity
             android:name="es.where2night.activities.LocalsSearchResultsActivity"

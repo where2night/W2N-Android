@@ -113,9 +113,4 @@ public class DJEventsFragment extends Fragment {
 		requestQueue.add(request);
 	}
 	
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.menu_events_fragment, menu);
-	}
 }

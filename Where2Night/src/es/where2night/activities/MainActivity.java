@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -21,7 +23,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,12 +38,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
-import es.where2night.fragments.DJsFragment;
 import es.where2night.fragments.EventsFragment;
 import es.where2night.fragments.FriendsFragment;
 import es.where2night.fragments.HomeFragment;
 import es.where2night.fragments.LocalsFragment;
-import es.where2night.fragments.PhotosFragment;
 import es.where2night.fragments.ProfileFragment;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.FbManagement;
@@ -63,10 +67,10 @@ public class MainActivity extends FragmentActivity {
     private String email;
     private RequestQueue requestQueue;
     private JSONObject respuesta = null;
+    private Menu actionBarMenu;
     private Fragment[] fragments = new Fragment[]{new HomeFragment(),
     									  new ProfileFragment(),
     									  new EventsFragment(),
-    									  new PhotosFragment(),
     									  new FriendsFragment(),    									  
     									  new LocalsFragment()};
 	
@@ -126,7 +130,7 @@ public class MainActivity extends FragmentActivity {
         	public void onDrawerOpened(View drawerView) {
             	invalidateOptionsMenu();
             	getActionBar().setTitle("");
-            	getActionBar().setIcon(R.drawable.open_drawer);
+            //	getActionBar().setIcon(R.drawable.open_drawer);
             }
         };
         
@@ -141,19 +145,18 @@ public class MainActivity extends FragmentActivity {
         		.add(R.id.contentFrame, fragments[2])
         		.add(R.id.contentFrame, fragments[3])
         		.add(R.id.contentFrame, fragments[4])
-        		.add(R.id.contentFrame, fragments[5])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
 				        		  .hide(fragments[2])
 				        		  .hide(fragments[3])
 				        		  .hide(fragments[4])
-				        		  .hide(fragments[5])
 				        		  .commit();
         
         setContent(option);
     
         getActionBar().setIcon(R.drawable.logo7);
+        
     }
     
 	@Override
@@ -189,6 +192,11 @@ public class MainActivity extends FragmentActivity {
         }else if (item.getItemId() == R.id.action_edit_profile){
         	Intent i = new Intent(getApplicationContext(), EditProfileActivity.class);
 			startActivity(i);
+        } else if (item.getItemId() == R.id.action_search){
+            return true;
+        }else if (item.getItemId() == R.id.action_notifications){
+        	Toast.makeText(this, "Click!", Toast.LENGTH_SHORT).show();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -216,10 +224,8 @@ public class MainActivity extends FragmentActivity {
 		drawerList.setItemChecked(index, true);
 	    drawerLayout.closeDrawer(drawerList);	
 	    
-	    if (index == 5) actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	    if (index == 4) actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	    if (index == 2) ((EventsFragment) toShow).fill();
-	    if (index == 6) ((DJsFragment) toShow).fill();
-	    if (index == 4) Toast.makeText(getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -235,6 +241,26 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+	    // Assumes current activity is the searchable activity
+	    searchView.setSearchableInfo(searchManager.getSearchableInfo( getComponentName()));
+	    searchView.setIconifiedByDefault(true);
+	    actionBarMenu = menu;
+	    
+	    RelativeLayout badgeLayout = (RelativeLayout) actionBarMenu.findItem(R.id.action_notifications).getActionView();
+	    ImageView imgNotifications = (ImageView) badgeLayout.findViewById(R.id.actionbar_notifcation_img);
+	    imgNotifications.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), FriendsRequestActivity.class);
+				startActivity(i);
+				
+			}
+		});
+	    getFriendshipRequest();
         return true;
     }
     
@@ -300,7 +326,43 @@ public class MainActivity extends FragmentActivity {
     		
     	}
 
+    private void getFriendshipRequest() {
     	
+		final DataManager dm = new DataManager(getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
+		String url = Helper.getFriendshipPetUrl() + "/" + cred[0] + "/" + cred[1];
+		Log.e("Friendship", url);
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            try {
+	            		JSONObject root = new JSONObject(response);
+	            		RelativeLayout badgeLayout = (RelativeLayout) actionBarMenu.findItem(R.id.action_notifications).getActionView();
+	            	    TextView txtNotifications = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
+	            		txtNotifications.setText(root.getString("numPetitions"));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		
+		requestQueue.add(request);
+	}	
     
     
 }

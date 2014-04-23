@@ -1,6 +1,7 @@
 package es.where2night.fragments;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,13 +27,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.where2night.R;
 
+import es.where2night.activities.LocalViewActivity;
 import es.where2night.data.LocalListData;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
@@ -49,6 +53,7 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 	private GoogleMap mapa;
 	private RequestQueue requestQueue;
 	private ArrayList<LocalListData> localListData = new ArrayList<LocalListData>();
+	private Hashtable<Marker,String> markers = new Hashtable<Marker,String>();
 	
 	public MapFragment(){}
 
@@ -69,7 +74,7 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 			String latitude = local.getLatitude();
 			String longitude = local.getLongitude();
 			try{
-				fillMap(latitude,longitude,local.getName());
+				fillMap(latitude,longitude,local.getName(), local.getIdProfile());
 			}catch(NumberFormatException e){}
 			
 		}
@@ -149,7 +154,7 @@ private void getAllInfoFromServer() {
 	}
 	}
 	
-	public void fillMap(String latitude2, String longitude2, String localName) throws NumberFormatException
+	public void fillMap(String latitude2, String longitude2, String localName, final long idProfile) throws NumberFormatException
 	{
 		
 		float latitude = Float.valueOf(latitude2);
@@ -160,14 +165,26 @@ private void getAllInfoFromServer() {
 		
 		
 		
-		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+		  mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
 	     
-	      mapa.getUiSettings().setZoomControlsEnabled(false);
+	      mapa.getUiSettings().setZoomControlsEnabled(true);
 	      mapa.getUiSettings().setCompassEnabled(true);
-	      mapa.addMarker(new MarkerOptions()
-	            .position(position)
-	            .title(title)
-	            .anchor(0.5f, 0.5f));
+	      
+	      Marker marker =   mapa.addMarker(new MarkerOptions()
+					            .position(position)
+					            .title(title)
+					            .anchor(0.5f, 0.5f));
+	      
+	      markers.put(marker, String.valueOf(idProfile));
+	      
+	      mapa.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+	            @Override
+	            public void onInfoWindowClick(Marker marker) {
+	               Intent intent = new Intent(getActivity().getApplicationContext(),LocalViewActivity.class);
+	               intent.putExtra(LocalViewActivity.ID, markers.get(marker) );
+	               startActivity(intent);
+	            }
+	        });
 	}
 	
 	 public void moveCamera(View view) {
@@ -194,9 +211,9 @@ private void getAllInfoFromServer() {
             .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
    }
 
-public void fill() {
-	getAllInfoFromServer();
-	
-}
+	public void fill() {
+		getAllInfoFromServer();
+		
+	}
 	
 }
