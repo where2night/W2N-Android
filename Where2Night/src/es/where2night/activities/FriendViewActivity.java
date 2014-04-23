@@ -16,7 +16,7 @@ import com.where2night.R;
 import es.where2night.fragments.friendProfile.FriendEventsFragment;
 import es.where2night.fragments.friendProfile.FriendInfoFragment;
 
-public class FriendViewActivty extends FragmentActivity implements ActionBar.TabListener  {
+public class FriendViewActivity extends FragmentActivity implements ActionBar.TabListener  {
 
 	public static final String ID = "id";
 	private Bundle bundle;

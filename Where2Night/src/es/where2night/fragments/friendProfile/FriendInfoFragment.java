@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.where2night.R;
 
-import es.where2night.activities.FriendViewActivty;
+import es.where2night.activities.FriendViewActivity;
 
 public class FriendInfoFragment extends Fragment implements OnClickListener {
 	
@@ -35,7 +35,7 @@ public class FriendInfoFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_friend_info, container, false);
 
-		friendId = getArguments().getString(FriendViewActivty.ID);
+		friendId = getArguments().getString(FriendViewActivity.ID);
 		
 		imgFriend = (NetworkImageView) view.findViewById(R.id.imgFriend);
 		txtNameAndSurnameFriend = (TextView) view.findViewById(R.id.txtNameAndSurnameFriend);
@@ -47,7 +47,7 @@ public class FriendInfoFragment extends Fragment implements OnClickListener {
 		btnAddAsFriend = (Button) view.findViewById(R.id.btnAddAsFriend);
         btnAddAsFriend.setOnClickListener(this);
         
-        //fillData();
+        fillData();
         
 		return view;
 	}
