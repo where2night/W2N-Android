@@ -44,6 +44,10 @@ public class Helper {
 		return "http://www.where2night.es/images/profile.jpg";
 	}
 	
+	public static String getDefaultPubPictureUrl(){
+		return "http://www.where2night.es/profilesImages/pollo.jpg";
+	}
+	
 	public static String getProfilePictureUrl(){
 		return "http://www.where2night.es/profilesImages/";
 	}

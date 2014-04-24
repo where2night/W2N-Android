@@ -380,6 +380,7 @@ public class HomeFragment extends Fragment{
 			            	for (int i = 0; i < root.length() - 1; i++){
 			            		JSONObject aux = root.getJSONObject(String.valueOf(i));
 			            		String type = aux.getString("TYPE");
+			            		String pictureAux = "0";
 			            		int tipo = Integer.parseInt(type);
 			            		switch (tipo) {
 									case 1:
@@ -392,13 +393,17 @@ public class HomeFragment extends Fragment{
 						            	String close = aux.getString("closeHour");
 						            	String idCreator = aux.getString("idProfileLocal");
 						            	long id = Long.valueOf(aux.getString("idEvent"));
-						            	String name = aux.getString("name");
+						            	String name = aux.getString("localName");
 						            	String picture = aux.getString("picture");
+						            	picture = picture.replace("\\", "");
+						            	if(picture.equals(pictureAux) || picture.equals("")){
+											picture = Helper.getDefaultPubPictureUrl();
+										}
 						            	String goes = aux.getString("GOES");
 						            	boolean going = false;
 						            	if (!goes.equals("null"))
 						            		going = true;
-						            	ItemEvent event = new ItemEvent("",name,title,text,date,start,close,idCreator,id,going); //FIXME cargar imagen
+						            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id,going); //FIXME cargar imagen
 						            	arraydir.add(event);
 										break;
 									
@@ -406,9 +411,13 @@ public class HomeFragment extends Fragment{
 										//Estado de amigos
 										String nameAS = aux.getString("name") + " " + aux.getString("surnames");
 										String pictureAS = aux.getString("picture");
+										pictureAS = pictureAS.replace("\\", "");
+										if(pictureAS.equals(pictureAux) || pictureAS.equals("")){
+											pictureAS = Helper.getDefaultProfilePictureUrl();
+										}
 										String stateAS = aux.getString("status");
 										long idAs = Integer.valueOf(aux.getString("idPartierFriend"));
-										ItemFriendState iFState = new ItemFriendState("",nameAS,stateAS,idAs);
+										ItemFriendState iFState = new ItemFriendState(pictureAS,nameAS,stateAS,idAs);
 										arraydir.add(iFState);
 										break;
 										
@@ -416,9 +425,13 @@ public class HomeFragment extends Fragment{
 										//Modo de amigos
 										String nameAM = aux.getString("name") + " " + aux.getString("surnames");
 										String pictureAM = aux.getString("picture");
+										pictureAM = pictureAM.replace("\\", "");
+										if(pictureAM.equals(pictureAux) || pictureAM.equals("")){
+											pictureAM = Helper.getDefaultProfilePictureUrl();
+										}
 										String modeAM = aux.getString("mode");
 										long idAM = Integer.valueOf(aux.getString("idPartierFriend"));
-										ItemFriendMode iFMode = new ItemFriendMode("",nameAM,modeAM,idAM);
+										ItemFriendMode iFMode = new ItemFriendMode(pictureAM,nameAM,modeAM,idAM);
 										arraydir.add(iFMode);									
 										break;
 										
@@ -427,8 +440,12 @@ public class HomeFragment extends Fragment{
 										String nameL = aux.getString("localName");
 										String nameF = aux.getString("name") + " " + aux.getString("surnames");
 										String pictureLoc = aux.getString("picture");
+										pictureLoc = pictureLoc.replace("\\", "");
+										if(pictureLoc.equals(pictureAux) || pictureLoc.equals("")){
+											picture = Helper.getDefaultPubPictureUrl();
+										}
 										long idL = Integer.valueOf(aux.getString("idProfileLocal"));
-										ItemLocalNews iLocal= new ItemLocalNews(nameL, "", nameF,idL);
+										ItemLocalNews iLocal= new ItemLocalNews(nameL, pictureLoc, nameF,idL);
 										arraydir.add(iLocal);
 										break;
 										
@@ -444,12 +461,16 @@ public class HomeFragment extends Fragment{
 						            	long idF = Long.valueOf(aux.getString("idEvent"));
 						            	String nameLoc = aux.getString("localName");
 						            	String pictureF = aux.getString("picture");
+						            	pictureF = pictureF.replace("\\", "");
+						            	if(pictureF.equals(pictureAux) || pictureF.equals("")){
+						            		pictureF = Helper.getDefaultPubPictureUrl();
+										}
 						            	String nameFriend = aux.getString("name");
 						            	String goesF = aux.getString("GOES");
 						            	boolean goingF = false;
 						            	if (!goesF.equals("null"))
 						            		goingF = true;
-						            	ItemEventFriend eventFriend = new ItemEventFriend("",nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,goingF,idF); //FIXME cargar imagen
+						            	ItemEventFriend eventFriend = new ItemEventFriend(pictureF,nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,goingF,idF); //FIXME cargar imagen
 						            	arraydir.add(eventFriend);
 										break;
 	
