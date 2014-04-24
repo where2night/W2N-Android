@@ -71,25 +71,9 @@ public class FriendEventsFragment extends Fragment{
 	        	Log.e("Response", response);
 	            try {
 	            	
-		            	JSONObject root = new JSONObject(response);
-		            	String name = root.getString("name");
-		            	String picture = root.getString("pictureC");
+		            
 		            	
-		            	for (int i = 0; i < root.length() - 3; i++){
-			            	JSONObject aux = root.getJSONObject(String.valueOf(i));
-			            	String title = aux.getString("title");
-			            	String text = aux.getString("text");
-			            	String[] dateArr = aux.getString("date").split("-");
-			            	String date = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
-			            	String start = aux.getString("startHour");
-			            	String close = aux.getString("closeHour");
-			            	String idCreator = aux.getString("idProfileCreator");
-			            	long id = Long.valueOf(aux.getString("idEvent"));
-			            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id);
-			            	arraydir.add(event);
-		            	}
-		            adapter.notifyDataSetChanged();
-		            pgEventList.setVisibility(View.GONE);
+		          
 		    		
 				} catch (Exception e) {
 					pgEventList.setVisibility(View.GONE);
@@ -113,8 +97,4 @@ public class FriendEventsFragment extends Fragment{
 	}
 	
 	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.menu_events_fragment, menu);
-	}
 }

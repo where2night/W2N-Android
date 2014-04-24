@@ -7,7 +7,6 @@ public class ItemFriend extends Item{
 	protected String ubication;
 	protected String mode;
 	protected String estado;
-	protected long id;
 	
 
 	public ItemFriend (String picture, String name, String ubication, String mode, String estado){

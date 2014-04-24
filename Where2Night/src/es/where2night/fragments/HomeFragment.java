@@ -241,7 +241,11 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 						            	long id = Long.valueOf(aux.getString("idEvent"));
 						            	String name = aux.getString("name");
 						            	String picture = aux.getString("picture");
-						            	ItemEvent event = new ItemEvent("",name,title,text,date,start,close,idCreator,id); //FIXME cargar imagen
+						            	String goes = aux.getString("GOES");
+						            	boolean going = false;
+						            	if (!goes.equals("null"))
+						            		going = true;
+						            	ItemEvent event = new ItemEvent("",name,title,text,date,start,close,idCreator,id,going); //FIXME cargar imagen
 						            	arraydir.add(event);
 										break;
 									

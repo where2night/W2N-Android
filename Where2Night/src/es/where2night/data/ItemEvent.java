@@ -11,11 +11,12 @@ public class ItemEvent extends Item{
 	private String close;
 	private String idCreator;
 	public long id;
+	private boolean goes; 
 	
 
 
 
-public ItemEvent(String picture, String name,String title, String text, String date, String start, String close, String idCreator, long id){
+public ItemEvent(String picture, String name,String title, String text, String date, String start, String close, String idCreator, long id, boolean goes){
 
 	this.picture = picture;
 	this.name = name;
@@ -26,6 +27,7 @@ public ItemEvent(String picture, String name,String title, String text, String d
 	this.close = close;
 	this.idCreator = idCreator;
 	this.id = id;
+	this.goes = goes;
 }
 
 public String getPicture() {
@@ -94,6 +96,14 @@ public String getIdCreator() {
 
 public void setIdCreator(String idCreator) {
 	this.idCreator = idCreator;
+}
+
+public boolean isGoes() {
+	return goes;
+}
+
+public void setGoes(boolean goes) {
+	this.goes = goes;
 }
 
 }

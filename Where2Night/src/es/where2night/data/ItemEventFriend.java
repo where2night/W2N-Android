@@ -10,10 +10,11 @@ public class ItemEventFriend extends Item{
 	private String close;
 	private String idCreator;
 	private String nameFriend;
+	private boolean goes;
 	
 	public ItemEventFriend(String picture, String nameEvent, String title,
 			String text, String date, String start, String close,
-			String idCreator, String nameFriend) {
+			String idCreator, String nameFriend, boolean goes) {
 		super();
 		this.picture = picture;
 		this.nameEvent = nameEvent;
@@ -24,6 +25,7 @@ public class ItemEventFriend extends Item{
 		this.close = close;
 		this.idCreator = idCreator;
 		this.nameFriend = nameFriend;
+		this.goes = goes;
 	}
 	
 	public ItemEventFriend(String picture, String nameEvent, String title,
@@ -112,6 +114,14 @@ public class ItemEventFriend extends Item{
 
 	public void setNameFriend(String nameFriend) {
 		this.nameFriend = nameFriend;
+	}
+
+	public boolean isGoes() {
+		return goes;
+	}
+
+	public void setGoes(boolean goes) {
+		this.goes = goes;
 	}
 	
 	

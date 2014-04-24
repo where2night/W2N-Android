@@ -58,8 +58,8 @@ public class FriendsRequestActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position,
 					long arg3) {
-				Intent intent = new Intent(FriendsRequestActivity.this, LocalViewActivity.class);
-                intent.putExtra(LocalViewActivity.ID, String.valueOf(adapter.getItemId(position)));
+				Intent intent = new Intent(FriendsRequestActivity.this, FriendViewActivity.class);
+                intent.putExtra(FriendViewActivity.ID, String.valueOf(adapter.getItemId(position)));
                 startActivity(intent);
 			}
 			

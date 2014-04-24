@@ -14,10 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,10 +26,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
+import es.where2night.activities.FriendViewActivity;
 import es.where2night.activities.LocalViewActivity;
 import es.where2night.adapters.AdapterItemFriendList;
 import es.where2night.data.ItemFriend;
-import es.where2night.data.ItemLocalAndDJ;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
@@ -51,7 +50,6 @@ public class FriendsFragment extends Fragment {
         connectionProgressDialog.setMessage("Cargando tu perfil...");
         
 		ListView lista = (ListView) view.findViewById(R.id.friendList);
-	//	friendshipPets = (TextView) view.findViewById(R.id.textNumberFriendRequest);
         arraydir = new ArrayList<ItemFriend>();
         
         //TODO      
@@ -63,7 +61,7 @@ public class FriendsFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position,
 					long arg3) {
-				Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+				Intent intent = new Intent(getActivity(), FriendViewActivity.class);
                 intent.putExtra(LocalViewActivity.ID, String.valueOf(adapter.getItemId(position)));
                 startActivity(intent);
 			}

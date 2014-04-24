@@ -86,8 +86,8 @@ public class DJEventsFragment extends Fragment {
 			            	String close = aux.getString("closeHour");
 			            	String idCreator = aux.getString("idProfileCreator");
 			            	long id = Long.valueOf(aux.getString("idEvent"));
-			            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id);
-			            	arraydir.add(event);
+			      //      	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id);
+			       //     	arraydir.add(event);
 		            	}
 		            adapter.notifyDataSetChanged();
 		            pgEventList.setVisibility(View.GONE);

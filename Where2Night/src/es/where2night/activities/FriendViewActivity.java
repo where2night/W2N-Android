@@ -1,5 +1,7 @@
 package es.where2night.activities;
 
+import org.json.JSONObject;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
@@ -8,13 +10,26 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
 import es.where2night.fragments.friendProfile.FriendEventsFragment;
 import es.where2night.fragments.friendProfile.FriendInfoFragment;
+import es.where2night.utilities.BitmapLRUCache;
+import es.where2night.utilities.DataManager;
+import es.where2night.utilities.Helper;
 
 public class FriendViewActivity extends FragmentActivity implements ActionBar.TabListener  {
 
@@ -23,6 +38,7 @@ public class FriendViewActivity extends FragmentActivity implements ActionBar.Ta
     private String friendId = "";
     private int lastIndex = 0;
     
+  
     
     private Fragment[] fragments = new Fragment[] {new FriendInfoFragment(),
     											   new FriendEventsFragment()};
@@ -31,7 +47,9 @@ public class FriendViewActivity extends FragmentActivity implements ActionBar.Ta
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_view);
+        
         friendId = getIntent().getStringExtra(ID);
+        
         final ActionBar actionBar = getActionBar();
         actionBar.setIcon(R.drawable.logo7);
         actionBar.setHomeButtonEnabled(true);
@@ -43,13 +61,14 @@ public class FriendViewActivity extends FragmentActivity implements ActionBar.Ta
         
         String[] tabs = getResources().getStringArray(R.array.friend_tabs);
         
+        bundle = new Bundle();
+		bundle.putString(ID, friendId);
+		
         for (int i = 0; i<tabs.length; i++){
 	        actionBar.addTab(
 	                actionBar.newTab()
 	                        .setText(tabs[i])
 	                        .setTabListener(this));
-	        bundle = new Bundle();
-			bundle.putString(ID, friendId);
 			fragments[i].setArguments(bundle);
         }
         
@@ -126,6 +145,7 @@ public class FriendViewActivity extends FragmentActivity implements ActionBar.Ta
 		Intent intent = new Intent(this, MainActivity.class);
 		return intent;
 	}
+
 	
 
 }

@@ -91,7 +91,11 @@ public class LocalEventsFragment extends Fragment {
 			            	String close = aux.getString("closeHour");
 			            	String idCreator = aux.getString("idProfileCreator");
 			            	long id = Long.valueOf(aux.getString("idEvent"));
-			            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id);
+			            	String goes = aux.getString("GOES");
+			            	boolean going = false;
+			            	if (!goes.equals("null"))
+			            		going = true;
+			            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id,going);
 			            	arraydir.add(event);
 		            	}
 		            adapter.notifyDataSetChanged();

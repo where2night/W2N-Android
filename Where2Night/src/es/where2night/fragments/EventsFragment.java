@@ -88,7 +88,8 @@ public void fill(){
 			            	long id = Long.valueOf(aux.getString("idEvent"));
 			            	String name = aux.getString("name");
 			            	String picture = aux.getString("pictureC");
-			            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id);
+			            	
+			            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id,true);
 			            	arraydir.add(event);
 		            	}
 		            adapter.notifyDataSetChanged();

@@ -2,6 +2,16 @@ package es.where2night.adapters;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,27 +23,14 @@ import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
 import es.where2night.adapters.AdapterItemEvent.ViewHolderEvent;
-import es.where2night.adapters.AdapterItemFriend.ViewHolderFriend;
 import es.where2night.data.Item;
 import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemEventFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
-import es.where2night.data.ItemLocalAndDJ;
 import es.where2night.data.ItemLocalNews;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 public class AdapterItemNews extends BaseAdapter{
 

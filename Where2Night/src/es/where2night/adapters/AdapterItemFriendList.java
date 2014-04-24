@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,7 +52,9 @@ public class AdapterItemFriendList extends BaseAdapter implements OnClickListene
  
     @Override
     public long getItemId(int position) {
+    	Log.e("ID", String.valueOf(items.get(position).getId()));
         return items.get(position).getId();
+        
     }
  
     @Override

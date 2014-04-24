@@ -105,6 +105,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/Notifications" >
         </activity>
+        
+         <activity
+            android:name="es.where2night.activities.FriendViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/Notifications" >
+        </activity>
 
         
         <!-- Search results activity -->

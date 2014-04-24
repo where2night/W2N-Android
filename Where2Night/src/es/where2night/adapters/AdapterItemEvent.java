@@ -80,33 +80,41 @@ public class AdapterItemEvent extends BaseAdapter implements OnClickListener{
             holder.txtTime = (TextView) v.findViewById(R.id.txtEventTime);
             holder.btnSignMe = (Button) v.findViewById(R.id.btnSignMe);
             
-                     
-            holder.btnSignMe.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					long eventId = dir.getId();
-					if (v.isSelected()){
-				//		holder.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
-						v.setSelected(false);
-						Button b = (Button) v.findViewById(v.getId());
-						b.setText(activity.getResources().getString(R.string.SignMe));
-						goToEvent(eventId,true);
-					}else{
-					//	holder.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
-						Button b = (Button) v.findViewById(v.getId());
-						b.setText(activity.getResources().getString(R.string.Signed));
-						v.setSelected(true);
-						goToEvent(eventId,false);
-					}
-				}
-			});
-            
             v.setTag(holder);
         } else {
         	holder = (ViewHolderEvent) convertView.getTag();
         }
- 
+        
+       
+        
+        holder.btnSignMe.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				long eventId = dir.getId();
+				if (v.isSelected()){
+					holder.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+		        	holder.btnSignMe.setSelected(false);
+		        	dir.setGoes(false);
+		        	
+					goToEvent(eventId,true);
+				}else{
+					holder.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+		        	holder.btnSignMe.setSelected(true);
+		        	dir.setGoes(true);
+					goToEvent(eventId,false);
+				}
+				notifyDataSetChanged(); // tells the adapter that the data changed
+			}
+		});
+        
+        if (dir.isGoes()){
+        	holder.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+        	holder.btnSignMe.setSelected(true);
+        }else {
+        	holder.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+        	holder.btnSignMe.setSelected(false);
+        }
         
         //Rellenamos la picturegrafía
         if (!dir.getPicture().equals("")){
