@@ -256,7 +256,7 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 										pictureAM = Helper.getDefaultProfilePictureUrl();
 									}
 									String modeAM = aux.getString("mode");
-									ItemFriendMode iFMode = new ItemFriendMode("",nameAM,modeAM);
+									ItemFriendMode iFMode = new ItemFriendMode(pictureAM,nameAM,modeAM);
 									arraydir.add(iFMode);									
 									break;
 									
