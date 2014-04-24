@@ -16,6 +16,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
+import es.where2night.activities.FriendViewActivity;
+import es.where2night.activities.LocalViewActivity;
 import es.where2night.activities.MainActivity;
 import es.where2night.adapters.AdapterItemNews;
 import es.where2night.data.Item;
@@ -129,16 +131,6 @@ public class HomeFragment extends Fragment{
 		        	fillNews(getView());
 		            loading = true;
 		        }
-				
-			}
-		});
-        
-        lista.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -336,6 +328,40 @@ public class HomeFragment extends Fragment{
 		
         //Toast.makeText(getActivity().getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
         
+		lista.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				
+				if(adapterNews.getItem(position).getClass() == ItemFriendMode.class){
+					Intent intent = new Intent(getActivity(), FriendViewActivity.class);
+					intent.putExtra(FriendViewActivity.ID, String.valueOf(((ItemFriendState)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemFriendState.class){
+					Intent intent = new Intent(getActivity(), FriendViewActivity.class);
+					intent.putExtra(FriendViewActivity.ID, String.valueOf(((ItemFriendState)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemEvent.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemEvent)adapterNews.getItem(position)).getIdCreator()));
+					startActivity(intent);
+				}//FIXME
+				else if(adapterNews.getItem(position).getClass() == ItemLocalNews.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemLocalNews)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemEventFriend.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemEventFriend)adapterNews.getItem(position)).getIdCreator()));
+					startActivity(intent);
+				}
+			}
+		});
+		
+		
         final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
@@ -381,7 +407,8 @@ public class HomeFragment extends Fragment{
 										String nameAS = aux.getString("name") + " " + aux.getString("surnames");
 										String pictureAS = aux.getString("picture");
 										String stateAS = aux.getString("status");
-										ItemFriendState iFState = new ItemFriendState("",nameAS,stateAS);
+										long idAs = Integer.valueOf(aux.getString("idPartierFriend"));
+										ItemFriendState iFState = new ItemFriendState("",nameAS,stateAS,idAs);
 										arraydir.add(iFState);
 										break;
 										
@@ -390,7 +417,8 @@ public class HomeFragment extends Fragment{
 										String nameAM = aux.getString("name") + " " + aux.getString("surnames");
 										String pictureAM = aux.getString("picture");
 										String modeAM = aux.getString("mode");
-										ItemFriendMode iFMode = new ItemFriendMode("",nameAM,modeAM);
+										long idAM = Integer.valueOf(aux.getString("idPartierFriend"));
+										ItemFriendMode iFMode = new ItemFriendMode("",nameAM,modeAM,idAM);
 										arraydir.add(iFMode);									
 										break;
 										
@@ -399,7 +427,8 @@ public class HomeFragment extends Fragment{
 										String nameL = aux.getString("localName");
 										String nameF = aux.getString("name") + " " + aux.getString("surnames");
 										String pictureLoc = aux.getString("picture");
-										ItemLocalNews iLocal= new ItemLocalNews(nameL, "", nameF);
+										long idL = Integer.valueOf(aux.getString("idProfileLocal"));
+										ItemLocalNews iLocal= new ItemLocalNews(nameL, "", nameF,idL);
 										arraydir.add(iLocal);
 										break;
 										
