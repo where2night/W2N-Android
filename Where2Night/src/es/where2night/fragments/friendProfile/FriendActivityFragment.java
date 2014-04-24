@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
 import es.where2night.activities.FriendViewActivity;
+import es.where2night.activities.LocalViewActivity;
 import es.where2night.adapters.AdapterItemEvent;
 import es.where2night.adapters.AdapterItemNews;
 import es.where2night.data.Item;
@@ -25,6 +26,7 @@ import es.where2night.data.ItemLocalNews;
 import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -121,15 +123,39 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 			}
 		});
         
-        list.setOnItemClickListener(new OnItemClickListener() {
+		list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				
+				/*if(adapterNews.getItem(position).getClass() == ItemFriendMode.class){
+					Intent intent = new Intent(getActivity(), FriendViewActivity.class);
+					intent.putExtra(FriendViewActivity.ID, String.valueOf(((ItemFriendMode)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemFriendState.class){
+					Intent intent = new Intent(getActivity(), FriendViewActivity.class);
+					intent.putExtra(FriendViewActivity.ID, String.valueOf(((ItemFriendState)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemEvent.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemEvent)adapterNews.getItem(position)).getIdCreator()));
+					startActivity(intent);
+				}*/
+				if(adapterNews.getItem(position).getClass() == ItemLocalNews.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemLocalNews)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				/*else if(adapterNews.getItem(position).getClass() == ItemEventFriend.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemEventFriend)adapterNews.getItem(position)).getIdCreator()));
+					startActivity(intent);
+				}*/
 			}
 		});
+		
         fill();
 		return view;
 	}

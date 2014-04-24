@@ -335,7 +335,7 @@ public class HomeFragment extends Fragment{
 				
 				if(adapterNews.getItem(position).getClass() == ItemFriendMode.class){
 					Intent intent = new Intent(getActivity(), FriendViewActivity.class);
-					intent.putExtra(FriendViewActivity.ID, String.valueOf(((ItemFriendState)adapterNews.getItem(position)).getId()));
+					intent.putExtra(FriendViewActivity.ID, String.valueOf(((ItemFriendMode)adapterNews.getItem(position)).getId()));
 					startActivity(intent);
 				}
 				else if(adapterNews.getItem(position).getClass() == ItemFriendState.class){

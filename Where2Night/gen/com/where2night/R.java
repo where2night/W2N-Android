@@ -1541,7 +1541,7 @@ containing a value of this type.
         public static final int yuli=0x7f0200cd;
     }
     public static final class id {
-        public static final int ButtonLayout=0x7f070093;
+        public static final int ButtonLayout=0x7f070092;
         public static final int Eventpicture=0x7f0700b6;
         public static final int FriendPicture=0x7f0700be;
         public static final int Friendpicture=0x7f0700c0;
@@ -1564,19 +1564,19 @@ containing a value of this type.
         public static final int action_mode_close_button=0x7f070029;
         public static final int action_notifications=0x7f0700c8;
         public static final int action_search=0x7f0700c9;
-        public static final int action_settings=0x7f0700c7;
+        public static final int action_settings=0x7f0700cc;
         public static final int actionbar_notifcation_img=0x7f070041;
         public static final int actionbar_notifcation_textview=0x7f070042;
         public static final int activity_chooser_view_content=0x7f07002a;
         public static final int always=0x7f070011;
         public static final int beginning=0x7f070016;
-        public static final int btnAddAsFriend=0x7f070095;
+        public static final int btnAddAsFriend=0x7f070094;
         public static final int btnEditAccept=0x7f070051;
         public static final int btnEditCancel=0x7f070050;
         public static final int btnEnviarEstado=0x7f07005a;
         public static final int btnFollowMe=0x7f07008f;
         public static final int btnIGo=0x7f07005c;
-        public static final int btnIgnoreFriend=0x7f070094;
+        public static final int btnIgnoreFriend=0x7f070093;
         public static final int btnLogin=0x7f07005f;
         public static final int btnLoginEmail=0x7f070059;
         public static final int btnSignMe=0x7f0700bc;
@@ -1605,6 +1605,7 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment_profile_name=0x7f070085;
         public static final int contentFrame=0x7f070064;
         public static final int default_activity_button=0x7f07002d;
+        public static final int delete_friend=0x7f0700c7;
         public static final int dialog=0x7f070014;
         public static final int disableHome=0x7f07000e;
         public static final int drawerLayout=0x7f070063;
@@ -1637,7 +1638,7 @@ containing a value of this type.
         public static final int image=0x7f07002c;
         public static final int imgDj=0x7f070087;
         public static final int imgEditProfile=0x7f070044;
-        public static final int imgFriend=0x7f070092;
+        public static final int imgFriend=0x7f070095;
         public static final int imgLocal=0x7f0700a5;
         public static final int imgTop=0x7f070053;
         public static final int large=0x7f070006;
@@ -1825,26 +1826,27 @@ containing a value of this type.
         public static final int fragment_dj_info=0x7f030030;
         public static final int fragment_djs=0x7f030031;
         public static final int fragment_events=0x7f030032;
-        public static final int fragment_friend_info=0x7f030033;
-        public static final int fragment_friends=0x7f030034;
-        public static final int fragment_home=0x7f030035;
-        public static final int fragment_list=0x7f030036;
-        public static final int fragment_local_info=0x7f030037;
-        public static final int fragment_locals=0x7f030038;
-        public static final int fragment_map=0x7f030039;
-        public static final int fragment_photos=0x7f03003a;
-        public static final int fragment_profile=0x7f03003b;
-        public static final int fragment_under_construction=0x7f03003c;
-        public static final int itemdiscountlist=0x7f03003d;
-        public static final int itemevent=0x7f03003e;
-        public static final int itemeventfriend=0x7f03003f;
-        public static final int itemeventslists=0x7f030040;
-        public static final int itemfriend=0x7f030041;
-        public static final int itemfriendnews=0x7f030042;
-        public static final int itemfriendslists=0x7f030043;
-        public static final int itemlocallist=0x7f030044;
-        public static final int itemlocalnews=0x7f030045;
-        public static final int support_simple_spinner_dropdown_item=0x7f030046;
+        public static final int fragment_friend_activity=0x7f030033;
+        public static final int fragment_friend_info=0x7f030034;
+        public static final int fragment_friends=0x7f030035;
+        public static final int fragment_home=0x7f030036;
+        public static final int fragment_list=0x7f030037;
+        public static final int fragment_local_info=0x7f030038;
+        public static final int fragment_locals=0x7f030039;
+        public static final int fragment_map=0x7f03003a;
+        public static final int fragment_photos=0x7f03003b;
+        public static final int fragment_profile=0x7f03003c;
+        public static final int fragment_under_construction=0x7f03003d;
+        public static final int itemdiscountlist=0x7f03003e;
+        public static final int itemevent=0x7f03003f;
+        public static final int itemeventfriend=0x7f030040;
+        public static final int itemeventslists=0x7f030041;
+        public static final int itemfriend=0x7f030042;
+        public static final int itemfriendnews=0x7f030043;
+        public static final int itemfriendslists=0x7f030044;
+        public static final int itemlocallist=0x7f030045;
+        public static final int itemlocalnews=0x7f030046;
+        public static final int support_simple_spinner_dropdown_item=0x7f030047;
     }
     public static final class menu {
         public static final int friend_view_activty=0x7f0e0000;
@@ -2066,6 +2068,7 @@ containing a value of this type.
         public static final int contrasena=0x7f08005e;
         public static final int date=0x7f08005d;
         public static final int default_status=0x7f080052;
+        public static final int delete_friend=0x7f08009f;
         public static final int drawer_close=0x7f080048;
         public static final int drawer_open=0x7f080047;
         public static final int drink=0x7f080076;
