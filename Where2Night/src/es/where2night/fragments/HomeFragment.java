@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment{
 	private TextView txtStatus;
 	
 	//El minimo de elementos a tener debajo de la posicion actual del scroll antes de cargar mas
-    private int visibleThreshold = 1;
+    private int visibleThreshold = 3;
     // La pagina actual
     private int currentPage = 0;
     // El total de elementos despues de la ultima carga de datos
@@ -71,6 +71,7 @@ public class HomeFragment extends Fragment{
     private int startingPageIndex = 0;
 	
 	private Button btnEnviar;
+	private ProgressBar pgEventList;
 	private String oldMode;
 	private String oldStatus;
 	
@@ -85,6 +86,7 @@ public class HomeFragment extends Fragment{
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 		spinnerAnimo = (Spinner)view.findViewById(R.id.spinnerAnimo);
 		btnEnviar = (Button)view.findViewById(R.id.btnEnviarEstado);
+		pgEventList = (ProgressBar)view.findViewById(R.id.pgEventList);
 		txtStatus = (TextView)view.findViewById(R.id.txtEstado);
 		lista = (ListView) view.findViewById(R.id.newsList);
 		arraydir = new ArrayList<Item>();
@@ -307,6 +309,7 @@ public class HomeFragment extends Fragment{
 	            	oldStatus = statusString;
 	            }
 	            catch (Exception e) {
+	            	pgEventList.setVisibility(View.GONE);
 					e.printStackTrace();
 				}
 	        }
@@ -317,6 +320,7 @@ public class HomeFragment extends Fragment{
 	         @Override
 	         public void onErrorResponse(VolleyError error) {
 	             // error
+	        	 pgEventList.setVisibility(View.GONE);
 	             Log.e("Error.Response", error.toString());
 	       }
 	    };
@@ -424,9 +428,11 @@ public class HomeFragment extends Fragment{
 										break;
 								}
 			            	}
+			            	pgEventList.setVisibility(View.GONE);
 			            	adapterNews.notifyDataSetChanged();
 			            	
 			            } catch (Exception e) {
+			            	pgEventList.setVisibility(View.GONE);
 							e.printStackTrace();
 						}
 			        }
@@ -439,6 +445,7 @@ public class HomeFragment extends Fragment{
 			         @Override
 			         public void onErrorResponse(VolleyError error) {
 			             // error
+			        	 pgEventList.setVisibility(View.GONE);
 			             Log.e("Error.Response", error.toString());
 			       }
 			    };

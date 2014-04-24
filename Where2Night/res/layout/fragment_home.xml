@@ -63,4 +63,13 @@
         android:text="@string/enviar"
         android:textColor="@color/white" />
 
+    <ProgressBar
+        android:id="@+id/pgEventList"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtEstado"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp" />
+
 </RelativeLayout>

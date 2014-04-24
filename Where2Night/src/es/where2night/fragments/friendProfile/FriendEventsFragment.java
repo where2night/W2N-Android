@@ -48,7 +48,7 @@ public class FriendEventsFragment extends Fragment{
 	private ListView list;
 	
 	//El minimo de elementos a tener debajo de la posicion actual del scroll antes de cargar mas
-    private int visibleThreshold = 1;
+    private int visibleThreshold = 3;
     // La pagina actual
     private int currentPage = 0;
     // El total de elementos despues de la ultima carga de datos
@@ -116,7 +116,8 @@ public class FriendEventsFragment extends Fragment{
 				
 			}
 		});
-		
+        
+		fill();
 		return view;
 	}
 	
@@ -132,7 +133,7 @@ public class FriendEventsFragment extends Fragment{
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getNewsUrl() + "/" + cred[0] + "/" + cred[1] + "/" + currentPage;
+		String url = Helper.getNewsFriendUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId + "/" + currentPage;
 		
 		Log.e("url", url);
 		
@@ -222,6 +223,7 @@ public class FriendEventsFragment extends Fragment{
 									break;
 							}
 		            	}
+		            pgEventList.setVisibility(View.GONE);
 		            adapterNews.notifyDataSetChanged();
 		            	
 				} catch (Exception e) {
