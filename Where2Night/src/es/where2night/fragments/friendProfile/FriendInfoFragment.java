@@ -76,7 +76,7 @@ public class FriendInfoFragment extends Fragment implements OnClickListener {
         btnAddAsFriend.setOnClickListener(this);
         btnIgnoreFriend.setOnClickListener(this);
         
-     //  fillData();
+      fillData();
         
        return view;
 	}
@@ -100,7 +100,7 @@ public class FriendInfoFragment extends Fragment implements OnClickListener {
 	}
 	
 	
-private void friendShip() {
+private void fillData() {
 		
 		
 		

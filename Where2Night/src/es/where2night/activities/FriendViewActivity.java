@@ -23,8 +23,8 @@ public class FriendViewActivity extends FragmentActivity implements ActionBar.Ta
     
   
     
-    private Fragment[] fragments = new Fragment[] {new FriendInfoFragment(),
-    											   new FriendActivityFragment()};
+    private Fragment[] fragments = new Fragment[] {new FriendActivityFragment(),
+    											   new FriendInfoFragment()};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class FriendViewActivity extends FragmentActivity implements ActionBar.Ta
 				.show(toShow)
 				.commit();
 		
-		if (index == 1) ((FriendActivityFragment) toShow).fill();
+		//if (index == 1) ((FriendActivityFragment) toShow).fill();
     }
 
 	@Override

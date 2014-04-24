@@ -122,8 +122,8 @@
         <item>Eventos</item>
     </string-array>
     <string-array name="friend_tabs">
-        <item>Info</item>
         <item>Actividad</item>
+        <item>Info</item>
     </string-array>
 
     <string name="Search">Search</string>

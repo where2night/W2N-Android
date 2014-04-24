@@ -130,8 +130,7 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 				
 			}
 		});
-        
-		fill();
+        fill();
 		return view;
 	}
 	
