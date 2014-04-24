@@ -133,5 +133,6 @@
     <string name="FriendRequest">Peticiones de amistad</string>
     <string name="AcceptFriendRequest">Aceptar peticion</string>
     <string name="IgnoreFriendRequest">Ignorar</string>
+    <string name="delete_friend">Eliminar amigo</string>
 
 </resources>
