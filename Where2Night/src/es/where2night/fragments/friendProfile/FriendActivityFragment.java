@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
@@ -21,6 +22,7 @@ import es.where2night.data.ItemEventFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
 import es.where2night.data.ItemLocalNews;
+import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 import android.os.Bundle;
@@ -29,16 +31,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class FriendEventsFragment extends Fragment{
+public class FriendActivityFragment extends Fragment implements OnClickListener{
 	
 	private String friendId;
 	private RequestQueue requestQueue;
@@ -46,6 +51,10 @@ public class FriendEventsFragment extends Fragment{
     private AdapterItemNews adapterNews;
 	private ProgressBar pgEventList;
 	private ListView list;
+	
+	private Button btnAddAsFriend;
+	private Button btnIgnoreFriend;
+	private int friends = 0;
 	
 	//El minimo de elementos a tener debajo de la posicion actual del scroll antes de cargar mas
     private int visibleThreshold = 3;
@@ -61,10 +70,15 @@ public class FriendEventsFragment extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_events, container, false);
+		View view = inflater.inflate(R.layout.fragment_friend_activity, container, false);
 		list = (ListView) view.findViewById(R.id.eventList);
 		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
 		friendId = getArguments().getString(FriendViewActivity.ID);
+		
+		btnAddAsFriend = (Button) view.findViewById(R.id.btnAddAsFriend);
+		btnIgnoreFriend = (Button) view.findViewById(R.id.btnIgnoreFriend);
+        btnAddAsFriend.setOnClickListener(this);
+        btnIgnoreFriend.setOnClickListener(this);
 		
 		list.setOnScrollListener(new OnScrollListener() {
 			
@@ -121,12 +135,31 @@ public class FriendEventsFragment extends Fragment{
 		return view;
 	}
 	
+	@Override
+	public void onClick(View v) {
+		 if (v.getId() == btnAddAsFriend.getId()){
+			 friend(true);
+			 if (friends == 0){
+				 btnAddAsFriend.setEnabled(false);
+			 }else {
+				 btnAddAsFriend.setVisibility(View.GONE);
+				 btnIgnoreFriend.setVisibility(View.GONE); 
+			 }
+			
+		 }else  if (v.getId() == btnIgnoreFriend.getId()){
+			 friend(false);
+			 btnAddAsFriend.setText(getResources().getString(R.string.AddAsFriend));
+			 btnIgnoreFriend.setVisibility(View.GONE);
+		 }
+	}
+	
 	public void fill(){
 		
 		arraydir = new ArrayList<Item>();
 	    adapterNews = new AdapterItemNews(getActivity(), arraydir);
 	    list.setAdapter(adapterNews);
 	    fillData();
+	    friendShip();
 	}
 	
 	private void fillData() {
@@ -247,6 +280,125 @@ public class FriendEventsFragment extends Fragment{
 		
 		requestQueue.add(request);
 	}
+	
+	
+private void friendShip() {
+		
+		
+		String idProfile;
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		idProfile = cred[0];
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+		String url = Helper.getProfileUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId;
+		Log.e("Edit", url);
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            try {
+	            	JSONObject respuesta = new JSONObject(response);
+		            friends = Integer.parseInt(respuesta.getString("modefriend"));
+		            
+		            switch (friends) {
+					case 0:
+						btnIgnoreFriend.setVisibility(View.GONE);
+						break;
+					case 1:
+						btnAddAsFriend.setText(getResources().getString(R.string.AcceptFriendRequest));
+						btnIgnoreFriend.setText(getResources().getString(R.string.IgnoreFriendRequest));	
+						btnIgnoreFriend.setVisibility(View.VISIBLE);
+						break;
+					case 3:
+						btnAddAsFriend.setEnabled(false);
+						btnIgnoreFriend.setVisibility(View.GONE);
+						break;
+					case 4:
+						btnIgnoreFriend.setVisibility(View.GONE);
+						btnAddAsFriend.setVisibility(View.GONE);
+						break;
+
+					default:
+						break;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		
+		requestQueue.add(request);
+	}
+
+private void friend(boolean accept){
+	
+	final DataManager dm = new DataManager(getActivity().getApplicationContext());
+	String[] cred = dm.getCred();
+	requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+	String url = Helper.getFriendshipResponseUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId;
+	 
+	 
+	Response.Listener<String> succeedListener = new Response.Listener<String>(){
+        @Override
+        public void onResponse(String response) {
+            // response
+        	Log.e("Response", response);
+        }
+	};
+	
+	Response.ErrorListener errorListener = new Response.ErrorListener(){
+		@Override
+		public void onErrorResponse(VolleyError error) {
+         // error
+			Log.e("Error.Response", error.toString());
+		}
+	};
+	
+	StringRequest request;
+	
+	if(accept){
+		if (friends == 0)
+			request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		else
+			request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener); 
+	}
+	else{
+		request = new StringRequest(Request.Method.DELETE, url, succeedListener, errorListener); 
+
+	}
+	requestQueue.add(request);
+}
+
+
+@Override
+public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	inflater.inflate(R.menu.friend_view_activty, menu);
+}
+
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+	// Handle action bar item clicks here. The action bar will
+	// automatically handle clicks on the Home/Up button, so long
+	// as you specify a parent activity in AndroidManifest.xml.
+	int id = item.getItemId();
+	if (id == R.id.delete_friend) {
+		return true;
+	}
+	return super.onOptionsItemSelected(item);
+}
 	
 	
 }
