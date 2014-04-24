@@ -70,6 +70,7 @@ public class FriendInfoFragment extends Fragment {
 		txtNameAndSurnameFriend = (TextView) view.findViewById(R.id.txtNameAndSurnameFriend);
 		txtBirthdayFriend = (TextView) view.findViewById(R.id.txtBirthdayFriend);
 		txtCivilStateFriend = (TextView) view.findViewById(R.id.txtCivilStateFriend);
+		txtMusicFriend = (TextView) view.findViewById(R.id.txtMusicFriend);
 		txtCityFriend = (TextView) view.findViewById(R.id.txtCityFriend);
 		txtDrinkFriend = (TextView) view.findViewById(R.id.txtDrinkFriend);
 		txtAboutFriend = (TextView) view.findViewById(R.id.txtAboutFriend);
@@ -115,7 +116,31 @@ private void fillData() {
 		        	txtCityFriend.setText(respuesta.getString("city"));
 		        	txtDrinkFriend.setText(respuesta.getString("drink"));
 		        	txtAboutFriend.setText(respuesta.getString("about"));
-		            
+		        	int modeInt = Integer.parseInt(respuesta.getString("mode"));
+		        	String modeString = "";
+		        	
+		        	switch (modeInt){
+	            	case 0:
+	            		modeString = "'De tranquis'";
+	            		break;
+	            	case 1:
+	            		modeString = "'Hoy no me lio'";
+	            		break;
+	            	case 2:
+	            		modeString = "'Lo que surja'";
+	            		break;
+	            	case 3:
+	            		modeString = "'Lo daré todo'";
+	            		break;
+	            	case 4:
+	            		modeString = "'Destroyer'";
+	            		break;
+	            	case 5:
+	            		modeString = "'Yo me llamo Ralph'";
+	            		break;
+		        	}
+		        	
+		        	getActivity().getActionBar().setSubtitle(modeString);
 		            pictureUrl = respuesta.getString("picture");
 		            if (pictureUrl.equals("") || pictureUrl.contains("face"))
 		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
