@@ -5,98 +5,79 @@
     android:layout_height="match_parent" 
     android:layout_marginLeft="10dp">
    
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/imgFriend"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/profile" />
-    
-    <LinearLayout 
-         android:id="@+id/ButtonLayout"
-         android:layout_width="match_parent"
-    	 android:layout_height="wrap_content"
-    	 android:layout_below="@id/imgFriend"
-    	 android:layout_margin="15dp"
-    	 android:orientation="horizontal" >
-    	 
-        <Button
-	       android:id="@+id/btnIgnoreFriend"
-	       android:layout_width="wrap_content"
-	       android:layout_height="wrap_content"
-	       android:layout_weight="1"
-	       android:layout_marginRight="15dp"
-	       android:visibility="gone" 
-	       android:background="@drawable/btn_igo_style"
-	       android:text="@string/IgnoreFriendRequest" />
-        
-        <Button
-	       android:id="@+id/btnAddAsFriend"
-	       android:layout_width="wrap_content"
-	       android:layout_height="wrap_content"
-	       android:layout_weight="1"
-	       android:background="@drawable/btn_igo_style"
-	       android:text="@string/AddAsFriend" />
-        
-        
-        
-    </LinearLayout>
-    
-    
-    
-    <TextView
-        android:id="@+id/txtNameAndSurnameFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ButtonLayout"
-        android:text="@string/NameAndSurnameFriend" />
-    
-    
-    <TextView
-        android:id="@+id/txtNumberOfFriends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtNameAndSurnameFriend"
-        android:text="@string/Friends" />
-    
-    <TextView
-        android:id="@+id/txtBirthdayFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtNumberOfFriends"
-        android:text="@string/Birthday" />
-    
-   <TextView
-        android:id="@+id/txtMusicFriendLike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtBirthdayFriend"
-        android:text="@string/MusicFriendLike" />
-   
-   <TextView
-        android:id="@+id/txtAboutMeFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtMusicFriendLike"
-        android:text="@string/AboutMeFriend"/>
-   
-   <TextView
-        android:id="@+id/txtDescriptionFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtAboutMeFriend"
-        android:layout_margin="5dp"
-        android:padding="10dp" />
+  
+
+   <com.android.volley.toolbox.NetworkImageView
+       android:id="@+id/imgFriend"
+       android:layout_width="150dp"
+       android:layout_height="150dp"
+       android:layout_alignParentTop="true"
+       android:layout_centerHorizontal="true"
+       android:src="@drawable/profile" />
 
    <ProgressBar
        android:id="@+id/pgFriendView"
        style="?android:attr/progressBarStyleLarge"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_below="@+id/txtNameAndSurnameFriend"
-       android:layout_centerHorizontal="true" />
+       android:layout_below="@+id/imgFriend"
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="20dp" />  
 
+   <TextView
+       android:id="@+id/txtNameAndSurnameFriend"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/pgFriendView"
+       android:layout_centerHorizontal="true"
+       android:text="TextView" />
    
+   <TextView
+       android:id="@+id/txtBirthdayFriend"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/txtNameAndSurnameFriend"
+       android:layout_centerHorizontal="true"
+       android:text="TextView" />
+   
+   <TextView
+       android:id="@+id/txtMusicFriend"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/txtBirthdayFriend"
+       android:layout_centerHorizontal="true"
+       android:text="TextView" />
+   
+   <TextView
+       android:id="@+id/txtCivilStateFriend"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/txtMusicFriend"
+       android:layout_centerHorizontal="true"
+       android:text="TextView" />
+   
+   <TextView
+       android:id="@+id/txtCityFriend"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/txtCivilStateFriend"
+       android:layout_centerHorizontal="true"
+       android:text="TextView" />
+   
+   <TextView
+       android:id="@+id/txtDrinkFriend"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/txtCityFriend"
+       android:layout_centerHorizontal="true"
+       android:text="TextView" />
+
+   <TextView
+       android:id="@+id/txtAboutFriend"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@+id/txtDrinkFriend"
+       android:text="TextView" />
 
 </RelativeLayout>

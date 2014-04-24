@@ -31,14 +31,16 @@ import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
-public class FriendInfoFragment extends Fragment implements OnClickListener {
+public class FriendInfoFragment extends Fragment {
 	
 	private NetworkImageView imgFriend;
 	private TextView txtNameAndSurnameFriend;
-	private TextView txtNumberOfFriends;
 	private TextView txtBirthdayFriend;
-	private TextView txtMusicFriendLike;
-	private TextView txtDescriptionFriend;
+	private TextView txtMusicFriend;
+	private TextView txtCivilStateFriend;
+	private TextView txtCityFriend;
+	private TextView txtDrinkFriend;
+	private TextView txtAboutFriend;
 	private ProgressBar pgFriendView;
 	
 	private Button btnAddAsFriend;
@@ -66,38 +68,20 @@ public class FriendInfoFragment extends Fragment implements OnClickListener {
 		
 		imgFriend = (NetworkImageView) view.findViewById(R.id.imgFriend);
 		txtNameAndSurnameFriend = (TextView) view.findViewById(R.id.txtNameAndSurnameFriend);
-		txtNumberOfFriends = (TextView) view.findViewById(R.id.txtNumberOfFriends);
 		txtBirthdayFriend = (TextView) view.findViewById(R.id.txtBirthdayFriend);
-		txtMusicFriendLike = (TextView) view.findViewById(R.id.txtMusicFriendLike);
-		txtDescriptionFriend = (TextView) view.findViewById(R.id.txtDescriptionFriend);
+		txtCivilStateFriend = (TextView) view.findViewById(R.id.txtCivilStateFriend);
+		txtCityFriend = (TextView) view.findViewById(R.id.txtCityFriend);
+		txtDrinkFriend = (TextView) view.findViewById(R.id.txtDrinkFriend);
+		txtAboutFriend = (TextView) view.findViewById(R.id.txtAboutFriend);
 		pgFriendView = (ProgressBar) view.findViewById(R.id.pgFriendView);
-		btnAddAsFriend = (Button) view.findViewById(R.id.btnAddAsFriend);
-		btnIgnoreFriend = (Button) view.findViewById(R.id.btnIgnoreFriend);
-        btnAddAsFriend.setOnClickListener(this);
-        btnIgnoreFriend.setOnClickListener(this);
+	
         
       fillData();
         
        return view;
 	}
 	
-	@Override
-	public void onClick(View v) {
-		 if (v.getId() == btnAddAsFriend.getId()){
-			 friend(true);
-			 if (friends == 0){
-				 btnAddAsFriend.setEnabled(false);
-			 }else {
-				 btnAddAsFriend.setVisibility(View.GONE);
-				 btnIgnoreFriend.setVisibility(View.GONE); 
-			 }
-			
-		 }else  if (v.getId() == btnIgnoreFriend.getId()){
-			 friend(false);
-			 btnAddAsFriend.setText(getResources().getString(R.string.AddAsFriend));
-			 btnIgnoreFriend.setVisibility(View.GONE);
-		 }
-	}
+	
 	
 	
 private void fillData() {
@@ -121,15 +105,17 @@ private void fillData() {
 	            try {
 	            	pgFriendView.setVisibility(View.GONE);
 	            	JSONObject respuesta = new JSONObject(response);
-	            	txtNameAndSurnameFriend.setText(respuesta.getString("name") + " " + respuesta.getString("surnames"));
+	            	String name = respuesta.getString("name") + " " + respuesta.getString("surnames");
+	            	getActivity().getActionBar().setTitle(name);
+	            	txtNameAndSurnameFriend.setText(name);
 		            String[] date = respuesta.getString("birthdate").split("/");
 		            txtBirthdayFriend.setText(date[2] + "/" + date[1] + "/" + date[0]);
-		            txtMusicFriendLike.setText(respuesta.getString("music"));
-		         /*   etEditDrink.setText(respuesta.getString("drink"));
-		            etEditCivilState.setText(respuesta.getString("civil_state"));
-		            etEditCity.setText(respuesta.getString("city"));*/
-		            txtDescriptionFriend.setText(respuesta.getString("about"));
-		            friends = Integer.parseInt(respuesta.getString("modefriend"));
+		            txtMusicFriend.setText(respuesta.getString("music"));
+		        	txtCivilStateFriend.setText(respuesta.getString("civil_state"));
+		        	txtCityFriend.setText(respuesta.getString("city"));
+		        	txtDrinkFriend.setText(respuesta.getString("drink"));
+		        	txtAboutFriend.setText(respuesta.getString("about"));
+		            
 		            pictureUrl = respuesta.getString("picture");
 		            if (pictureUrl.equals("") || pictureUrl.contains("face"))
 		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
@@ -178,62 +164,6 @@ private void fillData() {
 		requestQueue.add(request);
 	}
 
-private void friend(boolean accept){
-	
-	final DataManager dm = new DataManager(getActivity().getApplicationContext());
-	String[] cred = dm.getCred();
-	requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-	String url = Helper.getFriendshipResponseUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId;
-	 
-	 
-	Response.Listener<String> succeedListener = new Response.Listener<String>(){
-        @Override
-        public void onResponse(String response) {
-            // response
-        	Log.e("Response", response);
-        }
-	};
-	
-	Response.ErrorListener errorListener = new Response.ErrorListener(){
-		@Override
-		public void onErrorResponse(VolleyError error) {
-         // error
-			Log.e("Error.Response", error.toString());
-		}
-	};
-	
-	StringRequest request;
-	
-	if(accept){
-		if (friends == 0)
-			request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
-		else
-			request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener); 
-	}
-	else{
-		request = new StringRequest(Request.Method.DELETE, url, succeedListener, errorListener); 
-
-	}
-	requestQueue.add(request);
-}
-
-
-@Override
-public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-	inflater.inflate(R.menu.friend_view_activty, menu);
-}
-
-@Override
-public boolean onOptionsItemSelected(MenuItem item) {
-	// Handle action bar item clicks here. The action bar will
-	// automatically handle clicks on the Home/Up button, so long
-	// as you specify a parent activity in AndroidManifest.xml.
-	int id = item.getItemId();
-	if (id == R.id.delete_friend) {
-		return true;
-	}
-	return super.onOptionsItemSelected(item);
-}
 
 
 }
