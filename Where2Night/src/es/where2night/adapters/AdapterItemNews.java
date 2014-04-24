@@ -285,7 +285,7 @@ public class AdapterItemNews extends BaseAdapter{
             holderFriendState.txtName.setText(fri.getName());
             //Rellenamos el mode
             String state = "'" + fri.getState() + "'";
-            holderFriendMode.txtMode.setText("Ha cambiado su estado " + state);
+            holderFriendState.txtState.setText("Ha cambiado su estado " + state);
         }
         else if(i.getClass() == ItemEvent.class){
         	eve = (ItemEvent)i;

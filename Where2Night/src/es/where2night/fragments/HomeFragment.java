@@ -130,6 +130,17 @@ public class HomeFragment extends Fragment{
 				
 			}
 		});
+        
+        lista.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
 		btnEnviar.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -365,7 +376,7 @@ public class HomeFragment extends Fragment{
 										//Estado de amigos
 										String nameAS = aux.getString("name") + " " + aux.getString("surnames");
 										String pictureAS = aux.getString("picture");
-										String stateAS = aux.getString("mode");
+										String stateAS = aux.getString("status");
 										ItemFriendState iFState = new ItemFriendState("",nameAS,stateAS);
 										arraydir.add(iFState);
 										break;

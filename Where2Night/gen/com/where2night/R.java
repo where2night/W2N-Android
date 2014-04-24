@@ -1714,11 +1714,11 @@ containing a value of this type.
         public static final int txtDrinkPrice=0x7f0700a9;
         public static final int txtEntryPrice=0x7f0700a8;
         public static final int txtEstado=0x7f07009f;
-        public static final int txtEventClub=0x7f0700b6;
-        public static final int txtEventDate=0x7f0700b7;
-        public static final int txtEventText=0x7f0700b5;
-        public static final int txtEventTime=0x7f0700b9;
-        public static final int txtEventTitle=0x7f0700b8;
+        public static final int txtEventClub=0x7f0700b5;
+        public static final int txtEventDate=0x7f0700b9;
+        public static final int txtEventText=0x7f0700b6;
+        public static final int txtEventTime=0x7f0700b8;
+        public static final int txtEventTitle=0x7f0700b7;
         public static final int txtExpireDate=0x7f0700b2;
         public static final int txtFriend=0x7f0700bb;
         public static final int txtFriendName=0x7f0700bd;
