@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/imgFriend"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/profile" />
+    
+    <LinearLayout 
+         android:id="@+id/ButtonLayout"
+         android:layout_width="match_parent"
+    	 android:layout_height="wrap_content"
+    	 android:layout_below="@id/imgFriend"
+    	 android:layout_margin="15dp"
+    	 android:orientation="horizontal" >
+    	 
+        <Button
+	       android:id="@+id/btnIgnoreFriend"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_weight="1"
+	       android:layout_marginRight="15dp"
+	       android:visibility="gone"
+	       android:background="@drawable/btn_igo_style"
+	       android:text="@string/IgnoreFriendRequest" />
+        
+        <Button
+	       android:id="@+id/btnAddAsFriend"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_weight="1"
+	       android:background="@drawable/btn_igo_style"
+	       android:text="@string/AddAsFriend" />
+    </LinearLayout>
+
+	<ProgressBar
+	    android:id="@+id/pgEventList"
+	    style="?android:attr/progressBarStyleLarge"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerHorizontal="true"
+	    android:layout_centerVertical="true" />
+	
+	<ListView 
+	    android:layout_below="@+id/ButtonLayout"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/eventList" >
+	</ListView>
+
+</RelativeLayout>
