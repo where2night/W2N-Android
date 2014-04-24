@@ -138,7 +138,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 		});
         
         //Registro
-        btnRegistro = (Button) findViewById(R.id.btnRegister);
+        btnRegistro = (Button) findViewById(R.id.btnEnviarEstado);
         btnRegistro.setOnClickListener(new View.OnClickListener() {
 			
 			@Override

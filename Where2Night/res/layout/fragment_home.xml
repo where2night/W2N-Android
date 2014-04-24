@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -9,6 +10,8 @@
         android:id="@+id/textAnimo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:text="@string/animo"
         android:textSize="26sp" />
 
@@ -16,6 +19,9 @@
         android:id="@+id/spinnerAnimo"
         android:layout_width="wrap_content"
         android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textAnimo"
+        android:layout_toLeftOf="@+id/btnEnviarEstado"
         android:paddingBottom="10dp"
         android:paddingTop="5dp" />
 
@@ -23,6 +29,9 @@
         android:id="@+id/txtEstado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/spinnerAnimo"
+        android:layout_toLeftOf="@+id/btnEnviarEstado"
         android:ems="10"
         android:hint="Estado"
         android:maxHeight="139dp" >
@@ -34,9 +43,24 @@
         android:id="@+id/newsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtEstado"
         android:paddingTop="10dp" >
     </ListView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btnEnviarEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtEstado"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dip"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="18dp"
+        android:background="@drawable/button_style"
+        android:minHeight="25dip"
+        android:padding="5dp"
+        android:text="@string/enviar"
+        android:textColor="@color/white" />
 
-
+</RelativeLayout>

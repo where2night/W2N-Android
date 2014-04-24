@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import es.where2night.data.ItemEventFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
 import es.where2night.data.ItemLocalNews;
+import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
@@ -48,6 +50,8 @@ public class AdapterItemNews extends BaseAdapter{
 	public AdapterItemNews(Activity activity, ArrayList<Item> items){
 		this.activity = activity;
         this.items = items;
+        requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
+        this.imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
 	}
 	
 	@Override
@@ -85,7 +89,7 @@ public class AdapterItemNews extends BaseAdapter{
         		holderFriendMode = new ViewHolderFriendMode();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inf.inflate(R.layout.itemfriendnews, null);
-                holderFriendMode.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
+                holderFriendMode.picture = (NetworkImageView) v.findViewById(R.id.Friendpicture);
                 holderFriendMode.txtName = (TextView) v.findViewById(R.id.txtName);
                 holderFriendMode.txtMode = (TextView) v.findViewById(R.id.txtNews);
                 v.setTag(holderFriendMode);
@@ -95,7 +99,7 @@ public class AdapterItemNews extends BaseAdapter{
         		holderFriendState = new ViewHolderFriendState();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inf.inflate(R.layout.itemfriendnews, null);
-                holderFriendState.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
+                holderFriendState.picture = (NetworkImageView) v.findViewById(R.id.Friendpicture);
                 holderFriendState.txtName = (TextView) v.findViewById(R.id.txtName);
                 holderFriendState.txtState = (TextView) v.findViewById(R.id.txtNews);
                 v.setTag(holderFriendState);
@@ -104,7 +108,7 @@ public class AdapterItemNews extends BaseAdapter{
         		eve = (ItemEvent)i;
         		holderEvent = new ViewHolderEvent();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = inf.inflate(R.layout.itemeventslists, null);
+                v = inf.inflate(R.layout.itemevent, null);
                 holderEvent.picture = (NetworkImageView) v.findViewById(R.id.Eventpicture);
                 holderEvent.txtTitle = (TextView) v.findViewById(R.id.txtEventTitle);
                 holderEvent.txtClub = (TextView) v.findViewById(R.id.txtEventClub);
@@ -112,28 +116,45 @@ public class AdapterItemNews extends BaseAdapter{
                 holderEvent.txtText = (TextView) v.findViewById(R.id.txtEventText);
                 holderEvent.txtTime = (TextView) v.findViewById(R.id.txtEventTime);
                 holderEvent.btnSignMe = (Button) v.findViewById(R.id.btnSignMe);
+                if (eve.isGoes()){
+					holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+		        	holderEvent.btnSignMe.setSelected(true);
+                }
+                else{
+                	holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+		        	holderEvent.btnSignMe.setSelected(false);
+                }
+                final ItemEvent eveFinal = eve;
                 
-                /*         
+                         
                 holderEvent.btnSignMe.setOnClickListener(new OnClickListener() {
-    				
-    				@Override
-    				public void onClick(View v) {
-    					long eventId = eve.getId();
-    					if (v.isSelected()){
-    				//		holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
-    						v.setSelected(false);
-    						Button b = (Button) v.findViewById(v.getId());
-    						b.setText(activity.getResources().getString(R.string.SignMe));
-    						goToEvent(eventId,true);
-    					}else{
-    					//	holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
-    						Button b = (Button) v.findViewById(v.getId());
-    						b.setText(activity.getResources().getString(R.string.Signed));
-    						v.setSelected(true);
-    						goToEvent(eventId,false);
-    					}
-    				}
-    			});*/ //FIXME
+			
+					@Override
+					public void onClick(View v) {
+						long eventId = eveFinal.getId();
+						if (v.isSelected()){
+							holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+				        	holderEvent.btnSignMe.setSelected(false);
+				        	eveFinal.setGoes(false);
+				        	
+							goToEvent(eventId,true);
+						}else{
+							holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+				        	holderEvent.btnSignMe.setSelected(true);
+				        	eveFinal.setGoes(true);
+							goToEvent(eventId,false);
+						}
+						notifyDataSetChanged(); // tells the adapter that the data changed
+					}
+				});
+		        
+		        if (eve.isGoes()){
+		        	holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+		        	holderEvent.btnSignMe.setSelected(true);
+		        }else {
+		        	holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+		        	holderEvent.btnSignMe.setSelected(false);
+		        } //FIXME
                 
                 v.setTag(holderEvent);
         	}
@@ -159,30 +180,46 @@ public class AdapterItemNews extends BaseAdapter{
                 holderEventFriend.txtText = (TextView) v.findViewById(R.id.txtEventText);
                 holderEventFriend.txtTime = (TextView) v.findViewById(R.id.txtEventTime);
                 holderEventFriend.btnSignMe = (Button) v.findViewById(R.id.btnSignMe);
+                if (eFri.isGoes()){
+					holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+		        	holderEventFriend.btnSignMe.setSelected(true);
+                }
+                else{
+                	holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+		        	holderEventFriend.btnSignMe.setSelected(false);
+                }
         		holderEventFriend.txtFriend = (TextView) v.findViewById(R.id.txtFriend);
         		v.setTag(holderEventFriend);
-        		
-        		/*         
+        		final ItemEventFriend eFriFinal = eFri;
+        		         
                 holderEventFriend.btnSignMe.setOnClickListener(new OnClickListener() {
-    				
-    				@Override
-    				public void onClick(View v) {
-    					long eventId = eFri.getId();
-    					if (v.isSelected()){
-    				//		holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
-    						v.setSelected(false);
-    						Button b = (Button) v.findViewById(v.getId());
-    						b.setText(activity.getResources().getString(R.string.SignMe));
-    						goToEvent(eventId,true);
-    					}else{
-    					//	holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
-    						Button b = (Button) v.findViewById(v.getId());
-    						b.setText(activity.getResources().getString(R.string.Signed));
-    						v.setSelected(true);
-    						goToEvent(eventId,false);
-    					}
-    				}
-    			});*/ //FIXME
+			
+					@Override
+					public void onClick(View v) {
+						long eventId = eFriFinal.getId();
+						if (v.isSelected()){
+							holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+				        	holderEventFriend.btnSignMe.setSelected(false);
+				        	eFriFinal.setGoes(false);
+				        	
+							goToEvent(eventId,true);
+						}else{
+							holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+				        	holderEventFriend.btnSignMe.setSelected(true);
+				        	eFriFinal.setGoes(true);
+							goToEvent(eventId,false);
+						}
+						notifyDataSetChanged(); // tells the adapter that the data changed
+					}
+				});
+		        
+		        if (eFri.isGoes()){
+		        	holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+		        	holderEventFriend.btnSignMe.setSelected(true);
+		        }else {
+		        	holderEventFriend.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+		        	holderEventFriend.btnSignMe.setSelected(false);
+		        }
         	}
        /* }
         else{
@@ -264,6 +301,7 @@ public class AdapterItemNews extends BaseAdapter{
             holderEvent.txtDate.setText(eve.getDate());
             holderEvent.txtText.setText(eve.getText());
             holderEvent.txtTime.setText(eve.getStart() + " - " + eve.getClose());
+            
         }
         else if(i.getClass() == ItemLocalNews.class){
         	loc = (ItemLocalNews)i;
@@ -296,6 +334,35 @@ public class AdapterItemNews extends BaseAdapter{
         return v;
 	}
 	
+	
+	static class ViewHolderFriendMode {
+		public NetworkImageView picture;
+		public TextView txtName;
+		public TextView txtMode;
+	}
+	
+	static class ViewHolderFriendState {
+		public NetworkImageView picture;
+		public TextView txtName;
+		public TextView txtState;
+	}
+	
+	static class ViewHolderLocalFollow {
+		public NetworkImageView picture;
+		public TextView txtNameLocal;
+		public TextView txtNameFriend;
+	}
+	
+	static class ViewHolderEventFriend {
+			public NetworkImageView picture;
+			public TextView txtTitle;
+			public TextView txtClub;
+			public TextView txtDate;
+			public TextView txtText;
+			public TextView txtTime;
+			public Button btnSignMe;
+			public TextView txtFriend;
+	}
 	
 	private void goToEvent(long eventId,boolean notGoing){
 		final DataManager dm = new DataManager(activity.getApplicationContext());
@@ -341,35 +408,6 @@ public class AdapterItemNews extends BaseAdapter{
 
 		}
 		requestQueue.add(request);
-	}
-	
-	static class ViewHolderFriendMode {
-		public NetworkImageView picture;
-		public TextView txtName;
-		public TextView txtMode;
-	}
-	
-	static class ViewHolderFriendState {
-		public NetworkImageView picture;
-		public TextView txtName;
-		public TextView txtState;
-	}
-	
-	static class ViewHolderLocalFollow {
-		public NetworkImageView picture;
-		public TextView txtNameLocal;
-		public TextView txtNameFriend;
-	}
-	
-	static class ViewHolderEventFriend {
-			public NetworkImageView picture;
-			public TextView txtTitle;
-			public TextView txtClub;
-			public TextView txtDate;
-			public TextView txtText;
-			public TextView txtTime;
-			public Button btnSignMe;
-			public TextView txtFriend;
 	}
 
 }

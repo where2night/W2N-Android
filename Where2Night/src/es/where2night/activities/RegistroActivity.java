@@ -70,7 +70,7 @@ public class RegistroActivity extends Activity {
 		etRegisterPass2 = (EditText) findViewById(R.id.etRegisterPass2);
 		rdFemale = (RadioButton) findViewById(R.id.rdFemale);
 		rdMale = (RadioButton) findViewById(R.id.rdMale);
-		btnRegister = (Button) findViewById(R.id.btnRegister);
+		btnRegister = (Button) findViewById(R.id.btnEnviarEstado);
 		pgRegister = (ProgressBar) findViewById(R.id.pgRegister);
 		register_error = (TextView) findViewById(R.id.register_error);
 		

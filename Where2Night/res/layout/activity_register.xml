@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/etRegisterDate"
-	        android:layout_alignRight="@+id/btnRegister"
+	        android:layout_alignRight="@+id/btnEnviarEstado"
             android:orientation="horizontal" >
 
             <RadioButton
@@ -139,7 +139,7 @@
             android:textCursorDrawable="@null" />
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnEnviarEstado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/link_to_login"
@@ -155,7 +155,7 @@
             android:id="@+id/link_to_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btnRegister"
+            android:layout_below="@id/btnEnviarEstado"
             android:layout_margin="25dip"
             android:gravity="center"
             android:padding="10dp"
@@ -180,7 +180,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/rgGender"
-            android:layout_alignTop="@+id/btnRegister"
+            android:layout_alignTop="@+id/btnEnviarEstado"
             android:layout_marginRight="38dp" />
 
     </RelativeLayout>

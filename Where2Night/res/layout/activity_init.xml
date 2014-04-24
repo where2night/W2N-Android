@@ -79,7 +79,7 @@
         android:textColor="@color/white" />
 
     <Button
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnEnviarEstado"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnLoginEmail"

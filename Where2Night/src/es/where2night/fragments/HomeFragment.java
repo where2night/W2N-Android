@@ -36,10 +36,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -49,69 +54,180 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
-public class HomeFragment extends Fragment implements OnItemSelectedListener{
+public class HomeFragment extends Fragment{
 	
 	private Spinner spinnerAnimo;
 	private TextView txtStatus;
-	int numPagina;
+	
+	//El minimo de elementos a tener debajo de la posicion actual del scroll antes de cargar mas
+    private int visibleThreshold = 1;
+    // La pagina actual
+    private int currentPage = 0;
+    // El total de elementos despues de la ultima carga de datos
+    private int previousTotalItemCount = 0;
+    //True si sigue esperando que termine de cargar el ultimo grupo de datos solicitados
+    private boolean loading = true;
+    // Sirve para setear la pagina inicial
+    private int startingPageIndex = 0;
+	
+	private Button btnEnviar;
+	private String oldMode;
+	private String oldStatus;
 	
 	private RequestQueue requestQueue;
 	AdapterItemNews adapterNews;
 	ArrayList<Item> arraydir;
+	ListView lista;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 		spinnerAnimo = (Spinner)view.findViewById(R.id.spinnerAnimo);
+		btnEnviar = (Button)view.findViewById(R.id.btnEnviarEstado);
 		txtStatus = (TextView)view.findViewById(R.id.txtEstado);
-		txtStatus.setOnEditorActionListener(new OnEditorActionListener(){
-
+		lista = (ListView) view.findViewById(R.id.newsList);
+		arraydir = new ArrayList<Item>();
+		adapterNews = new AdapterItemNews(getActivity(), arraydir);
+        lista.setAdapter(adapterNews);
+        lista.setOnScrollListener(new OnScrollListener() {
+			
 			@Override
-			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-				final DataManager dm = new DataManager(getActivity().getApplicationContext());
-				String[] cred = dm.getCred();
-				requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-				String url = Helper.getSetStatusUrl() + "/" + cred[0] + "/" + cred[1];
-				Log.e("url", url);
-				
-				Response.Listener<String> succeedListener = new Response.Listener<String>(){
-			        @Override
-			        public void onResponse(String response) {
-			            // response
-			        	Log.e("Response", response);
-			            try {} 
-			            catch (Exception e) {
-			            	e.printStackTrace();
-			            }
-			        }		
-				};
-				    
-			    Response.ErrorListener errorListener = new Response.ErrorListener() 
-			    {
-			         @Override
-			         public void onErrorResponse(VolleyError error) {
-			             // error
-			             Log.e("Error.Response", error.toString());
-			       }
-			    };
-			    
-			    StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){
-			    	@Override
-				    protected Map<String, String> getParams() 
-				    {  
-				    	Map<String, String> info = new HashMap<String, String>();
-				    	String strStatus = txtStatus.getText().toString();
-				    	info.put("mode", strStatus);
-				        return info;
-				    }
-			    }; 
-				
-				requestQueue.add(request);
-				return true;
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub				
 			}
 			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				
+				
+				if (!loading && (totalItemCount < previousTotalItemCount)) {
+		            currentPage = startingPageIndex;
+		            previousTotalItemCount = totalItemCount;
+		            if (totalItemCount == 0) {
+		                loading = true;
+		            }
+		        }
+
+		        if (loading) {
+		            if (totalItemCount > previousTotalItemCount) {
+		                loading = false;
+		                previousTotalItemCount = totalItemCount;
+		                currentPage++;
+		            }
+		        }
+
+		        //Si hemos llegado al final de la lista y una carga de datos no esta en proceso
+		        //invoco el metodo onLoadMore para poder cargar mas datos.
+		        if (!loading
+		                && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+		        	currentPage++;
+		        	//Toast.makeText(getActivity().getApplicationContext(), "Entra Refill", Toast.LENGTH_LONG).show();
+		        	fillNews(getView());
+		            loading = true;
+		        }
+				
+			}
 		});
-		numPagina = 0;
+		btnEnviar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(!(oldMode.equals(spinnerAnimo.getSelectedItem().toString()))){
+					oldMode = spinnerAnimo.getSelectedItem().toString();
+					final DataManager dm = new DataManager(getActivity().getApplicationContext());
+					String[] cred = dm.getCred();
+					requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+					String url = Helper.getSetModeUrl() + "/" + cred[0] + "/" + cred[1];
+					Log.e("url", url);
+					
+					Response.Listener<String> succeedListener = new Response.Listener<String>(){
+				        @Override
+				        public void onResponse(String response) {
+				            // response
+				        	Log.e("Response", response);
+				            try {} 
+				            catch (Exception e) {
+				            	e.printStackTrace();
+				            }
+				        }		
+					};
+					    
+				    Response.ErrorListener errorListener = new Response.ErrorListener() 
+				    {
+				         @Override
+				         public void onErrorResponse(VolleyError error) {
+				             // error
+				             Log.e("Error.Response", error.toString());
+				       }
+				    };
+				    
+				    StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){
+				    	@Override
+					    protected Map<String, String> getParams() 
+					    {  
+					    	Map<String, String> info = new HashMap<String, String>();
+					    	String strMode = ((Integer)spinnerAnimo.getSelectedItemPosition()).toString();
+					    	info.put("mode", strMode);
+					        return info;
+					    }
+				    }; 
+					
+					requestQueue.add(request);
+				
+				}
+				
+				if(!(oldStatus.equals(txtStatus.getText().toString()))){
+					oldStatus = txtStatus.getText().toString();
+					final DataManager dm = new DataManager(getActivity().getApplicationContext());
+					String[] cred = dm.getCred();
+					requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+					String url = Helper.getSetStatusUrl() + "/" + cred[0] + "/" + cred[1];
+					Log.e("url", url);
+					
+					Response.Listener<String> succeedListener = new Response.Listener<String>(){
+				        @Override
+				        public void onResponse(String response) {
+				            // response
+				        	Log.e("Response", response);
+				            try {} 
+				            catch (Exception e) {
+				            	e.printStackTrace();
+				            }
+				        }		
+					};
+					    
+				    Response.ErrorListener errorListener = new Response.ErrorListener() 
+				    {
+				         @Override
+				         public void onErrorResponse(VolleyError error) {
+				             // error
+				             Log.e("Error.Response", error.toString());
+				       }
+				    };
+				    
+				    StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){
+				    	@Override
+					    protected Map<String, String> getParams() 
+					    {  
+					    	Map<String, String> info = new HashMap<String, String>();
+					    	String strStatus = txtStatus.getText().toString();
+					    	info.put("status", strStatus);
+					        return info;
+					    }
+				    }; 
+					
+					requestQueue.add(request);
+					
+				}
+				
+				InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(txtStatus.getWindowToken(), 0);
+			}
+		});
+		
+		
 		fill(view);
 		return view;
 	}
@@ -147,8 +263,9 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 	            	JSONArray aux = new JSONArray(response);
 	            	JSONObject mo = aux.getJSONObject(0);
 	            	String modeString = mo.getString("mode");
-	            	Toast.makeText(getActivity().getApplicationContext(), "Ha entrado", Toast.LENGTH_LONG).show();
+	            	//Toast.makeText(getActivity().getApplicationContext(), "Ha entrado", Toast.LENGTH_LONG).show();
 	            	spinnerAnimo.setSelection(Integer.parseInt(modeString));
+	            	oldMode = modeString;
 	            }
 	            catch (Exception e) {
 					e.printStackTrace();
@@ -176,6 +293,7 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 	            	JSONObject mo = aux.getJSONObject(0);
 	            	String statusString = mo.getString("status");
 	            	txtStatus.setText(statusString);
+	            	oldStatus = statusString;
 	            }
 	            catch (Exception e) {
 					e.printStackTrace();
@@ -196,23 +314,17 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 		requestQueue.add(request);
 		StringRequest request2 = new StringRequest(Request.Method.GET, urlStatus, succeedListenerStatus, errorListenerStatus); 
 		requestQueue.add(request2);
-		
-		spinnerAnimo.setOnItemSelectedListener(this);
 
 	}
 
 	private void fillNews(View view) {
-		ListView lista = (ListView) view.findViewById(R.id.newsList);
-		arraydir = new ArrayList<Item>();
-		adapterNews = new AdapterItemNews(getActivity(), arraydir);
-        lista.setAdapter(adapterNews);
 		
         //Toast.makeText(getActivity().getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
         
         final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getNewsUrl() + "/" + cred[0] + "/" + cred[1] + "/" + numPagina;
+		String url = Helper.getNewsUrl() + "/" + cred[0] + "/" + cred[1] + "/" + currentPage;
 		Log.e("url", url);
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
@@ -289,7 +401,11 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
 						            	String nameLoc = aux.getString("localName");
 						            	String pictureF = aux.getString("picture");
 						            	String nameFriend = aux.getString("name");
-						            	ItemEventFriend eventFriend = new ItemEventFriend("",nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,idF); //FIXME cargar imagen
+						            	String goesF = aux.getString("GOES");
+						            	boolean goingF = false;
+						            	if (!goesF.equals("null"))
+						            		goingF = true;
+						            	ItemEventFriend eventFriend = new ItemEventFriend("",nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,goingF,idF); //FIXME cargar imagen
 						            	arraydir.add(eventFriend);
 										break;
 	
@@ -322,55 +438,4 @@ public class HomeFragment extends Fragment implements OnItemSelectedListener{
         
 	}
 
-
-	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		final DataManager dm = new DataManager(getActivity().getApplicationContext());
-		String[] cred = dm.getCred();
-		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getSetModeUrl() + "/" + cred[0] + "/" + cred[1];
-		Log.e("url", url);
-		
-		Response.Listener<String> succeedListener = new Response.Listener<String>(){
-	        @Override
-	        public void onResponse(String response) {
-	            // response
-	        	Log.e("Response", response);
-	            try {} 
-	            catch (Exception e) {
-	            	e.printStackTrace();
-	            }
-	        }		
-		};
-		    
-	    Response.ErrorListener errorListener = new Response.ErrorListener() 
-	    {
-	         @Override
-	         public void onErrorResponse(VolleyError error) {
-	             // error
-	             Log.e("Error.Response", error.toString());
-	       }
-	    };
-	    
-	    StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){
-	    	@Override
-		    protected Map<String, String> getParams() 
-		    {  
-		    	Map<String, String> info = new HashMap<String, String>();
-		    	String strMode = ((Integer)spinnerAnimo.getSelectedItemPosition()).toString();
-		    	info.put("mode", strMode);
-		        return info;
-		    }
-	    }; 
-		
-		requestQueue.add(request);
-		
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }

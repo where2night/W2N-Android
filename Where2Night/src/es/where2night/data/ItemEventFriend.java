@@ -30,7 +30,7 @@ public class ItemEventFriend extends Item{
 	
 	public ItemEventFriend(String picture, String nameEvent, String title,
 			String text, String date, String start, String close,
-			String idCreator, String nameFriend, long id) {
+			String idCreator, String nameFriend, boolean goes, long id) {
 		super();
 		this.picture = picture;
 		this.nameEvent = nameEvent;
@@ -41,6 +41,7 @@ public class ItemEventFriend extends Item{
 		this.close = close;
 		this.idCreator = idCreator;
 		this.nameFriend = nameFriend;
+		this.goes = goes;
 		this.id = id;
 	}
 

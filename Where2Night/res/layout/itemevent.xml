@@ -24,16 +24,6 @@
             android:scaleType="center" />
 
         <TextView
-            android:id="@+id/txtEventTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnSignMe"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="Event Title"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
             android:id="@+id/txtEventText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,17 +31,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="Event Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/txtFriend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/txtEventTime"
-            android:layout_marginTop="5dp"
-            android:maxWidth="130dp"
-            android:text="Friend Event"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -86,11 +65,21 @@
             android:id="@+id/btnSignMe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/txtFriend"
-            android:layout_below="@+id/txtFriend"
-            android:layout_marginTop="10dp"
+            android:layout_alignRight="@+id/txtEventTime"
+            android:layout_centerVertical="true"
+            android:layout_margin="0dp"
             android:background="@drawable/btn_igo_style"
             android:text="@string/SignMe" />
+
+        <TextView
+            android:id="@+id/txtEventTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Eventpicture"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/txtEventDate"
+            android:text="Event Title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </RelativeLayout>
 
