@@ -86,5 +86,9 @@ public class Helper {
 		return BASE_API_URL + "read/newsUser.php";
 	}
 	
+	public static String getFriendshipResponseUrl(){
+		return BASE_API_URL + "actions/followFriend.php";
+	}
+	
 	
 }

@@ -39,17 +39,18 @@ public class FriendInfoFragment extends Fragment implements OnClickListener {
 	private ProgressBar pgFriendView;
 	
 	private Button btnAddAsFriend;
+	private Button btnIgnoreFriend;
 	private int friends = 0;
 	
-		private ImageLoader imageLoader;
+	private ImageLoader imageLoader;
 		
-	    private String pictureUrl;	
-		private String idProfile;
-		private String picturePath;
+	private String pictureUrl;	
+	private String idProfile;
+	private String picturePath;
 		
-		String encodedImage = "";
+	String encodedImage = "";
 		
-		private RequestQueue requestQueue;
+	private RequestQueue requestQueue;
 	
 	String friendId;
 	
@@ -68,23 +69,30 @@ public class FriendInfoFragment extends Fragment implements OnClickListener {
 		txtDescriptionFriend = (TextView) view.findViewById(R.id.txtDescriptionFriend);
 		pgFriendView = (ProgressBar) view.findViewById(R.id.pgFriendView);
 		btnAddAsFriend = (Button) view.findViewById(R.id.btnAddAsFriend);
+		btnIgnoreFriend = (Button) view.findViewById(R.id.btnIgnoreFriend);
         btnAddAsFriend.setOnClickListener(this);
+        btnIgnoreFriend.setOnClickListener(this);
         
        fillData();
         
-		return view;
+       return view;
 	}
 	
 	@Override
 	public void onClick(View v) {
 		 if (v.getId() == btnAddAsFriend.getId()){
-			 if (btnAddAsFriend.isSelected()){
-			 	friends--;
+			 friend(true);
+			 if (friends == 0){
+				 btnAddAsFriend.setEnabled(false);
+			 }else {
+				 btnAddAsFriend.setVisibility(View.GONE);
+				 btnIgnoreFriend.setVisibility(View.GONE); 
 			 }
-			 else{
-				 btnAddAsFriend.setSelected(true);
-				 friends++;
-			 }
+			
+		 }else  if (v.getId() == btnIgnoreFriend.getId()){
+			 friend(false);
+			 btnAddAsFriend.setText(getResources().getString(R.string.AddAsFriend));
+			 btnIgnoreFriend.setVisibility(View.GONE);
 		 }
 	}
 	
@@ -118,12 +126,35 @@ private void fillData() {
 		            etEditCivilState.setText(respuesta.getString("civil_state"));
 		            etEditCity.setText(respuesta.getString("city"));*/
 		            txtDescriptionFriend.setText(respuesta.getString("about"));
-		            
+		            friends = Integer.parseInt(respuesta.getString("modefriend"));
 		            pictureUrl = respuesta.getString("picture");
 		            if (pictureUrl.equals("") || pictureUrl.contains("face"))
 		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
 		            
 		            imgFriend.setImageUrl(pictureUrl, imageLoader);
+		            
+		            
+		            switch (friends) {
+					case 0:
+						btnIgnoreFriend.setVisibility(View.GONE);
+						break;
+					case 1:
+						btnAddAsFriend.setText(getResources().getString(R.string.AcceptFriendRequest));
+						btnIgnoreFriend.setText(getResources().getString(R.string.IgnoreFriendRequest));	
+						btnIgnoreFriend.setVisibility(View.VISIBLE);
+						break;
+					case 3:
+						btnAddAsFriend.setEnabled(false);
+						btnIgnoreFriend.setVisibility(View.GONE);
+						break;
+					case 4:
+						btnIgnoreFriend.setVisibility(View.GONE);
+						btnAddAsFriend.setVisibility(View.GONE);
+						break;
+
+					default:
+						break;
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -143,5 +174,45 @@ private void fillData() {
 		
 		requestQueue.add(request);
 	}
+
+private void friend(boolean accept){
+	
+	final DataManager dm = new DataManager(getActivity().getApplicationContext());
+	String[] cred = dm.getCred();
+	requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+	String url = Helper.getFriendshipResponseUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId;
+	 
+	 
+	Response.Listener<String> succeedListener = new Response.Listener<String>(){
+        @Override
+        public void onResponse(String response) {
+            // response
+        	Log.e("Response", response);
+        }
+	};
+	
+	Response.ErrorListener errorListener = new Response.ErrorListener(){
+		@Override
+		public void onErrorResponse(VolleyError error) {
+         // error
+			Log.e("Error.Response", error.toString());
+		}
+	};
+	
+	StringRequest request;
+	
+	if(accept){
+		if (friends == 0)
+			request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		else
+			request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener); 
+	}
+	else{
+		request = new StringRequest(Request.Method.DELETE, url, succeedListener, errorListener); 
+
+	}
+	requestQueue.add(request);
+}
+
 
 }

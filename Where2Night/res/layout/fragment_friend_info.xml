@@ -13,21 +13,43 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/profile" />
     
-    <Button
-       android:id="@+id/btnAddAsFriend"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_below="@id/imgFriend"
-       android:layout_centerHorizontal="true"
-       android:layout_margin="15dp"
-       android:background="@drawable/btn_igo_style"
-       android:text="@string/AddAsFriend" />
+    <LinearLayout 
+         android:id="@+id/ButtonLayout"
+         android:layout_width="match_parent"
+    	 android:layout_height="wrap_content"
+    	 android:layout_below="@id/imgFriend"
+    	 android:layout_margin="15dp"
+    	 android:orientation="horizontal" >
+    	 
+        <Button
+	       android:id="@+id/btnIgnoreFriend"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_weight="1"
+	       android:layout_marginRight="15dp"
+	       android:visibility="gone"
+	       android:background="@drawable/btn_igo_style"
+	       android:text="@string/IgnoreFriendRequest" />
+        
+        <Button
+	       android:id="@+id/btnAddAsFriend"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_weight="1"
+	       android:background="@drawable/btn_igo_style"
+	       android:text="@string/AddAsFriend" />
+        
+        
+        
+    </LinearLayout>
+    
+    
     
     <TextView
         android:id="@+id/txtNameAndSurnameFriend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnAddAsFriend"
+        android:layout_below="@id/ButtonLayout"
         android:text="@string/NameAndSurnameFriend" />
     
     
