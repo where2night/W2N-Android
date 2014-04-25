@@ -74,8 +74,8 @@ public class HomeFragment extends Fragment{
 	
 	private Button btnEnviar;
 	private ProgressBar pgEventList;
-	private String oldMode;
-	private String oldStatus;
+	private String oldMode = "";
+	private String oldStatus = "";
 	
 	private RequestQueue requestQueue;
 	AdapterItemNews adapterNews;
@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				if(!(oldMode.equals(spinnerAnimo.getSelectedItem().toString()))){
+				if(oldMode == null || !(oldMode.equals(spinnerAnimo.getSelectedItem().toString()))){
 					oldMode = spinnerAnimo.getSelectedItem().toString();
 					final DataManager dm = new DataManager(getActivity().getApplicationContext());
 					String[] cred = dm.getCred();
@@ -183,7 +183,7 @@ public class HomeFragment extends Fragment{
 				
 				}
 				
-				if(!(oldStatus.equals(txtStatus.getText().toString()))){
+				if(oldStatus != null || !(oldStatus.equals(txtStatus.getText().toString()))){
 					oldStatus = txtStatus.getText().toString();
 					final DataManager dm = new DataManager(getActivity().getApplicationContext());
 					String[] cred = dm.getCred();

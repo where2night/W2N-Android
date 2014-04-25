@@ -78,7 +78,7 @@ public class FriendsFragment extends Fragment {
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
 		String url = Helper.getPartierListUrl() + "/" + cred[0] + "/" + cred[1];
-		
+		Log.e("Friends", url);
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
 	    {
