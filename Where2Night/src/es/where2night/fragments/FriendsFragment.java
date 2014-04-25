@@ -73,7 +73,7 @@ public class FriendsFragment extends Fragment {
 	}
 	
 	
-	private void getFriendList() {
+	public void getFriendList() {
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 

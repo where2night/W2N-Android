@@ -183,6 +183,7 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 	}
 	
 	private void fillData() {
+		pgEventList.setVisibility(View.VISIBLE);
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
@@ -302,6 +303,7 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 		            	
 				} catch (Exception e) {
 					pgEventList.setVisibility(View.GONE);
+					Log.e("Exception", e.getMessage());
 					e.printStackTrace();
 				}
 	        }   

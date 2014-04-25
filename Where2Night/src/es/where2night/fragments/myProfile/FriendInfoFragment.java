@@ -75,7 +75,7 @@ public class FriendInfoFragment extends Fragment {
 		pgFriendView = (ProgressBar) view.findViewById(R.id.pgFriendView);
 	
         
-      fillData();
+      fill();
         
        return view;
 	}
@@ -83,7 +83,7 @@ public class FriendInfoFragment extends Fragment {
 	
 	
 	
-private void fillData() {
+public void fill() {
 		
 		
 		
@@ -105,6 +105,7 @@ private void fillData() {
 	            	pgFriendView.setVisibility(View.GONE);
 	            	JSONObject respuesta = new JSONObject(response);
 	            	String name = respuesta.getString("name") + " " + respuesta.getString("surnames");
+	            	getActivity().getActionBar().setTitle(name);
 	            	txtNameAndSurnameFriend.setText(name);
 		            String[] date = respuesta.getString("birthdate").split("/");
 		            txtBirthdayFriend.setText(date[2] + "/" + date[1] + "/" + date[0]);
@@ -120,28 +121,7 @@ private void fillData() {
 		            
 		            imgFriend.setImageUrl(pictureUrl, imageLoader);
 		            
-		            
-		            switch (friends) {
-					case 0:
-						btnIgnoreFriend.setVisibility(View.GONE);
-						break;
-					case 1:
-						btnAddAsFriend.setText(getResources().getString(R.string.AcceptFriendRequest));
-						btnIgnoreFriend.setText(getResources().getString(R.string.IgnoreFriendRequest));	
-						btnIgnoreFriend.setVisibility(View.VISIBLE);
-						break;
-					case 3:
-						btnAddAsFriend.setEnabled(false);
-						btnIgnoreFriend.setVisibility(View.GONE);
-						break;
-					case 4:
-						btnIgnoreFriend.setVisibility(View.GONE);
-						btnAddAsFriend.setVisibility(View.GONE);
-						break;
-
-					default:
-						break;
-					}
+		         
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

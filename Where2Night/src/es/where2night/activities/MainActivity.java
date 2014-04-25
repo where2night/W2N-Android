@@ -231,13 +231,16 @@ public class MainActivity extends FragmentActivity {
 	    
 	    if (index == 1) {
 	    	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-	    	((ProfileFragment) toShow).setTabs();
+	    	Intent i = new Intent(MainActivity.this, ProfileViewActivity.class);
+			startActivity(i);
+	    	((ProfileFragment) toShow).fill();
 	    }
 	    if (index == 4) {
 	    	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	    	((LocalsFragment) toShow).setTabs();
 	    }
 	    if (index == 2) ((EventsFragment) toShow).fill();
+	    if (index == 3) ((FriendsFragment) toShow).getFriendList();
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
