@@ -49,11 +49,14 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 	public static final String NAME = "localName";
 	
 	LatLng position;
+	LatLng default_pos = new LatLng(40.416829,-3.703944);
 	DataManager dm;
 	private GoogleMap mapa;
 	private RequestQueue requestQueue;
 	private ArrayList<LocalListData> localListData = new ArrayList<LocalListData>();
 	private Hashtable<Marker,String> markers = new Hashtable<Marker,String>();
+	
+	
 	
 	public MapFragment(){}
 
@@ -74,9 +77,8 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 			String latitude = local.getLatitude();
 			String longitude = local.getLongitude();
 			try{
-				fillMap(latitude,longitude,local.getName(), local.getIdProfile());
+				fillMap(latitude,longitude,local.getName(), local.getIdProfile(), local.getAddress());
 			}catch(NumberFormatException e){}
-			
 		}
 		LocationManager lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
 		if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
@@ -97,9 +99,8 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 		  alertDialog.setCanceledOnTouchOutside(false);
 		  alertDialog.show();
 		}
-		 mapa.animateCamera(CameraUpdateFactory.newLatLngZoom(
-		            new LatLng( mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude()), 15));
-		 
+		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(default_pos, 12));
+		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng( mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude()), 15));
 	}
 
 private void getAllInfoFromServer() {
@@ -126,7 +127,8 @@ private void getAllInfoFromServer() {
 			            	String name = aux.getString("localName");
 			            	String latitude = aux.getString("latitude");
 			            	String longitude = aux.getString("longitude");
-			            	LocalListData local = new LocalListData(idProfile,name,picture,latitude,longitude);
+			            	String address = aux.getString("streetNameLocal") + " " + aux.getString("streetNumberLocal");
+			            	LocalListData local = new LocalListData(idProfile,name,picture,latitude,longitude,address);
 			            	localListData.add(local);
 		            	}
 		            	allLocals(localListData);
@@ -154,7 +156,7 @@ private void getAllInfoFromServer() {
 	}
 	}
 	
-	public void fillMap(String latitude2, String longitude2, String localName, final long idProfile) throws NumberFormatException
+	public void fillMap(String latitude2, String longitude2, String localName, final long idProfile, String address) throws NumberFormatException
 	{
 		
 		float latitude = Float.valueOf(latitude2);
@@ -165,7 +167,7 @@ private void getAllInfoFromServer() {
 		
 		
 		
-		  mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+		  
 	     
 	      mapa.getUiSettings().setZoomControlsEnabled(true);
 	      mapa.getUiSettings().setCompassEnabled(true);
@@ -173,6 +175,7 @@ private void getAllInfoFromServer() {
 	      Marker marker =   mapa.addMarker(new MarkerOptions()
 					            .position(position)
 					            .title(title)
+					            .snippet(address)
 					            .anchor(0.5f, 0.5f));
 	      
 	      markers.put(marker, String.valueOf(idProfile));

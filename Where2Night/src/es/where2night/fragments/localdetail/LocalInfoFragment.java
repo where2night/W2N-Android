@@ -139,7 +139,7 @@ private void fillData() {
 		    		txtDrinkPrice.setText(getResources().getString(R.string.DrinkPrice) + respuesta.getString("drinkPrice"));
 		    		followers = Integer.valueOf(respuesta.getString("followers"));
 		    		String pictureUrl = respuesta.getString("picture");
-		    		
+		    		String address = respuesta.getString("streetNameLocal") + " " + respuesta.getString("streetNumberLocal");
 		    		latitude = respuesta.getString("latitude");
 		    		longitude = respuesta.getString("longitude");
 		    		
@@ -152,7 +152,7 @@ private void fillData() {
 		    			LocalViewActivity.btnIGo.setSelected(true);
 		    			LocalViewActivity.btnIGo.setText(getResources().getString(R.string.Going));
 		    		}
-		            mapFragment.fillMap(latitude,longitude,localName,Long.parseLong(localId));
+		            mapFragment.fillMap(latitude,longitude,localName,Long.parseLong(localId),address);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

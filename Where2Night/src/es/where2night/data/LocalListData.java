@@ -7,13 +7,15 @@ public class LocalListData {
 	private String picture;
 	private String latitude;
 	private String longitude;
+	private String address;
 	
-	public LocalListData(long idProfile, String name, String picture, String latitude, String longitude){
+	public LocalListData(long idProfile, String name, String picture, String latitude, String longitude, String address){
 		this.idProfile = idProfile;
 		this.name = name;
 		this.picture = picture;
 		this.setLatitude(latitude);
 		this.longitude = longitude;
+		this.address = address;
 	}
 
 	public long getIdProfile() {
@@ -54,6 +56,14 @@ public class LocalListData {
 
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }
 

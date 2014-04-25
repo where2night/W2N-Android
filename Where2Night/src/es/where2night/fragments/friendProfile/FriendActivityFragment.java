@@ -349,6 +349,7 @@ private void friendShip() {
 	            	JSONObject respuesta = new JSONObject(response);
 		            friends = Integer.parseInt(respuesta.getString("modefriend"));
 		            
+		            setHasOptionsMenu(false);
 		            switch (friends) {
 					case 0:
 						btnIgnoreFriend.setVisibility(View.GONE);
@@ -365,6 +366,7 @@ private void friendShip() {
 					case 4:
 						btnIgnoreFriend.setVisibility(View.GONE);
 						btnAddAsFriend.setVisibility(View.GONE);
+						 setHasOptionsMenu(true);
 						break;
 
 					default:

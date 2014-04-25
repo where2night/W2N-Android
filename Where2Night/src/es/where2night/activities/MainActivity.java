@@ -292,6 +292,8 @@ public class MainActivity extends FragmentActivity {
     					{ 
     						dm.login(email,idProfile,token,type);
     						connectionProgressDialog.dismiss();
+    						((HomeFragment)fragments[0]).fill(null);
+    						invalidateOptionsMenu();
     					}else{}
     	            } catch(JSONException e) {}
     	        }
