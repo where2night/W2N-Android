@@ -1,4 +1,4 @@
-package es.where2night.fragments.friendProfile;
+package es.where2night.fragments.myProfile;
 
 import java.util.ArrayList;
 
@@ -44,11 +44,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 public class FriendActivityFragment extends Fragment implements OnClickListener{
 	
-	private String friendId;
 	private RequestQueue requestQueue;
     private ArrayList<Item> arraydir;
     private AdapterItemNews adapterNews;
@@ -76,12 +74,11 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 		View view = inflater.inflate(R.layout.fragment_friend_activity, container, false);
 		list = (ListView) view.findViewById(R.id.eventList);
 		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
-		friendId = getArguments().getString(FriendViewActivity.ID);
 		
 		btnAddAsFriend = (Button) view.findViewById(R.id.btnAddAsFriend);
 		btnIgnoreFriend = (Button) view.findViewById(R.id.btnIgnoreFriend);
-        btnAddAsFriend.setOnClickListener(this);
-        btnIgnoreFriend.setOnClickListener(this);
+		btnIgnoreFriend.setVisibility(View.GONE);
+		btnAddAsFriend.setVisibility(View.GONE);
 		
 		list.setOnScrollListener(new OnScrollListener() {
 			
@@ -164,7 +161,6 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		 if (v.getId() == btnAddAsFriend.getId()){
-			 friend(true);
 			 if (friends == 0){
 				 btnAddAsFriend.setEnabled(false);
 			 }else {
@@ -173,7 +169,6 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 			 }
 			
 		 }else  if (v.getId() == btnIgnoreFriend.getId()){
-			 friend(false);
 			 btnAddAsFriend.setText(getResources().getString(R.string.AddAsFriend));
 			 btnIgnoreFriend.setVisibility(View.GONE);
 		 }
@@ -185,14 +180,13 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 	    adapterNews = new AdapterItemNews(getActivity(), arraydir);
 	    list.setAdapter(adapterNews);
 	    fillData();
-	    friendShip();
 	}
 	
 	private void fillData() {
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getNewsFriendUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId + "/" + currentPage;
+		String url = Helper.getNewsFriendUrl() + "/" + cred[0] + "/" + cred[1] + "/" + cred[0] + "/" + currentPage;
 		
 		Log.e("url", url);
 		
@@ -328,108 +322,7 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 		requestQueue.add(request);
 	}
 	
-	
-private void friendShip() {
-		
-		
-		String idProfile;
-		final DataManager dm = new DataManager(getActivity().getApplicationContext());
-		String[] cred = dm.getCred();
-		idProfile = cred[0];
-		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getProfileUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId;
-		Log.e("Edit", url);
-		
-		Response.Listener<String> succeedListener = new Response.Listener<String>() 
-	    {
-	        @Override
-	        public void onResponse(String response) {
-	            // response
-	        	Log.e("Response", response);
-	            try {
-	            	JSONObject respuesta = new JSONObject(response);
-		            friends = Integer.parseInt(respuesta.getString("modefriend"));
-		            
-		            setHasOptionsMenu(false);
-		            switch (friends) {
-					case 0:
-						btnIgnoreFriend.setVisibility(View.GONE);
-						break;
-					case 1:
-						btnAddAsFriend.setText(getResources().getString(R.string.AcceptFriendRequest));
-						btnIgnoreFriend.setText(getResources().getString(R.string.IgnoreFriendRequest));	
-						btnIgnoreFriend.setVisibility(View.VISIBLE);
-						break;
-					case 3:
-						btnAddAsFriend.setEnabled(false);
-						btnIgnoreFriend.setVisibility(View.GONE);
-						break;
-					case 4:
-						btnIgnoreFriend.setVisibility(View.GONE);
-						btnAddAsFriend.setVisibility(View.GONE);
-						 setHasOptionsMenu(true);
-						break;
 
-					default:
-						break;
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-	        }
-	    };
-	    Response.ErrorListener errorListener = new Response.ErrorListener() 
-	    {
-	         @Override
-	         public void onErrorResponse(VolleyError error) {
-	             // error
-	             Log.e("Error.Response", error.toString());
-	       }
-	    };
-		
-		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
-		
-		requestQueue.add(request);
-	}
-
-private void friend(boolean accept){
-	
-	final DataManager dm = new DataManager(getActivity().getApplicationContext());
-	String[] cred = dm.getCred();
-	requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-	String url = Helper.getFriendshipResponseUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId;
-	 
-	 
-	Response.Listener<String> succeedListener = new Response.Listener<String>(){
-        @Override
-        public void onResponse(String response) {
-            // response
-        	Log.e("Response", response);
-        }
-	};
-	
-	Response.ErrorListener errorListener = new Response.ErrorListener(){
-		@Override
-		public void onErrorResponse(VolleyError error) {
-         // error
-			Log.e("Error.Response", error.toString());
-		}
-	};
-	
-	StringRequest request;
-	
-	if(accept){
-		if (friends == 0)
-			request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
-		else
-			request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener); 
-	}
-	else{
-		request = new StringRequest(Request.Method.DELETE, url, succeedListener, errorListener); 
-
-	}
-	requestQueue.add(request);
-}
 
 
 @Override
@@ -444,11 +337,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	// as you specify a parent activity in AndroidManifest.xml.
 	int id = item.getItemId();
 	if (id == R.id.delete_friend) {
-		 friend(false);
-		 btnAddAsFriend.setText(getResources().getString(R.string.AddAsFriend));
-		 btnIgnoreFriend.setVisibility(View.GONE);
-		 btnAddAsFriend.setVisibility(View.VISIBLE);
-		 Toast.makeText(getActivity(), "Amigo Eliminado", Toast.LENGTH_SHORT).show();
+		return true;
 	}
 	return super.onOptionsItemSelected(item);
 }

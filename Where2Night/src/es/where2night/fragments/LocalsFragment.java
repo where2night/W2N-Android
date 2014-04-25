@@ -33,18 +33,9 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 		
 		setHasOptionsMenu(true);
 
-		final ActionBar actionBar = getActivity().getActionBar();
-		// Specify that we will be displaying tabs in the action bar.
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setText("Mapa")
-                        .setTabListener(this));
-        
-        actionBar.addTab(
-                actionBar.newTab()
-                        .setText("Lista")
-                        .setTabListener(this));
-        
+       
+		setTabs();
+		
         FragmentManager manager = getChildFragmentManager();
         manager.beginTransaction()
         	    .add(R.id.localListTab, fragments[0])
@@ -53,14 +44,28 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
         
         manager.beginTransaction().hide(fragments[1])
 				        		  .commit();
-        
-        
-       // setContent(0);
-        
 		return view;
 	}
 	
 
+public void setTabs(){
+		
+		final ActionBar actionBar = getActivity().getActionBar();
+	    
+	    actionBar.removeAllTabs();
+	    
+	    
+	    actionBar.addTab(
+                actionBar.newTab()
+                        .setText("Mapa")
+                        .setTabListener(this));
+        
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setText("Lista")
+                        .setTabListener(this));
+		
+	}
 	
 
 

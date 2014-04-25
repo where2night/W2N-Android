@@ -167,7 +167,7 @@ private void getAllInfoFromServer() {
 		
 		
 		
-		  
+		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
 	     
 	      mapa.getUiSettings().setZoomControlsEnabled(true);
 	      mapa.getUiSettings().setCompassEnabled(true);

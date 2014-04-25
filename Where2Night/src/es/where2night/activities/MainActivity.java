@@ -125,11 +125,13 @@ public class MainActivity extends FragmentActivity {
             	invalidateOptionsMenu();
             	getActionBar().setIcon(R.drawable.logo7);
             	getActionBar().setTitle(drawerOptions[lastIndex]);
+            	getActionBar().setSubtitle("");
             }
 
         	public void onDrawerOpened(View drawerView) {
             	invalidateOptionsMenu();
             	getActionBar().setTitle("");
+            	getActionBar().setSubtitle("");
             //	getActionBar().setIcon(R.drawable.open_drawer);
             }
         };
@@ -213,6 +215,9 @@ public class MainActivity extends FragmentActivity {
 		
 		
 		FragmentManager manager = getSupportFragmentManager();
+		 
+		/*if (lastIndex != 1 || index != 1) 
+		manager.beginTransaction().detach(toHide).attach(toShow).commit();*/
 		
 		manager.beginTransaction()
 				.hide(toHide)
@@ -224,7 +229,14 @@ public class MainActivity extends FragmentActivity {
 		drawerList.setItemChecked(index, true);
 	    drawerLayout.closeDrawer(drawerList);	
 	    
-	    if (index == 4) actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	    if (index == 1) {
+	    	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	    	((ProfileFragment) toShow).setTabs();
+	    }
+	    if (index == 4) {
+	    	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	    	((LocalsFragment) toShow).setTabs();
+	    }
 	    if (index == 2) ((EventsFragment) toShow).fill();
     }
 
