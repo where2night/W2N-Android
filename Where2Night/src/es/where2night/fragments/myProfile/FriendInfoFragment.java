@@ -107,12 +107,12 @@ private void fillData() {
 	            	String name = respuesta.getString("name") + " " + respuesta.getString("surnames");
 	            	txtNameAndSurnameFriend.setText(name);
 		            String[] date = respuesta.getString("birthdate").split("/");
-		            txtBirthdayFriend.setText(date[2] + "/" + date[1] + "/" + date[0]);
-		            txtMusicFriend.setText(respuesta.getString("music"));
-		        	txtCivilStateFriend.setText(respuesta.getString("civil_state"));
-		        	txtCityFriend.setText(respuesta.getString("city"));
-		        	txtDrinkFriend.setText(respuesta.getString("drink"));
-		        	txtAboutFriend.setText(respuesta.getString("about"));
+		            txtBirthdayFriend.setText("Fecha de nacimiento: " + date[2] + "/" + date[1] + "/" + date[0]);
+		            txtMusicFriend.setText("Mi música favorita es: " + respuesta.getString("music"));
+		        	txtCivilStateFriend.setText("Estado 'civil' actual: " + respuesta.getString("civil_state"));
+		        	txtCityFriend.setText("Ciudad actual: " + respuesta.getString("city"));
+		        	txtDrinkFriend.setText("Mi bebida favorita es: " + respuesta.getString("drink"));
+		        	txtAboutFriend.setText("Algo más sobre mi: " + respuesta.getString("about"));
 		        	
 		            pictureUrl = respuesta.getString("picture");
 		            if (pictureUrl.equals("") || pictureUrl.contains("face"))

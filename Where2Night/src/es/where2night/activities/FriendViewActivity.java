@@ -111,6 +111,13 @@ public class FriendViewActivity extends FragmentActivity implements ActionBar.Ta
 		return intent;
 	}
 
-	
+	@Override
+    public void onBackPressed()
+    {
+    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        
+        //super.onBackPressed();  // optional depending on your needs
+    }
 
 }

@@ -207,4 +207,13 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		//	intent.putExtra(MainActivity.OPTION, "5");
 			return intent;
 	 }
+	 
+	 @Override
+	    public void onBackPressed()
+	    {
+	    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+	        startActivity(intent);
+	        
+	        //super.onBackPressed();  // optional depending on your needs
+	    }
 }
