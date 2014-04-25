@@ -347,7 +347,7 @@ public class HomeFragment extends Fragment{
 					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
 					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemEvent)adapterNews.getItem(position)).getIdCreator()));
 					startActivity(intent);
-				}//FIXME
+				}
 				else if(adapterNews.getItem(position).getClass() == ItemLocalNews.class){
 					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
 					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemLocalNews)adapterNews.getItem(position)).getId()));
@@ -403,7 +403,7 @@ public class HomeFragment extends Fragment{
 						            	boolean going = false;
 						            	if (!goes.equals("null"))
 						            		going = true;
-						            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id,going); //FIXME cargar imagen
+						            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id,going);
 						            	arraydir.add(event);
 										break;
 									
@@ -470,7 +470,7 @@ public class HomeFragment extends Fragment{
 						            	boolean goingF = false;
 						            	if (!goesF.equals("null"))
 						            		goingF = true;
-						            	ItemEventFriend eventFriend = new ItemEventFriend(pictureF,nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,goingF,idF); //FIXME cargar imagen
+						            	ItemEventFriend eventFriend = new ItemEventFriend(pictureF,nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,goingF,idF);
 						            	arraydir.add(eventFriend);
 										break;
 	

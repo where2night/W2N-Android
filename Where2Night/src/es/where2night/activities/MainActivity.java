@@ -52,7 +52,7 @@ import es.where2night.utilities.Helper;
  * In this Activity is implemented the navigation drawer
  */
 
-public class MainActivity extends FragmentActivity { 
+public class MainActivity extends FragmentActivity{ 
 
 	protected static final String EMAIL = "email";
 	protected static final String TYPE = "type";
@@ -380,6 +380,15 @@ public class MainActivity extends FragmentActivity {
 		
 		requestQueue.add(request);
 	}	
+    
+    @Override
+    public void onBackPressed()
+    {
+    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        
+        //super.onBackPressed();  // optional depending on your needs
+    }
     
     
 }

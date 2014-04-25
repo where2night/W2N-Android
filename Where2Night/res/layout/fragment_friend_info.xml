@@ -5,14 +5,13 @@
     android:layout_height="match_parent" 
     android:layout_marginLeft="10dp">
    
-  
-
    <com.android.volley.toolbox.NetworkImageView
        android:id="@+id/imgFriend"
        android:layout_width="150dp"
        android:layout_height="150dp"
        android:layout_alignParentTop="true"
        android:layout_centerHorizontal="true"
+       android:layout_marginTop="15dp"
        android:src="@drawable/profile" />
 
    <ProgressBar
@@ -22,7 +21,8 @@
        android:layout_height="wrap_content"
        android:layout_below="@+id/imgFriend"
        android:layout_centerHorizontal="true"
-       android:layout_marginBottom="20dp" />  
+       android:layout_marginBottom="20dp"
+       android:layout_marginTop="5dp" />
 
    <TextView
        android:id="@+id/txtNameAndSurnameFriend"
@@ -78,6 +78,8 @@
        android:layout_height="wrap_content"
        android:layout_alignParentLeft="true"
        android:layout_below="@+id/txtDrinkFriend"
+       android:layout_marginLeft="15dp"
+       android:layout_marginRight="15dp"
        android:text="TextView" />
 
 </RelativeLayout>
