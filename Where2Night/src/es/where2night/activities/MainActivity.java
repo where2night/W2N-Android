@@ -240,7 +240,7 @@ public class MainActivity extends FragmentActivity{
 	    	((LocalsFragment) toShow).setTabs();
 	    }
 	    if (index == 2) ((EventsFragment) toShow).fill();
-	    if (index == 3) ((FriendsFragment) toShow).getFriendList();
+	    if (index == 3) ((FriendsFragment) toShow).fill();
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {

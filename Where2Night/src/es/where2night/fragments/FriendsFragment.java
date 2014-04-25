@@ -39,6 +39,7 @@ public class FriendsFragment extends Fragment {
 	 private ProgressDialog connectionProgressDialog;
 	 ArrayList<ItemFriend> arraydir;
 	 AdapterItemFriendList adapter;
+	 ListView lista;
 	// TextView friendshipPets;
 	
 	@Override
@@ -49,7 +50,7 @@ public class FriendsFragment extends Fragment {
 		connectionProgressDialog = new ProgressDialog(getActivity());
         connectionProgressDialog.setMessage("Cargando tu perfil...");
         
-		ListView lista = (ListView) view.findViewById(R.id.friendList);
+		lista = (ListView) view.findViewById(R.id.friendList);
         arraydir = new ArrayList<ItemFriend>();
         
         //TODO      
@@ -70,6 +71,14 @@ public class FriendsFragment extends Fragment {
 		
         getFriendList();
 		return view;
+	}
+	
+	public void fill(){
+		arraydir = new ArrayList<ItemFriend>();
+	    adapter = new AdapterItemFriendList(getActivity(), arraydir);
+        lista.setAdapter(adapter);
+        getFriendList();
+		
 	}
 	
 	
