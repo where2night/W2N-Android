@@ -384,11 +384,11 @@ public class MainActivity extends FragmentActivity{
     @Override
     public void onBackPressed()
     {
-    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+    	Intent intent = new Intent(Intent.ACTION_MAIN);
+        finish();
         
         //super.onBackPressed();  // optional depending on your needs
     }
-    
+        
     
 }
