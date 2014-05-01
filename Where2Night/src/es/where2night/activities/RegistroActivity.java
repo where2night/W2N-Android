@@ -6,6 +6,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +42,7 @@ public class RegistroActivity extends Activity {
 	private RadioButton rdFemale;
 	private RadioButton rdMale;
 	private Button btnRegister;
-	private TextView register_error;
+	private TextView con_cuenta;
 	private ProgressBar pgRegister;
 	
 	private String name;
@@ -72,7 +74,17 @@ public class RegistroActivity extends Activity {
 		rdMale = (RadioButton) findViewById(R.id.rdMale);
 		btnRegister = (Button) findViewById(R.id.btnEnviarEstado);
 		pgRegister = (ProgressBar) findViewById(R.id.pgRegister);
-		register_error = (TextView) findViewById(R.id.register_error);
+		con_cuenta = (TextView) findViewById(R.id.link_to_login);
+		
+		con_cuenta.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), LoginEmailActivity.class);
+                startActivity(intent);
+				
+			}
+		});
 		
 		btnRegister.setOnClickListener(new View.OnClickListener(){
 
@@ -209,7 +221,19 @@ public class RegistroActivity extends Activity {
 	private void setErrorMsg(String string){
 		pgRegister.setVisibility(View.GONE);
 		btnRegister.setEnabled(true);
-		register_error.setText(string);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(string)
+		        .setTitle("Error en el registro")
+		        .setCancelable(false)
+		        .setNeutralButton("Aceptar",
+		                new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                        dialog.cancel();
+		                    }
+		                });
+		AlertDialog alert = builder.create();
+		alert.show();
+		//register_error.setText(string);
 	}
 
 

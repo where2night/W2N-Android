@@ -32,6 +32,7 @@
     <string name="female">Mujer</string>
     <string name="date">Fecha de nacimiento (dd/mm/aaaa)</string>
     <string name="contrasena">Contraseña</string>
+    <string name="contrasena2">Repite la contraseña</string>
     <string name="enviar">Enviar</string>
     <string name="sinRegistro">¿No tienes cuenta? ¡Registrate! </string>
     <string name="nombre">Nombre</string>

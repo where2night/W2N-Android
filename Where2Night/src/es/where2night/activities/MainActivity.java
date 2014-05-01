@@ -6,9 +6,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -383,9 +385,27 @@ public class MainActivity extends FragmentActivity{
     
     @Override
     public void onBackPressed()
-    {
-    	Intent intent = new Intent(Intent.ACTION_MAIN);
-        finish();
+    {        
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage("¿Desea salir de Where2Night?")
+    	        .setTitle("Salir")
+    	        .setCancelable(false)
+    	        .setNegativeButton("No, sigo un rato más",
+    	                new DialogInterface.OnClickListener() {
+    	                    public void onClick(DialogInterface dialog, int id) {
+    	                    	//Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    	                        //startActivity(intent);
+    	                    }
+    	                })
+    	        .setPositiveButton("Si, salir",
+    	                new DialogInterface.OnClickListener() {
+    	                    public void onClick(DialogInterface dialog, int id) {
+    	                    	Intent intent = new Intent(Intent.ACTION_MAIN);
+    	                        finish();
+    	                    }
+    	                });
+    	AlertDialog alert = builder.create();
+    	alert.show();
         
         //super.onBackPressed();  // optional depending on your needs
     }

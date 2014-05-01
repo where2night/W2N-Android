@@ -41,54 +41,52 @@
         android:inputType="textPassword" />
 
  <RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="fill_parent" >   
-  
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="100dp"
-	    android:layout_marginRight="43dp"
-	    android:layout_marginBottom="10dp"
-	    android:textColor="@color/white"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_style"
-        android:text="@string/enviar" />
+     android:layout_width="wrap_content"
+     android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/login_error"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/link_to_register"
-        android:layout_marginTop="29dp"
-        android:gravity="center"
-        android:textColor="#0b84aa"
-        android:textSize="20sp" />
+     <TextView
+         android:id="@+id/login_error"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/link_to_register"
+         android:layout_marginTop="29dp"
+         android:gravity="center"
+         android:textColor="#0b84aa"
+         android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/link_to_register"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/btnLogin"
-        android:layout_marginTop="18dp"
-        android:gravity="center"
-        android:text="@string/sinRegistro"
-        android:textColor="#ffa500"
-        android:textSize="20sp" />
+     <ProgressBar
+         android:id="@+id/pgLoginEmail"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_marginRight="93dp"
+         android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+id/pgLoginEmail"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btnLogin"
-        android:layout_alignRight="@+id/btnLogin"
-        android:layout_marginRight="93dp" />
+     <Button
+         android:id="@+id/btnLoginLogin"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+         android:layout_margin="20dip"
+         android:layout_marginTop="19dp"
+         android:background="@drawable/button_style"
+         android:padding="10dp"
+         android:text="@string/enviar"
+         android:textColor="@color/white" />
 
-   </RelativeLayout> 
+     <TextView
+         android:id="@+id/link_to_register"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/btnLoginLogin"
+         android:gravity="center"
+         android:text="@string/sinRegistro"
+         android:textColor="#ffa500"
+         android:textSize="20sp" />
+
+ </RelativeLayout>
 
 </LinearLayout>

@@ -74,8 +74,8 @@ public class HomeFragment extends Fragment{
 	
 	private Button btnEnviar;
 	private ProgressBar pgEventList;
-	private String oldMode = "";
-	private String oldStatus = "";
+	public static String oldMode;
+	public static String oldStatus;
 	
 	private RequestQueue requestQueue;
 	AdapterItemNews adapterNews;
@@ -139,8 +139,8 @@ public class HomeFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				if(oldMode == null || !(oldMode.equals(spinnerAnimo.getSelectedItem().toString()))){
-					oldMode = spinnerAnimo.getSelectedItem().toString();
+				if(oldMode == null || !(oldMode.equals(((Integer)spinnerAnimo.getSelectedItemPosition()).toString()))){
+					oldMode = ((Integer)spinnerAnimo.getSelectedItemPosition()).toString();
 					final DataManager dm = new DataManager(getActivity().getApplicationContext());
 					String[] cred = dm.getCred();
 					requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
@@ -183,7 +183,7 @@ public class HomeFragment extends Fragment{
 				
 				}
 				
-				if(oldStatus != null || !(oldStatus.equals(txtStatus.getText().toString()))){
+				if(oldStatus == null || !(oldStatus.equals(txtStatus.getText().toString()))){
 					oldStatus = txtStatus.getText().toString();
 					final DataManager dm = new DataManager(getActivity().getApplicationContext());
 					String[] cred = dm.getCred();
@@ -229,6 +229,7 @@ public class HomeFragment extends Fragment{
 				
 				InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(txtStatus.getWindowToken(), 0);
+				Toast.makeText(getActivity().getApplicationContext(), "¡Hecho!", Toast.LENGTH_SHORT).show();
 			}
 		});
 		

@@ -7,6 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +35,7 @@ public class LoginEmailActivity extends Activity {
 	private EditText txtEmail;
 	private EditText txtPass;
 	private TextView txtLoginError;
+	private TextView sin_cuenta;
 	private ProgressBar pgLoginEmail;
 	String email, pass;
 	RequestQueue requestQueue;
@@ -45,11 +48,22 @@ public class LoginEmailActivity extends Activity {
 		 setContentView(R.layout.activity_login_email);
 		 getActionBar().hide();
 		  
-		 btnLoginEmail = (Button) findViewById(R.id.btnLogin);
+		 btnLoginEmail = (Button) findViewById(R.id.btnLoginLogin);
 		 txtEmail = (EditText) findViewById(R.id.txtLoginEmail);
 		 txtPass = (EditText) findViewById(R.id.txtLoginPass);
 		 pgLoginEmail = (ProgressBar) findViewById(R.id.pgLoginEmail);
 		 txtLoginError = (TextView) findViewById(R.id.login_error);
+		 sin_cuenta = (TextView) findViewById(R.id.link_to_register);
+		 
+		 sin_cuenta.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), RegistroActivity.class);
+                startActivity(intent);
+				
+			}
+		});
 		 
 	     btnLoginEmail.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -86,10 +100,13 @@ public class LoginEmailActivity extends Activity {
 									startActivity(i);
 								}
 								else{
-									txtLoginError.setText(getResources().getString(R.string.login_error));
+									muestraError("El email o la contraseña no es correcto");
+									//txtLoginError.setText(getResources().getString(R.string.login_error));
 									btnLoginEmail.setEnabled(true);									
 								}
-				            } catch(JSONException e) {}
+				            } catch(JSONException e) {
+				            	muestraError("El email o la contraseña no es correcto");
+				            }
 				        }
 				    };
 				    Response.ErrorListener errorListener = new Response.ErrorListener() 
@@ -97,8 +114,8 @@ public class LoginEmailActivity extends Activity {
 				         @Override
 				         public void onErrorResponse(VolleyError error) {
 				             // error
-				             Log.e("Error.Response", error.toString());
-				             txtLoginError.setText(getResources().getString(R.string.login_error_connection));
+				             muestraError("Error de conexión");
+				             //txtLoginError.setText(getResources().getString(R.string.login_error_connection));
 				             btnLoginEmail.setEnabled(true);
 				       }
 				    };
@@ -123,6 +140,21 @@ public class LoginEmailActivity extends Activity {
 	     
 	     
 	        
+	}
+	
+	private void muestraError(String error){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(error)
+		        .setTitle("Error en el login")
+		        .setCancelable(false)
+		        .setNeutralButton("Aceptar",
+		                new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                        dialog.cancel();
+		                    }
+		                });
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 
