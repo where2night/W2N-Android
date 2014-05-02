@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
+import es.where2night.fragments.localdetail.JukeboxViewFragment;
 import es.where2night.fragments.localdetail.LocalDiscountListFragment;
 import es.where2night.fragments.localdetail.LocalEventsFragment;
 import es.where2night.fragments.localdetail.LocalInfoFragment;
@@ -41,7 +42,8 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     
     private Fragment[] fragments = new Fragment[]{ new LocalInfoFragment(),
     											   new LocalEventsFragment(),
-    											   new LocalDiscountListFragment()};
+    											   new LocalDiscountListFragment(),
+    											   new JukeboxViewFragment()};
     private RequestQueue requestQueue;
     private JSONObject respuesta = null;
     
@@ -70,7 +72,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
        
         bundle = new Bundle();
 		bundle.putString(ID, localId);
-        for (int i = 0; i</*tabs.length*/3; i++){
+        for (int i = 0; i</*tabs.length*/4; i++){
         actionBar.addTab(
                 actionBar.newTab()
                         .setText(tabs[i])
@@ -84,10 +86,12 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         	    .add(R.id.selectedTabFragment, fragments[0])
         	    .add(R.id.selectedTabFragment, fragments[1])
         	    .add(R.id.selectedTabFragment, fragments[2])
+        	    .add(R.id.selectedTabFragment, fragments[3])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
         						  .hide(fragments[2])
+        						  .hide(fragments[3])
 				        		  .commit();
         
         setContent(0);
@@ -118,6 +122,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		
 		if (index == 1) ((LocalEventsFragment) toShow).fill();
 		if (index == 2) Toast.makeText(getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
+		if (index == 3) ((JukeboxViewFragment) toShow).fill();
     }
     
 

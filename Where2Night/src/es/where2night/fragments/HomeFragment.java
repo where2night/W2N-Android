@@ -71,6 +71,8 @@ public class HomeFragment extends Fragment{
     private boolean loading = true;
     // Sirve para setear la pagina inicial
     private int startingPageIndex = 0;
+    
+    private static int lastVisibleItem = 0;
 	
 	private Button btnEnviar;
 	private ProgressBar pgEventList;
@@ -94,17 +96,19 @@ public class HomeFragment extends Fragment{
 		arraydir = new ArrayList<Item>();
 		adapterNews = new AdapterItemNews(getActivity(), arraydir);
         lista.setAdapter(adapterNews);
+        
         lista.setOnScrollListener(new OnScrollListener() {
 			
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// TODO Auto-generated method stub				
+				//TODO Auto-generated				
 			}
+			
+			
 			
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-				
+					int visibleItemCount, int totalItemCount) {				
 				
 				if (!loading && (totalItemCount < previousTotalItemCount)) {
 		            currentPage = startingPageIndex;

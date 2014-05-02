@@ -88,13 +88,12 @@
     <string name="Ubication">Ubicación </string>
     <string name="IGo">Quiero ir </string>
     <string name="Going">Voy a ir </string>
-    
     <string name="Friends">Número de amigos: </string>
     <string name="NameAndSurnameFriend">Nombre: </string>
     <string name="MusicFriendLike">Estilo musical preferido: </string>
     <string name="AboutMeFriend">Sobre mí: </string>
     <string name="AddAsFriend">Añadir como amigo</string>
-    
+
     <string-array name="mode_array">
         <item>De tranquis</item>
         <item>Hoy no me lio</item>
@@ -103,20 +102,20 @@
         <item>Destroyer</item>
         <item>Yo me llamo Ralph</item>
     </string-array>
-    
+
     <string name="Detranquis">"De tranquis"</string>
     <string name="Hoynomelio">"Hoy no me lio"</string>
     <string name="Loquesurja">"Lo que surja"</string>
     <string name="Lodaretodo">"Lo daré todo"</string>
     <string name="Destroyer">"Destroyer"</string>
     <string name="YomellamoRalph">"Yo me llamo Ralph"</string>
-    
+
     <string-array name="local_tabs">
         <item>Info</item>
         <item>Eventos</item>
         <item>Listas</item>
-        <item>Asistentes</item>
         <item>Gramola</item>
+        <item>Asistentes</item>
     </string-array>
     <string-array name="dj_tabs">
         <item>Info</item>
@@ -135,5 +134,6 @@
     <string name="AcceptFriendRequest">Aceptar peticion</string>
     <string name="IgnoreFriendRequest">Ignorar</string>
     <string name="delete_friend">Eliminar amigo</string>
+    <string name="title_activity_jukebox_view">JukeboxViewActivity</string>
 
 </resources>

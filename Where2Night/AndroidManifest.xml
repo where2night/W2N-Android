@@ -25,7 +25,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <!--
          The following two permissions are not required to use
-	     Google Maps Android API v2, but are recommended.
+	     Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -75,6 +75,11 @@
             android:label="@string/title_activity_registro" >
         </activity>
         <activity
+            android:name="es.where2night.activities.ProfileViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/Notifications" >
+        </activity>
+        <activity
             android:name="es.where2night.activities.LoginEmailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_login_email" >
@@ -105,19 +110,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/Notifications" >
         </activity>
-        
-         <activity
+        <activity
             android:name="es.where2night.activities.FriendViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/Notifications" >
         </activity>
-         <activity
-            android:name="es.where2night.activities.ProfileViewActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/Notifications" >
-        </activity>
 
-        
         <!-- Search results activity -->
         <activity
             android:name="es.where2night.activities.LocalsSearchResultsActivity"
@@ -131,14 +129,14 @@
         <activity
             android:name="es.where2night.activities.SearchResultsActivity"
             android:label="@string/title_activity_search_results" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-             <meta-data
+
+            <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable_locals" />
         </activity>
-        
     </application>
 
 </manifest>

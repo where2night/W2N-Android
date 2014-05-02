@@ -110,5 +110,14 @@ public class ProfileViewActivity extends FragmentActivity implements ActionBar.T
 	}
 
 	
+	@Override
+    public void onBackPressed()
+    {
+    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        
+        //super.onBackPressed();  // optional depending on your needs
+    }
+	
 
 }

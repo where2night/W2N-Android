@@ -93,6 +93,12 @@ public class Helper {
 	public static String getFriendshipResponseUrl(){
 		return BASE_API_URL + "actions/followFriend.php";
 	}
+	public static String getSongsUrl() {
+		return BASE_API_URL + "read/songs.php";
+	}
+	public static String getVoteSongUrl() {
+		return BASE_API_URL + "actions/voteSong.php";
+	}
 	
 	
 }
