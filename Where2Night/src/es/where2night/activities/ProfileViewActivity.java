@@ -33,7 +33,6 @@ public class ProfileViewActivity extends FragmentActivity implements ActionBar.T
         
         
         final ActionBar actionBar = getActionBar();
-        
         actionBar.removeAllTabs();
         
         actionBar.setIcon(R.drawable.logo7);

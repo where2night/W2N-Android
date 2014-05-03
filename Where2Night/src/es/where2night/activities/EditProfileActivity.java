@@ -1,13 +1,15 @@
 package es.where2night.activities;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,9 +17,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,59 +39,72 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
+import es.where2night.fragments.editprofile.BasicInfoFragment;
+import es.where2night.fragments.editprofile.DetailedInfoFragment;
+import es.where2night.fragments.editprofile.PasswordChangeFragment;
 import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
-public class EditProfileActivity extends Activity {
+public class EditProfileActivity extends FragmentActivity implements ActionBar.TabListener  {
 
-	private static int RESULT_LOAD_IMAGE = 1;
 	
-	private NetworkImageView imgEditProfile;
-	private ImageLoader imageLoader;
-	private EditText etEditName;
-	private EditText etEditSurname;
-	private EditText etEditDate;
-	private EditText etEditMusic;
-	private EditText etEditDrink;
-	private EditText etEditCivilState;
-	private EditText etEditCity;
-	private EditText edEditAbout;
-	private RadioButton rdEditFemale;
-	private RadioButton rdEditMale;
 	private Button btnEditAccept;
 	private Button btnEditCancel;
 	private ProgressBar pgEdit;
 	
-	private String pictureUrl;	
+
 	private String idProfile;
-	private String picturePath;
 	
-	String encodedImage = "";
 	
-	private RequestQueue requestQueue;
+	private int lastIndex = 0;
+	
+	public static RequestQueue requestQueue;
     private JSONObject respuesta = null;
+    
+    private Fragment[] fragments = new Fragment[] {new BasicInfoFragment(),
+			   										new DetailedInfoFragment(),
+			   										new PasswordChangeFragment()};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_profile);
-		getActionBar().setIcon(R.drawable.logo7);
 		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		 final ActionBar actionBar = getActionBar();
+        actionBar.removeAllTabs();
+        
+        actionBar.setIcon(R.drawable.logo7);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        
+        // Specify that we will be displaying tabs in the action bar.
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        
+        
+        String[] tabs = getResources().getStringArray(R.array.editProfile_tabs);
+        
 		
+        for (int i = 0; i<tabs.length; i++){
+	        actionBar.addTab(
+	                actionBar.newTab()
+	                        .setText(tabs[i])
+	                        .setTabListener(this));
+        }
+        
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+        	    .add(R.id.selectedTabFragment, fragments[0])
+        	    .add(R.id.selectedTabFragment, fragments[1])
+        	    .add(R.id.selectedTabFragment, fragments[2])
+        	    .commit();	
+        
+        manager.beginTransaction().hide(fragments[1])
+        						  .hide(fragments[2])
+				        		  .commit();
+        
+        setContent(0);
 		
-		imgEditProfile = (NetworkImageView) findViewById(R.id.imgEditProfile);
-		etEditName = (EditText) findViewById(R.id.etEditName);
-		etEditSurname = (EditText) findViewById(R.id.etEditSurname);
-		etEditDate = (EditText) findViewById(R.id.etEditDate);
-		etEditMusic = (EditText) findViewById(R.id.etEditMusic);
-		etEditDrink = (EditText) findViewById(R.id.etEditDrink);
-		etEditCivilState = (EditText) findViewById(R.id.etEditCivilState);
-		etEditCity = (EditText) findViewById(R.id.etEditCity);
-		edEditAbout = (EditText) findViewById(R.id.edEditAbout);
-		rdEditFemale = (RadioButton) findViewById(R.id.rdEditFemale);
-		rdEditMale = (RadioButton) findViewById(R.id.rdEditMale);
 		btnEditAccept = (Button) findViewById(R.id.btnEditAccept);
 		btnEditCancel = (Button) findViewById(R.id.btnEditCancel);
 		pgEdit = (ProgressBar) findViewById(R.id.pgEdit);
@@ -113,63 +130,29 @@ public class EditProfileActivity extends Activity {
 				startActivity(i);
 				
 			}
-		});
+		}); 
 		
-		imgEditProfile.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(
-						Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);				
-				startActivityForResult(i, RESULT_LOAD_IMAGE);
-			}
-		});
+	
 	}
-	
-	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-         
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
- 
-            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            picturePath = cursor.getString(columnIndex);
-            cursor.close();
-             
-            imgEditProfile.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 
-
-            BitmapFactory.Options options = new BitmapFactory.Options();
-
-            options.inSampleSize = 4;
-            options.inPurgeable = true;
-            Bitmap bm = BitmapFactory.decodeFile(picturePath);
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            bm.compress(Bitmap.CompressFormat.JPEG,40,baos); 
-
-
-            // bitmap object
-
-            byte[] byteImage_photo = baos.toByteArray();
-
-                        //generate base64 string of image
-
-            encodedImage =Base64.encodeToString(byteImage_photo,Base64.DEFAULT);
-            
-        }
-     }
-	
+	public void setContent(int index) {
+	    Fragment toHide = null;
+		Fragment toShow = null;
+		
+		toHide = fragments[lastIndex];
+		toShow =  fragments[index];
+		lastIndex = index;
+		
+		FragmentManager manager = getSupportFragmentManager();
+		
+		manager.beginTransaction()
+				.hide(toHide)
+				.show(toShow)
+				.commit();
+		
+    }
 
 	private void fillData() {
-		
-		
 		
 		final DataManager dm = new DataManager(getApplicationContext());
 		String[] cred = dm.getCred();
@@ -177,7 +160,7 @@ public class EditProfileActivity extends Activity {
 		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
 		String url = Helper.getProfileUrl() + "/" + cred[0] + "/" + cred[1] + "/" + cred[0];
 		Log.e("Edit", url);
-		imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
+		
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
 	    {
@@ -185,33 +168,17 @@ public class EditProfileActivity extends Activity {
 	        public void onResponse(String response) {
 	            // response
 	        	Log.e("Response", response);
-	            try {
 	            	pgEdit.setVisibility(View.GONE);
 	            	btnEditAccept.setEnabled(true);
-		            respuesta = new JSONObject(response);
-		            etEditName.setText(respuesta.getString("name"));
-		            etEditSurname.setText(respuesta.getString("surnames"));
-		            String[] date = respuesta.getString("birthdate").split("/");
-		            etEditDate.setText(date[2] + "/" + date[1] + "/" + date[0]);
-		            etEditMusic.setText(respuesta.getString("music"));
-		            etEditDrink.setText(respuesta.getString("drink"));
-		            etEditCivilState.setText(respuesta.getString("civil_state"));
-		            etEditCity.setText(respuesta.getString("city"));
-		            edEditAbout.setText(respuesta.getString("about"));
-		            if (respuesta.getString("gender").equals("male")){
-		            	rdEditMale.setChecked(true);
-		            }else{
-		            	rdEditFemale.setChecked(true);
-		            }
-		            
-		            pictureUrl = respuesta.getString("picture");
-		            if (pictureUrl.equals("") || pictureUrl.contains("face"))
-		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
-		            
-		            imgEditProfile.setImageUrl(pictureUrl, imageLoader);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		            try {
+						respuesta = new JSONObject(response);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		            ((BasicInfoFragment) fragments[0]).setData(respuesta);
+		            ((DetailedInfoFragment) fragments[1]).setData(respuesta);
+		           
 	        }
 	    };
 	    Response.ErrorListener errorListener = new Response.ErrorListener() 
@@ -268,31 +235,27 @@ public class EditProfileActivity extends Activity {
 			    protected Map<String, String> getParams() 
 			    {  
 			    	HashMap<String, String> info = new HashMap<String, String>();
+			    	String[] dataBasic = ((BasicInfoFragment) fragments[0]).getData();
+			    	String[] dataDetailed = ((DetailedInfoFragment) fragments[1]).getData();
 			    	
 			    	info.put("idProfile", idProfile);
-			    	if (encodedImage.equals(""))
-			    		info.put("picture", pictureUrl);
+			    	if (dataBasic[1].equals("false"))
+			    		info.put("picture", dataBasic[0]);
 			    	else{
-			    		info.put("picture", encodedImage);
+			    		info.put("picture", dataBasic[0]);
 			    		info.put("uploading", "true");
 			    	}
-			    	info.put("name", etEditName.getText().toString());
-			    	info.put("surnames", etEditSurname.getText().toString());
-			    	String[] date = etEditDate.getText().toString().split("/");
-			    	info.put("birthdate", date[2] + "/" + date[1] + "/" + date[0]);
-			    	info.put("city", etEditCity.getText().toString());
-			    	info.put("music", etEditMusic.getText().toString());
-			    	info.put("civil_state", etEditCivilState.getText().toString());
-			    	info.put("drink", etEditDrink.getText().toString());
-			    	info.put("about", edEditAbout.getText().toString());
+			    	info.put("name", dataBasic[2]);
+			    	info.put("surnames", dataBasic[3]);
 			    	
-			    	String gender = null;
-			    	if (rdEditFemale.isChecked()){
-						gender = "female";
-					}else if(rdEditMale.isChecked()){
-						gender = "male";
-					}
-			    	info.put("gender", gender);
+			    	info.put("birthdate", dataBasic[4]);
+			    	info.put("city", dataDetailed[0]);
+			    	info.put("music", dataDetailed[1]);
+			    	info.put("civil_state",dataDetailed[2]);
+			    	info.put("drink",dataDetailed[3]);
+			    	info.put("about", dataDetailed[4]);
+
+			    	info.put("gender", dataBasic[5]);
 			    	
 			    	return info;
 			    }
@@ -307,6 +270,20 @@ public class EditProfileActivity extends Activity {
 	public Intent getParentActivityIntent() {
 		Intent intent = new Intent(this, MainActivity.class);
 		return intent;
+	}
+
+	@Override
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction arg1) {
+		setContent(tab.getPosition());
+		
+	}
+
+	@Override
+	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
 	}
 	
 	

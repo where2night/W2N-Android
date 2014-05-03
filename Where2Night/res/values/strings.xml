@@ -33,6 +33,7 @@
     <string name="date">Fecha de nacimiento (dd/mm/aaaa)</string>
     <string name="contrasena">Contraseña</string>
     <string name="contrasena2">Repite la contraseña</string>
+    <string name="oldPassword">Contraseña actual</string>
     <string name="enviar">Enviar</string>
     <string name="sinRegistro">¿No tienes cuenta? ¡Registrate! </string>
     <string name="nombre">Nombre</string>
@@ -64,7 +65,7 @@
     <string name="about">Acerca de ti</string>
     <string name="city">Ciudad Actual</string>
     <string name="civil_state">Estado Civil</string>
-    <string name="music">Mísica Preferida</string>
+    <string name="music">Música Preferida</string>
     <string name="drink">Bebida Favorita</string>
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
@@ -121,9 +122,16 @@
         <item>Info</item>
         <item>Eventos</item>
     </string-array>
+    
     <string-array name="friend_tabs">
         <item>Actividad</item>
         <item>Info</item>
+    </string-array>
+    
+    <string-array name="editProfile_tabs">
+        <item>Básica</item>
+        <item>Detallada</item>
+        <item>Contraseña</item>
     </string-array>
 
     <string name="Search">Search</string>

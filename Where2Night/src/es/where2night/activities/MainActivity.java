@@ -232,7 +232,6 @@ public class MainActivity extends FragmentActivity{
 	    drawerLayout.closeDrawer(drawerList);	
 	    
 	    if (index == 1) {
-	    	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	    	Intent i = new Intent(MainActivity.this, ProfileViewActivity.class);
 			startActivity(i);
 	    	((ProfileFragment) toShow).fill();
