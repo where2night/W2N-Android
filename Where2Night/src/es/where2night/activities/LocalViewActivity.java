@@ -15,6 +15,9 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.CalendarView.OnDateChangeListener;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,6 +39,8 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
    
     public static final String ID = "id";
     public static Button btnIGo;
+    public CalendarView calendar;
+    FrameLayout f;
     private int lastIndex = 0;
     private Bundle bundle;
     private String localId = "";
@@ -65,6 +70,9 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         
         btnIGo = (Button) findViewById(R.id.btnIGo);
+        calendar = (CalendarView) findViewById(R.id.calendarEvent);
+        f = (FrameLayout) findViewById(R.id.selectedTabFragment);
+        calendar.setVisibility(View.GONE);
         
         btnIGo.setOnClickListener(this);
         
@@ -136,6 +144,19 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 			 }else{
 				 btnIGo.setSelected(true);
 				 btnIGo.setText(getResources().getString(R.string.Going));
+				 f.setVisibility(View.GONE);
+				 calendar.setVisibility(View.VISIBLE);
+				 calendar.setAlpha(1);
+				 calendar.setOnDateChangeListener(new OnDateChangeListener() {
+					
+					@Override
+					public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+						// TODO Auto-generated method stub
+						calendar.setVisibility(View.GONE);
+						f.setVisibility(View.VISIBLE);
+						
+					}
+				});
 				 goingTo(false);
 			 }
 		 }
