@@ -24,6 +24,8 @@ import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +41,7 @@ import android.os.Build;
 public class JukeboxViewFragment extends Fragment {
 	
 	private String localId;
+	private boolean checkIn;
 	private RequestQueue requestQueue;
     private ArrayList<ItemSong> arraydir;
     private AdapterItemSong adapter;
@@ -50,6 +53,7 @@ public class JukeboxViewFragment extends Fragment {
 			Bundle savedInstanceState) {
 		
 		localId = getArguments().getString(LocalViewActivity.ID);
+		//checkIn = getArguments().getString(CHECKIN);
 		
 		View view = inflater.inflate(R.layout.fragment_jukebox_view, container, false);
 		list = (ListView) view.findViewById(R.id.listSongs);
@@ -60,10 +64,32 @@ public class JukeboxViewFragment extends Fragment {
 	
 	public void fill(){
 		
-	    arraydir = new ArrayList<ItemSong>();
-	    adapter = new AdapterItemSong(getActivity(), arraydir);
-	    list.setAdapter(adapter);
-	    fillData();
+		if(checkIn && localId != null){
+		    arraydir = new ArrayList<ItemSong>();
+		    adapter = new AdapterItemSong(getActivity(), arraydir);
+		    list.setAdapter(adapter);
+		    fillData();
+		}
+		else{
+			pgEventList.setVisibility(View.GONE);
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setMessage("No has hecho CheckIn")
+			        .setTitle("Error en el registro")
+			        .setCancelable(false)
+			        .setNeutralButton("Aceptar",
+			                new DialogInterface.OnClickListener() {
+			                    public void onClick(DialogInterface dialog, int id) {
+			                        dialog.cancel();
+			                    }
+			                });
+			AlertDialog alert = builder.create();
+			alert.show();
+			pgEventList.setVisibility(View.VISIBLE);
+			arraydir = new ArrayList<ItemSong>();
+			adapter = new AdapterItemSong(getActivity(), arraydir);
+			list.setAdapter(adapter);
+			fillData();
+		}
 	   
 	}
 	
@@ -93,7 +119,7 @@ public class JukeboxViewFragment extends Fragment {
 			            	String voted = aux.getString("voted");
 			            	boolean vot = true;
 			            	if (voted.equals("0")) vot = false;
-			            	ItemSong song = new ItemSong(title,artist,Integer.parseInt(votes),vot);
+			            	ItemSong song = new ItemSong(title,artist,Integer.parseInt(votes),vot,checkIn);
 			            	arraydir.add(song);
 		            	}
 		            adapter.notifyDataSetChanged();

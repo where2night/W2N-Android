@@ -105,6 +105,12 @@ public class AdapterItemSong extends BaseAdapter{
         	holder.btnVote.setText("+1");
         	holder.btnVote.setSelected(false);
         }
+        if (dir.isCheckIn()){
+        	holder.btnVote.setVisibility(View.VISIBLE);
+        }else{
+        	holder.btnVote.setVisibility(View.GONE);
+        }
+        
  
         //Rellenamos el nombre de la cancion
         holder.songName.setText(dir.getSongName());

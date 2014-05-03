@@ -8,22 +8,25 @@ public class ItemSong {
 	private int votes;
 	protected long id;
 	private boolean voted;
+	private boolean checkIn;
 	
-	public ItemSong(String songName, String artist, int votes, boolean voted) {
+	public ItemSong(String songName, String artist, int votes, boolean voted, boolean checkIn) {
 		super();
 		this.songName = songName;
 		this.artist = artist;
 		this.votes = votes;
 		this.voted = voted;
+		this.checkIn = checkIn;
 	}
 	
-	public ItemSong(String songName, String artist, int votes, long id, boolean voted) {
+	public ItemSong(String songName, String artist, int votes, long id, boolean voted, boolean checkIn) {
 		super();
 		this.songName = songName;
 		this.artist = artist;
 		this.votes = votes;
 		this.voted = voted;
 		this.id = id;
+		this.checkIn = checkIn;
 	}
 	
 	public String getSongName() {
@@ -64,6 +67,14 @@ public class ItemSong {
 
 	public void setVoted(boolean voted) {
 		this.voted = voted;
+	}
+
+	public boolean isCheckIn() {
+		return checkIn;
+	}
+
+	public void setCheckIn(boolean checkIn) {
+		this.checkIn = checkIn;
 	}
 
 }
