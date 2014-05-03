@@ -73,4 +73,35 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp" />
 
+    <LinearLayout
+        android:id="@+id/layoutCheckIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/grey" >
+        
+         <TextView
+        android:id="@+id/txtLocalGoing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:text="Hoy vas a Cats!" />
+         
+         <Button
+        android:id="@+id/btnCheckIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style"
+        android:minHeight="25dip"
+         android:layout_weight="1"
+        android:padding="5dp"
+        android:text="Check In"
+        android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    
+
 </RelativeLayout>

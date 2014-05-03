@@ -8,6 +8,35 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,48 +47,22 @@ import com.where2night.R;
 
 import es.where2night.activities.FriendViewActivity;
 import es.where2night.activities.LocalViewActivity;
-import es.where2night.activities.MainActivity;
 import es.where2night.adapters.AdapterItemNews;
 import es.where2night.data.Item;
 import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemEventFriend;
-import es.where2night.data.ItemFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
 import es.where2night.data.ItemLocalNews;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 
 public class HomeFragment extends Fragment{
 	
 	private Spinner spinnerAnimo;
 	private TextView txtStatus;
+	private LinearLayout layoutCheckIn;
 	
 	//El minimo de elementos a tener debajo de la posicion actual del scroll antes de cargar mas
     private int visibleThreshold = 3;
@@ -75,6 +78,7 @@ public class HomeFragment extends Fragment{
     private static int lastVisibleItem = 0;
 	
 	private Button btnEnviar;
+	private Button btnCheckIn;
 	private ProgressBar pgEventList;
 	public static String oldMode;
 	public static String oldStatus;
@@ -83,6 +87,8 @@ public class HomeFragment extends Fragment{
 	AdapterItemNews adapterNews;
 	ArrayList<Item> arraydir;
 	ListView lista;
+	double latLocal = 38.113855;
+	double lngLocal =  -3.0806086;
 	
 	
 	@Override
@@ -90,15 +96,26 @@ public class HomeFragment extends Fragment{
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 		spinnerAnimo = (Spinner)view.findViewById(R.id.spinnerAnimo);
 		btnEnviar = (Button)view.findViewById(R.id.btnEnviarEstado);
+		btnCheckIn = (Button)view.findViewById(R.id.btnCheckIn);
 		pgEventList = (ProgressBar)view.findViewById(R.id.pgEventList);
 		txtStatus = (TextView)view.findViewById(R.id.txtEstado);
 		lista = (ListView) view.findViewById(R.id.newsList);
+		layoutCheckIn = (LinearLayout) view.findViewById(R.id.layoutCheckIn);
 		arraydir = new ArrayList<Item>();
 		adapterNews = new AdapterItemNews(getActivity(), arraydir);
         lista.setAdapter(adapterNews);
         
-        lista.setOnScrollListener(new OnScrollListener() {
+        btnCheckIn.setOnClickListener(new OnClickListener() {
 			
+			@Override
+			public void onClick(View arg0) {
+				hacerCheckIn();
+			}
+		});
+        
+        lista.setOnScrollListener(new OnScrollListener() {
+        	
+        	int mLastFirstVisibleItem = 0;
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				//TODO Auto-generated				
@@ -108,7 +125,25 @@ public class HomeFragment extends Fragment{
 			
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {				
+					int visibleItemCount, int totalItemCount) {	
+				
+				
+				if (view.getId() == lista.getId()) 
+		        {
+		            final int currentFirstVisibleItem = lista.getFirstVisiblePosition();
+
+		            if (currentFirstVisibleItem > mLastFirstVisibleItem) 
+		            {
+		            	layoutCheckIn.setVisibility(View.GONE);
+		            } 
+		            else if (currentFirstVisibleItem < mLastFirstVisibleItem) 
+		            {
+		            	layoutCheckIn.setVisibility(View.VISIBLE);
+		            }
+
+		            mLastFirstVisibleItem = currentFirstVisibleItem;
+		        }   
+				
 				
 				if (!loading && (totalItemCount < previousTotalItemCount)) {
 		            currentPage = startingPageIndex;
@@ -248,6 +283,57 @@ public class HomeFragment extends Fragment{
 	    fillNews(view);
 	    
 	    
+	}
+	
+	public void hacerCheckIn(){
+		
+		LocationManager lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+		if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+		      !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+		  // Build the alert dialog
+		  AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		  builder.setTitle("Check In");
+		  builder.setMessage("Para hacer Check In debes habilitar el GPS");
+		  builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialogInterface, int i) {
+		    // Show location settings when the user acknowledges the alert dialog
+		    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+		    startActivity(intent);
+		    }
+		  });
+		  builder.setNegativeButton("Cancelar",null);
+		  Dialog alertDialog = builder.create();
+		  alertDialog.setCanceledOnTouchOutside(false);
+		  alertDialog.show();
+		}else{
+			Location locationGPS = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		    Location locationNet = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		    Location best;
+		    long GPSLocationTime = 0;
+		    if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
+
+		    long NetLocationTime = 0;
+
+		    if (null != locationNet) {
+		        NetLocationTime = locationNet.getTime();
+		    }
+		    if ( 0 < GPSLocationTime - NetLocationTime ) {
+		       best = locationGPS;
+		    	
+		    }
+		    else {
+		        best = locationNet;
+		    }
+		    double lat = best.getLatitude();
+		    double lng = best.getLongitude();
+		    
+		    if ((lat < latLocal + 0.0002) &&
+		    	(lat > latLocal - 0.0002) &&	
+		    	(lng < lngLocal + 0.0002) &&	
+		    	(lng > lngLocal - 0.0002) ){
+		    	Toast.makeText(getActivity(), "CheckIn", Toast.LENGTH_SHORT).show();
+		    }
+		}
 	}
 
 	private void fillData(View view) {

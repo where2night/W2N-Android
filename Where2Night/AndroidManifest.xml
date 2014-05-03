@@ -34,7 +34,7 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
     <!-- FIN PERMISOS MAPA -->
-
+  <!--  android:uiOptions="splitActionBarWhenNarrow"  -->
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"

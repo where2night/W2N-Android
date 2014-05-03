@@ -7,17 +7,17 @@
     <!-- Menu Item Image -->
     <ImageView
         android:id="@+id/actionbar_notifcation_img"
-        android:layout_width="48dp"
+        android:layout_width="35dp"
         android:layout_height="fill_parent"
         android:clickable="true"
-        android:src="@drawable/ic_action_add_person" />
+        android:src="@drawable/ic_action_warning" />
 
     <!-- Badge Count -->    
     <TextView
         android:id="@+id/actionbar_notifcation_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:textColor="@color/app_color" />
 
 </RelativeLayout>
