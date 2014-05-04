@@ -3,25 +3,18 @@ package es.where2night.activities;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
-import android.app.SearchManager;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -47,7 +40,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     public static final String ID = "id";
     public static Button btnIGo;
     public CalendarView calendar;
-    private Menu actionBarMenu;
     FrameLayout f;
     private int lastIndex = 0;
     private Bundle bundle;
@@ -254,33 +246,4 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	        
 	        //super.onBackPressed();  // optional depending on your needs
 	    }
-	 
-	 @Override
-	    public boolean onCreateOptionsMenu(Menu menu) {
-	        getMenuInflater().inflate(R.menu.jukebox_menu, menu);
-	        
-	        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-		    // Assumes current activity is the searchable activity
-		    searchView.setSearchableInfo(searchManager.getSearchableInfo( getComponentName()));
-		    searchView.setIconifiedByDefault(true);
-		    actionBarMenu = menu;
-		
-	        return true;
-	    }
-	 
-	 @Override
-	  public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	    // action with ID action_refresh was selected
-	    case R.id.action_refresh:
-	      Toast.makeText(this, "Refresh selected", Toast.LENGTH_SHORT)
-	          .show();
-	      break;
-	    default:
-	      break;
-	    }
-
-	    return true;
-	  }
 }
