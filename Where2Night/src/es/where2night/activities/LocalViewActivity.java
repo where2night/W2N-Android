@@ -5,12 +5,17 @@ import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -44,6 +49,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     private int lastIndex = 0;
     private Bundle bundle;
     private String localId = "";
+    public Menu actionBarMenu;
     
     private Fragment[] fragments = new Fragment[]{ new LocalInfoFragment(),
     											   new LocalEventsFragment(),
@@ -111,7 +117,12 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     
     
     public void setContent(int index) {
-	    Fragment toHide = null;
+    	if(lastIndex == 3 ){
+    		for(int i=1; i<actionBarMenu.size(); i++){
+		    	actionBarMenu.getItem(i).setVisible(false);
+		    }
+    	}
+    	Fragment toHide = null;
 		Fragment toShow = null;
 		
 		toHide = fragments[lastIndex];
@@ -130,10 +141,14 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 				.commit();
 		
 		
-		
 		if (index == 1) ((LocalEventsFragment) toShow).fill();
 		if (index == 2) Toast.makeText(getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
-		if (index == 3) ((JukeboxViewFragment) toShow).fill();
+		if (index == 3) {
+			for(int i=0; i<actionBarMenu.size(); i++){
+		    	actionBarMenu.getItem(i).setVisible(true);
+		    }
+			((JukeboxViewFragment) toShow).fill();
+		}
 		if (index == 4) ((LocalPhotographsFragment) toShow).fill();
     }
     
@@ -246,4 +261,40 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	        
 	        //super.onBackPressed();  // optional depending on your needs
 	    }
+	 
+	 @Override
+	    public boolean onCreateOptionsMenu(Menu menu) {
+	        getMenuInflater().inflate(R.menu.jukebox_view, menu);
+	        
+	       /* SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+		    // Assumes current activity is the searchable activity
+		    searchView.setSearchableInfo(searchManager.getSearchableInfo( getComponentName()));
+		    searchView.setIconifiedByDefault(true);*/
+		    actionBarMenu = menu;
+
+		    for(int i=0; i<actionBarMenu.size(); i++){
+		    	actionBarMenu.getItem(i).setVisible(false);
+		    }
+		    
+	        return true;
+	    }
+	 
+	 @Override
+	  public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    // action with ID action_refresh was selected
+	    case R.id.action_refresh:
+	      ((JukeboxViewFragment)fragments[3]).fill();
+	      break;
+	    case 16908332:
+	    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+	        startActivity(intent);
+	    default:
+	      break;
+	    }
+
+	    return true;
+	  }
+
 }
