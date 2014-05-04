@@ -9,7 +9,6 @@ import android.database.SQLException;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.google.android.gms.plus.PlusClient;
 import com.where2night.R;
 
 import es.where2night.utilities.DataManager;

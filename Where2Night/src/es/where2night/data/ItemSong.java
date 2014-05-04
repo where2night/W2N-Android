@@ -1,7 +1,5 @@
 package es.where2night.data;
 
-import android.widget.Button;
-
 public class ItemSong {
 	private String songName;
 	private String artist;

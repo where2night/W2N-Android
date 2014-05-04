@@ -99,6 +99,9 @@ public class Helper {
 	public static String getVoteSongUrl() {
 		return BASE_API_URL + "actions/voteSong.php";
 	}
+	public static String getPhotosUrl() {
+		return BASE_API_URL + "read/photos.php";
+	}
 	
 	
 }

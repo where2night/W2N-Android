@@ -11,32 +11,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
-import com.where2night.R.id;
-import com.where2night.R.layout;
-import com.where2night.R.menu;
 
 import es.where2night.activities.LocalViewActivity;
-import es.where2night.adapters.AdapterItemEvent;
 import es.where2night.adapters.AdapterItemSong;
-import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemSong;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
-import android.app.Activity;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.os.Build;
 
 public class JukeboxViewFragment extends Fragment {
 	
@@ -88,7 +78,7 @@ public class JukeboxViewFragment extends Fragment {
 			arraydir = new ArrayList<ItemSong>();
 			adapter = new AdapterItemSong(getActivity(), arraydir);
 			list.setAdapter(adapter);
-			fillData();
+			//fillData();
 		}
 	   
 	}

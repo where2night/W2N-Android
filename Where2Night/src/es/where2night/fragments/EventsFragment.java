@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -23,7 +21,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
-import es.where2night.activities.LocalViewActivity;
 import es.where2night.adapters.AdapterItemEvent;
 import es.where2night.data.ItemEvent;
 import es.where2night.utilities.DataManager;
@@ -31,8 +28,6 @@ import es.where2night.utilities.Helper;
 
 public class EventsFragment extends Fragment {
 	
-	
-	private String localId;
 	private RequestQueue requestQueue;
     private ArrayList<ItemEvent> arraydir;
     private AdapterItemEvent adapter;

@@ -25,7 +25,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <!--
          The following two permissions are not required to use
-	     Google Maps Android API v2, but are recommended.
+	     Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -34,7 +34,7 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
     <!-- FIN PERMISOS MAPA -->
-  <!--  android:uiOptions="splitActionBarWhenNarrow"  -->
+    <!-- android:uiOptions="splitActionBarWhenNarrow" -->
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -136,6 +136,12 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable_locals" />
+        </activity>
+        <activity
+            android:name="es.where2night.activities.PhotoViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_photo_view"
+            android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
 

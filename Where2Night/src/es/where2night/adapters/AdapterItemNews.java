@@ -163,7 +163,7 @@ public class AdapterItemNews extends BaseAdapter{
         		holderLocal = new ViewHolderLocalFollow();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inf.inflate(R.layout.itemlocalnews, null);
-                holderLocal.picture = (NetworkImageView) v.findViewById(R.id.LocalPicture);
+                holderLocal.picture = (NetworkImageView) v.findViewById(R.id.LocalPhoto);
                 holderLocal.txtNameLocal = (TextView) v.findViewById(R.id.txtLocalName);
                 holderLocal.txtNameFriend = (TextView) v.findViewById(R.id.txtNameFriend);
                 v.setTag(holderLocal);

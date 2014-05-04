@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -20,7 +18,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
-import es.where2night.adapters.AdapterItemEvent.ViewHolderEvent;
 import es.where2night.data.ItemFriend;
 import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.Helper;

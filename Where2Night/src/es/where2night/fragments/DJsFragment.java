@@ -9,16 +9,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
 import es.where2night.activities.DjViewActivty;
-import es.where2night.activities.LocalViewActivity;
-import es.where2night.adapters.AdapterItemEvent;
 import es.where2night.adapters.AdapterItemLocal;
-import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemLocalAndDJ;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
@@ -39,7 +35,6 @@ public class DJsFragment extends Fragment {
 	private AdapterItemLocal adapter;
 	
 	private RequestQueue requestQueue;
-    private JSONObject respuesta = null;
     private ProgressBar pgLocalsList;
     private ListView list;
     

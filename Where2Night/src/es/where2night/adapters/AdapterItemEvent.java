@@ -2,8 +2,6 @@ package es.where2night.adapters;
 
 import java.util.ArrayList;
 
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;

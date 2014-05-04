@@ -47,6 +47,7 @@
         <item>Eventos</item>
         <item>Amigos</item>
         <item>Locales</item>
+        <item>Gramola</item>
     </string-array>
 
     <string name="title_activity_init"></string>
@@ -116,18 +117,17 @@
         <item>Eventos</item>
         <item>Listas</item>
         <item>Gramola</item>
+        <item>Fotos</item>
         <item>Asistentes</item>
     </string-array>
     <string-array name="dj_tabs">
         <item>Info</item>
         <item>Eventos</item>
     </string-array>
-    
     <string-array name="friend_tabs">
         <item>Actividad</item>
         <item>Info</item>
     </string-array>
-    
     <string-array name="editProfile_tabs">
         <item>Básica</item>
         <item>Detallada</item>
@@ -143,5 +143,8 @@
     <string name="IgnoreFriendRequest">Ignorar</string>
     <string name="delete_friend">Eliminar amigo</string>
     <string name="title_activity_jukebox_view">JukeboxViewActivity</string>
+    <string name="title_activity_photo_view">PhotoViewActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

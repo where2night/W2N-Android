@@ -5,7 +5,7 @@
     tools:context="com.where2night.JukeboxViewActivity$PlaceholderFragment" >
 
     <ProgressBar
-        android:id="@+id/progressBar1"
+        android:id="@+id/pgEventList"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

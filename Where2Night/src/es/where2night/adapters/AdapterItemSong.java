@@ -6,14 +6,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
-import es.where2night.adapters.AdapterItemFriendList.ViewHolderFriend;
-import es.where2night.data.ItemDiscountList;
-import es.where2night.data.ItemFriend;
 import es.where2night.data.ItemSong;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;

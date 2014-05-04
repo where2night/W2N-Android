@@ -12,7 +12,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +33,6 @@ public class LoginEmailActivity extends Activity {
 
 	private EditText txtEmail;
 	private EditText txtPass;
-	private TextView txtLoginError;
 	private TextView sin_cuenta;
 	private ProgressBar pgLoginEmail;
 	String email, pass;
@@ -52,7 +50,6 @@ public class LoginEmailActivity extends Activity {
 		 txtEmail = (EditText) findViewById(R.id.txtLoginEmail);
 		 txtPass = (EditText) findViewById(R.id.txtLoginPass);
 		 pgLoginEmail = (ProgressBar) findViewById(R.id.pgLoginEmail);
-		 txtLoginError = (TextView) findViewById(R.id.login_error);
 		 sin_cuenta = (TextView) findViewById(R.id.link_to_register);
 		 
 		 sin_cuenta.setOnClickListener(new View.OnClickListener() {
