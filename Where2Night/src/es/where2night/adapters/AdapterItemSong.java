@@ -68,7 +68,7 @@ public class AdapterItemSong extends BaseAdapter{
             holder.songName = (TextView) v.findViewById(R.id.txtSongName);
             holder.artistName = (TextView) v.findViewById(R.id.txtArtistName);
             holder.votes = (TextView) v.findViewById(R.id.txtVotes);
-            holder.btnVote = (Button) v.findViewById(R.id.btnVote);
+            holder.btnVote = (Button) v.findViewById(R.id.btnVote1);
             v.setTag(holder);
         }
         else{
