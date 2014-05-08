@@ -8,6 +8,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -60,6 +61,7 @@ import es.where2night.utilities.Helper;
 
 public class HomeFragment extends Fragment{
 	
+	private static int RESULT_START_GPS = 1;
 	private Spinner spinnerAnimo;
 	private TextView txtStatus;
 	private LinearLayout layoutCheckIn;
@@ -285,9 +287,18 @@ public class HomeFragment extends Fragment{
 	    
 	}
 	
+	@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Toast.makeText(getActivity().getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
+        if (requestCode == RESULT_START_GPS && resultCode == Activity.RESULT_CANCELED ) {
+        	LocationManager lm = (LocationManager) getActivity().getSystemService(Activity.LOCATION_SERVICE);
+        	doCheckIn(lm);        	
+        }
+	}
+	
 	public void hacerCheckIn(){
 		
-		LocationManager lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+		LocationManager lm = (LocationManager) getActivity().getSystemService(Activity.LOCATION_SERVICE);
 		if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
 		      !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 		  // Build the alert dialog
@@ -298,7 +309,7 @@ public class HomeFragment extends Fragment{
 		  public void onClick(DialogInterface dialogInterface, int i) {
 		    // Show location settings when the user acknowledges the alert dialog
 		    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-		    startActivity(intent);
+		    startActivityForResult(intent, RESULT_START_GPS);
 		    }
 		  });
 		  builder.setNegativeButton("Cancelar",null);
@@ -306,34 +317,40 @@ public class HomeFragment extends Fragment{
 		  alertDialog.setCanceledOnTouchOutside(false);
 		  alertDialog.show();
 		}else{
-			Location locationGPS = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		    Location locationNet = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		    Location best;
-		    long GPSLocationTime = 0;
-		    if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
-
-		    long NetLocationTime = 0;
-
-		    if (null != locationNet) {
-		        NetLocationTime = locationNet.getTime();
-		    }
-		    if ( 0 < GPSLocationTime - NetLocationTime ) {
-		       best = locationGPS;
-		    	
-		    }
-		    else {
-		        best = locationNet;
-		    }
-		    double lat = best.getLatitude();
-		    double lng = best.getLongitude();
-		    
-		    if ((lat < latLocal + 0.0002) &&
-		    	(lat > latLocal - 0.0002) &&	
-		    	(lng < lngLocal + 0.0002) &&	
-		    	(lng > lngLocal - 0.0002) ){
-		    	Toast.makeText(getActivity(), "CheckIn", Toast.LENGTH_SHORT).show();
-		    }
+			doCheckIn(lm);
 		}
+	}
+	
+	public boolean doCheckIn (LocationManager lm){
+		Location locationGPS = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	    Location locationNet = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+	    Location best;
+	    long GPSLocationTime = 0;
+	    if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
+
+	    long NetLocationTime = 0;
+
+	    if (null != locationNet) {
+	        NetLocationTime = locationNet.getTime();
+	    }
+	    if ( 0 < GPSLocationTime - NetLocationTime ) {
+	       best = locationGPS;
+	    	
+	    }
+	    else {
+	        best = locationNet;
+	    }
+	    double lat = best.getLatitude();
+	    double lng = best.getLongitude();
+	    
+	    if ((lat < latLocal + 0.0002) &&
+	    	(lat > latLocal - 0.0002) &&	
+	    	(lng < lngLocal + 0.0002) &&	
+	    	(lng > lngLocal - 0.0002) ){
+	    	Toast.makeText(getActivity(), "CheckIn", Toast.LENGTH_SHORT).show();
+	    	return true;
+	    }
+	    return false;
 	}
 
 	private void fillData(View view) {

@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -47,6 +49,7 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 	public static final String LAT = "latitude";
 	public static final String LONG = "longitude";
 	public static final String NAME = "localName";
+	private static final int RESULT_MAP_LOCATION = 3;
 	
 	LatLng position;
 	LatLng default_pos = new LatLng(40.416829,-3.703944);
@@ -71,6 +74,16 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 		return view;
 	}
 	
+	@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+         
+		Toast.makeText(getActivity().getApplicationContext(), "Pantalla Estática Mapas", Toast.LENGTH_LONG).show();
+		if (requestCode == RESULT_MAP_LOCATION 
+        		&& resultCode == Activity.RESULT_CANCELED ) {
+        	mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng( mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude()), 15));       	
+        }
+	}
+	
 	public void allLocals(ArrayList<LocalListData> localListData){
 		mapa.setMyLocationEnabled(true);
 		for (LocalListData local: localListData){
@@ -80,7 +93,8 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 				fillMap(latitude,longitude,local.getName(), local.getIdProfile(), local.getAddress());
 			}catch(NumberFormatException e){}
 		}
-		LocationManager lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(default_pos, 12));
+		LocationManager lm = (LocationManager) getActivity().getSystemService(Activity.LOCATION_SERVICE);
 		if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
 		      !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 		  // Build the alert dialog
@@ -91,7 +105,7 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 		  public void onClick(DialogInterface dialogInterface, int i) {
 		    // Show location settings when the user acknowledges the alert dialog
 		    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-		    startActivity(intent);
+		    startActivityForResult(intent, RESULT_MAP_LOCATION);
 		    }
 		  });
 		  builder.setNegativeButton("Cancelar",null);
@@ -99,8 +113,11 @@ public class MapFragment extends Fragment implements OnMapClickListener {
 		  alertDialog.setCanceledOnTouchOutside(false);
 		  alertDialog.show();
 		}
-		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(default_pos, 12));
-		mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng( mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude()), 15));
+		else{
+			mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng( mapa.getMyLocation().getLatitude(), mapa.getMyLocation().getLongitude()), 15));
+		}
+		
+		
 	}
 
 private void getAllInfoFromServer() {

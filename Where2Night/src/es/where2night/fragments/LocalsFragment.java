@@ -34,7 +34,7 @@ public class LocalsFragment extends Fragment implements  ActionBar.TabListener {
 		setHasOptionsMenu(true);
 
        
-		setTabs();
+	//	setTabs();
 		
         FragmentManager manager = getChildFragmentManager();
         manager.beginTransaction()
