@@ -99,8 +99,16 @@ public class Helper {
 	public static String getVoteSongUrl() {
 		return BASE_API_URL + "actions/voteTrack.php";
 	}
+	
 	public static String getPhotosUrl() {
 		return BASE_API_URL + "read/photos.php";
+	}
+	
+	public static String getDiscountListUrl(){
+		return BASE_API_URL + "read/lists.php";
+	}
+	public static String joinDiscountListUrl(){
+		return BASE_API_URL + "actions/joinList.php";
 	}
 	
 	
