@@ -1595,7 +1595,7 @@ containing a value of this type.
         public static final int btnLoginLogin=0x7f070059;
         public static final int btnSignMe=0x7f0700cc;
         public static final int btnSignMeIn=0x7f0700c3;
-        public static final int btnVote=0x7f0700d8;
+        public static final int btnVote=0x7f0700d9;
         public static final int calendarEvent=0x7f070053;
         public static final int checkbox=0x7f070032;
         public static final int collapseActionView=0x7f070013;
@@ -1771,7 +1771,7 @@ containing a value of this type.
         public static final int txtOpening=0x7f0700b6;
         public static final int txtSignEnd=0x7f0700c2;
         public static final int txtSongName=0x7f0700d7;
-        public static final int txtVotes=0x7f0700d9;
+        public static final int txtVotes=0x7f0700d8;
         public static final int ubication=0x7f0700d2;
         public static final int up=0x7f070026;
         public static final int useLogo=0x7f070009;

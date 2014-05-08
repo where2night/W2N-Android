@@ -94,10 +94,10 @@ public class Helper {
 		return BASE_API_URL + "actions/followFriend.php";
 	}
 	public static String getSongsUrl() {
-		return BASE_API_URL + "read/songs.php";
+		return BASE_API_URL + "read/playList.php";
 	}
 	public static String getVoteSongUrl() {
-		return BASE_API_URL + "actions/voteSong.php";
+		return BASE_API_URL + "actions/voteTrack.php";
 	}
 	public static String getPhotosUrl() {
 		return BASE_API_URL + "read/photos.php";

@@ -2,6 +2,8 @@ package es.where2night.adapters;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -78,17 +80,18 @@ public class AdapterItemSong extends BaseAdapter{
 			@Override
 			public void onClick(View v) {
 				long songId = dir.getId();
+				long localId = dir.getLocal();
 				if (v.isSelected()){
 					holder.btnVote.setText("+1");
 		        	holder.btnVote.setSelected(false);
 		        	dir.setVoted(false);
 		        	
-					voteSong(songId,true);
+					voteSong(songId,localId,true);
 				}else{
 					holder.btnVote.setText(activity.getResources().getString(R.string.Signed));
 		        	holder.btnVote.setSelected(true);
 		        	dir.setVoted(true);
-					voteSong(songId,false);
+					voteSong(songId,localId,false);
 				}
 				notifyDataSetChanged(); // tells the adapter that the data changed
 			}
@@ -125,11 +128,11 @@ public class AdapterItemSong extends BaseAdapter{
 		public Button btnVote;
 	}
 	
-	private void voteSong(long songId,boolean notVote){
+	private void voteSong(long songId, long localId, boolean notVote){
 		final DataManager dm = new DataManager(activity.getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
-		String url = Helper.getVoteSongUrl() + "/" + cred[0] + "/" + cred[1] + "/" + songId;
+		String url = Helper.getVoteSongUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId + "/" + songId;
 		Log.e("AdapterURl", url); 
 		 
 		Response.Listener<String> succeedListener = new Response.Listener<String>(){
@@ -138,12 +141,8 @@ public class AdapterItemSong extends BaseAdapter{
 	            // response
 	        	Log.e("Response", response);
 	            try {
-	            	/*JSONObject respuesta = new JSONObject(response);
-	            	if (respuesta.getString("goto").equals("true")){
-	            		
-	            	}else if (respuesta.getString("goto").equals("false")){
-	            		
-	            	}*/
+	            	
+	            	
             	}
 	            catch (Exception e) {
 					e.printStackTrace();
@@ -165,7 +164,7 @@ public class AdapterItemSong extends BaseAdapter{
 			request = new StringRequest(Request.Method.DELETE, url, succeedListener, errorListener); 
 		}
 		else{
-			request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+			request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener); 
 
 		}
 		requestQueue.add(request);

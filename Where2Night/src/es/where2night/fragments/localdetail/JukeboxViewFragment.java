@@ -38,6 +38,7 @@ public class JukeboxViewFragment extends Fragment {
     private AdapterItemSong adapter;
 	private ProgressBar pgEventList;
 	private ListView list;
+	private boolean votada;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +46,7 @@ public class JukeboxViewFragment extends Fragment {
 		
 		localId = getArguments().getString(LocalViewActivity.ID);
 		//checkIn = getArguments().getString(CHECKIN);
+		checkIn = true;
 		
 		View view = inflater.inflate(R.layout.fragment_jukebox_view, container, false);
 		list = (ListView) view.findViewById(R.id.listSongs);
@@ -79,7 +81,7 @@ public class JukeboxViewFragment extends Fragment {
 			arraydir = new ArrayList<ItemSong>();
 			adapter = new AdapterItemSong(getActivity(), arraydir);
 			list.setAdapter(adapter);
-			//fillData();
+			fillData();
 		}
 	   
 	}
@@ -102,15 +104,14 @@ public class JukeboxViewFragment extends Fragment {
 	            	
 		            	JSONObject root = new JSONObject(response);
 		            	
-		            	for (int i = 0; i < root.length(); i++){
+		            	for (int i = 0; i < root.length() - 3; i++){
 			            	JSONObject aux = root.getJSONObject(String.valueOf(i));
-			            	String title = aux.getString("title");
-			            	String artist = aux.getString("artist");
+			            	String title = aux.getString("trackName");
+			            	String artist = aux.getString("trackArtist");
 			            	String votes = aux.getString("votes");
-			            	String voted = aux.getString("voted");
-			            	boolean vot = true;
-			            	if (voted.equals("0")) vot = false;
-			            	ItemSong song = new ItemSong(title,artist,Integer.parseInt(votes),vot,checkIn);
+			            	String idTrack = aux.getString("idTrack");
+			            	boolean vot = isVoted(idTrack);
+			            	ItemSong song = new ItemSong(title,artist,Integer.parseInt(votes),Long.parseLong(idTrack),vot,checkIn,Long.parseLong(localId));
 			            	arraydir.add(song);
 		            	}
 		            adapter.notifyDataSetChanged();
@@ -121,7 +122,51 @@ public class JukeboxViewFragment extends Fragment {
 					e.printStackTrace();
 				}
 	        }
+
+			private boolean isVoted(String idTrack) {
+				final DataManager dm = new DataManager(getActivity().getApplicationContext());
+				String[] cred = dm.getCred();
+				requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+				String url = Helper.getVoteSongUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId + "/" + idTrack;
+				Log.e("url", url);
+				
+				Response.Listener<String> succeedListener = new Response.Listener<String>() 
+				    {
+				        @Override
+				        public void onResponse(String response) {
+				            // response
+				        	Log.e("Response", response);
+				            try {
+				            	
+					            	JSONObject root = new JSONObject(response);
+					            	String voted = root.getString("vote");
+					            	if (voted.equals("0")) votada = false;
+					            	else votada = true;
+				            }
+					        catch (Exception e) {
+								pgEventList.setVisibility(View.GONE);
+								e.printStackTrace();
+							}
+				        }
+				    };
+					    
+				    Response.ErrorListener errorListener = new Response.ErrorListener() 
+				    {
+				         @Override
+				         public void onErrorResponse(VolleyError error) {
+				             // error
+				        	 pgEventList.setVisibility(View.GONE);
+				             Log.e("Error.Response", error.toString());
+				       }
+				    };
+					
+					StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+					
+					requestQueue.add(request);
+					return votada;
+				}
 	    };
+	    
 	    Response.ErrorListener errorListener = new Response.ErrorListener() 
 	    {
 	         @Override

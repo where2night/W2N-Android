@@ -7,17 +7,19 @@ public class ItemSong {
 	protected long id;
 	private boolean voted;
 	private boolean checkIn;
+	protected long localId;
 	
-	public ItemSong(String songName, String artist, int votes, boolean voted, boolean checkIn) {
+	public ItemSong(String songName, String artist, int votes, boolean voted, boolean checkIn, long localId) {
 		super();
 		this.songName = songName;
 		this.artist = artist;
 		this.votes = votes;
 		this.voted = voted;
 		this.checkIn = checkIn;
+		this.localId = localId;
 	}
 	
-	public ItemSong(String songName, String artist, int votes, long id, boolean voted, boolean checkIn) {
+	public ItemSong(String songName, String artist, int votes, long id, boolean voted, boolean checkIn, long localId) {
 		super();
 		this.songName = songName;
 		this.artist = artist;
@@ -25,6 +27,7 @@ public class ItemSong {
 		this.voted = voted;
 		this.id = id;
 		this.checkIn = checkIn;
+		this.localId = localId;
 	}
 	
 	public String getSongName() {
@@ -73,6 +76,14 @@ public class ItemSong {
 
 	public void setCheckIn(boolean checkIn) {
 		this.checkIn = checkIn;
+	}
+
+	public long getLocal() {
+		return localId;
+	}
+	
+	public void setLocalId(long localId) {
+		this.localId = localId;
 	}
 
 }

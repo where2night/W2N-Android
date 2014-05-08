@@ -118,7 +118,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     
     public void setContent(int index) {
     	if(lastIndex == 3 ){
-    		for(int i=1; i<actionBarMenu.size(); i++){
+    		for(int i=0; i<actionBarMenu.size(); i++){
 		    	actionBarMenu.getItem(i).setVisible(false);
 		    }
     	}
@@ -285,8 +285,9 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	    switch (item.getItemId()) {
 	    // action with ID action_refresh was selected
 	    case R.id.action_refresh:
-	      ((JukeboxViewFragment)fragments[3]).fill();
-	      break;
+	    	//fragments[3] = new JukeboxViewFragment();
+	    	((JukeboxViewFragment)fragments[3]).fill();
+	    	break;
 	    case 16908332:
 	    	Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 	        startActivity(intent);
