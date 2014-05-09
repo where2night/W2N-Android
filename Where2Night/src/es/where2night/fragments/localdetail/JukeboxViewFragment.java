@@ -38,7 +38,7 @@ public class JukeboxViewFragment extends Fragment {
     private AdapterItemSong adapter;
 	private ProgressBar pgEventList;
 	private ListView list;
-	private boolean votada;
+
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,7 +110,10 @@ public class JukeboxViewFragment extends Fragment {
 			            	String artist = aux.getString("trackArtist");
 			            	String votes = aux.getString("votes");
 			            	String idTrack = aux.getString("idTrack");
-			            	boolean vot = isVoted(idTrack);
+			            	String voted = aux.getString("VOTE");
+			            	boolean vot;
+			            	if (voted.equals("null")) vot = false;
+			            	else vot = true;
 			            	ItemSong song = new ItemSong(title,artist,Integer.parseInt(votes),Long.parseLong(idTrack),vot,checkIn,Long.parseLong(localId));
 			            	arraydir.add(song);
 		            	}
@@ -122,49 +125,6 @@ public class JukeboxViewFragment extends Fragment {
 					e.printStackTrace();
 				}
 	        }
-
-			private boolean isVoted(String idTrack) {
-				final DataManager dm = new DataManager(getActivity().getApplicationContext());
-				String[] cred = dm.getCred();
-				requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-				String url = Helper.getVoteSongUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId + "/" + idTrack;
-				Log.e("url", url);
-				
-				Response.Listener<String> succeedListener = new Response.Listener<String>() 
-				    {
-				        @Override
-				        public void onResponse(String response) {
-				            // response
-				        	Log.e("Response", response);
-				            try {
-				            	
-					            	JSONObject root = new JSONObject(response);
-					            	String voted = root.getString("vote");
-					            	if (voted.equals("0")) votada = false;
-					            	else votada = true;
-				            }
-					        catch (Exception e) {
-								pgEventList.setVisibility(View.GONE);
-								e.printStackTrace();
-							}
-				        }
-				    };
-					    
-				    Response.ErrorListener errorListener = new Response.ErrorListener() 
-				    {
-				         @Override
-				         public void onErrorResponse(VolleyError error) {
-				             // error
-				        	 pgEventList.setVisibility(View.GONE);
-				             Log.e("Error.Response", error.toString());
-				       }
-				    };
-					
-					StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
-					
-					requestQueue.add(request);
-					return votada;
-				}
 	    };
 	    
 	    Response.ErrorListener errorListener = new Response.ErrorListener() 
