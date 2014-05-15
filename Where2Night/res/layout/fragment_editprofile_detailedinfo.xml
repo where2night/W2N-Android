@@ -1,99 +1,74 @@
-<ScrollView	 xmlns:android="http://schemas.android.com/apk/res/android"
-	    xmlns:tools="http://schemas.android.com/tools"
-	     android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    tools:context=".EditProfileActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    tools:context=".EditProfileActivity" >
 	    
 	<RelativeLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content" >
-	
-	        <EditText
-	            android:id="@+id/etEditMusic"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_below="@id/rgEditGender"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginLeft="20dp"
-	            android:layout_marginRight="20dp"
-	            android:hint="@string/music"
-	            android:inputType="textEmailAddress"
-	            android:padding="10dp"
-	            android:textColor="@color/app_color"
-	            android:textColorHint="@color/hint_color"
-	            android:textCursorDrawable="@null" />
-	
-	        <EditText
-	            android:id="@+id/etEditDrink"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_below="@id/etEditMusic"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginLeft="20dp"
-	            android:layout_marginRight="20dp"
-	            android:hint="@string/drink"
-	            android:padding="10dp"
-	            android:textColor="@color/app_color"
-	            android:textColorHint="@color/hint_color"
-	            android:textCursorDrawable="@null" />
-	        
-	        <EditText
-	            android:id="@+id/etEditCivilState"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_below="@id/etEditDrink"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginLeft="20dp"
-	            android:layout_marginRight="20dp"
-	            android:hint="@string/civil_state"
-	            android:padding="10dp"
-	            android:textColor="@color/app_color"
-	            android:textColorHint="@color/hint_color"
-	            android:textCursorDrawable="@null" />
-	        
-	        <EditText
-	            android:id="@+id/etEditCity"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_below="@id/etEditCivilState"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginLeft="20dp"
-	            android:layout_marginRight="20dp"
-	            android:hint="@string/city"
-	            android:padding="10dp"
-	            android:textColor="@color/app_color"
-	            android:textColorHint="@color/hint_color"
-	            android:textCursorDrawable="@null" />
-	        
-	        <EditText
-	            android:id="@+id/edEditAbout"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_below="@id/etEditCity"
-	            android:layout_marginBottom="10dp"
-	            android:layout_marginLeft="20dp"
-	            android:layout_marginRight="20dp"
-	            android:hint="@string/about"
-	            android:padding="10dp"
-	            android:textColor="@color/app_color"
-	            android:textColorHint="@color/hint_color"
-	            android:textCursorDrawable="@null"
-	            android:inputType="textMultiLine" >
 
-	            <requestFocus />
-	        </EditText> 
-	
+	    <Spinner
+	        android:id="@+id/spinnerMusica"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignRight="@+id/spinnerEstadoCivil" />
 	    
+	    <Spinner
+	        android:id="@+id/spinnerBebida"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/spinnerMusica" />
 
-	        <ProgressBar
-	            android:id="@+id/pgEdit"
-	            style="?android:attr/progressBarStyleLarge"
-	            android:visibility="gone"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignTop="@+id/etEditMusic"
-	            android:layout_centerHorizontal="true" />
-	
+	    <Spinner
+	        android:id="@+id/spinnerEstadoCivil"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/edEditAbout"
+	        android:layout_alignRight="@+id/edEditAbout"
+	        android:layout_below="@id/spinnerBebida" />
+
+	    <ProgressBar
+	        android:id="@+id/pgEdit"
+	        style="?android:attr/progressBarStyleLarge"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/rgEditGender"
+	        android:layout_centerHorizontal="true"
+	        android:visibility="gone" />
+	    
+	    <EditText
+	        android:id="@+id/etEditCity"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/spinnerEstadoCivil"
+	        android:ems="10"
+	        android:hint="@string/city"
+	        android:padding="10dp"
+	        android:textColor="@color/app_color"
+	        android:textColorHint="@color/hint_color"
+	        android:textCursorDrawable="@null" />
+
+	    <EditText
+	        android:id="@+id/edEditAbout"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@id/etEditCity"
+	        android:ems="10"
+	        android:hint="@string/about"
+	        android:inputType="textMultiLine"
+	        android:padding="10dp"
+	        android:textColor="@color/app_color"
+	        android:textColorHint="@color/hint_color"
+	        android:textCursorDrawable="@null" >
+	    </EditText>
+
 	</RelativeLayout>
 
 </ScrollView>

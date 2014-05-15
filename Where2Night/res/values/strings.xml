@@ -104,6 +104,33 @@
         <item>Destroyer</item>
         <item>Yo me llamo Ralph</item>
     </string-array>
+    
+    <string-array name="bebida_array">
+        <item>Ron</item>
+        <item>Whisky</item>
+        <item>Ginebra</item>
+        <item>Bourbon</item>
+        <item>Vodka</item>
+        <item>Cerveza</item>
+        <item>Agua</item>
+    </string-array>
+    
+    <string-array name="musica_array">
+        <item>Sin compromiso</item>
+        <item>Ennoviad@</item>
+        <item>Con novi@, pero no es un problema</item>
+        <item>Buscando rollete</item>
+        <item>Casad@</item>
+    </string-array>
+    
+    <string-array name="estado_civil_array">
+        <item>Pop</item>
+        <item>Rock</item>
+        <item>House</item>
+        <item>80´s</item>
+        <item>Pachangueo</item>
+        <item>Clásica</item>
+    </string-array>
 
     <string name="Detranquis">"De tranquis"</string>
     <string name="Hoynomelio">"Hoy no me lio"</string>

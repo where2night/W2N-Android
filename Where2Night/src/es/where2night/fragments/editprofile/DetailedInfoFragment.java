@@ -15,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,9 +38,9 @@ import es.where2night.utilities.Helper;
 
 public class DetailedInfoFragment  extends Fragment {
 	
-	private EditText etEditMusic;
-	private EditText etEditDrink;
-	private EditText etEditCivilState;
+	private Spinner etEditMusic;
+	private Spinner etEditDrink;
+	private Spinner etEditCivilState;
 	private EditText etEditCity;
 	private EditText edEditAbout;
 	
@@ -47,11 +49,26 @@ public class DetailedInfoFragment  extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_editprofile_detailedinfo, container, false);
 		
-		etEditMusic = (EditText) view.findViewById(R.id.etEditMusic);
-		etEditDrink = (EditText) view.findViewById(R.id.etEditDrink);
-		etEditCivilState = (EditText) view.findViewById(R.id.etEditCivilState);
+		etEditMusic = (Spinner) view.findViewById(R.id.spinnerMusica);
+		etEditDrink = (Spinner) view.findViewById(R.id.spinnerBebida);
+		etEditCivilState = (Spinner) view.findViewById(R.id.spinnerEstadoCivil);
 		etEditCity = (EditText) view.findViewById(R.id.etEditCity);
 		edEditAbout = (EditText) view.findViewById(R.id.edEditAbout);
+		
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+		        R.array.musica_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		etEditMusic.setAdapter(adapter);
+		
+		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getActivity(),
+		        R.array.bebida_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		etEditDrink.setAdapter(adapter2);
+		
+		ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getActivity(),
+		        R.array.estado_civil_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		etEditCivilState.setAdapter(adapter3);
 		
 		return view;
 	}
@@ -67,9 +84,13 @@ public class DetailedInfoFragment  extends Fragment {
 	public void setData(JSONObject respuesta) {
 
 		 try {
-			 etEditMusic.setText(respuesta.getString("music"));
-			 etEditDrink.setText(respuesta.getString("drink"));
-	         etEditCivilState.setText(respuesta.getString("civil_state"));
+			 String vacio = "";
+			 if(!respuesta.getString("music").equals(vacio))
+				 etEditMusic.setSelection(Integer.parseInt(respuesta.getString("music")));
+			 if(!respuesta.getString("drink").equals(vacio))
+				 etEditDrink.setSelection(Integer.parseInt(respuesta.getString("drink")));
+			 if(!respuesta.getString("civl_state").equals(vacio))
+				 etEditCivilState.setSelection(Integer.parseInt(respuesta.getString("civil_state")));
 	         etEditCity.setText(respuesta.getString("city"));
 	         edEditAbout.setText(respuesta.getString("about"));
 		} catch (JSONException e) {
@@ -84,9 +105,9 @@ public class DetailedInfoFragment  extends Fragment {
 		String[] data = new String[5];
 		
 		data[0] =  etEditCity.getText().toString();
-		data[1] = etEditMusic.getText().toString();
-		data[2] = etEditCivilState.getText().toString();
-		data[3] = etEditDrink.getText().toString();
+		data[1] = ((Integer)etEditMusic.getSelectedItemPosition()).toString();
+		data[2] = ((Integer)etEditCivilState.getSelectedItemPosition()).toString();
+		data[3] = ((Integer)etEditDrink.getSelectedItemPosition()).toString();
 		data[4] = edEditAbout.getText().toString();
     	
 		return data;
