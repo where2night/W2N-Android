@@ -12,11 +12,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
-import es.where2night.activities.FriendViewActivity;
 import es.where2night.activities.LocalViewActivity;
 import es.where2night.activities.PhotoViewActivity;
 import es.where2night.adapters.AdapterItemPhoto;
-import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemPhoto;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;

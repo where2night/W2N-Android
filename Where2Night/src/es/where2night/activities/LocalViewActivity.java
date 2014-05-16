@@ -37,6 +37,7 @@ import es.where2night.fragments.localdetail.LocalDiscountListFragment;
 import es.where2night.fragments.localdetail.LocalEventsFragment;
 import es.where2night.fragments.localdetail.LocalInfoFragment;
 import es.where2night.fragments.localdetail.LocalPhotographsFragment;
+import es.where2night.fragments.localdetail.LocalStatisticsFragment;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
@@ -55,7 +56,8 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     											   new LocalEventsFragment(),
     											   new LocalDiscountListFragment(),
     											   new JukeboxViewFragment(),
-    											   new LocalPhotographsFragment()};
+    											   new LocalPhotographsFragment(),
+    											   new LocalStatisticsFragment()};
     private RequestQueue requestQueue;
     private JSONObject respuesta = null;
     
@@ -87,7 +89,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
        
         bundle = new Bundle();
 		bundle.putString(ID, localId);
-        for (int i = 0; i</*tabs.length*/5; i++){
+        for (int i = 0; i</*tabs.length*/6; i++){
         actionBar.addTab(
                 actionBar.newTab()
                         .setText(tabs[i])
@@ -103,12 +105,14 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         	    .add(R.id.selectedTabFragment, fragments[2])
         	    .add(R.id.selectedTabFragment, fragments[3])
         	    .add(R.id.selectedTabFragment, fragments[4])
+        	    .add(R.id.selectedTabFragment, fragments[5])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
         						  .hide(fragments[2])
         						  .hide(fragments[3])
         						  .hide(fragments[4])
+        						  .hide(fragments[5])
 				        		  .commit();
         
         setContent(0);
@@ -150,6 +154,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 			((JukeboxViewFragment) toShow).fill();
 		}
 		if (index == 4) ((LocalPhotographsFragment) toShow).fill();
+		if (index == 5) ((LocalStatisticsFragment) toShow).fill();
     }
     
 

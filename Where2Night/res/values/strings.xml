@@ -145,6 +145,7 @@
         <item>Listas</item>
         <item>Gramola</item>
         <item>Fotos</item>
+        <item>Estadísticas</item>
         <item>Asistentes</item>
     </string-array>
     <string-array name="dj_tabs">
