@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -69,6 +71,19 @@ public class DetailedInfoFragment  extends Fragment {
 		        R.array.estado_civil_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		etEditCivilState.setAdapter(adapter3);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setMessage("Te recordamos que el estado civil es privado, y nadie podrá verlo. Solamente es para las estadísticas de los locales.")
+		        .setTitle("Estado 'civil'")
+		        .setCancelable(false)
+		        .setNeutralButton("Aceptar",
+		                new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                        dialog.cancel();
+		                    }
+		                });
+		AlertDialog alert = builder.create();
+		alert.show();
 		
 		return view;
 	}

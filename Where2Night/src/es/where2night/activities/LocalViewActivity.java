@@ -33,6 +33,7 @@ import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
 import es.where2night.fragments.localdetail.JukeboxViewFragment;
+import es.where2night.fragments.localdetail.LocalAsistantsFragment;
 import es.where2night.fragments.localdetail.LocalDiscountListFragment;
 import es.where2night.fragments.localdetail.LocalEventsFragment;
 import es.where2night.fragments.localdetail.LocalInfoFragment;
@@ -57,7 +58,8 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     											   new LocalDiscountListFragment(),
     											   new JukeboxViewFragment(),
     											   new LocalPhotographsFragment(),
-    											   new LocalStatisticsFragment()};
+    											   new LocalStatisticsFragment(),
+    											   new LocalAsistantsFragment()};
     private RequestQueue requestQueue;
     private JSONObject respuesta = null;
     
@@ -89,7 +91,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
        
         bundle = new Bundle();
 		bundle.putString(ID, localId);
-        for (int i = 0; i</*tabs.length*/6; i++){
+        for (int i = 0; i</*tabs.length*/7; i++){
         actionBar.addTab(
                 actionBar.newTab()
                         .setText(tabs[i])
@@ -106,6 +108,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         	    .add(R.id.selectedTabFragment, fragments[3])
         	    .add(R.id.selectedTabFragment, fragments[4])
         	    .add(R.id.selectedTabFragment, fragments[5])
+        	    .add(R.id.selectedTabFragment, fragments[6])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
@@ -113,6 +116,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         						  .hide(fragments[3])
         						  .hide(fragments[4])
         						  .hide(fragments[5])
+        						  .hide(fragments[6])
 				        		  .commit();
         
         setContent(0);
@@ -155,6 +159,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		}
 		if (index == 4) ((LocalPhotographsFragment) toShow).fill();
 		if (index == 5) ((LocalStatisticsFragment) toShow).fill();
+		if (index == 6) ((LocalAsistantsFragment) toShow).fill();
     }
     
 
