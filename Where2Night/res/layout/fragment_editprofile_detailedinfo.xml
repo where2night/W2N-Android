@@ -27,8 +27,7 @@
 	        android:id="@+id/spinnerEstadoCivil"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignLeft="@+id/edEditAbout"
-	        android:layout_alignRight="@+id/edEditAbout"
+	        android:layout_alignParentRight="true"
 	        android:layout_below="@id/spinnerBebida" />
 
 	    <ProgressBar
@@ -36,7 +35,6 @@
 	        style="?android:attr/progressBarStyleLarge"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/rgEditGender"
 	        android:layout_centerHorizontal="true"
 	        android:visibility="gone" />
 	    

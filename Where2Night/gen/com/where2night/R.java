@@ -1636,10 +1636,10 @@ containing a value of this type.
         public static final int drawerLayout=0x7f07005a;
         public static final int dropdown=0x7f070015;
         public static final int dummy_button=0x7f07005f;
-        public static final int edEditAbout=0x7f070099;
+        public static final int edEditAbout=0x7f07009a;
         public static final int edit_query=0x7f070035;
         public static final int end=0x7f070018;
-        public static final int etEditCity=0x7f07009a;
+        public static final int etEditCity=0x7f070099;
         public static final int etEditDate=0x7f07008e;
         public static final int etEditMusic=0x7f070092;
         public static final int etEditName=0x7f07008c;

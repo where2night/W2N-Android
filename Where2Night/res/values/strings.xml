@@ -106,13 +106,31 @@
     </string-array>
     
     <string-array name="bebida_array">
-        <item>Ron</item>
-        <item>Whisky</item>
-        <item>Ginebra</item>
+        <item>Agua con gas</item>
+        <item>Agua sin gas</item>
+        <item>Anís</item>
         <item>Bourbon</item>
-        <item>Vodka</item>
+        <item>Brandy</item>
+        <item>Calimocho</item>
+        <item>Cava</item>
         <item>Cerveza</item>
-        <item>Agua</item>
+        <item>Champagne</item>
+        <item>Coñac</item>
+        <item>Energetica</item>
+        <item>Ginebra</item>
+        <item>Horchata</item>
+        <item>Licor con alcohol</item>
+        <item>Refresco con gas</item>
+        <item>Refresco sin gas</item>
+        <item>Ron añejo</item>
+        <item>Ron blanco</item>
+        <item>Sidra</item>
+        <item>Tequila</item>
+        <item>Vermouth</item>
+        <item>Vino</item>
+        <item>Vodka</item>
+        <item>Whisky</item>
+        <item>Zumo</item>
     </string-array>
     
     <string-array name="musica_array">
@@ -121,15 +139,53 @@
         <item>Con novi@, pero no es un problema</item>
         <item>Buscando rollete</item>
         <item>Casad@</item>
+        <item>Divorciad@</item>
+        <item>Viud@</item>
     </string-array>
     
     <string-array name="estado_civil_array">
-        <item>Pop</item>
-        <item>Rock</item>
+        <item>Acid-House</item>
+        <item>Alternative Rock</item>
+        <item>Beatbox</item>
+        <item>Black Metal</item>
+        <item>Country</item>
+        <item>Death-Metal</item>
+        <item>Deep-House</item>
+        <item>Disco</item>
+        <item>Drum n Bass</item>
+        <item>Electro</item>
+        <item>EuroPop</item>
+        <item>Folk</item>
+        <item>Folk-Rock</item>
+        <item>Funk</item>
+        <item>Hard-Trance</item>
+        <item>Hard-House</item>
+        <item>Hard-Rock</item>
+        <item>Hardcore</item>
+        <item>HardStyle</item>
+        <item>Heavy Metal</item>
+        <item>Hip Hop</item>
         <item>House</item>
-        <item>80´s</item>
-        <item>Pachangueo</item>
-        <item>Clásica</item>
+        <item>Indie-Rock</item>
+        <item>Italo-Disco</item>
+        <item>Italo-Dance</item>
+        <item>Jungle</item>
+        <item>Latin</item>
+        <item>Makina</item>
+        <item>Minimal</item>
+        <item>Pachanga</item>
+        <item>Pop Rock</item>
+        <item>Progressive House</item>
+        <item>Progressive Trance</item>
+        <item>Punk</item>
+        <item>Reggae</item>
+        <item>Reggaeton</item>
+        <item>Rock and Roll</item>
+        <item>Ska</item>
+        <item>Soul</item>
+        <item>Soul-Jazz</item>
+        <item>Tech-House</item>
+        <item>Techno</item>
     </string-array>
 
     <string name="Detranquis">"De tranquis"</string>
