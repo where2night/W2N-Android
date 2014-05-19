@@ -97,7 +97,6 @@
     <string name="AddAsFriend">Añadir como amigo</string>
 
     <string-array name="mode_array">
-        <item>			 </item>
         <item>De tranquis</item>
         <item>Hoy no me lio</item>
         <item>Lo que surja</item>
@@ -146,6 +145,7 @@
     </string-array>
     
     <string-array name="musica_array">
+        <item>			 </item>
         <item>Acid-House</item>
         <item>Alternative Rock</item>
         <item>Beatbox</item>
