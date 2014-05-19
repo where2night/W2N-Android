@@ -118,9 +118,15 @@ public class Helper {
 	public static String joinDiscountListUrl(){
 		return BASE_API_URL + "actions/joinList.php";
 	}
+	
 	public static String getStatisticsUrl() {
 		return BASE_API_URL + "actions/statisticsPub.php";
 	}
+	
+	public static String getAllUsersUrl() {
+		return BASE_API_URL + "read/allusers.php";
+	}
+	
 	
 	
 }

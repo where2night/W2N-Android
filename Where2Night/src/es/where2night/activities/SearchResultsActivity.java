@@ -5,6 +5,17 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,29 +24,21 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
-import es.where2night.adapters.AdapterItemLocal;
+import es.where2night.adapters.AdapterItemSearch;
+import es.where2night.data.Item;
 import es.where2night.data.ItemLocalAndDJ;
+import es.where2night.data.ItemSearch;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
-import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class SearchResultsActivity extends Activity { 
 	
 	 private ProgressBar pgLocalsList;
 	 private ListView list;
-	 ArrayList<ItemLocalAndDJ> arraydir;
-	AdapterItemLocal adapter;
-	private RequestQueue requestQueue;
-	
+	 ArrayList<ItemSearch> arraydir;
+	 AdapterItemSearch adapter;
+	 private RequestQueue requestQueue;
+	 
 	   @Override
 	   public void onCreate(Bundle savedInstanceState) { 
 	      super.onCreate(savedInstanceState); 
@@ -58,19 +61,27 @@ public class SearchResultsActivity extends Activity {
 	   
 	   public void fill(String query){
 			
-			arraydir = new ArrayList<ItemLocalAndDJ>();
+			arraydir = new ArrayList<ItemSearch>();
 			
 			
-		    adapter = new AdapterItemLocal(this, arraydir);
+		    adapter = new AdapterItemSearch(this, arraydir);
 		    list.setAdapter(adapter);
 		    
 		    list.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View view, int position,
 						long arg3) {
-					Intent intent = new Intent(SearchResultsActivity.this, LocalViewActivity.class);
-	                intent.putExtra(LocalViewActivity.ID, String.valueOf(adapter.getItemId(position)));
-	                startActivity(intent);
+					int type = ((ItemSearch)adapter.getItem(position)).getType();
+					if (type == 0){
+						Intent intent = new Intent(SearchResultsActivity.this, FriendViewActivity.class);
+		                intent.putExtra(FriendViewActivity.ID, String.valueOf(adapter.getItemId(position)));
+		                startActivity(intent);
+					} else {
+						Intent intent = new Intent(SearchResultsActivity.this, LocalViewActivity.class);
+		                intent.putExtra(LocalViewActivity.ID, String.valueOf(adapter.getItemId(position)));
+		                startActivity(intent);
+					}
+	                
 				}
 				
 			});
@@ -81,7 +92,7 @@ public class SearchResultsActivity extends Activity {
 			final DataManager dm = new DataManager(getApplicationContext());
 			String[] cred = dm.getCred();
 			requestQueue = Volley.newRequestQueue(getApplicationContext()); 
-			String url = Helper.getAllLocalsUrl() + "/" + cred[0] + "/" + cred[1];
+			String url = Helper.getAllUsersUrl() + "/" + cred[0] + "/" + cred[1];
 			
 			
 			Response.Listener<String> succeedListener = new Response.Listener<String>() 
@@ -97,9 +108,10 @@ public class SearchResultsActivity extends Activity {
 				            	long idProfile = Long.valueOf(aux.getString("idProfile"));
 				            	String picture = aux.getString("picture");
 				            	picture = picture.replace("\\", "");
-				            	String name = aux.getString("localName");
+				            	String name = aux.getString("name");
+				            	int type = Integer.valueOf(aux.getString("type"));
 				            	if (name.toUpperCase().contains(query)){
-				            		ItemLocalAndDJ local = new ItemLocalAndDJ(picture,name,idProfile);
+				            		ItemSearch local = new ItemSearch(picture,name,idProfile,type);
 				            		arraydir.add(local);
 				            	}
 			            	}
