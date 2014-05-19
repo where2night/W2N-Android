@@ -1,42 +1,21 @@
 package es.where2night.fragments.editprofile;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.where2night.R;
-
-import es.where2night.activities.LocalViewActivity;
-import es.where2night.adapters.AdapterItemLocal;
-import es.where2night.data.ItemLocalAndDJ;
-import es.where2night.data.LocalListData;
-import es.where2night.utilities.DataManager;
-import es.where2night.utilities.Helper;
 
 public class DetailedInfoFragment  extends Fragment {
 	
@@ -44,7 +23,10 @@ public class DetailedInfoFragment  extends Fragment {
 	private Spinner etEditDrink;
 	private Spinner etEditCivilState;
 	private EditText etEditCity;
-	private EditText edEditAbout;
+	private EditText etEditAbout;
+	private EditText etEditFB;
+	private EditText etEditTW;
+	private EditText etEditIG;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,7 +37,12 @@ public class DetailedInfoFragment  extends Fragment {
 		etEditDrink = (Spinner) view.findViewById(R.id.spinnerBebida);
 		etEditCivilState = (Spinner) view.findViewById(R.id.spinnerEstadoCivil);
 		etEditCity = (EditText) view.findViewById(R.id.etEditCity);
-		edEditAbout = (EditText) view.findViewById(R.id.edEditAbout);
+		etEditAbout = (EditText) view.findViewById(R.id.etEditAbout);
+		etEditFB = (EditText) view.findViewById(R.id.etEditFB);
+		etEditTW = (EditText) view.findViewById(R.id.etEditTW);
+		etEditIG = (EditText) view.findViewById(R.id.etEditIG);
+		etEditAbout = (EditText) view.findViewById(R.id.etEditIG);
+		
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
 		        R.array.musica_array, android.R.layout.simple_spinner_item);
@@ -99,15 +86,19 @@ public class DetailedInfoFragment  extends Fragment {
 	public void setData(JSONObject respuesta) {
 
 		 try {
+			 Log.e("setData", respuesta.toString());
 			 String vacio = "";
 			 if(!respuesta.getString("music").equals(vacio))
 				 etEditMusic.setSelection(Integer.parseInt(respuesta.getString("music")));
 			 if(!respuesta.getString("drink").equals(vacio))
 				 etEditDrink.setSelection(Integer.parseInt(respuesta.getString("drink")));
-			 if(!respuesta.getString("civl_state").equals(vacio))
+			 if(!respuesta.getString("civil_state").equals(vacio))
 				 etEditCivilState.setSelection(Integer.parseInt(respuesta.getString("civil_state")));
 	         etEditCity.setText(respuesta.getString("city"));
-	         edEditAbout.setText(respuesta.getString("about"));
+	         etEditAbout.setText(respuesta.getString("about"));
+	         etEditFB.setText(respuesta.getString("facebook"));
+	         etEditTW.setText(respuesta.getString("twitter"));
+	         etEditIG.setText(respuesta.getString("instagram"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,13 +108,16 @@ public class DetailedInfoFragment  extends Fragment {
 	}
 
 	public String[] getData() {
-		String[] data = new String[5];
+		String[] data = new String[8];
 		
 		data[0] =  etEditCity.getText().toString();
 		data[1] = ((Integer)etEditMusic.getSelectedItemPosition()).toString();
 		data[2] = ((Integer)etEditCivilState.getSelectedItemPosition()).toString();
 		data[3] = ((Integer)etEditDrink.getSelectedItemPosition()).toString();
-		data[4] = edEditAbout.getText().toString();
+		data[4] = etEditAbout.getText().toString();
+		data[5] = etEditFB.getText().toString();
+		data[6] = etEditTW.getText().toString();
+		data[7] = etEditIG.getText().toString();
     	
 		return data;
 		

@@ -118,7 +118,6 @@
         <item>Coñac</item>
         <item>Energetica</item>
         <item>Ginebra</item>
-        <item>Horchata</item>
         <item>Licor con alcohol</item>
         <item>Refresco con gas</item>
         <item>Refresco sin gas</item>
@@ -133,7 +132,7 @@
         <item>Zumo</item>
     </string-array>
     
-    <string-array name="musica_array">
+    <string-array name="estado_civil_array">
         <item>Sin compromiso</item>
         <item>Ennoviad@</item>
         <item>Con novi@, pero no es un problema</item>
@@ -143,7 +142,7 @@
         <item>Viud@</item>
     </string-array>
     
-    <string-array name="estado_civil_array">
+    <string-array name="musica_array">
         <item>Acid-House</item>
         <item>Alternative Rock</item>
         <item>Beatbox</item>
@@ -218,6 +217,9 @@
         <item>Contraseña</item>
     </string-array>
 
+    <string name="twitter">Twitter</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
     <string name="Search">Search</string>
     <string name="Notifications">Notificaciones</string>
     <string name="search_hint_locals">Locales</string>

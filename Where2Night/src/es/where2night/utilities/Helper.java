@@ -20,6 +20,10 @@ public class Helper {
 		return BASE_API_URL + "update/user.php"; 
 	}
 	
+	public static String getPassChangeUrl(){
+		return BASE_API_URL + "update/updatePass.php"; 
+	}
+	
 	public static String getLocalUrl(){
 		return BASE_API_URL + "update/local.php";
 	}

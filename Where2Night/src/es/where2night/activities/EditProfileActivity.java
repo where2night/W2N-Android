@@ -7,8 +7,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,10 +42,9 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 	private Button btnEditAccept;
 	private Button btnEditCancel;
 	private ProgressBar pgEdit;
-	
 
 	private String idProfile;
-	
+	private boolean passChange;
 	
 	private int lastIndex = 0;
 	
@@ -58,7 +59,7 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_profile);
-		
+		passChange = false;
 		 final ActionBar actionBar = getActionBar();
         actionBar.removeAllTabs();
         
@@ -72,8 +73,13 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
         
         String[] tabs = getResources().getStringArray(R.array.editProfile_tabs);
         
+        DataManager dm = new DataManager(getApplicationContext());
+        int type = dm.checkLogin();
+        int ntabs = tabs.length;
+        if (type != -1 )
+        	ntabs -= 1;
 		
-        for (int i = 0; i<tabs.length; i++){
+        for (int i = 0; i < ntabs ; i++){
 	        actionBar.addTab(
 	                actionBar.newTab()
 	                        .setText(tabs[i])
@@ -103,9 +109,18 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 			
 			@Override
 			public void onClick(View v) {
-				pgEdit.setVisibility(View.VISIBLE);
 				btnEditAccept.setEnabled(false);
-				sendData();
+				String[] dataPassword = ((PasswordChangeFragment) fragments[2]).getData();
+				if (dataPassword != null){
+					pgEdit.setVisibility(View.VISIBLE);
+					if (!dataPassword[0].equals("")){
+						changePassword();
+						passChange = true;
+					}
+					sendData();
+				}
+				btnEditAccept.setEnabled(true);
+				
 			}
 		});
 		
@@ -142,7 +157,7 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 
 	private void fillData() {
 		
-		final DataManager dm = new DataManager(getApplicationContext());
+		DataManager dm = new DataManager(getApplicationContext());
 		String[] cred = dm.getCred();
 		idProfile = cred[0];
 		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
@@ -200,10 +215,12 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 	        	Log.e("Response", response);
 	            pgEdit.setVisibility(View.GONE);
 				btnEditAccept.setEnabled(true);
-				Toast.makeText(getApplicationContext(), "Perfil Guardado", Toast.LENGTH_SHORT).show();
-				Intent i = new Intent(getApplicationContext(), MainActivity.class);
-				i.putExtra(MainActivity.PARENT, "0");
-				startActivity(i);
+				if(!passChange){
+					Toast.makeText(getApplicationContext(), "Perfil Guardado", Toast.LENGTH_SHORT).show();
+					Intent i = new Intent(getApplicationContext(), MainActivity.class);
+					i.putExtra(MainActivity.PARENT, "0");
+					startActivity(i);
+				}
 	        }
 	    };
 	    Response.ErrorListener errorListener = new Response.ErrorListener() 
@@ -233,16 +250,18 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 			    		info.put("picture", dataBasic[0]);
 			    		info.put("uploading", "true");
 			    	}
-			    	info.put("name", dataBasic[2]);
-			    	info.put("surnames", dataBasic[3]);
 			    	
+			    	info.put("name", dataBasic[2]);
+			    	info.put("surnames", dataBasic[3]);			    	
 			    	info.put("birthdate", dataBasic[4]);
 			    	info.put("city", dataDetailed[0]);
 			    	info.put("music", dataDetailed[1]);
 			    	info.put("civil_state",dataDetailed[2]);
 			    	info.put("drink",dataDetailed[3]);
 			    	info.put("about", dataDetailed[4]);
-
+			    	info.put("facebook", dataDetailed[5]);
+			    	info.put("twitter", dataDetailed[6]);
+			    	info.put("instagra,", dataDetailed[7]);
 			    	info.put("gender", dataBasic[5]);
 			    	
 			    	return info;
@@ -252,6 +271,77 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 		requestQueue.add(request);
 	}
 	
+	private void changePassword() {
+		final DataManager dm = new DataManager(getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
+		String url = Helper.getPassChangeUrl() + "/" + cred[0] + "/" + cred[1];
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            pgEdit.setVisibility(View.GONE);
+				btnEditAccept.setEnabled(true);
+				try {
+					respuesta = new JSONObject(response);
+					String error = respuesta.getString("Error");
+					if (error.equals("3")){
+						AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+						builder.setMessage("La contraseña antigua no es correcta")
+						        .setTitle("Cambio de contraseña")
+						        .setCancelable(false)
+						        .setNeutralButton("Aceptar",
+						                new DialogInterface.OnClickListener() {
+						                    public void onClick(DialogInterface dialog, int id) {
+						                        dialog.cancel();
+						                    }
+						                });
+						AlertDialog alert = builder.create();
+						alert.show();	
+					}else{
+						passChange = false;
+						Toast.makeText(getApplicationContext(), "Perfil Guardado", Toast.LENGTH_SHORT).show();
+						Intent i = new Intent(getApplicationContext(), MainActivity.class);
+						i.putExtra(MainActivity.PARENT, "0");
+						startActivity(i);
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	        	 pgEdit.setVisibility(View.GONE);
+	        	 btnEditAccept.setEnabled(true);
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener) 
+		{     
+			    @Override
+			    protected Map<String, String> getParams() 
+			    {  
+			    	HashMap<String, String> info = new HashMap<String, String>();
+			    	String[] dataPassword = ((PasswordChangeFragment) fragments[2]).getData();
+			    	info.put("oldPass", dataPassword[0]);
+			    	info.put("newPass", dataPassword[1]);	
+			    				    	
+			    	return info;
+			    }
+		};
+		
+		requestQueue.add(request);
+		
+	}
 
 
 	@Override
