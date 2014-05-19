@@ -84,7 +84,7 @@ public class FriendsFragment extends Fragment {
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
-		String url = Helper.getPartierListUrl() + "/" + cred[0] + "/" + cred[1];
+		String url = Helper.getMyFriendListUrl() + "/" + cred[0] + "/" + cred[1] + "/" + cred[0];
 		Log.e("Friends", url);
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
@@ -94,9 +94,9 @@ public class FriendsFragment extends Fragment {
 	            // response
 	        	Log.e("Response", response);
 	            try {
-		            	JSONArray root = new JSONArray(response);
-		            	for (int i = 0; i < root.length(); i++){
-		            		JSONObject aux = root.getJSONObject(i);
+	            		JSONObject root = new JSONObject(response);
+		            	for (int i = 0; i < root.length() - 2 ; i++){
+		            		JSONObject aux = new JSONObject(root.getString(String.valueOf(i)));
 			            	long idProfile = Long.valueOf(aux.getString("idProfile"));
 			            	String picture = aux.getString("picture");
 			            	picture = picture.replace("\\", "");

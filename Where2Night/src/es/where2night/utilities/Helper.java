@@ -87,6 +87,10 @@ public class Helper {
 		return BASE_API_URL + "read/partiers.php";
 	}
 	
+	public static String getMyFriendListUrl(){
+		return BASE_API_URL + "read/myFriends.php";
+	}
+	
 	public static String getFriendshipPetUrl(){
 		return BASE_API_URL + "read/petFriendship.php";
 	}
