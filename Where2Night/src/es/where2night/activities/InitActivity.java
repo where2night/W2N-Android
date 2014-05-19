@@ -102,7 +102,7 @@ public class InitActivity extends Activity implements View.OnClickListener, Conn
 									birthdate = date[1] + "/" + date[0] + "/" + date[2];
 									String fbId = user.getId();
 									user.getProperty("picture");
-									String picture = "http://graph.facebook.com/" + fbId + "/picture?type=large";
+									String picture = "https://graph.facebook.com/" + fbId + "/picture?type=large";
 									DataManager dm = new DataManager(getApplicationContext());
 									dm.setUser(email,picture,name,surnames, birthdate, gender);
 									Intent i = new Intent(getApplicationContext(), MainActivity.class);

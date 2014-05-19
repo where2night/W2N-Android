@@ -97,6 +97,7 @@
     <string name="AddAsFriend">Añadir como amigo</string>
 
     <string-array name="mode_array">
+        <item>			 </item>
         <item>De tranquis</item>
         <item>Hoy no me lio</item>
         <item>Lo que surja</item>
@@ -106,6 +107,7 @@
     </string-array>
     
     <string-array name="bebida_array">
+        <item>			 </item>
         <item>Agua con gas</item>
         <item>Agua sin gas</item>
         <item>Anís</item>
@@ -133,6 +135,7 @@
     </string-array>
     
     <string-array name="estado_civil_array">
+        <item>			 </item>
         <item>Sin compromiso</item>
         <item>Ennoviad@</item>
         <item>Con novi@, pero no es un problema</item>

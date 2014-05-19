@@ -1,50 +1,33 @@
 package es.where2night.fragments.editprofile;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
 import es.where2night.activities.EditProfileActivity;
-import es.where2night.activities.LocalViewActivity;
-import es.where2night.adapters.AdapterItemLocal;
-import es.where2night.data.ItemLocalAndDJ;
-import es.where2night.data.LocalListData;
 import es.where2night.utilities.BitmapLRUCache;
-import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
 public class BasicInfoFragment  extends Fragment {
@@ -119,24 +102,7 @@ public class BasicInfoFragment  extends Fragment {
         	if (extras != null) {
                 Bitmap bm = extras.getParcelable("data");
         	
-        	/*Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
- 
-            Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            picturePath = cursor.getString(columnIndex);
-            cursor.close();
-             
-            imgEditProfile.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
-
-            BitmapFactory.Options options = new BitmapFactory.Options();
-
-            options.inSampleSize = 4;
-            options.inPurgeable = true;
-            Bitmap bm = BitmapFactory.decodeFile(picturePath);*/
+        
 
             imgEditProfile.setImageBitmap(bm);
                 
@@ -173,8 +139,9 @@ public class BasicInfoFragment  extends Fragment {
             }
             
             pictureUrl = respuesta.getString("picture");
-            if (pictureUrl.equals("") || pictureUrl.contains("face"))
+            if (pictureUrl.equals(""))
     			pictureUrl = Helper.getDefaultProfilePictureUrl();
+
             
             imgEditProfile.setImageUrl(pictureUrl, imageLoader);
 		} catch (JSONException e) {
