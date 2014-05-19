@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -47,6 +48,8 @@ import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
 public class BasicInfoFragment  extends Fragment {
+	private static final int RESULT_CROP = 3;
+
 	private static int RESULT_LOAD_IMAGE = 1;
 	
 	private NetworkImageView imgEditProfile;
@@ -80,19 +83,43 @@ public class BasicInfoFragment  extends Fragment {
 				Intent i = new Intent(
 						Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);				
 				startActivityForResult(i, RESULT_LOAD_IMAGE);
-			}
+				
+							}
 		});
 		
 		 fillData();
 		return view;
 	}
 	
+	private void crop(Uri photoUri) {
+	    Intent intent = new Intent("com.android.camera.action.CROP");
+	    intent.setData(photoUri);
+	    intent.putExtra("outputX", 200);
+	    intent.putExtra("outputY", 200);
+	    intent.putExtra("aspectX", 1);
+	    intent.putExtra("aspectY", 1);
+	    intent.putExtra("scale", true);
+	    intent.putExtra("return-data", true);
+	    startActivityForResult(intent, RESULT_CROP);
+	}
+	
 	@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
          
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == getActivity().RESULT_OK && data != null) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
+            if (selectedImage != null){
+            	crop(selectedImage);
+            }
+        } else if (requestCode == RESULT_CROP && resultCode == Activity.RESULT_OK && data != null){
+        	
+        	Bundle extras = data.getExtras();
+        	
+        	if (extras != null) {
+                Bitmap bm = extras.getParcelable("data");
+        	
+        	/*Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
  
             Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -109,8 +136,10 @@ public class BasicInfoFragment  extends Fragment {
 
             options.inSampleSize = 4;
             options.inPurgeable = true;
-            Bitmap bm = BitmapFactory.decodeFile(picturePath);
+            Bitmap bm = BitmapFactory.decodeFile(picturePath);*/
 
+            imgEditProfile.setImageBitmap(bm);
+                
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             bm.compress(Bitmap.CompressFormat.JPEG,40,baos); 
@@ -123,7 +152,7 @@ public class BasicInfoFragment  extends Fragment {
                         //generate base64 string of image
 
             encodedImage = Base64.encodeToString(byteImage_photo,Base64.DEFAULT);
-            
+        	}
         }
      }
 	
