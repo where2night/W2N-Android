@@ -26,6 +26,7 @@ import es.where2night.utilities.Helper;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,12 +35,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.os.Build;
 
-public class MessagesViewActivity extends Activity {
+public class MessagesViewActivity extends Activity implements OnClickListener{
 
 	private ListView messagesList;
 	public static final String ID = "id";
@@ -59,66 +61,22 @@ public class MessagesViewActivity extends Activity {
 		messagesList = (ListView) findViewById(R.id.listMessages);
 		messageToSent = (EditText) findViewById(R.id.editMessage);
 		btnEnviar = (Button) findViewById(R.id.buttonSendMessage);
-		btnEnviar.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				final DataManager dm = new DataManager(getApplicationContext());
-				String[] cred = dm.getCred();
-				requestQueue = Volley.newRequestQueue(getApplicationContext()); 
-				String url = Helper.getSendMessageUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId;
-				Log.e("url", url);
-				
-				Response.Listener<String> succeedListener = new Response.Listener<String>(){
-			        @Override
-			        public void onResponse(String response) {
-			            // response
-			        	Log.e("Response", response);
-			            try {} 
-			            catch (Exception e) {
-			            	e.printStackTrace();
-			            }
-			        }		
-				};
-				    
-			    Response.ErrorListener errorListener = new Response.ErrorListener() 
-			    {
-			         @Override
-			         public void onErrorResponse(VolleyError error) {
-			             // error
-			             Log.e("Error.Response", error.toString());
-			       }
-			    };
-			    
-			    StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){
-			    	@Override
-				    protected Map<String, String> getParams() 
-				    {  
-				    	Map<String, String> info = new HashMap<String, String>();
-				    	String strMessage = messageToSent.getText().toString();
-				    	info.put("status", strMessage);
-				        return info;
-				    }
-			    }; 
-				
-				requestQueue.add(request);
-				
-			}
-		});
-		
-		arraydir = new ArrayList<ItemMessage>();
-		adapter = new AdapterItemMessage(this, arraydir);
-        messagesList.setAdapter(adapter);
+		messageToSent.setText("");
+		btnEnviar.setOnClickListener(this); 
 
-		if (savedInstanceState == null) {
+		/*if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		}*/
 		
 		fillMessages();
+		hideKeyBoard();
 	}
 
 	private void fillMessages() {
+		arraydir = new ArrayList<ItemMessage>();
+		adapter = new AdapterItemMessage(this, arraydir);
+        messagesList.setAdapter(adapter);
 		final DataManager dm = new DataManager(this.getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(this.getApplicationContext()); 
@@ -133,7 +91,7 @@ public class MessagesViewActivity extends Activity {
 	        	Log.e("Response", response);
 	            try {
 	            	JSONObject root = new JSONObject(response);
-	            	for (int i = 0; i < root.length() - 7; i++){
+	            	for (int i = root.length() - 8; i >= 0; i--){
 	            		JSONObject aux = new JSONObject(root.getString(String.valueOf(i)));
 	            		String message = aux.getString("message");
 	            		int mode = Integer.parseInt(aux.getString("mode"));
@@ -162,7 +120,7 @@ public class MessagesViewActivity extends Activity {
 		requestQueue.add(request);
 		
 	}
-
+/*
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -181,12 +139,12 @@ public class MessagesViewActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}*/
 
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	/*public static class PlaceholderFragment extends Fragment {
 
 		public PlaceholderFragment() {
 		}
@@ -198,6 +156,72 @@ public class MessagesViewActivity extends Activity {
 					container, false);
 			return rootView;
 		}
+	}*/
+
+	@Override
+	public void onClick(View v) {
+		String vacio ="";
+		if (!messageToSent.getText().toString().equals(vacio)){
+			final DataManager dm = new DataManager(getApplicationContext());
+			String[] cred = dm.getCred();
+			requestQueue = Volley.newRequestQueue(getApplicationContext()); 
+			String url = Helper.getSendMessageUrl() + "/" + cred[0] + "/" + cred[1] + "/" + friendId;
+			Log.e("url", url);
+			
+			Response.Listener<String> succeedListener = new Response.Listener<String>(){
+		        @Override
+		        public void onResponse(String response) {
+		            // response
+		        	Log.e("Response", response);
+		            try {} 
+		            catch (Exception e) {
+		            	e.printStackTrace();
+		            }
+		        }		
+			};
+			    
+		    Response.ErrorListener errorListener = new Response.ErrorListener() 
+		    {
+		         @Override
+		         public void onErrorResponse(VolleyError error) {
+		             // error
+		             Log.e("Error.Response", error.toString());
+		       }
+		    };
+		    
+		    StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){
+		    	@Override
+			    protected Map<String, String> getParams() 
+			    {  
+			    	Map<String, String> info = new HashMap<String, String>();
+			    	String strMessage = messageToSent.getText().toString();
+			    	info.put("message", strMessage);
+			    	runOnUiThread(new Runnable() {
+			    	    @Override
+			    	    public void run() {
+			    	    	messageToSent.setText("");
+			    	    	fillMessages();
+			    	    }
+			    	});
+			        return info;
+			    }
+		    }; 
+			
+			requestQueue.add(request);
+			hideKeyBoard();
+			
+		}
+		else{
+			hideKeyBoard();
+		}
+		
+	}
+
+	private void hideKeyBoard() {
+		InputMethodManager imm = (InputMethodManager)getSystemService(
+			      Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(messageToSent.getWindowToken(), 0);
+		
 	}
 
 }
