@@ -79,6 +79,7 @@ public class FriendInfoFragment extends Fragment {
 		txtAboutFriend = (TextView) view.findViewById(R.id.txtAboutFriend);
 		pgFriendView = (ProgressBar) view.findViewById(R.id.pgFriendView);
 		btnMessage = (Button) view.findViewById(R.id.btnMessage);
+		txtCivilStateFriend.setVisibility(View.GONE);
 		
 		btnMessage.setOnClickListener(new OnClickListener() {
 			
