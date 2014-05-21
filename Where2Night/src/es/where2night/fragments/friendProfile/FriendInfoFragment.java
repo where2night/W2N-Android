@@ -2,6 +2,7 @@ package es.where2night.fragments.friendProfile;
 
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
 import es.where2night.activities.FriendViewActivity;
+import es.where2night.activities.MessagesViewActivity;
 import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
@@ -42,6 +44,7 @@ public class FriendInfoFragment extends Fragment {
 	private TextView txtDrinkFriend;
 	private TextView txtAboutFriend;
 	private ProgressBar pgFriendView;
+	private Button btnMessage;
 	
 	private Button btnAddAsFriend;
 	private Button btnIgnoreFriend;
@@ -75,6 +78,18 @@ public class FriendInfoFragment extends Fragment {
 		txtDrinkFriend = (TextView) view.findViewById(R.id.txtDrinkFriend);
 		txtAboutFriend = (TextView) view.findViewById(R.id.txtAboutFriend);
 		pgFriendView = (ProgressBar) view.findViewById(R.id.pgFriendView);
+		btnMessage = (Button) view.findViewById(R.id.btnMessage);
+		
+		btnMessage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), MessagesViewActivity.class);
+                intent.putExtra(MessagesViewActivity.ID, friendId);
+                startActivity(intent);
+				
+			}
+		});
 	
         
       fillData();

@@ -126,6 +126,15 @@ public class Helper {
 	public static String getAllUsersUrl() {
 		return BASE_API_URL + "read/allusers.php";
 	}
+	public static String getFriendsMessagesUrl() {
+		return BASE_API_URL + "/read/messagesSorted.php";
+	}
+	public static String getMessage() {
+		return BASE_API_URL + "/read/messagesFriend.php";
+	}
+	public static String getSendMessageUrl() {
+		return BASE_API_URL + "/actions/sendMessage.php";
+	}
 	
 	
 	

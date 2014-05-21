@@ -61,7 +61,7 @@ public class FriendsFragment extends Fragment {
 			public void onItemClick(AdapterView<?> arg0, View view, int position,
 					long arg3) {
 				Intent intent = new Intent(getActivity(), FriendViewActivity.class);
-                intent.putExtra(LocalViewActivity.ID, String.valueOf(adapter.getItemId(position)));
+                intent.putExtra(FriendViewActivity.ID, String.valueOf(adapter.getItemId(position)));
                 startActivity(intent);
 			}
 			

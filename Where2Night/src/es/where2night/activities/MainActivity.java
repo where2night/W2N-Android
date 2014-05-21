@@ -44,6 +44,7 @@ import es.where2night.fragments.EventsFragment;
 import es.where2night.fragments.FriendsFragment;
 import es.where2night.fragments.HomeFragment;
 import es.where2night.fragments.LocalsFragment;
+import es.where2night.fragments.MessagesFragment;
 import es.where2night.fragments.ProfileFragment;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.FbManagement;
@@ -74,7 +75,8 @@ public class MainActivity extends FragmentActivity{
     									  new ProfileFragment(),
     									  new EventsFragment(),
     									  new FriendsFragment(),    									  
-    									  new LocalsFragment()};
+    									  new LocalsFragment(),
+    									  new MessagesFragment()};
 	
     private ProgressDialog connectionProgressDialog;
     
@@ -148,12 +150,14 @@ public class MainActivity extends FragmentActivity{
         		.add(R.id.contentFrame, fragments[2])
         		.add(R.id.contentFrame, fragments[3])
         		.add(R.id.contentFrame, fragments[4])
+        		.add(R.id.contentFrame, fragments[5])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
 				        		  .hide(fragments[2])
 				        		  .hide(fragments[3])
 				        		  .hide(fragments[4])
+				        		  .hide(fragments[5])
 				        		  .commit();
         
         setContent(option);
@@ -241,6 +245,7 @@ public class MainActivity extends FragmentActivity{
 	    }
 	    if (index == 2) ((EventsFragment) toShow).fill();
 	    if (index == 3) ((FriendsFragment) toShow).fill();
+	    if (index == 5) ((MessagesFragment) toShow).fill();
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {

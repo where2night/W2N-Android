@@ -82,4 +82,14 @@
        android:layout_marginRight="15dp"
        android:text="TextView" />
 
+   <Button
+       android:id="@+id/btnMessage"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignRight="@+id/imgFriend"
+       android:layout_below="@+id/txtAboutFriend"
+       android:layout_marginTop="15dp"
+       android:background="@drawable/btn_igo_style"
+       android:text="@string/PrivateMessage" />
+
 </RelativeLayout>

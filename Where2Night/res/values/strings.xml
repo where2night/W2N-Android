@@ -47,6 +47,7 @@
         <item>Eventos</item>
         <item>Amigos</item>
         <item>Locales</item>
+        <item>Mensajes</item>
         <item>Gramola</item>
     </string-array>
 
@@ -95,6 +96,7 @@
     <string name="MusicFriendLike">Estilo musical preferido: </string>
     <string name="AboutMeFriend">Sobre mí: </string>
     <string name="AddAsFriend">Añadir como amigo</string>
+    <string name="PrivateMessage">Mensaje privado</string>
 
     <string-array name="mode_array">
         <item>De tranquis</item>
@@ -104,9 +106,8 @@
         <item>Destroyer</item>
         <item>Yo me llamo Ralph</item>
     </string-array>
-    
     <string-array name="bebida_array">
-        <item>			 </item>
+        <item></item>
         <item>Agua con gas</item>
         <item>Agua sin gas</item>
         <item>Anís</item>
@@ -132,9 +133,8 @@
         <item>Whisky</item>
         <item>Zumo</item>
     </string-array>
-    
     <string-array name="estado_civil_array">
-        <item>			 </item>
+        <item></item>
         <item>Sin compromiso</item>
         <item>Ennoviad@</item>
         <item>Con novi@, pero no es un problema</item>
@@ -143,9 +143,8 @@
         <item>Divorciad@</item>
         <item>Viud@</item>
     </string-array>
-    
     <string-array name="musica_array">
-        <item>			 </item>
+        <item></item>
         <item>Acid-House</item>
         <item>Alternative Rock</item>
         <item>Beatbox</item>
@@ -235,5 +234,6 @@
     <string name="title_activity_photo_view">PhotoViewActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_messages_view">MessagesViewActivity</string>
 
 </resources>
