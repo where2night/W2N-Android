@@ -284,7 +284,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	            	respuesta = new JSONObject(response);
 	            	if (respuesta.getString("goToPub").equals("error")){
 	            		AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-	            		builder.setMessage("Has dicho que vas a ir un día en el cual ya has señalado que ibas.")
+	            		builder.setMessage("Has dicho que vas (no vas) a ir un día en el cual has señalado que ibas (no ibas).")
 	            		        .setTitle("Error")
 	            		        .setCancelable(false)
 	            		        .setNeutralButton("Aceptar",
@@ -299,21 +299,11 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
             	}
 	            catch (Exception e) {
 					e.printStackTrace();
-					AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-            		builder.setMessage("Has dicho que no vas a ir un día en el cual no has señalado que ibas.")
-            		        .setTitle("Error")
-            		        .setCancelable(false)
-            		        .setNeutralButton("Aceptar",
-            		                new DialogInterface.OnClickListener() {
-            		                    public void onClick(DialogInterface dialog, int id) {
-            		                        dialog.cancel();
-            		                    }
-            		                });
-            		AlertDialog alert = builder.create();
-            		alert.show();
+					muestraError();
 				}
 	        
 	        }
+
 		};
 		Response.ErrorListener errorListener = new Response.ErrorListener(){
 			@Override
@@ -329,6 +319,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     	Format format = new SimpleDateFormat("dd/MM/yyyy");
     	String dateString = format.format(date).toString();
 		String urlDelete = Helper.getGoToLocalUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId + "/" + dateString;
+		Log.e("NotGoing", urlDelete);
 		
 		if(notGoing){
 			request = new StringRequest(Request.Method.DELETE, urlDelete, succeedListener, errorListener); 
@@ -417,5 +408,21 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 
 	    return true;
 	  }
+	 
+	 private void muestraError() {
+		 AlertDialog.Builder builder = new AlertDialog.Builder(this);
+ 		builder.setMessage("Has dicho que vas (no vas) a ir un día en el cual has señalado que ibas (no ibas).")
+ 		        .setTitle("Error")
+ 		        .setCancelable(false)
+ 		        .setNeutralButton("Aceptar",
+ 		                new DialogInterface.OnClickListener() {
+ 		                    public void onClick(DialogInterface dialog, int id) {
+ 		                        dialog.cancel();
+ 		                    }
+ 		                });
+ 		AlertDialog alert = builder.create();
+ 		alert.show();
+			
+		}
 
 }
