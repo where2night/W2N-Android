@@ -126,10 +126,18 @@ private void fillData() {
 	            	txtNameAndSurnameFriend.setText(name);
 		            String[] date = respuesta.getString("birthdate").split("/");
 		            txtBirthdayFriend.setText("Fecha de nacimiento: " + date[2] + "/" + date[1] + "/" + date[0]);
-		            txtMusicFriend.setText("Mi música favorita es: " + respuesta.getString("music"));
-		        	txtCivilStateFriend.setText("Estado 'civil' actual: " + respuesta.getString("civil_state"));
+		            String[] music = getResources().getStringArray(R.array.musica_array);
+		            String[] civil_state = getResources().getStringArray(R.array.estado_civil_array);
+		            String[] drink = getResources().getStringArray(R.array.bebida_array);
+		            int musicId = Integer.valueOf(respuesta.getString("music"));
+		            int civil_stateId = Integer.valueOf(respuesta.getString("civil_state"));
+		            int drinkId = Integer.valueOf(respuesta.getString("drink"));
+		            
+		            txtMusicFriend.setText("Mi música favorita es: " + music[musicId]);
+		        	txtCivilStateFriend.setText("Estado 'civil' actual: " + civil_state[civil_stateId]);
+		        	txtDrinkFriend.setText("Mi bebida favorita es: " + drink[drinkId]);
+		        	
 		        	txtCityFriend.setText("Ciudad actual: " + respuesta.getString("city"));
-		        	txtDrinkFriend.setText("Mi bebida favorita es: " + respuesta.getString("drink"));
 		        	txtAboutFriend.setText("Algo más sobre mi: " + respuesta.getString("about"));
 		        	int modeInt = Integer.parseInt(respuesta.getString("mode"));
 		        	String modeString = "";
