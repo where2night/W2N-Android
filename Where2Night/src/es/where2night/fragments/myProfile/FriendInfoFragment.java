@@ -42,6 +42,7 @@ public class FriendInfoFragment extends Fragment {
 	private TextView txtDrinkFriend;
 	private TextView txtAboutFriend;
 	private ProgressBar pgFriendView;
+	private Button btnMessage;
 	
 	private Button btnAddAsFriend;
 	private Button btnIgnoreFriend;
@@ -73,7 +74,8 @@ public class FriendInfoFragment extends Fragment {
 		txtDrinkFriend = (TextView) view.findViewById(R.id.txtDrinkFriend);
 		txtAboutFriend = (TextView) view.findViewById(R.id.txtAboutFriend);
 		pgFriendView = (ProgressBar) view.findViewById(R.id.pgFriendView);
-	
+		btnMessage = (Button) view.findViewById(R.id.btnMessage);
+		btnMessage.setVisibility(View.GONE);
         
       fill();
         
