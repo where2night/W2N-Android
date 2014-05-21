@@ -2,6 +2,7 @@ package es.where2night.fragments.localdetail;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.Request;
@@ -31,7 +32,7 @@ import android.widget.ProgressBar;
 
 public class JukeboxViewFragment extends Fragment {
 	
-	private String localId;
+	private String localId = "";
 	private boolean checkIn;
 	private RequestQueue requestQueue;
     private ArrayList<ItemSong> arraydir;
@@ -43,21 +44,29 @@ public class JukeboxViewFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		try{
+			localId = getArguments().getString(LocalViewActivity.ID);
+		}catch(Exception e){}
 		
-		localId = getArguments().getString(LocalViewActivity.ID);
+		checkIn = false;
+		if (localId.equals("")){
+			checkCheckIn();
+		}
 		//checkIn = getArguments().getString(CHECKIN);
-		checkIn = true;
+		
 		
 		View view = inflater.inflate(R.layout.fragment_jukebox_view, container, false);
 		list = (ListView) view.findViewById(R.id.listSongs);
 		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
-		
+		arraydir = new ArrayList<ItemSong>();
+		adapter = new AdapterItemSong(getActivity(), arraydir);
+		list.setAdapter(adapter);
 		return view;
 	}
 	
 	public void fill(){
 		
-		if(checkIn && localId != null){
+		if(checkIn && localId != ""){
 		    arraydir = new ArrayList<ItemSong>();
 		    adapter = new AdapterItemSong(getActivity(), arraydir);
 		    list.setAdapter(adapter);
@@ -78,9 +87,7 @@ public class JukeboxViewFragment extends Fragment {
 			AlertDialog alert = builder.create();
 			alert.show();
 			pgEventList.setVisibility(View.VISIBLE);
-			arraydir = new ArrayList<ItemSong>();
-			adapter = new AdapterItemSong(getActivity(), arraydir);
-			list.setAdapter(adapter);
+			
 			fillData();
 		}
 	   
@@ -142,5 +149,45 @@ public class JukeboxViewFragment extends Fragment {
 		requestQueue.add(request);
 	}
 	
+	private void checkCheckIn(){
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+		String url = Helper.getCheckInUrl() + "/" + cred[0] + "/" + cred[1];
 
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+		            try {
+		            	JSONObject respuesta = new JSONObject(response);
+		            	String id = respuesta.getString("id");
+		            	if (!id.equals("null")){
+		            		localId = id;
+		            		checkIn = true;
+		            		fillData();
+		            	}
+		            		
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		           
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		
+		requestQueue.add(request);
+	}
 }
