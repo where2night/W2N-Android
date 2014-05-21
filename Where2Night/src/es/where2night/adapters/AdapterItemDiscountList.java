@@ -1,30 +1,31 @@
 package es.where2night.adapters;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
-import es.where2night.adapters.AdapterItemEvent.ViewHolderEvent;
 import es.where2night.data.ItemDiscountList;
-import es.where2night.data.ItemEvent;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
@@ -53,7 +54,12 @@ public class AdapterItemDiscountList extends BaseAdapter{
  
     static class ViewHolderItemDiscount {
 		public TextView txtTitle;
+		public TextView txtDescription;
 		public TextView txtDate;
+		public TextView txtHour;
+		public TextView txtExpireDate;
+		public TextView txtInvited;
+		public Spinner spinnerInvited;
 		public Button btnSignMe;
 	}
    
@@ -69,9 +75,19 @@ public class AdapterItemDiscountList extends BaseAdapter{
         	holder = new ViewHolderItemDiscount();
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inf.inflate(R.layout.itemdiscountlist, null);
-            holder.txtDate = (TextView) v.findViewById(R.id.txtDay);
-            holder.txtTitle = (TextView) v.findViewById(R.id.txtExpireDate);
+            holder.txtTitle = (TextView) v.findViewById(R.id.txtTitle);
+            holder.txtDescription = (TextView) v.findViewById(R.id.txtDescription);
+            holder.txtDate = (TextView) v.findViewById(R.id.txtDate);
+            holder.txtHour = (TextView) v.findViewById(R.id.txtHour);
+            holder.txtExpireDate = (TextView) v.findViewById(R.id.txtExpireDate);
+            holder.txtInvited = (TextView) v.findViewById(R.id.txtInvited);
             holder.btnSignMe = (Button) v.findViewById(R.id.btnSignMeIn);
+            holder.spinnerInvited = (Spinner) v.findViewById(R.id.spinnerInvited);
+            
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity,
+    		        R.array.invited_array, android.R.layout.simple_spinner_item);
+    		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    		holder.spinnerInvited.setAdapter(adapter);
             
             v.setTag(holder);
         }else {
@@ -87,7 +103,8 @@ public class AdapterItemDiscountList extends BaseAdapter{
 					holder.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
 		        	holder.btnSignMe.setSelected(false);
 		        	dir.setGoes(false);
-		        	
+		        	holder.txtInvited.setVisibility(View.VISIBLE);
+		        	holder.spinnerInvited.setVisibility(View.VISIBLE);
 					singIntoList(listId,true);
 				}else{
 					holder.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
@@ -102,16 +119,22 @@ public class AdapterItemDiscountList extends BaseAdapter{
         if (dir.isGoes()){
         	holder.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
         	holder.btnSignMe.setSelected(true);
+        	holder.txtInvited.setVisibility(View.GONE);
+        	holder.spinnerInvited.setVisibility(View.GONE);
         }else {
         	holder.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
         	holder.btnSignMe.setSelected(false);
+        	holder.txtInvited.setVisibility(View.VISIBLE);
+        	holder.spinnerInvited.setVisibility(View.VISIBLE);
         }
  
-        // Creamos un objeto ItemEvent
-        //Rellenamos el name
-        holder.txtDate.setText(dir.getDay());
-        //Rellenamos el club
-        holder.txtTitle.setText(dir.getExpireDate());
+        holder.txtTitle.setText(dir.getTitle());
+        holder.txtDescription.setText(dir.getDescription());
+        holder.txtDate.setText(dir.getDate());
+        String start = dir.getStart().substring(0, 5);
+        String end = dir.getEnd().substring(0, 5);
+        holder.txtHour.setText(start + " - " + end);
+        holder.txtExpireDate.setText(dir.getExpireDate());
         // Retornamos la vista
         return v;
     }
@@ -134,9 +157,9 @@ public class AdapterItemDiscountList extends BaseAdapter{
 	        	Log.e("Response", response);
 	            try {
 	            	/*JSONObject respuesta = new JSONObject(response);
-	            	if (respuesta.getString("goto").equals("true")){
+	            	if (respuesta.getString("join").equals("true")){
 	            		
-	            	}else if (respuesta.getString("goto").equals("false")){
+	            	}else if (respuesta.getString("join").equals("false")){
 	            		
 	            	}*/
             	}
@@ -160,7 +183,16 @@ public class AdapterItemDiscountList extends BaseAdapter{
 			request = new StringRequest(Request.Method.DELETE, url, succeedListener, errorListener); 
 		}
 		else{
-			request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+			request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){     
+			    @Override
+			    protected Map<String, String> getParams() 
+			    {  
+			    	HashMap<String, String> info = new HashMap<String, String>();
+			    	info.put("numGuest", ((Integer)holder.spinnerInvited.getSelectedItemPosition()).toString());
+			    				    	
+			    	return info;
+			    }
+		};
 
 		}
 		requestQueue.add(request);

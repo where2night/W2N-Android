@@ -42,6 +42,7 @@ public class FriendInfoFragment extends Fragment {
 	private TextView txtDrinkFriend;
 	private TextView txtAboutFriend;
 	private ProgressBar pgFriendView;
+	private Button btnMessage;
 	
 	private Button btnAddAsFriend;
 	private Button btnIgnoreFriend;
@@ -73,7 +74,8 @@ public class FriendInfoFragment extends Fragment {
 		txtDrinkFriend = (TextView) view.findViewById(R.id.txtDrinkFriend);
 		txtAboutFriend = (TextView) view.findViewById(R.id.txtAboutFriend);
 		pgFriendView = (ProgressBar) view.findViewById(R.id.pgFriendView);
-	
+		btnMessage = (Button) view.findViewById(R.id.btnMessage);
+		btnMessage.setVisibility(View.GONE);
         
       fill();
         
@@ -109,14 +111,22 @@ public void fill() {
 	            	txtNameAndSurnameFriend.setText(name);
 		            String[] date = respuesta.getString("birthdate").split("/");
 		            txtBirthdayFriend.setText("Fecha de nacimiento: " + date[2] + "/" + date[1] + "/" + date[0]);
-		            txtMusicFriend.setText("Mi música favorita es: " + respuesta.getString("music"));
-		        	txtCivilStateFriend.setText("Estado 'civil' actual: " + respuesta.getString("civil_state"));
-		        	txtCityFriend.setText("Ciudad actual: " + respuesta.getString("city"));
-		        	txtDrinkFriend.setText("Mi bebida favorita es: " + respuesta.getString("drink"));
+		            String[] music = getResources().getStringArray(R.array.musica_array);
+		            String[] civil_state = getResources().getStringArray(R.array.estado_civil_array);
+		            String[] drink = getResources().getStringArray(R.array.bebida_array);
+		            int musicId = Integer.valueOf(respuesta.getString("music"));
+		            int civil_stateId = Integer.valueOf(respuesta.getString("civil_state"));
+		            int drinkId = Integer.valueOf(respuesta.getString("drink"));
+		            
+		            txtMusicFriend.setText("Mi música favorita es: " + music[musicId]);
+		        	txtCivilStateFriend.setText("Estado 'civil' actual: " + civil_state[civil_stateId]);
+		        	txtDrinkFriend.setText("Mi bebida favorita es: " + drink[drinkId]);
+		        	
+		        	txtCityFriend.setText("Ciudad actual: " + respuesta.getString("city"));		        	
 		        	txtAboutFriend.setText("Algo más sobre mi: " + respuesta.getString("about"));
 		        	
 		            pictureUrl = respuesta.getString("picture");
-		            if (pictureUrl.equals("") || pictureUrl.contains("face"))
+		            if (pictureUrl.equals(""))
 		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
 		            
 		            imgFriend.setImageUrl(pictureUrl, imageLoader);

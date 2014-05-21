@@ -150,7 +150,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		
 		
 		if (index == 1) ((LocalEventsFragment) toShow).fill();
-		if (index == 2) Toast.makeText(getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
 		if (index == 3) {
 			for(int i=0; i<actionBarMenu.size(); i++){
 		    	actionBarMenu.getItem(i).setVisible(true);

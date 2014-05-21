@@ -13,33 +13,49 @@
         style="@style/nowCardStyleLocals" >
 	
 	    <TextView
-	        android:id="@+id/txtDay"
+	        android:id="@+id/txtTitle"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
 	        android:layout_alignParentTop="true"
-	        android:text="Large Text"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	        android:text="Titulo"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+	    <TextView
+	        android:id="@+id/txtDescription"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:paddingRight="5dp"
+	        android:layout_below="@+id/txtTitle"
+	        android:text="Descripcion"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+	    <TextView
+	        android:id="@+id/txtDate"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/txtDescription"
+	        android:text="Fecha" />
+	    
+	     <TextView
+	        android:id="@+id/txtHour"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/txtDescription"
+	        android:layout_toRightOf="@+id/txtDate"
+	        android:layout_marginLeft="10dp"
+	        android:text="00:00 - 02:00" />
 	
 	    <TextView
 	        android:id="@+id/txtSignEnd"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/btnSignMeIn"
-	        android:layout_marginTop="36dp"
+	        android:layout_below="@+id/txtHour"
+	        android:layout_marginTop="5dp"
 	        android:text="Te puedes apuntar hasta: " />
-	
-	    <Button
-	        android:id="@+id/btnSignMeIn"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentRight="true"
-	        android:layout_alignParentTop="true"
-	        android:background="@drawable/button_style"
-	        android:padding="3dp"
-	        android:text="Apuntame!" />
-
+	    
 	    <TextView
 	        android:id="@+id/txtExpireDate"
 	        android:layout_width="wrap_content"
@@ -49,6 +65,35 @@
 	        android:layout_marginLeft="17dp"
 	        android:layout_toRightOf="@+id/txtSignEnd"
 	        android:text="TextView" />
+
+	   
+	
+	    <Button
+	        android:id="@+id/btnSignMeIn"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/txtSignEnd"
+	        android:background="@drawable/button_style"
+	        android:layout_marginTop="5dp"
+	        android:padding="3dp"
+	        android:text="Apuntame!" />
+
+	     <TextView
+	         android:id="@+id/txtInvited"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_alignBaseline="@+id/btnSignMeIn"
+	         android:layout_alignBottom="@+id/btnSignMeIn"
+	         android:layout_toRightOf="@+id/btnSignMeIn"
+	         android:text=" + " />
+	     
+	      <Spinner
+	        android:id="@+id/spinnerInvited"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/btnSignMeIn"
+	        android:layout_alignBottom="@+id/btnSignMeIn"
+	        android:layout_toRightOf="@+id/txtInvited" />
 	
 	</RelativeLayout>
 

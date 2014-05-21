@@ -74,19 +74,21 @@ public class LocalDiscountListFragment extends Fragment {
 		            	for (int i = 0; i < root.length() - 3; i++){
 			            	JSONObject aux = root.getJSONObject(String.valueOf(i));
 			            	String title = aux.getString("title");
-			            	String text = aux.getString("about");
-			            	String[] dateArr = aux.getString("date").split("-");
+			            	String about = aux.getString("about");
+			            	String[] dateArr = aux.getString("dateClose").split("-");
+			            	String dateClose = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+			            	dateArr = aux.getString("date").split("-");
 			            	String date = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
 			            	String start = aux.getString("startHour");
 			            	String close = aux.getString("closeHour");
 			            	long id = Long.valueOf(aux.getString("idLists"));
 			            	
-			            	//String goes = aux.getString("GOES");
+			            	String goes = aux.getString("GOES");
 			            	boolean going = false;
-			            //	if (!goes.equals("null"))
-			            //		going = true;
+			            	if (!goes.equals("null"))
+			            		going = true;
 			            	
-			            	ItemDiscountList event = new ItemDiscountList(id,title,date,going);
+			            	ItemDiscountList event = new ItemDiscountList(id,title,about,date,start,close,dateClose,going);
 			            	arraydir.add(event);
 		            	}
 		            adapter.notifyDataSetChanged();
