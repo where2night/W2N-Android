@@ -170,6 +170,9 @@ public class MainActivity extends FragmentActivity{
     
         getActionBar().setIcon(R.drawable.logo7);
         
+        
+    	
+        
     }
     
 	@Override
@@ -286,6 +289,8 @@ public class MainActivity extends FragmentActivity{
 				
 			}
 		});
+	    TextView txtNotifications = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
+    	txtNotifications.setText("0");
 	    getFriendshipRequest();
 	    getNumMessages();
         return true;
@@ -425,7 +430,9 @@ public class MainActivity extends FragmentActivity{
 	            		JSONObject root = new JSONObject(response);
 	            		RelativeLayout badgeLayout = (RelativeLayout) actionBarMenu.findItem(R.id.action_notifications).getActionView();
 	            	    TextView txtNotifications = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
-	            		txtNotifications.setText(root.getString("numPetitions"));
+	            		int not = Integer.parseInt(txtNotifications.getText().toString());
+	            		not += Integer.parseInt(root.getString("numPetitions"));
+	            	    txtNotifications.setText(((Integer)not).toString());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

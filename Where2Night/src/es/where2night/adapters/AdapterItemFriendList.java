@@ -50,7 +50,8 @@ public class AdapterItemFriendList extends BaseAdapter implements OnClickListene
     @Override
     public long getItemId(int position) {
     	Log.e("ID", String.valueOf(items.get(position).getId()));
-        return items.get(position).getId();
+    	ItemFriend i = items.get(position);
+        return i.getId();
         
     }
  
