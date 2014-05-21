@@ -90,6 +90,7 @@
     <string name="ClosingHour">Hora de cierre: </string>
     <string name="Ubication">Ubicación </string>
     <string name="IGo">Quiero ir </string>
+    <string name="IDontGo">Dejar de ir </string>
     <string name="Going">Voy a ir </string>
     <string name="Friends">Número de amigos: </string>
     <string name="NameAndSurnameFriend">Nombre: </string>
@@ -97,6 +98,8 @@
     <string name="AboutMeFriend">Sobre mí: </string>
     <string name="AddAsFriend">Añadir como amigo</string>
     <string name="PrivateMessage">Mensaje privado</string>
+    <string name="Peticiones">Peticiones de amistad</string>
+    <string name="NewMessages">Nuevos mensajes</string>
 
     <string-array name="mode_array">
         <item>De tranquis</item>

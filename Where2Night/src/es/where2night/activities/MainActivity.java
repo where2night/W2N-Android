@@ -2,6 +2,7 @@ package es.where2night.activities;
 
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,6 +41,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
+import es.where2night.data.ItemFriend;
 import es.where2night.fragments.EventsFragment;
 import es.where2night.fragments.FriendsFragment;
 import es.where2night.fragments.HomeFragment;
@@ -281,10 +283,63 @@ public class MainActivity extends FragmentActivity{
 			}
 		});
 	    getFriendshipRequest();
+	    getNumMessages();
         return true;
     }
     
-    private void getDataFromServer(final String email,final String type){
+    private void getNumMessages() {
+    	final DataManager dm = new DataManager(getApplicationContext());
+		String[] cred = dm.getCred();
+		String url = Helper.getFriendsMessagesUrl() + "/" + cred[0] + "/" + cred[1];
+		Log.e("Pido Mensajes",url);
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+			    {
+			        @Override
+			        public void onResponse(String response) {
+			            // response
+			        	Log.e("Response", response);
+			            try {
+			            		JSONArray root = new JSONArray(response);
+			            		int requests = 0;
+				            	for (int i = 0; i < root.length(); i++){
+				            		JSONObject aux = root.getJSONObject(i);
+				            		for (int j=0; j<aux.length();j++){
+				            			JSONObject aux2 = aux.getJSONObject(String.valueOf(j));
+				            			String mode = "1";
+				            			String modeRec = aux2.getString("mode");
+				            			if (modeRec.equals(mode)){
+							            	requests++;
+							            	break;
+				            			}
+				            		}
+				            	}
+				            	RelativeLayout badgeLayout = (RelativeLayout) actionBarMenu.findItem(R.id.action_notifications).getActionView();
+				            	TextView txtNotifications = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
+				            	int numNotifications = Integer.parseInt(txtNotifications.getText().toString());
+				            	numNotifications += requests;
+				            	txtNotifications.setText(((Integer)numNotifications).toString());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+			        }
+			    };
+			    Response.ErrorListener errorListener = new Response.ErrorListener() 
+			    {
+			         @Override
+			         public void onErrorResponse(VolleyError error) {
+			             // error
+			             Log.e("Error.Response", error.toString());
+			       }
+			    };
+				
+				StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+				
+				requestQueue.add(request);
+		
+	}
+
+	private void getDataFromServer(final String email,final String type){
     	
     	
     	final DataManager dm = new DataManager(getApplicationContext());

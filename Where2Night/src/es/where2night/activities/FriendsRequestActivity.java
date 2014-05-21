@@ -2,6 +2,7 @@ package es.where2night.activities;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -32,7 +33,9 @@ public class FriendsRequestActivity extends Activity {
 	 private RequestQueue requestQueue;
 	 private ProgressDialog connectionProgressDialog;
 	 ArrayList<ItemFriend> arraydir;
+	 ArrayList<ItemFriend> arraydir2;
 	 AdapterItemFriendList adapter;
+	 AdapterItemFriendList adapter2;
 	// TextView friendshipPets;
 	
 	@Override
@@ -44,17 +47,18 @@ public class FriendsRequestActivity extends Activity {
         connectionProgressDialog.setMessage("Cargando tu perfil...");
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setIcon(R.drawable.logo7);
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
         
-		ListView lista = (ListView) findViewById(R.id.friendList);
+		ListView listaPeticiones = (ListView) findViewById(R.id.friendList);
 	//	friendshipPets = (TextView) view.findViewById(R.id.textNumberFriendRequest);
         arraydir = new ArrayList<ItemFriend>();
         
         //TODO      
         
 	    adapter = new AdapterItemFriendList(this, arraydir);
-        lista.setAdapter(adapter);
+        listaPeticiones.setAdapter(adapter);
         
-        lista.setOnItemClickListener(new OnItemClickListener() {
+        listaPeticiones.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position,
 					long arg3) {
@@ -66,17 +70,93 @@ public class FriendsRequestActivity extends Activity {
 		});
 		
         getFriendshipRequest();
+        
+        
+        ListView listaMensajes = (ListView) findViewById(R.id.listNewMessages);
+        arraydir2 = new ArrayList<ItemFriend>();
+        adapter2 = new AdapterItemFriendList(this, arraydir2);
+        listaMensajes.setAdapter(adapter2);
+        
+        listaMensajes.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int position,
+					long arg3) {
+				Intent intent = new Intent(FriendsRequestActivity.this, MessagesViewActivity.class);
+                intent.putExtra(MessagesViewActivity.ID, String.valueOf(adapter.getItemId(position)));
+                startActivity(intent);
+			}
+			
+		});
+        
+        getNewMessages();
+        
 	}
 	
 	
-	private void getFriendshipRequest() {
+	private void getNewMessages() {
 		final DataManager dm = new DataManager(getApplicationContext());
 		String[] cred = dm.getCred();
-		requestQueue = Volley.newRequestQueue(getApplicationContext()); 
+		String url = Helper.getFriendsMessagesUrl() + "/" + cred[0] + "/" + cred[1];
+		Log.e("Pido Mensajes",url);
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+			    {
+			        @Override
+			        public void onResponse(String response) {
+			            // response
+			        	Log.e("Response", response);
+			            try {
+			            		JSONArray root = new JSONArray(response);
+			            		int requests = 0;
+				            	for (int i = 0; i < root.length(); i++){
+				            		JSONObject aux = root.getJSONObject(i);
+				            		for (int j=0; j<aux.length();j++){
+				            			JSONObject aux2 = aux.getJSONObject(String.valueOf(j));
+				            			String mode = "1";
+				            			String modeRec = aux2.getString("mode");
+				            			if (modeRec.equals(mode)){
+							            	long idProfile = Long.valueOf(aux.getString("idProfile"));
+							            	String picture = aux.getString("picture");
+							            	picture = picture.replace("\\", "");
+							            	String name = aux.getString("name") + " " +  aux.getString("surnames");
+							            	ItemFriend friend = new ItemFriend(picture,name,"0","0","0",idProfile);
+							            	arraydir2.add(friend);
+							            	requests++;
+							            	break;
+				            			}
+				            		}
+				            	}
+				            	connectionProgressDialog.dismiss();
+				            	adapter2.notifyDataSetChanged();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+			        }
+			    };
+			    Response.ErrorListener errorListener = new Response.ErrorListener() 
+			    {
+			         @Override
+			         public void onErrorResponse(VolleyError error) {
+			             // error
+			             Log.e("Error.Response", error.toString());
+			       }
+			    };
+				
+				StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+				
+				requestQueue.add(request);
+	}
+		
+
+
+
+	private void getFriendshipRequest() {
+		final DataManager dm = new DataManager(getApplicationContext());
+		String[] cred = dm.getCred(); 
 		String url = Helper.getFriendshipPetUrl() + "/" + cred[0] + "/" + cred[1];
 		
 		
-		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+		Response.Listener<String> succeedListener2 = new Response.Listener<String>() 
 	    {
 	        @Override
 	        public void onResponse(String response) {
@@ -101,7 +181,7 @@ public class FriendsRequestActivity extends Activity {
 				}
 	        }
 	    };
-	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    Response.ErrorListener errorListener2 = new Response.ErrorListener() 
 	    {
 	         @Override
 	         public void onErrorResponse(VolleyError error) {
@@ -110,9 +190,9 @@ public class FriendsRequestActivity extends Activity {
 	       }
 	    };
 		
-		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		StringRequest request2 = new StringRequest(Request.Method.GET, url, succeedListener2, errorListener2); 
 		
-		requestQueue.add(request);
+		requestQueue.add(request2);
 	}
 	
 	@Override
