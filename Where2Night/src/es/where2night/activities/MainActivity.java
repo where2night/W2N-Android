@@ -48,6 +48,7 @@ import es.where2night.fragments.HomeFragment;
 import es.where2night.fragments.LocalsFragment;
 import es.where2night.fragments.MessagesFragment;
 import es.where2night.fragments.ProfileFragment;
+import es.where2night.fragments.localdetail.JukeboxViewFragment;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.FbManagement;
 import es.where2night.utilities.Helper;
@@ -78,7 +79,8 @@ public class MainActivity extends FragmentActivity{
     									  new EventsFragment(),
     									  new FriendsFragment(),    									  
     									  new LocalsFragment(),
-    									  new MessagesFragment()};
+    									  new MessagesFragment(),
+    									  new JukeboxViewFragment()};
 	
     private ProgressDialog connectionProgressDialog;
     
@@ -153,6 +155,7 @@ public class MainActivity extends FragmentActivity{
         		.add(R.id.contentFrame, fragments[3])
         		.add(R.id.contentFrame, fragments[4])
         		.add(R.id.contentFrame, fragments[5])
+        		.add(R.id.contentFrame, fragments[6])
         	    .commit();	
         
         manager.beginTransaction().hide(fragments[1])
@@ -160,6 +163,7 @@ public class MainActivity extends FragmentActivity{
 				        		  .hide(fragments[3])
 				        		  .hide(fragments[4])
 				        		  .hide(fragments[5])
+				        		  .hide(fragments[6])
 				        		  .commit();
         
         setContent(option);

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -55,6 +56,8 @@ import es.where2night.data.ItemEventFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
 import es.where2night.data.ItemLocalNews;
+import es.where2night.fragments.editprofile.BasicInfoFragment;
+import es.where2night.fragments.editprofile.DetailedInfoFragment;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
@@ -64,6 +67,7 @@ public class HomeFragment extends Fragment{
 	private static int RESULT_START_GPS = 1;
 	private Spinner spinnerAnimo;
 	private TextView txtStatus;
+	private TextView txtLocalGoing;
 	private LinearLayout layoutCheckIn;
 	
 	//El minimo de elementos a tener debajo de la posicion actual del scroll antes de cargar mas
@@ -89,8 +93,12 @@ public class HomeFragment extends Fragment{
 	AdapterItemNews adapterNews;
 	ArrayList<Item> arraydir;
 	ListView lista;
-	double latLocal = 38.113855;
-	double lngLocal =  -3.0806086;
+	
+	boolean goingSomewhere = false;
+	
+	double latLocal = 0;
+	double lngLocal = 0;
+	int idLocal = 0;
 	
 	
 	@Override
@@ -101,11 +109,16 @@ public class HomeFragment extends Fragment{
 		btnCheckIn = (Button)view.findViewById(R.id.btnCheckIn);
 		pgEventList = (ProgressBar)view.findViewById(R.id.pgEventList);
 		txtStatus = (TextView)view.findViewById(R.id.txtEstado);
+		txtLocalGoing = (TextView)view.findViewById(R.id.txtLocalGoing);
 		lista = (ListView) view.findViewById(R.id.newsList);
 		layoutCheckIn = (LinearLayout) view.findViewById(R.id.layoutCheckIn);
 		arraydir = new ArrayList<Item>();
 		adapterNews = new AdapterItemNews(getActivity(), arraydir);
         lista.setAdapter(adapterNews);
+        
+        checkCheckIn();
+        
+    //    checkGoingSomeWhere();
         
         btnCheckIn.setOnClickListener(new OnClickListener() {
 			
@@ -130,7 +143,7 @@ public class HomeFragment extends Fragment{
 					int visibleItemCount, int totalItemCount) {	
 				
 				
-				if (view.getId() == lista.getId()) 
+				if (goingSomewhere && view.getId() == lista.getId()) 
 		        {
 		            final int currentFirstVisibleItem = lista.getFirstVisiblePosition();
 
@@ -279,6 +292,52 @@ public class HomeFragment extends Fragment{
 		return view;
 	}
 	
+	private void checkGoingSomeWhere() {
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+		String url = Helper.getWereUserGoesTodayUrl() + "/" + cred[0] + "/" + cred[1];
+		Log.e("CheckIn", url);
+		
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+		            try {
+		            	JSONObject respuesta = new JSONObject(response);
+		            	String localName = respuesta.getString("localName");
+		            	txtLocalGoing.setText("Hoy vas a " + localName);
+		            	latLocal = Double.valueOf(respuesta.getString("latitude"));
+		            	lngLocal = Double.valueOf(respuesta.getString("longitude"));
+		            	idLocal = Integer.valueOf(respuesta.getString("idProfile"));
+		            	layoutCheckIn.setVisibility(View.VISIBLE);
+		            	goingSomewhere = true;
+		            	
+		            	
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		           
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		
+		requestQueue.add(request);
+	}
+
 	public void fill(View view){
 		fillData(view);
         //Toast.makeText(getActivity().getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
@@ -347,10 +406,96 @@ public class HomeFragment extends Fragment{
 	    	(lat > latLocal - 0.0002) &&	
 	    	(lng < lngLocal + 0.0002) &&	
 	    	(lng > lngLocal - 0.0002) ){
+	    	
+	    	registerCheckIn();
+	    	
 	    	Toast.makeText(getActivity(), "CheckIn", Toast.LENGTH_SHORT).show();
 	    	return true;
 	    }
 	    return false;
+	}
+	
+	private void registerCheckIn(){
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+		String url = Helper.getCheckInUrl() + "/" + cred[0] + "/" + cred[1] + "/" + idLocal;
+		Log.e("CheckIn", url);
+		
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+		            try {
+		            	JSONObject respuesta = new JSONObject(response);
+		            	String error = respuesta.getString("error");
+		            	if (error.equals("0")){
+		            		layoutCheckIn.setVisibility(View.GONE);
+		            		goingSomewhere = false;
+		            	}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		           
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener); 
+		
+		requestQueue.add(request);
+	}
+	
+	private void checkCheckIn(){
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+		String url = Helper.getCheckInUrl() + "/" + cred[0] + "/" + cred[1];
+
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+		            try {
+		            	JSONObject respuesta = new JSONObject(response);
+		            	String id = respuesta.getString("id");
+		            	if (id.equals("null"))
+		            		checkGoingSomeWhere();
+		            	else
+		            		idLocal = Integer.valueOf(id);
+		            		
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		           
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		
+		requestQueue.add(request);
 	}
 
 	private void fillData(View view) {
@@ -613,5 +758,6 @@ public class HomeFragment extends Fragment{
 				requestQueue.add(request);
         
 	}
+	
 
 }
