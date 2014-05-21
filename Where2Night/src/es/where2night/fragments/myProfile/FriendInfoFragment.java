@@ -116,7 +116,7 @@ public void fill() {
 		        	txtAboutFriend.setText("Algo más sobre mi: " + respuesta.getString("about"));
 		        	
 		            pictureUrl = respuesta.getString("picture");
-		            if (pictureUrl.equals("") || pictureUrl.contains("face"))
+		            if (pictureUrl.equals(""))
 		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
 		            
 		            imgFriend.setImageUrl(pictureUrl, imageLoader);

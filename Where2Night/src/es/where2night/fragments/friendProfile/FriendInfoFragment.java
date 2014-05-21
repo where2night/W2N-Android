@@ -157,7 +157,7 @@ private void fillData() {
 		        	
 		        	getActivity().getActionBar().setSubtitle(modeString);
 		            pictureUrl = respuesta.getString("picture");
-		            if (pictureUrl.equals("") || pictureUrl.contains("face"))
+		            if (pictureUrl.equals(""))
 		    			pictureUrl = Helper.getDefaultProfilePictureUrl();
 		            
 		            imgFriend.setImageUrl(pictureUrl, imageLoader);
