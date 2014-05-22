@@ -134,7 +134,11 @@ private void fillData() {
 		            txtLocalFollowers.setText(getResources().getString(R.string.Followers) + respuesta.getString("followers"));
 		            txtOpening.setText(getResources().getString(R.string.OpeningHour) + respuesta.getString("openingHours"));
 		    		txtClosing.setText(getResources().getString(R.string.ClosingHour) + respuesta.getString("closeHours"));
-		    		txtMusicType.setText(getResources().getString(R.string.MusicLocal) + respuesta.getString("music"));
+		    		
+		    		 String[] music = getResources().getStringArray(R.array.musica_array);
+		    		 int musicId = Integer.valueOf(respuesta.getString("music"));
+		    		
+		    		txtMusicType.setText(getResources().getString(R.string.MusicLocal) + music[musicId]);
 		    		txtEntryPrice.setText(getResources().getString(R.string.EntryPrice) + respuesta.getString("entryPrice"));
 		    		txtDrinkPrice.setText(getResources().getString(R.string.DrinkPrice) + respuesta.getString("drinkPrice"));
 		    		followers = Integer.valueOf(respuesta.getString("followers"));
