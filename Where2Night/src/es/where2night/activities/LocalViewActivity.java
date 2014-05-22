@@ -281,8 +281,9 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	            // response
 	        	Log.e("Response", response);
 	            try {
-	            	respuesta = new JSONObject(response);
-	            	if (respuesta.getString("goToPub").equals("error")){
+	            	JSONObject respuesta2 = new JSONObject(response);
+	            	String error = "error";
+	            	if (respuesta2.getString("goToPub").equals(error)){
 	            		AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
 	            		builder.setMessage("Has dicho que vas (no vas) a ir un día en el cual has señalado que ibas (no ibas).")
 	            		        .setTitle("Error")
@@ -411,7 +412,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	 
 	 private void muestraError() {
 		 AlertDialog.Builder builder = new AlertDialog.Builder(this);
- 		builder.setMessage("Has dicho que vas (no vas) a ir un día en el cual has señalado que ibas (no ibas).")
+ 		builder.setMessage("Estás apuntado a un evento o una lista ese día. Debes desapuntarte antes de decir que vas (no vas) a ir.")
  		        .setTitle("Error")
  		        .setCancelable(false)
  		        .setNeutralButton("Aceptar",
