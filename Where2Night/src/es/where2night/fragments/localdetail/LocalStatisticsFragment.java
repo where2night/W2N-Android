@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.where2night.R;
@@ -32,6 +33,7 @@ public class LocalStatisticsFragment extends Fragment{
 	private WebView chartAge;
 	private WebView chartCivilState;
 	private RequestQueue requestQueue;
+	ProgressBar pgEventList;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +46,7 @@ public class LocalStatisticsFragment extends Fragment{
 		chartGender = (WebView) view.findViewById(R.id.chartGender);
 		chartAge = (WebView) view.findViewById(R.id.chartAge);
 		chartCivilState = (WebView) view.findViewById(R.id.chartCivilState);
+		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
         
 		return view;
 		
@@ -99,8 +102,10 @@ public class LocalStatisticsFragment extends Fragment{
 	            	urlCivilState = urlCivilState + root.getString(((Integer)(inicial+76)).toString());						
 	            	urlCivilState = urlCivilState + "&chts=000000,16&chtt=Distribucion+por+estado+'civil'&chco=00FF00,FF0000,0000FF,FFFF00,FF00FF,00FFFF,660099&chdl=Sin+compromiso|Ennoviad@|Con+novi@,+pero...|Buscando+rollete|Casad@|Divorciad@|Viud@";		
 	            	chartCivilState.loadUrl(urlCivilState);
+	            	pgEventList.setVisibility(View.GONE);
 	            	
 				} catch (Exception e) {
+					pgEventList.setVisibility(View.GONE);
 					e.printStackTrace();
 				}
 	        }
@@ -111,6 +116,7 @@ public class LocalStatisticsFragment extends Fragment{
 	         public void onErrorResponse(VolleyError error) {
 	             // error
 	             Log.e("Error.Response", error.toString());
+	             pgEventList.setVisibility(View.GONE);
 	       }
 	    };
 		

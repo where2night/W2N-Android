@@ -22,7 +22,11 @@ import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemEventFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
+import es.where2night.data.ItemListFriend;
+import es.where2night.data.ItemLocalCheck;
+import es.where2night.data.ItemLocalGoes;
 import es.where2night.data.ItemLocalNews;
+import es.where2night.data.ItemNewList;
 import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
@@ -135,13 +139,13 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 					Intent intent = new Intent(getActivity(), FriendViewActivity.class);
 					intent.putExtra(FriendViewActivity.ID, String.valueOf(((ItemFriendState)adapterNews.getItem(position)).getId()));
 					startActivity(intent);
-				}
-				else if(adapterNews.getItem(position).getClass() == ItemEvent.class){
+				}*/
+				if(adapterNews.getItem(position).getClass() == ItemEvent.class){
 					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
 					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemEvent)adapterNews.getItem(position)).getIdCreator()));
 					startActivity(intent);
-				}*/
-				if(adapterNews.getItem(position).getClass() == ItemLocalNews.class){
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemLocalNews.class){
 					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
 					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemLocalNews)adapterNews.getItem(position)).getId()));
 					startActivity(intent);
@@ -151,6 +155,26 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemEventFriend)adapterNews.getItem(position)).getIdCreator()));
 					startActivity(intent);
 				}*/
+				else if(adapterNews.getItem(position).getClass() == ItemLocalGoes.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemLocalGoes)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemLocalCheck.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemLocalCheck)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemListFriend.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemListFriend)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemNewList.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemNewList)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
 			}
 		});
 		
@@ -192,110 +216,199 @@ public class FriendActivityFragment extends Fragment implements OnClickListener{
 		Log.e("url", url);
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
-	    {
-	        @Override
-	        public void onResponse(String response) {
-	            // response
-	        	Log.e("Response", response);
-	            	try {
-		            	JSONObject root = new JSONObject(response);
-		            	
-		            	for (int i = 0; i < root.length() - 1; i++){
-		            		JSONObject aux = root.getJSONObject(String.valueOf(i));
-		            		String type = aux.getString("TYPE");
-		            		String pictureAux = "0";
-		            		int tipo = Integer.parseInt(type);
-		            		switch (tipo) {
-								case 1:
-									//Eventos de locales que seguimos
-									String title = aux.getString("title");
-					            	String text = aux.getString("text");
-					            	String[] dateArr = aux.getString("date").split("-");
-					            	String date = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
-					            	String start = aux.getString("startHour");
-					            	String close = aux.getString("closeHour");
-					            	String idCreator = aux.getString("idProfileLocal");
-					            	long id = Long.valueOf(aux.getString("idEvent"));
-					            	String name = aux.getString("localName");
-					            	String picture = aux.getString("picture");
-					            	picture = picture.replace("\\", "");
-					            	if(picture.equals(pictureAux) || picture.equals("")){
-					            		picture = Helper.getDefaultPubPictureUrl();
-									}
-					            	String goes = aux.getString("GOES");
-					            	boolean going = false;
-					            	if (!goes.equals("null"))
-					            		going = true;
-					            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id,going); //FIXME cargar imagen
-					            	arraydir.add(event);
-									break;
-								
-								case 2:
-									//Estado de amigos
-									String nameAS = aux.getString("name") + " " + aux.getString("surnames");
-									String pictureAS = aux.getString("picture");
-									pictureAS = pictureAS.replace("\\", "");
-									if(pictureAS.equals(pictureAux) || pictureAS.equals("")){
-										pictureAS = Helper.getDefaultProfilePictureUrl();
-									}
-									String stateAS = aux.getString("status");
-									ItemFriendState iFState = new ItemFriendState(pictureAS,nameAS,stateAS);
-									arraydir.add(iFState);
-									break;
+			    {
+			        @Override
+			        public void onResponse(String response) {
+			            // response
+			        	Log.e("Response", response);
+			            try {
+			            	JSONObject root = new JSONObject(response);
+			            	
+			            	for (int i = 0; i < root.length() - 1; i++){
+			            		JSONObject aux = root.getJSONObject(String.valueOf(i));
+			            		String type = aux.getString("TYPE");
+			            		String pictureAux = "0";
+			            		int tipo = Integer.parseInt(type);
+			            		switch (tipo) {
+									case 1:
+										//Eventos de locales que seguimos
+										String title = aux.getString("title");
+						            	String text = aux.getString("text");
+						            	String[] dateArr = aux.getString("date").split("-");
+						            	String date = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+						            	String start = aux.getString("startHour");
+						            	String close = aux.getString("closeHour");
+						            	String idCreator = aux.getString("idProfileLocal");
+						            	long id = Long.valueOf(aux.getString("idEvent"));
+						            	String name = aux.getString("localName");
+						            	String picture = aux.getString("picture");
+						            	picture = picture.replace("\\", "");
+						            	if(picture.equals(pictureAux) || picture.equals("")){
+											picture = Helper.getDefaultPubPictureUrl();
+										}
+						            	String goes = aux.getString("GOES");
+						            	boolean going = false;
+						            	if (!goes.equals("null"))
+						            		going = true;
+						            	ItemEvent event = new ItemEvent(picture,name,title,text,date,start,close,idCreator,id,going);
+						            	arraydir.add(event);
+										break;
 									
-								case 3:
-									//Modo de amigos
-									String nameAM = aux.getString("name") + " " + aux.getString("surnames");
-									String pictureAM = aux.getString("picture");
-									pictureAM = pictureAM.replace("\\", "");
-									if(pictureAM.equals(pictureAux) || pictureAM.equals("")){
-										pictureAM = Helper.getDefaultProfilePictureUrl();
-									}
-									String modeAM = aux.getString("mode");
-									ItemFriendMode iFMode = new ItemFriendMode(pictureAM,nameAM,modeAM);
-									arraydir.add(iFMode);									
-									break;
-									
-								case 4:
-									//Locales seguidos por amigos
-									String nameL = aux.getString("localName");
-									String nameF = aux.getString("name") + " " + aux.getString("surnames");
-									String pictureLoc = aux.getString("picture");
-									pictureLoc = pictureLoc.replace("\\", "");
-									if(pictureLoc.equals(pictureAux) || pictureLoc.equals("")){
-										picture = Helper.getDefaultPubPictureUrl();
-									}
-									ItemLocalNews iLocal= new ItemLocalNews(nameL, pictureLoc, nameF);
-									arraydir.add(iLocal);
-									break;
-									
-								case 5:
-									//Eventos que asisten mis amigos
-									String titleF = aux.getString("title");
-					            	String textF = aux.getString("text");
-					            	String[] dateArrF = aux.getString("date").split("-");
-					            	String dateF = dateArrF[2] + "/" + dateArrF[1] + "/" + dateArrF[0];
-					            	String startF = aux.getString("startHour");
-					            	String closeF = aux.getString("closeHour");
-					            	String idCreatorF = aux.getString("idProfileLocal");
-					            	long idF = Long.valueOf(aux.getString("idEvent"));
-					            	String nameLoc = aux.getString("localName");
-					            	String pictureF = aux.getString("picture");
-					            	if(pictureF.equals(pictureAux) || pictureF.equals("")){
-					            		pictureF = Helper.getDefaultPubPictureUrl();
-									}
-					            	pictureF = pictureF.replace("\\", "");
-					            	String nameFriend = aux.getString("name");
-					            	String goesF = aux.getString("GOES");
-					            	boolean goingF = false;
-					            	if (!goesF.equals("null"))
-					            		goingF = true;
-					            	ItemEventFriend eventFriend = new ItemEventFriend(pictureF,nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,goingF,idF); //FIXME cargar imagen
-					            	arraydir.add(eventFriend);
-									break;
+									case 2:
+										//Estado de amigos
+										String nameAS = aux.getString("name") + " " + aux.getString("surnames");
+										String pictureAS = aux.getString("picture");
+										pictureAS = pictureAS.replace("\\", "");
+										if(pictureAS.equals(pictureAux) || pictureAS.equals("")){
+											pictureAS = Helper.getDefaultProfilePictureUrl();
+										}
+										String stateAS = aux.getString("status");
+										long idAs = Integer.valueOf(aux.getString("idPartierFriend"));
+										ItemFriendState iFState = new ItemFriendState(pictureAS,nameAS,stateAS,idAs);
+										arraydir.add(iFState);
+										break;
+										
+									case 3:
+										//Modo de amigos
+										String nameAM = aux.getString("name") + " " + aux.getString("surnames");
+										String pictureAM = aux.getString("picture");
+										pictureAM = pictureAM.replace("\\", "");
+										if(pictureAM.equals(pictureAux) || pictureAM.equals("")){
+											pictureAM = Helper.getDefaultProfilePictureUrl();
+										}
+										String modeAM = aux.getString("mode");
+										long idAM = Integer.valueOf(aux.getString("idPartierFriend"));
+										ItemFriendMode iFMode = new ItemFriendMode(pictureAM,nameAM,modeAM,idAM);
+										arraydir.add(iFMode);									
+										break;
+										
+									case 4:
+										//Locales seguidos por amigos
+										String nameL = aux.getString("localName");
+										String nameF = aux.getString("name") + " " + aux.getString("surnames");
+										String pictureLoc = aux.getString("picture");
+										pictureLoc = pictureLoc.replace("\\", "");
+										if(pictureLoc.equals(pictureAux) || pictureLoc.equals("")){
+											picture = Helper.getDefaultPubPictureUrl();
+										}
+										long idL = Integer.valueOf(aux.getString("idProfileLocal"));
+										ItemLocalNews iLocal= new ItemLocalNews(nameL, pictureLoc, nameF,idL);
+										arraydir.add(iLocal);
+										break;
+										
+									case 5:
+										//Eventos que asisten mis amigos
+										String titleF = aux.getString("title");
+						            	String textF = aux.getString("text");
+						            	String[] dateArrF = aux.getString("date").split("-");
+						            	String dateF = dateArrF[2] + "/" + dateArrF[1] + "/" + dateArrF[0];
+						            	String startF = aux.getString("startHour");
+						            	String closeF = aux.getString("closeHour");
+						            	String idCreatorF = aux.getString("idProfileLocal");
+						            	long idF = Long.valueOf(aux.getString("idEvent"));
+						            	String nameLoc = aux.getString("localName");
+						            	String pictureF = aux.getString("picture");
+						            	pictureF = pictureF.replace("\\", "");
+						            	if(pictureF.equals(pictureAux) || pictureF.equals("")){
+						            		pictureF = Helper.getDefaultPubPictureUrl();
+										}
+						            	String nameFriend = aux.getString("name");
+						            	String goesF = aux.getString("GOES");
+						            	boolean goingF = false;
+						            	if (!goesF.equals("null"))
+						            		goingF = true;
+						            	ItemEventFriend eventFriend = new ItemEventFriend(pictureF,nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,goingF,idF);
+						            	arraydir.add(eventFriend);
+										break;
+										
+									case 6:
+										//Locales a los que van mis amigos
+										String nameLG = aux.getString("localName");
+										String nameFG = aux.getString("name") + " " + aux.getString("surnames");
+										String pictureLocG = aux.getString("picture");
+										String[] dateArrG = aux.getString("assistdate").split("-");
+						            	String dateG = dateArrG[2] + "/" + dateArrG[1] + "/" + dateArrG[0];
+										pictureLocG = pictureLocG.replace("\\", "");
+										if(pictureLocG.equals(pictureAux) || pictureLocG.equals("")){
+											picture = Helper.getDefaultPubPictureUrl();
+										}
+										long idLG = Integer.valueOf(aux.getString("idProfileLocal"));
+										ItemLocalGoes iLocalG= new ItemLocalGoes(nameLG, pictureLocG, nameFG, dateG, idLG);
+										arraydir.add(iLocalG);
+										break;
+										
+									case 7:
+										//Locales a los han hecho checkin mis amigos
+										String valido = "1";
+										String isC = aux.getString("inside");
+										if (isC.equals(valido)){
+											String nameLC = aux.getString("localName");
+											String nameFC = aux.getString("name") + " " + aux.getString("surnames");
+											String pictureLocC = aux.getString("picture");
+											pictureLocC = pictureLocC.replace("\\", "");
+											if(pictureLocC.equals(pictureAux) || pictureLocC.equals("")){
+												picture = Helper.getDefaultPubPictureUrl();
+											}
+											long idLC = Integer.valueOf(aux.getString("idProfileLocal"));
+											ItemLocalCheck iLocalC= new ItemLocalCheck(nameLC, pictureLocC, nameFC, idLC);
+											arraydir.add(iLocalC);
+										}
+										break;
+										
+									case 8:
+										//Amigos se apuntan a lista
+										String pictureL = aux.getString("picture");
+						            	pictureL = pictureL.replace("\\", "");
+						            	if(pictureL.equals(pictureAux) || pictureL.equals("")){
+						            		pictureL = Helper.getDefaultPubPictureUrl();
+										}
+						            	String nameLocL = aux.getString("localName");
+										String textoL = aux.getString("name") + " " + aux.getString("surnames") + " se ha apuntado a esta lista";
+										String titleL = aux.getString("title");
+										String descripcionL = aux.getString("text");
+										String[] dateArrL = aux.getString("date").split("-");
+						            	String dateL = dateArrL[2] + "/" + dateArrL[1] + "/" + dateArrL[0];
+						            	String startL = aux.getString("startHour");
+						            	String closeL = aux.getString("closeHour");
+						            	long idLo = Long.valueOf(aux.getString("idEvent"));
+						            	String goesL = aux.getString("GOES");
+						            	boolean goingL = false;
+						            	if (!goesL.equals("null"))
+						            		goingL = true;
+						            	String[] dateArrLC = aux.getString("dateClose").split("-");
+						            	String expireL = dateArrLC[2] + "/" + dateArrLC[1] + "/" + dateArrLC[0];
+						            	ItemListFriend listF = new ItemListFriend(pictureL,textoL,nameLocL,titleL,descripcionL,dateL,startL,closeL,expireL,goingL,idLo);
+						            	arraydir.add(listF);
+										break;
+										
+									case 9:
+										//Locales a los que sigo crean nueva lista
+										String pictureN = aux.getString("picture");
+						            	pictureN = pictureN.replace("\\", "");
+						            	if(pictureN.equals(pictureAux) || pictureN.equals("")){
+						            		pictureN = Helper.getDefaultPubPictureUrl();
+										}
+						            	String nameLocN = aux.getString("localName");
+										String textoN = "Acaba de crear esta lista";
+										String titleN = aux.getString("title");
+										String descripcionN = aux.getString("text");
+										String[] dateArrN = aux.getString("date").split("-");
+						            	String dateN = dateArrN[2] + "/" + dateArrN[1] + "/" + dateArrN[0];
+						            	String startN = aux.getString("startHour");
+						            	String closeN = aux.getString("closeHour");
+						            	long idN = Long.valueOf(aux.getString("idEvent"));
+						            	String goesN = aux.getString("GOES");
+						            	boolean goingN = false;
+						            	if (!goesN.equals("null"))
+						            		goingN = true;
+						            	String[] dateArrNC = aux.getString("dateClose").split("-");
+						            	String expireN = dateArrNC[2] + "/" + dateArrNC[1] + "/" + dateArrNC[0];
+						            	ItemNewList list = new ItemNewList(pictureN,textoN,nameLocN,titleN,descripcionN,dateN,startN,closeN,expireN,goingN,idN);
+						            	arraydir.add(list);
+										break;
 
-								default:
-									break;
+									default:
+										break;
 							}
 		            	}
 		            pgEventList.setVisibility(View.GONE);

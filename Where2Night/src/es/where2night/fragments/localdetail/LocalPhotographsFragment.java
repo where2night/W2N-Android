@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
@@ -36,6 +37,7 @@ public class LocalPhotographsFragment extends Fragment{
 	private RequestQueue requestQueue;
     private ArrayList<ItemPhoto> arraydir;
     private AdapterItemPhoto adapter;
+    ProgressBar pgEventList;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +47,7 @@ public class LocalPhotographsFragment extends Fragment{
 		
 		View view = inflater.inflate(R.layout.fragment_photos, container, false);
 		grid = (GridView) view.findViewById(R.id.gridViewPhotographs);
+		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
 		
 		grid.setOnItemClickListener(new OnItemClickListener() {
 
@@ -85,13 +88,15 @@ public class LocalPhotographsFragment extends Fragment{
 	            	
 	            	for (int i = 0; i < root.length(); i++){
 		            	JSONObject aux = root.getJSONObject(String.valueOf(i));
-		            	String direccion = aux.getString("direccion");
+		            	String direccion = aux.getString("url");
 		            	ItemPhoto photo = new ItemPhoto(direccion);
 		            	arraydir.add(photo);
 	            	}
+	            	pgEventList.setVisibility(View.GONE);
 		            adapter.notifyDataSetChanged();
 		    		
 				} catch (Exception e) {
+					pgEventList.setVisibility(View.GONE);
 					e.printStackTrace();
 				}
 	        }
@@ -102,6 +107,7 @@ public class LocalPhotographsFragment extends Fragment{
 	         public void onErrorResponse(VolleyError error) {
 	             // error
 	             Log.e("Error.Response", error.toString());
+	             pgEventList.setVisibility(View.GONE);
 	       }
 	    };
 		

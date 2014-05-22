@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MessagesFragment extends Fragment{
@@ -44,6 +45,7 @@ public class MessagesFragment extends Fragment{
 	ArrayList<ItemFriend> arraydir;
 	private ImageLoader imageLoader;
 	private String idProfile;
+	ProgressBar pgEventList;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MessagesFragment extends Fragment{
 		arraydir = new ArrayList<ItemFriend>();
 		adapter = new AdapterItemFriendList(getActivity(), arraydir);
 		listFriends.setAdapter(adapter);
+		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
 		
 		listFriends.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -95,9 +98,11 @@ public class MessagesFragment extends Fragment{
 								arraydir.add(friend);
 			            	}
 			            	adapter.notifyDataSetChanged();
+			            	pgEventList.setVisibility(View.GONE);
 			            }
 			            catch(Exception e) {
-							e.printStackTrace();			            	
+							e.printStackTrace();
+							pgEventList.setVisibility(View.GONE);
 			            }
 			        }
 			    };
@@ -107,6 +112,7 @@ public class MessagesFragment extends Fragment{
 			         public void onErrorResponse(VolleyError error) {
 			             // error
 			             Log.e("Error.Response", error.toString());
+			             pgEventList.setVisibility(View.GONE);
 			       }
 			    };
 				

@@ -39,6 +39,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.os.Build;
 
 public class MessagesViewActivity extends Activity implements OnClickListener{
@@ -51,6 +52,7 @@ public class MessagesViewActivity extends Activity implements OnClickListener{
 	AdapterItemMessage adapter;
 	private EditText messageToSent;
 	private Button btnEnviar;
+	ProgressBar pgEventList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class MessagesViewActivity extends Activity implements OnClickListener{
 		btnEnviar = (Button) findViewById(R.id.buttonSendMessage);
 		messageToSent.setText("");
 		btnEnviar.setOnClickListener(this); 
+		pgEventList = (ProgressBar) findViewById(R.id.pgEventList);
 
 		/*if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
@@ -98,10 +101,12 @@ public class MessagesViewActivity extends Activity implements OnClickListener{
 	            		String date = aux.getString("createdTime");
 	            		ItemMessage mes = new ItemMessage(message,mode,date);
 	            		arraydir.add(mes);
+	            		pgEventList.setVisibility(View.GONE);
 	            	}
             	adapter.notifyDataSetChanged();
 
 	        	} catch (Exception e) {
+	        		pgEventList.setVisibility(View.GONE);
 	        		e.printStackTrace();
 	        	}
 	    	}
@@ -112,6 +117,7 @@ public class MessagesViewActivity extends Activity implements OnClickListener{
 		     public void onErrorResponse(VolleyError error) {
 		         // error
 		    	 Log.e("Error.Response", error.toString());
+		    	 pgEventList.setVisibility(View.GONE);
 		     }
 		};
 		

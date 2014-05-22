@@ -83,5 +83,13 @@
         android:layout_column="2"
         android:layout_gravity="fill_vertical"
         android:layout_row="3" />
+    
+    <ProgressBar
+	    android:id="@+id/pgEventList"
+	    style="?android:attr/progressBarStyleLarge"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerHorizontal="true"
+	    android:layout_centerVertical="true" />
 
 </RelativeLayout>

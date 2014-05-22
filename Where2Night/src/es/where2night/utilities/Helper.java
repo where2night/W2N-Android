@@ -109,7 +109,7 @@ public class Helper {
 	}
 	
 	public static String getPhotosUrl() {
-		return BASE_API_URL + "read/photos.php";
+		return BASE_API_URL + "actions/photoLocal.php";
 	}
 	
 	public static String getDiscountListUrl(){

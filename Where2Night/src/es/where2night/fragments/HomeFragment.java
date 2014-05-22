@@ -612,6 +612,26 @@ public class HomeFragment extends Fragment{
 					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemEventFriend)adapterNews.getItem(position)).getIdCreator()));
 					startActivity(intent);
 				}
+				else if(adapterNews.getItem(position).getClass() == ItemLocalGoes.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemLocalGoes)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemLocalCheck.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemLocalCheck)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemListFriend.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemListFriend)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
+				else if(adapterNews.getItem(position).getClass() == ItemNewList.class){
+					Intent intent = new Intent(getActivity(), LocalViewActivity.class);
+					intent.putExtra(LocalViewActivity.ID, String.valueOf(((ItemNewList)adapterNews.getItem(position)).getId()));
+					startActivity(intent);
+				}
 			}
 		});
 		
@@ -782,7 +802,8 @@ public class HomeFragment extends Fragment{
 						            	boolean goingL = false;
 						            	if (!goesL.equals("null"))
 						            		goingL = true;
-						            	String expireL = "Prueba de fecha"; //FIXME
+						            	String[] dateArrLC = aux.getString("dateClose").split("-");
+						            	String expireL = dateArrLC[2] + "/" + dateArrLC[1] + "/" + dateArrLC[0];
 						            	ItemListFriend listF = new ItemListFriend(pictureL,textoL,nameLocL,titleL,descripcionL,dateL,startL,closeL,expireL,goingL,idLo);
 						            	arraydir.add(listF);
 										break;
@@ -807,10 +828,12 @@ public class HomeFragment extends Fragment{
 						            	boolean goingN = false;
 						            	if (!goesN.equals("null"))
 						            		goingN = true;
-						            	String expireN = "Prueba de fecha"; //FIXME
+						            	String[] dateArrNC = aux.getString("dateClose").split("-");
+						            	String expireN = dateArrNC[2] + "/" + dateArrNC[1] + "/" + dateArrNC[0];
 						            	ItemNewList list = new ItemNewList(pictureN,textoN,nameLocN,titleN,descripcionN,dateN,startN,closeN,expireN,goingN,idN);
 						            	arraydir.add(list);
 										break;
+										
 	
 									default:
 										break;

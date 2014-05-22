@@ -103,9 +103,9 @@
 	          android:id="@+id/spinnerInvited"
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
-	          android:layout_alignBottom="@+id/txtInvited"
-	          android:layout_alignRight="@+id/txtInvited"
-	          android:layout_toRightOf="@+id/txtInvited" />
+	          android:layout_alignBaseline="@+id/btnSignMeIn"
+	          android:layout_alignBottom="@+id/btnSignMeIn" 
+	          android:layout_toRightOf="@+id/txtInvited"/>
 
 	      
 
