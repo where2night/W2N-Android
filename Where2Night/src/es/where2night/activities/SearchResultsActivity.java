@@ -55,7 +55,7 @@ public class SearchResultsActivity extends Activity {
 	   @Override
 		public Intent getParentActivityIntent() {
 			Intent intent = new Intent(this, MainActivity.class);
-	//		intent.putExtra(MainActivity.OPTION, "5");
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			return intent;
 		}
 	   
@@ -110,6 +110,9 @@ public class SearchResultsActivity extends Activity {
 				            	picture = picture.replace("\\", "");
 				            	String name = aux.getString("name");
 				            	int type = Integer.valueOf(aux.getString("type"));
+				            	if (type == 0){
+				            		name = name + " " + aux.getString("surnames");
+				            	}
 				            	if (name.toUpperCase().contains(query)){
 				            		ItemSearch local = new ItemSearch(picture,name,idProfile,type);
 				            		arraydir.add(local);

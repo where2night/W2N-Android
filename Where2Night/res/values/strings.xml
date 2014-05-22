@@ -110,7 +110,7 @@
         <item>Yo me llamo Ralph</item>
     </string-array>
     <string-array name="bebida_array">
-        <item></item>
+        <item>Sin seleccionar</item>
         <item>Agua con gas</item>
         <item>Agua sin gas</item>
         <item>Anís</item>
@@ -137,7 +137,7 @@
         <item>Zumo</item>
     </string-array>
     <string-array name="estado_civil_array">
-        <item></item>
+        <item>Sin seleccionar</item>
         <item>Sin compromiso</item>
         <item>Ennoviad@</item>
         <item>Con novi@, pero no es un problema</item>
@@ -147,7 +147,7 @@
         <item>Viud@</item>
     </string-array>
     <string-array name="musica_array">
-        <item></item>
+        <item>Sin seleccionar</item>
         <item>Acid-House</item>
         <item>Alternative Rock</item>
         <item>Beatbox</item>

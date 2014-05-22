@@ -83,6 +83,7 @@ public class FriendsRequestActivity extends Activity {
 					long arg3) {
 				Intent intent = new Intent(FriendsRequestActivity.this, MessagesViewActivity.class);
                 intent.putExtra(MessagesViewActivity.ID, String.valueOf(adapter2.getItemId(position)));
+                intent.putExtra(MessagesViewActivity.NAME, ((ItemFriend)adapter2.getItem(position)).getTitle() );
                 startActivity(intent);
 			}
 			

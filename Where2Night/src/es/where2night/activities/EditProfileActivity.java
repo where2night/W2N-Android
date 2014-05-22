@@ -129,6 +129,7 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getApplicationContext(), MainActivity.class);
+				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				i.putExtra(MainActivity.PARENT, "0");
 				startActivity(i);
 				
@@ -138,6 +139,8 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 	
 	}
 
+	
+	
 	public void setContent(int index) {
 	    Fragment toHide = null;
 		Fragment toShow = null;
@@ -261,7 +264,7 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 			    	info.put("about", dataDetailed[4]);
 			    	info.put("facebook", dataDetailed[5]);
 			    	info.put("twitter", dataDetailed[6]);
-			    	info.put("instagra,", dataDetailed[7]);
+			    	info.put("instagram", dataDetailed[7]);
 			    	info.put("gender", dataBasic[5]);
 			    	
 			    	return info;
@@ -347,6 +350,7 @@ public class EditProfileActivity extends FragmentActivity implements ActionBar.T
 	@Override
 	public Intent getParentActivityIntent() {
 		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		return intent;
 	}
 

@@ -51,9 +51,7 @@ public class MessagesFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_messages, container, false);
 		listFriends = (ListView) view.findViewById(R.id.listFriendsMessages);
-		arraydir = new ArrayList<ItemFriend>();
-		adapter = new AdapterItemFriendList(getActivity(), arraydir);
-		listFriends.setAdapter(adapter);
+
 		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
 		
 		listFriends.setOnItemClickListener(new OnItemClickListener() {
@@ -62,6 +60,7 @@ public class MessagesFragment extends Fragment{
 					long arg3) {
 				Intent intent = new Intent(getActivity(), MessagesViewActivity.class);
                 intent.putExtra(MessagesViewActivity.ID, String.valueOf(adapter.getItemId(position)));
+                intent.putExtra(MessagesViewActivity.NAME, ((ItemFriend)adapter.getItem(position)).getTitle() );
                 startActivity(intent);
 			}
 			
@@ -71,6 +70,9 @@ public class MessagesFragment extends Fragment{
 	}
 	
 	public void fill(){
+		arraydir = new ArrayList<ItemFriend>();
+		adapter = new AdapterItemFriendList(getActivity(), arraydir);
+		listFriends.setAdapter(adapter);
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		idProfile = cred[0];

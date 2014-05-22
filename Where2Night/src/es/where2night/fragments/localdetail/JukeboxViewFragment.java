@@ -142,7 +142,7 @@ public class JukeboxViewFragment extends Fragment {
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
 		String url = Helper.getSongsUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId;
 		Log.e("url", url);
-		
+		layoutNowPlaying.setVisibility(View.GONE);
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
 	    {
 	        @Override

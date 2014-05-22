@@ -6,6 +6,20 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,40 +27,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
-import com.where2night.R.id;
-import com.where2night.R.layout;
-import com.where2night.R.menu;
 
-import es.where2night.adapters.AdapterItemFriendList;
 import es.where2night.adapters.AdapterItemMessage;
-import es.where2night.data.ItemFriend;
 import es.where2night.data.ItemMessage;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.os.Build;
 
 public class MessagesViewActivity extends Activity implements OnClickListener{
 
 	private ListView messagesList;
 	public static final String ID = "id";
+	public static final String NAME = "name";
 	private String friendId = "";
+	private String name = "";
 	private RequestQueue requestQueue;
 	ArrayList<ItemMessage> arraydir;
 	AdapterItemMessage adapter;
@@ -54,18 +47,27 @@ public class MessagesViewActivity extends Activity implements OnClickListener{
 	private Button btnEnviar;
 	ProgressBar pgEventList;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_messages_view);
 		
 		friendId = getIntent().getStringExtra(ID);
+		name = getIntent().getStringExtra(NAME);
 		messagesList = (ListView) findViewById(R.id.listMessages);
 		messageToSent = (EditText) findViewById(R.id.editMessage);
 		btnEnviar = (Button) findViewById(R.id.buttonSendMessage);
 		messageToSent.setText("");
 		btnEnviar.setOnClickListener(this); 
 		pgEventList = (ProgressBar) findViewById(R.id.pgEventList);
+		
+		 final ActionBar actionBar = getActionBar();
+	        
+	        actionBar.setIcon(R.drawable.logo7);
+	        actionBar.setHomeButtonEnabled(true);
+	        actionBar.setDisplayHomeAsUpEnabled(true);
+	        actionBar.setTitle(name);
 
 		/*if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
@@ -221,6 +223,13 @@ public class MessagesViewActivity extends Activity implements OnClickListener{
 			hideKeyBoard();
 		}
 		
+	}
+	
+	@Override
+	public Intent getParentActivityIntent() {
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		return intent;
 	}
 
 	private void hideKeyBoard() {
