@@ -62,9 +62,9 @@ public class JukeboxViewFragment extends Fragment {
 		}
 		
 		checkIn = false;
-		if (localId.equals("")){
+	/*	if (localId.equals("")){
 			checkCheckIn();
-		}
+		}*/
 		//checkIn = getArguments().getString(CHECKIN);
 		
 		
@@ -76,10 +76,14 @@ public class JukeboxViewFragment extends Fragment {
 	}
 	
 	public void fill(){
+		
 		arraydir = new ArrayList<ItemSong>();
 		adapter = new AdapterItemSong(getActivity(), arraydir);
 		list.setAdapter(adapter);
-		if(checkIn && localId != ""){
+		
+		checkCheckIn();
+		
+	/*	if(checkIn && localId != ""){
 		    fillData();
 		}
 		else{
@@ -105,7 +109,7 @@ public class JukeboxViewFragment extends Fragment {
 			pgEventList.setVisibility(View.VISIBLE);
 			
 			
-		}
+		}*/
 	   
 	}
 	
@@ -222,8 +226,34 @@ public class JukeboxViewFragment extends Fragment {
 		            	JSONObject respuesta = new JSONObject(response);
 		            	String id = respuesta.getString("id");
 		            	if (!id.equals("null")){
-		            		localId = id;
-		            		checkIn = true;
+		            		if (localId.equals("") || id.equals(localId)){
+		            			checkIn = true;
+		            			fillData();
+		            			localId = id;
+		            		}else{
+		            			fillData();
+		            			checkIn = false;
+		            		}
+		            		
+		            	}else{
+		            		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		        			builder.setMessage("Necesitas hacer CheckIn en " + localName + " para votar las canciones")
+		        			        .setTitle("No puedes votar aún")
+		        			        .setCancelable(false)
+		        			        .setNegativeButton("No deseo hacerlo",
+		            	                new DialogInterface.OnClickListener() {
+		            	                    public void onClick(DialogInterface dialog, int id) {
+		            	                    	pgEventList.setVisibility(View.GONE);
+		            	                    }
+		            	                })
+		            	        .setPositiveButton("Hacer CheckIn",
+		            	                new DialogInterface.OnClickListener() {
+		            	                    public void onClick(DialogInterface dialog, int id) {
+		            	                    	hacerCheckIn();
+		            	                    }
+		            	                });
+		        			AlertDialog alert = builder.create();
+		        			alert.show();
 		            	}
 		            		
 					} catch (JSONException e) {

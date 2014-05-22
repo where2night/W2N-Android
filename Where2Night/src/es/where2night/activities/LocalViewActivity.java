@@ -218,7 +218,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		}
 		if (index == 4) ((LocalPhotographsFragment) toShow).fill();
 		if (index == 5) ((LocalStatisticsFragment) toShow).fill();
-		if (index == 6) ((LocalAsistantsFragment) toShow).fill();
+	//	if (index == 6) ((LocalAsistantsFragment) toShow).fill();
     }
     
 

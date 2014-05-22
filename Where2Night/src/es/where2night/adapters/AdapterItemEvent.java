@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.where2night.R;
 
+import es.where2night.activities.InitActivity;
+import es.where2night.activities.LocalViewActivity;
 import es.where2night.data.ItemEvent;
 import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
@@ -83,7 +86,16 @@ public class AdapterItemEvent extends BaseAdapter implements OnClickListener{
         	holder = (ViewHolderEvent) convertView.getTag();
         }
         
-       
+        holder.picture.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent i = new Intent(activity, LocalViewActivity.class);
+				i.putExtra(LocalViewActivity.ID, String.valueOf(dir.getId()));
+                activity.startActivity(i);
+			}
+        	
+        });
         
         holder.btnSignMe.setOnClickListener(new OnClickListener() {
 			

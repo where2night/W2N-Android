@@ -52,7 +52,7 @@ public class LocalAsistantsFragment extends Fragment{
 		
 	    adapter = new AdapterItemFriendList(getActivity(), arraydir);
         lista.setAdapter(adapter);
-        
+        fill();
         lista.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position,
