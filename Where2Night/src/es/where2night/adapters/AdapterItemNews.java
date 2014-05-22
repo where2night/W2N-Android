@@ -1,6 +1,8 @@
 package es.where2night.adapters;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -29,7 +33,11 @@ import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemEventFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
+import es.where2night.data.ItemListFriend;
+import es.where2night.data.ItemLocalCheck;
+import es.where2night.data.ItemLocalGoes;
 import es.where2night.data.ItemLocalNews;
+import es.where2night.data.ItemNewList;
 import es.where2night.utilities.BitmapLRUCache;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
@@ -44,7 +52,11 @@ public class AdapterItemNews extends BaseAdapter{
     ViewHolderFriendState holderFriendState;
     ViewHolderEvent holderEvent;
     ViewHolderLocalFollow holderLocal;
+    ViewHolderLocalGoes holderLocalGoes;
+    ViewHolderLocalCheck holderLocalCheck;
     ViewHolderEventFriend holderEventFriend;
+    ViewHolderListFriend holderListFriend;
+    ViewHolderListNew holderList;
     
 	
 	public AdapterItemNews(Activity activity, ArrayList<Item> items){
@@ -79,6 +91,10 @@ public class AdapterItemNews extends BaseAdapter{
         ItemEvent eve = null;
         ItemLocalNews loc = null;
         ItemEventFriend eFri = null;
+        ItemLocalGoes locg = null;
+        ItemLocalCheck locC = null;
+        ItemNewList list = null;
+        ItemListFriend listFriend = null;
         Item i = items.get(position);
  
         //Asociamos el layout de la lista que hemos creado
@@ -154,7 +170,7 @@ public class AdapterItemNews extends BaseAdapter{
 		        }else {
 		        	holderEvent.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
 		        	holderEvent.btnSignMe.setSelected(false);
-		        } //FIXME
+		        } 
                 
                 v.setTag(holderEvent);
         	}
@@ -167,6 +183,143 @@ public class AdapterItemNews extends BaseAdapter{
                 holderLocal.txtNameLocal = (TextView) v.findViewById(R.id.txtLocalName);
                 holderLocal.txtNameFriend = (TextView) v.findViewById(R.id.txtNameFriend);
                 v.setTag(holderLocal);
+        	}
+        	else if(i.getClass() == ItemLocalCheck.class){
+        		locC = (ItemLocalCheck)i;
+        		holderLocalCheck = new ViewHolderLocalCheck();
+                LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = inf.inflate(R.layout.itemlocalnews, null);
+                holderLocalCheck.picture = (NetworkImageView) v.findViewById(R.id.LocalPhoto);
+                holderLocalCheck.txtNameLocal = (TextView) v.findViewById(R.id.txtLocalName);
+                holderLocalCheck.txtNameFriend = (TextView) v.findViewById(R.id.txtNameFriend);
+                v.setTag(holderLocalCheck);
+        	}
+        	else if(i.getClass() == ItemLocalGoes.class){
+        		locg = (ItemLocalGoes)i;
+        		holderLocalGoes = new ViewHolderLocalGoes();
+                LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = inf.inflate(R.layout.itemlocalgoes, null);
+                holderLocalGoes.picture = (NetworkImageView) v.findViewById(R.id.LocalPhoto);
+                holderLocalGoes.txtNameLocal = (TextView) v.findViewById(R.id.txtLocalName);
+                holderLocalGoes.txtNameFriend = (TextView) v.findViewById(R.id.txtNameFriend);
+                holderLocalGoes.txtDate = (TextView) v.findViewById(R.id.textDate);
+                v.setTag(holderLocalGoes);
+        	}
+        	else if(i.getClass() == ItemNewList.class){
+        		list = (ItemNewList)i;
+        		holderList = new ViewHolderListNew();
+                LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = inf.inflate(R.layout.itemnewlist, null);
+                holderList.picture = (NetworkImageView) v.findViewById(R.id.localListPicture);//FIXME
+                holderList.nombre = (TextView) v.findViewById(R.id.textNameLocal);
+                holderList.texto = (TextView) v.findViewById(R.id.textDiscount);
+                holderList.txtTitle = (TextView) v.findViewById(R.id.txtTitle);
+                holderList.txtDescription = (TextView) v.findViewById(R.id.txtDescription);
+                holderList.txtDate = (TextView) v.findViewById(R.id.txtDate);
+                holderList.txtHour = (TextView) v.findViewById(R.id.txtHour);
+                holderList.txtExpireDate = (TextView) v.findViewById(R.id.txtExpireDate);
+                holderList.txtInvited = (TextView) v.findViewById(R.id.txtInvited);
+                holderList.btnSignMe = (Button) v.findViewById(R.id.btnSignMeIn);
+                holderList.spinnerInvited = (Spinner) v.findViewById(R.id.spinnerInvited);
+                
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity,
+        		        R.array.invited_array, android.R.layout.simple_spinner_item);
+        		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        		holderList.spinnerInvited.setAdapter(adapter);
+                v.setTag(holderList);
+                
+                final ItemNewList listFinal = list;
+                holderList.btnSignMe.setOnClickListener(new OnClickListener() {
+        			
+        			@Override
+        			public void onClick(View v) {
+        				long listId = listFinal.getId();
+        				if (v.isSelected()){
+        					holderList.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+        		        	holderList.btnSignMe.setSelected(false);
+        		        	listFinal.setGoes(false);
+        		        	holderList.txtInvited.setVisibility(View.VISIBLE);
+        		        	holderList.spinnerInvited.setVisibility(View.VISIBLE);
+        					singIntoList(listId,true);
+        				}else{
+        					holderList.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+        		        	holderList.btnSignMe.setSelected(true);
+        		        	listFinal.setGoes(true);
+        		        	singIntoList(listId,false);
+        				}
+        				notifyDataSetChanged(); // tells the adapter that the data changed
+        			}
+        		});
+                
+                if (list.isGoes()){
+                	holderList.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+                	holderList.btnSignMe.setSelected(true);
+                	holderList.txtInvited.setVisibility(View.GONE);
+                	holderList.spinnerInvited.setVisibility(View.GONE);
+                }else {
+                	holderList.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+                	holderList.btnSignMe.setSelected(false);
+                	holderList.txtInvited.setVisibility(View.VISIBLE);
+                	holderList.spinnerInvited.setVisibility(View.VISIBLE);
+                }
+        	}
+        	else if(i.getClass() == ItemListFriend.class){
+        		listFriend = (ItemListFriend)i;
+        		holderListFriend = new ViewHolderListFriend();
+                LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = inf.inflate(R.layout.itemnewlist, null);
+                holderListFriend.picture = (NetworkImageView) v.findViewById(R.id.localListPicture);//FIXME
+                holderListFriend.nombre = (TextView) v.findViewById(R.id.textNameLocal);
+                holderListFriend.texto = (TextView) v.findViewById(R.id.textDiscount);
+                holderListFriend.txtTitle = (TextView) v.findViewById(R.id.txtTitle);
+                holderListFriend.txtDescription = (TextView) v.findViewById(R.id.txtDescription);
+                holderListFriend.txtDate = (TextView) v.findViewById(R.id.txtDate);
+                holderListFriend.txtHour = (TextView) v.findViewById(R.id.txtHour);
+                holderListFriend.txtExpireDate = (TextView) v.findViewById(R.id.txtExpireDate);
+                holderListFriend.txtInvited = (TextView) v.findViewById(R.id.txtInvited);
+                holderListFriend.btnSignMe = (Button) v.findViewById(R.id.btnSignMeIn);
+                holderListFriend.spinnerInvited = (Spinner) v.findViewById(R.id.spinnerInvited);
+                
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity,
+        		        R.array.invited_array, android.R.layout.simple_spinner_item);
+        		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        		holderListFriend.spinnerInvited.setAdapter(adapter);
+                v.setTag(holderListFriend);
+                
+                final ItemListFriend listFriendFinal = listFriend;
+                holderListFriend.btnSignMe.setOnClickListener(new OnClickListener() {
+        			
+        			@Override
+        			public void onClick(View v) {
+        				long listId = listFriendFinal.getId();
+        				if (v.isSelected()){
+        					holderListFriend.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+        		        	holderListFriend.btnSignMe.setSelected(false);
+        		        	listFriendFinal.setGoes(false);
+        		        	holderListFriend.txtInvited.setVisibility(View.VISIBLE);
+        		        	holderListFriend.spinnerInvited.setVisibility(View.VISIBLE);
+        					singIntoList(listId,true);
+        				}else{
+        					holderListFriend.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+        		        	holderListFriend.btnSignMe.setSelected(true);
+        		        	listFriendFinal.setGoes(true);
+        		        	singIntoList(listId,false);
+        				}
+        				notifyDataSetChanged(); // tells the adapter that the data changed
+        			}
+        		});
+                
+                if (listFriend.isGoes()){
+                	holderListFriend.btnSignMe.setText(activity.getResources().getString(R.string.Signed));
+                	holderListFriend.btnSignMe.setSelected(true);
+                	holderListFriend.txtInvited.setVisibility(View.GONE);
+                	holderListFriend.spinnerInvited.setVisibility(View.GONE);
+                }else {
+                	holderListFriend.btnSignMe.setText(activity.getResources().getString(R.string.SignMe));
+                	holderListFriend.btnSignMe.setSelected(false);
+                	holderListFriend.txtInvited.setVisibility(View.VISIBLE);
+                	holderListFriend.spinnerInvited.setVisibility(View.VISIBLE);
+                }
         	}
         	else if(i.getClass() == ItemEventFriend.class){
         		eFri = (ItemEventFriend)i;
@@ -307,12 +460,36 @@ public class AdapterItemNews extends BaseAdapter{
         	loc = (ItemLocalNews)i;
         	//Rellenamos la picturegrafía
             if (!loc.getPicture().equals("") && !loc.getPicture().equals("null")){
-            	holderLocal.picture.setImageUrl(loc.getPicture(), imageLoader); //FIXME
+            	holderLocal.picture.setImageUrl(loc.getPicture(), imageLoader); 
             }
             //Rellenamos el nameLocal
             holderLocal.txtNameLocal.setText(loc.getNameLocal());
           //Rellenamos el nameFriend
             holderLocal.txtNameFriend.setText(loc.getNameFriend() + " está siguiendo a:");
+        }
+        else if(i.getClass() == ItemLocalCheck.class){
+        	locC = (ItemLocalCheck)i;
+        	//Rellenamos la picturegrafía
+            if (!locC.getPicture().equals("") && !locC.getPicture().equals("null")){
+            	holderLocalCheck.picture.setImageUrl(locC.getPicture(), imageLoader); 
+            }
+            //Rellenamos el nameLocal
+            holderLocalCheck.txtNameLocal.setText(locC.getNameLocal());
+          //Rellenamos el nameFriend
+            holderLocalCheck.txtNameFriend.setText(locC.getNameFriend() + " ha hecho checkIn en:");
+        }
+        else if(i.getClass() == ItemLocalGoes.class){
+        	locg = (ItemLocalGoes)i;
+        	//Rellenamos la picturegrafía
+            if (!locg.getPicture().equals("") && !locg.getPicture().equals("null")){
+            	holderLocalGoes.picture.setImageUrl(locg.getPicture(), imageLoader); 
+            }
+            //Rellenamos el nameLocal
+            holderLocalGoes.txtNameLocal.setText(locg.getNameLocal());
+          //Rellenamos el nameFriend
+            holderLocalGoes.txtNameFriend.setText(locg.getNameFriend() + " va a ir a:");
+          //Rellenamos el date
+            holderLocalGoes.txtDate.setText("el dia " + locg.getDate());
         }
         else if(i.getClass() == ItemEventFriend.class){
         	eFri = (ItemEventFriend)i;
@@ -329,6 +506,38 @@ public class AdapterItemNews extends BaseAdapter{
             holderEventFriend.txtText.setText(eFri.getText());
             holderEventFriend.txtTime.setText(eFri.getStart() + " - " + eFri.getClose());
             holderEventFriend.txtFriend.setText(eFri.getNameFriend() + " va a ir a este evento");
+        }
+        else if(i.getClass() == ItemNewList.class){
+        	list = (ItemNewList)i;
+        	//Rellenamos
+        	holderList.picture.setImageUrl(list.getPicture(),imageLoader);
+        	holderList.nombre.setText(list.getNombre());
+        	holderList.texto.setText(list.getText());
+        	 holderList.txtTitle.setText(list.getTitle());
+             holderList.txtDescription.setText(list.getDescription());
+             holderList.txtDate.setText(list.getDate());
+             String start = list.getStart().substring(0, 5);
+             String end = list.getEnd().substring(0, 5);
+             holderList.txtHour.setText(start + " - " + end);
+             holderList.txtExpireDate.setText(list.getExpireDate());
+             // Retornamos la vista
+             return v;
+        }
+        else if(i.getClass() == ItemListFriend.class){
+        	listFriend = (ItemListFriend)i;
+        	//Rellenamos
+        	holderListFriend.picture.setImageUrl(list.getPicture(),imageLoader);
+        	holderListFriend.nombre.setText(list.getNombre());
+        	holderListFriend.texto.setText(list.getText());
+        	 holderListFriend.txtTitle.setText(list.getTitle());
+             holderListFriend.txtDescription.setText(list.getDescription());
+             holderList.txtDate.setText(list.getDate());
+             String start = listFriend.getStart().substring(0, 5);
+             String end = listFriend.getEnd().substring(0, 5);
+             holderListFriend.txtHour.setText(start + " - " + end);
+             holderListFriend.txtExpireDate.setText(list.getExpireDate());
+             // Retornamos la vista
+             return v;
         }
 
         return v;
@@ -351,6 +560,44 @@ public class AdapterItemNews extends BaseAdapter{
 		public NetworkImageView picture;
 		public TextView txtNameLocal;
 		public TextView txtNameFriend;
+	}
+	static class ViewHolderListNew{
+		public NetworkImageView picture;
+		public TextView texto;
+		public TextView nombre;
+		public TextView txtTitle;
+		public TextView txtDescription;
+		public TextView txtDate;
+		public TextView txtHour;
+		public TextView txtExpireDate;
+		public TextView txtInvited;
+		public Spinner spinnerInvited;
+		public Button btnSignMe;
+	}
+	static class ViewHolderListFriend{
+		public NetworkImageView picture;
+		public TextView texto;
+		public TextView nombre;
+		public TextView txtTitle;
+		public TextView txtDescription;
+		public TextView txtDate;
+		public TextView txtHour;
+		public TextView txtExpireDate;
+		public TextView txtInvited;
+		public Spinner spinnerInvited;
+		public Button btnSignMe;
+	}
+	static class ViewHolderLocalCheck {
+		public NetworkImageView picture;
+		public TextView txtNameLocal;
+		public TextView txtNameFriend;
+	}
+	
+	static class ViewHolderLocalGoes {
+		public NetworkImageView picture;
+		public TextView txtNameLocal;
+		public TextView txtNameFriend;
+		public TextView txtDate;
 	}
 	
 	static class ViewHolderEventFriend {
@@ -405,6 +652,60 @@ public class AdapterItemNews extends BaseAdapter{
 		}
 		else{
 			request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+
+		}
+		requestQueue.add(request);
+	}
+	
+	private void singIntoList(long listtId,boolean notGoing){
+		final DataManager dm = new DataManager(activity.getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
+		String url = Helper.joinDiscountListUrl() + "/" + cred[0] + "/" + cred[1] + "/" + listtId;
+		 
+		Response.Listener<String> succeedListener = new Response.Listener<String>(){
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+	            try {
+	            	/*JSONObject respuesta = new JSONObject(response);
+	            	if (respuesta.getString("join").equals("true")){
+	            		
+	            	}else if (respuesta.getString("join").equals("false")){
+	            		
+	            	}*/
+            	}
+	            catch (Exception e) {
+					e.printStackTrace();
+				}
+	        
+	        }
+		};
+		Response.ErrorListener errorListener = new Response.ErrorListener(){
+			@Override
+			public void onErrorResponse(VolleyError error) {
+             // error
+				Log.e("Error.Response", error.toString());
+			}
+		};
+		
+		StringRequest request;
+		
+		if(notGoing){
+			request = new StringRequest(Request.Method.DELETE, url, succeedListener, errorListener); 
+		}
+		else{
+			request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener){     
+			    @Override
+			    protected Map<String, String> getParams() 
+			    {  
+			    	HashMap<String, String> info = new HashMap<String, String>();
+			    	info.put("numGuest", ((Integer)holderList.spinnerInvited.getSelectedItemPosition()).toString());
+			    				    	
+			    	return info;
+			    }
+		};
 
 		}
 		requestQueue.add(request);

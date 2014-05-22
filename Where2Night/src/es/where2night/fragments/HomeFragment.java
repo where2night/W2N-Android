@@ -55,7 +55,11 @@ import es.where2night.data.ItemEvent;
 import es.where2night.data.ItemEventFriend;
 import es.where2night.data.ItemFriendMode;
 import es.where2night.data.ItemFriendState;
+import es.where2night.data.ItemListFriend;
+import es.where2night.data.ItemLocalCheck;
+import es.where2night.data.ItemLocalGoes;
 import es.where2night.data.ItemLocalNews;
+import es.where2night.data.ItemNewList;
 import es.where2night.fragments.editprofile.BasicInfoFragment;
 import es.where2night.fragments.editprofile.DetailedInfoFragment;
 import es.where2night.utilities.DataManager;
@@ -133,7 +137,7 @@ public class HomeFragment extends Fragment{
         	int mLastFirstVisibleItem = 0;
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				//TODO Auto-generated				
+								
 			}
 			
 			
@@ -318,7 +322,6 @@ public class HomeFragment extends Fragment{
 		            	
 		            	
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		           
@@ -437,7 +440,6 @@ public class HomeFragment extends Fragment{
 		            		goingSomewhere = false;
 		            	}
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		           
@@ -478,7 +480,6 @@ public class HomeFragment extends Fragment{
 		            		idLocal = Integer.valueOf(id);
 		            		
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		           
@@ -725,6 +726,90 @@ public class HomeFragment extends Fragment{
 						            		goingF = true;
 						            	ItemEventFriend eventFriend = new ItemEventFriend(pictureF,nameLoc,titleF,textF,dateF,startF,closeF,idCreatorF,nameFriend,goingF,idF);
 						            	arraydir.add(eventFriend);
+										break;
+										
+									case 6:
+										//Locales a los que van mis amigos
+										String nameLG = aux.getString("localName");
+										String nameFG = aux.getString("name") + " " + aux.getString("surnames");
+										String pictureLocG = aux.getString("picture");
+										String[] dateArrG = aux.getString("assistdate").split("-");
+						            	String dateG = dateArrG[2] + "/" + dateArrG[1] + "/" + dateArrG[0];
+										pictureLocG = pictureLocG.replace("\\", "");
+										if(pictureLocG.equals(pictureAux) || pictureLocG.equals("")){
+											picture = Helper.getDefaultPubPictureUrl();
+										}
+										long idLG = Integer.valueOf(aux.getString("idProfileLocal"));
+										ItemLocalGoes iLocalG= new ItemLocalGoes(nameLG, pictureLocG, nameFG, dateG, idLG);
+										arraydir.add(iLocalG);
+										break;
+										
+									case 7:
+										//Locales a los han hecho checkin mis amigos
+										String valido = "1";
+										String isC = aux.getString("inside");
+										if (isC.equals(valido)){
+											String nameLC = aux.getString("localName");
+											String nameFC = aux.getString("name") + " " + aux.getString("surnames");
+											String pictureLocC = aux.getString("picture");
+											pictureLocC = pictureLocC.replace("\\", "");
+											if(pictureLocC.equals(pictureAux) || pictureLocC.equals("")){
+												picture = Helper.getDefaultPubPictureUrl();
+											}
+											long idLC = Integer.valueOf(aux.getString("idProfileLocal"));
+											ItemLocalCheck iLocalC= new ItemLocalCheck(nameLC, pictureLocC, nameFC, idLC);
+											arraydir.add(iLocalC);
+										}
+										break;
+										
+									case 8:
+										//Amigos se apuntan a lista
+										String pictureL = aux.getString("picture");
+						            	pictureL = pictureL.replace("\\", "");
+						            	if(pictureL.equals(pictureAux) || pictureL.equals("")){
+						            		pictureL = Helper.getDefaultPubPictureUrl();
+										}
+						            	String nameLocL = aux.getString("localName");
+										String textoL = aux.getString("name") + " " + aux.getString("surnames") + " se ha apuntado a esta lista";
+										String titleL = aux.getString("title");
+										String descripcionL = aux.getString("text");
+										String[] dateArrL = aux.getString("date").split("-");
+						            	String dateL = dateArrL[2] + "/" + dateArrL[1] + "/" + dateArrL[0];
+						            	String startL = aux.getString("startHour");
+						            	String closeL = aux.getString("closeHour");
+						            	long idLo = Long.valueOf(aux.getString("idEvent"));
+						            	String goesL = aux.getString("GOES");
+						            	boolean goingL = false;
+						            	if (!goesL.equals("null"))
+						            		goingL = true;
+						            	String expireL = "Prueba de fecha"; //FIXME
+						            	ItemListFriend listF = new ItemListFriend(pictureL,textoL,nameLocL,titleL,descripcionL,dateL,startL,closeL,expireL,goingL,idLo);
+						            	arraydir.add(listF);
+										break;
+										
+									case 9:
+										//Locales a los que sigo crean nueva lista
+										String pictureN = aux.getString("picture");
+						            	pictureN = pictureN.replace("\\", "");
+						            	if(pictureN.equals(pictureAux) || pictureN.equals("")){
+						            		pictureN = Helper.getDefaultPubPictureUrl();
+										}
+						            	String nameLocN = aux.getString("localName");
+										String textoN = "Acaba de crear esta lista";
+										String titleN = aux.getString("title");
+										String descripcionN = aux.getString("text");
+										String[] dateArrN = aux.getString("date").split("-");
+						            	String dateN = dateArrN[2] + "/" + dateArrN[1] + "/" + dateArrN[0];
+						            	String startN = aux.getString("startHour");
+						            	String closeN = aux.getString("closeHour");
+						            	long idN = Long.valueOf(aux.getString("idEvent"));
+						            	String goesN = aux.getString("GOES");
+						            	boolean goingN = false;
+						            	if (!goesN.equals("null"))
+						            		goingN = true;
+						            	String expireN = "Prueba de fecha"; //FIXME
+						            	ItemNewList list = new ItemNewList(pictureN,textoN,nameLocN,titleN,descripcionN,dateN,startN,closeN,expireN,goingN,idN);
+						            	arraydir.add(list);
 										break;
 	
 									default:
