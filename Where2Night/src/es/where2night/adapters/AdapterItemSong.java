@@ -85,13 +85,16 @@ public class AdapterItemSong extends BaseAdapter{
 					holder.btnVote.setText("+1");
 		        	holder.btnVote.setSelected(false);
 		        	dir.setVoted(false);
-		        	
 					voteSong(songId,localId,true);
+					dir.setVotes(dir.getVotes() - 1 );
+					
+					
 				}else{
 					holder.btnVote.setText(activity.getResources().getString(R.string.Signed));
 		        	holder.btnVote.setSelected(true);
 		        	dir.setVoted(true);
 					voteSong(songId,localId,false);
+					dir.setVotes(dir.getVotes() + 1 );
 				}
 				notifyDataSetChanged(); // tells the adapter that the data changed
 			}
