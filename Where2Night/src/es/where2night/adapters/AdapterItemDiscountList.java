@@ -41,7 +41,7 @@ public class AdapterItemDiscountList extends BaseAdapter{
         this.activity = activity;
         this.items = items;
       }
- 
+  
     @Override
     public int getCount() {
         return items.size();

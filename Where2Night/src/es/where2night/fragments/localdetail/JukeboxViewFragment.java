@@ -5,6 +5,26 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,24 +38,6 @@ import es.where2night.adapters.AdapterItemSong;
 import es.where2night.data.ItemSong;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 public class JukeboxViewFragment extends Fragment {
 	
@@ -46,6 +48,10 @@ public class JukeboxViewFragment extends Fragment {
     private AdapterItemSong adapter;
 	private ProgressBar pgEventList;
 	private ListView list;
+	
+	private LinearLayout layoutNowPlaying;
+	private TextView txtSongName;
+	private TextView txtArtistName;
 	double latLocal = 0;
 	double lngLocal = 0;
 	String localName;
@@ -62,16 +68,15 @@ public class JukeboxViewFragment extends Fragment {
 		}
 		
 		checkIn = false;
-	/*	if (localId.equals("")){
-			checkCheckIn();
-		}*/
-		//checkIn = getArguments().getString(CHECKIN);
 		
 		
 		View view = inflater.inflate(R.layout.fragment_jukebox_view, container, false);
 		list = (ListView) view.findViewById(R.id.listSongs);
+		layoutNowPlaying = (LinearLayout) view.findViewById(R.id.layoutNowPlaying);
+		txtSongName = (TextView) view.findViewById(R.id.txtSongName);
+		txtArtistName = (TextView) view.findViewById(R.id.txtArtistName);
 		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
-		
+		layoutNowPlaying.setVisibility(View.GONE);
 		return view;
 	}
 	
@@ -80,36 +85,12 @@ public class JukeboxViewFragment extends Fragment {
 		arraydir = new ArrayList<ItemSong>();
 		adapter = new AdapterItemSong(getActivity(), arraydir);
 		list.setAdapter(adapter);
+		if (checkIn)
+			fillData();
+		else
+			checkCheckIn();
 		
-		checkCheckIn();
-		
-	/*	if(checkIn && localId != ""){
-		    fillData();
-		}
-		else{
-			pgEventList.setVisibility(View.GONE);
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setMessage("Necesitas hacer CheckIn en " + localName + " para votar las canciones")
-			        .setTitle("No puedes votar aún")
-			        .setCancelable(false)
-			        .setNegativeButton("No deseo hacerlo",
-    	                new DialogInterface.OnClickListener() {
-    	                    public void onClick(DialogInterface dialog, int id) {
-    	                    	pgEventList.setVisibility(View.GONE);
-    	                    }
-    	                })
-    	        .setPositiveButton("Hacer CheckIn",
-    	                new DialogInterface.OnClickListener() {
-    	                    public void onClick(DialogInterface dialog, int id) {
-    	                    	hacerCheckIn();
-    	                    }
-    	                });
-			AlertDialog alert = builder.create();
-			alert.show();
-			pgEventList.setVisibility(View.VISIBLE);
-			
-			
-		}*/
+	
 	   
 	}
 	
@@ -179,11 +160,18 @@ public class JukeboxViewFragment extends Fragment {
 			            	String votes = aux.getString("votes");
 			            	String idTrack = aux.getString("idTrack");
 			            	String voted = aux.getString("VOTE");
+			            	String playing = aux.getString("playing");
 			            	boolean vot;
 			            	if (voted.equals("null")) vot = false;
 			            	else vot = true;
-			            	ItemSong song = new ItemSong(title,artist,Integer.parseInt(votes),Long.parseLong(idTrack),vot,checkIn,Long.parseLong(localId));
-			            	arraydir.add(song);
+			            	if(playing.equals("0")){
+			            		ItemSong song = new ItemSong(title,artist,Integer.parseInt(votes),Long.parseLong(idTrack),vot,checkIn,Long.parseLong(localId));
+			            		arraydir.add(song);
+			            	}else{
+			            		txtSongName.setText(title);
+			            		txtArtistName.setText(artist);
+			            		layoutNowPlaying.setVisibility(View.VISIBLE);
+			            	}
 		            	}
 		            adapter.notifyDataSetChanged();
 		            pgEventList.setVisibility(View.GONE);

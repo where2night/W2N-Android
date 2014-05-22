@@ -1,56 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@color/black"
+    android:orientation="vertical">
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    style="@style/nowCardStyleLocals"
     android:layout_margin="10dp" >   
+    
+    <TextView
+            android:id="@+id/txtSongName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="Song Name"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     
     	<TextView
             android:id="@+id/txtArtistName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/txtSongName"
-            android:layout_below="@+id/txtSongName"
-            android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
             android:text="Artist Name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+   
+    	<LinearLayout 
+   		 android:layout_width="match_parent"
+    	 android:layout_height="wrap_content"
+    	 android:orientation="horizontal"
+    	 android:layout_margin="15dp" > 	
 
+    	 <TextView
+            android:id="@+id/txtVotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:text="Votes"
+            android:textAppearance="?android:attr/textAppearanceSmall" />   
+    	    
         <Button
             android:id="@+id/btnVote1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtArtistName"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@+id/txtVotes"
+            android:layout_weight="1"
             android:background="@drawable/btn_igo_style"
-            android:minHeight="38dp"
-            android:minWidth="24dp"
             android:text="+1" />
         
-        <TextView
-            android:id="@+id/txtVotes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/btnVote1"
-            android:layout_alignLeft="@+id/txtSongName"
-            android:layout_below="@id/txtArtistName"
-            android:layout_marginLeft="23dp"
-            android:layout_marginTop="30dp"
-            android:text="Votes"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+        
 
-        <TextView
-            android:id="@+id/txtSongName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="19dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="10dp"
-            android:text="Song Name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+        </LinearLayout>
 
+</LinearLayout>
 </RelativeLayout>
