@@ -214,6 +214,14 @@ public class MainActivity extends FragmentActivity{
         	Toast.makeText(this, "Click!", Toast.LENGTH_SHORT).show();
             return true;
         }
+        else if(item.getItemId() == R.id.action_refresh_main){
+        	RelativeLayout badgeLayout = (RelativeLayout) actionBarMenu.findItem(R.id.action_notifications).getActionView();
+			TextView txtNotifications = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
+	    	txtNotifications.setText("0");
+	    	getFriendshipRequest();
+		    getNumMessages();
+		    ((HomeFragment)fragments[0]).fill(null);
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -299,8 +307,11 @@ public class MainActivity extends FragmentActivity{
 				
 			}
 		});
+	    
+	    
 	    TextView txtNotifications = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
     	txtNotifications.setText("0");
+    	
 	    getFriendshipRequest();
 	    getNumMessages();
         return true;

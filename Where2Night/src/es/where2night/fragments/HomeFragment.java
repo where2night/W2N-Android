@@ -342,6 +342,7 @@ public class HomeFragment extends Fragment{
 	}
 
 	public void fill(View view){
+		pgEventList.setVisibility(View.VISIBLE);
 		fillData(view);
         //Toast.makeText(getActivity().getApplicationContext(), "Pantalla Estática", Toast.LENGTH_LONG).show();
 	    fillNews(view);

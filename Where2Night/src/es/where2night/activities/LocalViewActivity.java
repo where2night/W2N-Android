@@ -112,7 +112,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 					
 					@Override
 					public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-						// TODO Auto-generated method stub
 						calendar.setVisibility(View.GONE);
 						f.setVisibility(View.VISIBLE);
 						if(calendar.getDate() != date)
@@ -135,7 +134,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 					
 					@Override
 					public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-						// TODO Auto-generated method stub
 						calendar.setVisibility(View.GONE);
 						f.setVisibility(View.VISIBLE);
 						if(calendar.getDate() != date)
@@ -236,7 +234,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 					
 					@Override
 					public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-						// TODO Auto-generated method stub
 						calendar.setVisibility(View.GONE);
 						f.setVisibility(View.VISIBLE);
 						if(calendar.getDate() != date)
@@ -256,7 +253,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 					
 					@Override
 					public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-						// TODO Auto-generated method stub
 						calendar.setVisibility(View.GONE);
 						f.setVisibility(View.VISIBLE);
 						if(calendar.getDate() != date)
