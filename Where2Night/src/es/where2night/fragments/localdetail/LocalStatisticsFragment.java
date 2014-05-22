@@ -91,7 +91,7 @@ public class LocalStatisticsFragment extends Fragment{
 	            					"&chts=000000,16&chtt=Distribucion+por+edad&chco=0000FF,FF0000,FFFF00,00FF00&chdl=18-20|21-23|24-30|31+o+mas";
 	            	chartAge.loadUrl(urlAge);
 	            	
-	            	String urlCivilState = "http://chart.apis.google.com/chart?cht=p3&chs=250x170&chd=t:";
+	            	String urlCivilState = "http://chart.apis.google.com/chart?cht=p3&chs=325x150&chd=t:";
 	            	for(int i=inicial+71; i<inicial+76; i++){
 	            		urlCivilState = urlCivilState + root.getString(((Integer)i).toString()) + ",";
 	            	}

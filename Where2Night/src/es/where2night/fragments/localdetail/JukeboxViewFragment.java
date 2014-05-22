@@ -137,6 +137,7 @@ public class JukeboxViewFragment extends Fragment {
 	}
 
 	private void fillData() {
+		pgEventList.setVisibility(View.VISIBLE);
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
@@ -179,6 +180,18 @@ public class JukeboxViewFragment extends Fragment {
 				} catch (Exception e) {
 					pgEventList.setVisibility(View.GONE);
 					e.printStackTrace();
+					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			 		builder.setMessage("No vas a ir a ningun sitio hoy ni has hecho checkIn, con lo cual no puedes ver la gramola.")
+			 		        .setTitle("Error")
+			 		        .setCancelable(false)
+			 		        .setNeutralButton("Aceptar",
+			 		                new DialogInterface.OnClickListener() {
+			 		                    public void onClick(DialogInterface dialog, int id) {
+			 		                        dialog.cancel();
+			 		                    }
+			 		                });
+			 		AlertDialog alert = builder.create();
+			 		alert.show();
 				}
 	        }
 	    };
@@ -232,6 +245,7 @@ public class JukeboxViewFragment extends Fragment {
 		            	                new DialogInterface.OnClickListener() {
 		            	                    public void onClick(DialogInterface dialog, int id) {
 		            	                    	pgEventList.setVisibility(View.GONE);
+		            	                    	fillData();
 		            	                    }
 		            	                })
 		            	        .setPositiveButton("Hacer CheckIn",

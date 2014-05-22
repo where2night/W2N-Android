@@ -1,6 +1,8 @@
 package es.where2night.fragments.localdetail;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,6 +41,7 @@ public class LocalAsistantsFragment extends Fragment{
 	AdapterItemFriendList adapter;
 	private RequestQueue requestQueue;
 	private ProgressBar progressBar;
+	private Set<Long> conjunto;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +52,7 @@ public class LocalAsistantsFragment extends Fragment{
 		lista = (ListView) view.findViewById(R.id.listAsistants);
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 		arraydir = new ArrayList<ItemFriend>();
+		conjunto = new HashSet<Long>();
 		
 	    adapter = new AdapterItemFriendList(getActivity(), arraydir);
         lista.setAdapter(adapter);
@@ -90,7 +94,10 @@ public class LocalAsistantsFragment extends Fragment{
 			            	picture = picture.replace("\\", "");
 			            	String name = aux.getString("name") + " " +  aux.getString("surnames");
 			            	ItemFriend friend = new ItemFriend(picture,name,"0","0","0",idProfile);
-			            	arraydir.add(friend);
+			            	if(!conjunto.contains(idProfile)){
+			            		arraydir.add(friend);
+			            		conjunto.add(idProfile);
+			            	}
 		            	}
 		            	progressBar.setVisibility(View.GONE);
 		            	adapter.notifyDataSetChanged();
