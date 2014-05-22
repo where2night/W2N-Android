@@ -43,12 +43,12 @@ public class FriendsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_friends, container, false);
+		View view = inflater.inflate(R.layout.fragment_friend_list, container, false);
 		
 		connectionProgressDialog = new ProgressDialog(getActivity());
         connectionProgressDialog.setMessage("Cargando tu perfil...");
         
-		lista = (ListView) view.findViewById(R.id.friendList);
+		lista = (ListView) view.findViewById(R.id.listFriendsList);
         arraydir = new ArrayList<ItemFriend>();
         
         //TODO      
