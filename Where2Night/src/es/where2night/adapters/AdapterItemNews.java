@@ -526,16 +526,16 @@ public class AdapterItemNews extends BaseAdapter{
         else if(i.getClass() == ItemListFriend.class){
         	listFriend = (ItemListFriend)i;
         	//Rellenamos
-        	holderListFriend.picture.setImageUrl(list.getPicture(),imageLoader);
-        	holderListFriend.nombre.setText(list.getNombre());
-        	holderListFriend.texto.setText(list.getText());
-        	 holderListFriend.txtTitle.setText(list.getTitle());
-             holderListFriend.txtDescription.setText(list.getDescription());
-             holderList.txtDate.setText(list.getDate());
+        	holderListFriend.picture.setImageUrl(listFriend.getPicture(),imageLoader);
+        	holderListFriend.nombre.setText(listFriend.getNombre());
+        	holderListFriend.texto.setText(listFriend.getText());
+        	 holderListFriend.txtTitle.setText(listFriend.getTitle());
+             holderListFriend.txtDescription.setText(listFriend.getDescription());
+             holderListFriend.txtDate.setText(listFriend.getDate());
              String start = listFriend.getStart().substring(0, 5);
              String end = listFriend.getEnd().substring(0, 5);
              holderListFriend.txtHour.setText(start + " - " + end);
-             holderListFriend.txtExpireDate.setText(list.getExpireDate());
+             holderListFriend.txtExpireDate.setText(listFriend.getExpireDate());
              // Retornamos la vista
              return v;
         }
