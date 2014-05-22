@@ -18,10 +18,16 @@ import es.where2night.adapters.AdapterItemSong;
 import es.where2night.data.ItemSong;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class JukeboxViewFragment extends Fragment {
 	
@@ -39,14 +46,20 @@ public class JukeboxViewFragment extends Fragment {
     private AdapterItemSong adapter;
 	private ProgressBar pgEventList;
 	private ListView list;
+	double latLocal = 0;
+	double lngLocal = 0;
+	String localName;
 
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		try{
 			localId = getArguments().getString(LocalViewActivity.ID);
-		}catch(Exception e){}
+		}catch(Exception e){
+			checkGoingSomeWhere();
+		}
 		
 		checkIn = false;
 		if (localId.equals("")){
@@ -58,42 +71,86 @@ public class JukeboxViewFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_jukebox_view, container, false);
 		list = (ListView) view.findViewById(R.id.listSongs);
 		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
-		arraydir = new ArrayList<ItemSong>();
-		adapter = new AdapterItemSong(getActivity(), arraydir);
-		list.setAdapter(adapter);
+		
 		return view;
 	}
 	
 	public void fill(){
-		
+		arraydir = new ArrayList<ItemSong>();
+		adapter = new AdapterItemSong(getActivity(), arraydir);
+		list.setAdapter(adapter);
 		if(checkIn && localId != ""){
-		    arraydir = new ArrayList<ItemSong>();
-		    adapter = new AdapterItemSong(getActivity(), arraydir);
-		    list.setAdapter(adapter);
 		    fillData();
 		}
 		else{
 			pgEventList.setVisibility(View.GONE);
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setMessage("No has hecho CheckIn")
-			        .setTitle("Error en el registro")
+			builder.setMessage("Necesitas hacer CheckIn en " + localName + " para votar las canciones")
+			        .setTitle("No puedes votar aún")
 			        .setCancelable(false)
-			        .setNeutralButton("Aceptar",
-			                new DialogInterface.OnClickListener() {
-			                    public void onClick(DialogInterface dialog, int id) {
-			                        dialog.cancel();
-			                    }
-			                });
+			        .setNegativeButton("No deseo hacerlo",
+    	                new DialogInterface.OnClickListener() {
+    	                    public void onClick(DialogInterface dialog, int id) {
+    	                    	pgEventList.setVisibility(View.GONE);
+    	                    }
+    	                })
+    	        .setPositiveButton("Hacer CheckIn",
+    	                new DialogInterface.OnClickListener() {
+    	                    public void onClick(DialogInterface dialog, int id) {
+    	                    	hacerCheckIn();
+    	                    }
+    	                });
 			AlertDialog alert = builder.create();
 			alert.show();
 			pgEventList.setVisibility(View.VISIBLE);
 			
-			fillData();
+			
 		}
 	   
 	}
 	
-	
+	private void checkGoingSomeWhere() {
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+		String url = Helper.getWereUserGoesTodayUrl() + "/" + cred[0] + "/" + cred[1];
+		Log.e("CheckIn", url);
+		
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+		            try {
+		            	JSONObject respuesta = new JSONObject(response);
+		            	localName = respuesta.getString("localName");
+		            	latLocal = Double.valueOf(respuesta.getString("latitude"));
+		            	lngLocal = Double.valueOf(respuesta.getString("longitude"));
+		            	localId = respuesta.getString("idProfile");
+		            	
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		           
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		
+		requestQueue.add(request);
+	}
+
 	private void fillData() {
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
@@ -167,7 +224,6 @@ public class JukeboxViewFragment extends Fragment {
 		            	if (!id.equals("null")){
 		            		localId = id;
 		            		checkIn = true;
-		            		fillData();
 		            	}
 		            		
 					} catch (JSONException e) {
@@ -187,6 +243,106 @@ public class JukeboxViewFragment extends Fragment {
 	    };
 		
 		StringRequest request = new StringRequest(Request.Method.GET, url, succeedListener, errorListener); 
+		
+		requestQueue.add(request);
+	}
+
+	public void hacerCheckIn(){
+		
+		LocationManager lm = (LocationManager) getActivity().getSystemService(Activity.LOCATION_SERVICE);
+		if(!lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+		  // Build the alert dialog
+		  AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		  builder.setTitle("Check In");
+		  builder.setMessage("Para hacer Check In debes habilitar el GPS");
+		  builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialogInterface, int i) {
+		    // Show location settings when the user acknowledges the alert dialog
+		    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+		    startActivity(intent);
+		    }
+		  });
+		  builder.setNegativeButton("Cancelar",null);
+		  Dialog alertDialog = builder.create();
+		  alertDialog.setCanceledOnTouchOutside(false);
+		  alertDialog.show();
+		}else{
+			doCheckIn(lm);
+		}
+	}
+	
+	public boolean doCheckIn (LocationManager lm){
+		Location locationGPS = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	    Location locationNet = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+	    Location best;
+	    long GPSLocationTime = 0;
+	    if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
+
+	    long NetLocationTime = 0;
+
+	    if (null != locationNet) {
+	        NetLocationTime = locationNet.getTime();
+	    }
+	    if ( 0 < GPSLocationTime - NetLocationTime ) {
+	       best = locationGPS;
+	    	
+	    }
+	    else {
+	        best = locationNet;
+	    }
+	    double lat = best.getLatitude();
+	    double lng = best.getLongitude();
+	    
+	    if ((lat < latLocal + 0.0002) &&
+	    	(lat > latLocal - 0.0002) &&	
+	    	(lng < lngLocal + 0.0002) &&	
+	    	(lng > lngLocal - 0.0002) ){
+	    	
+	    	registerCheckIn();
+	    	checkIn = true;
+	    	fillData();
+	    	Toast.makeText(getActivity(), "CheckIn", Toast.LENGTH_SHORT).show();
+	    	return true;
+	    }
+	    return false;
+	}
+	
+	private void registerCheckIn(){
+		final DataManager dm = new DataManager(getActivity().getApplicationContext());
+		String[] cred = dm.getCred();
+		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
+		String url = Helper.getCheckInUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId;
+		Log.e("CheckIn", url);
+		
+		
+		Response.Listener<String> succeedListener = new Response.Listener<String>() 
+	    {
+	        @Override
+	        public void onResponse(String response) {
+	            // response
+	        	Log.e("Response", response);
+		            try {
+		            	JSONObject respuesta = new JSONObject(response);
+		            	String error = respuesta.getString("error");
+		            	if (error.equals("0")){
+		            	}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		           
+	        }
+	    };
+	    Response.ErrorListener errorListener = new Response.ErrorListener() 
+	    {
+	         @Override
+	         public void onErrorResponse(VolleyError error) {
+	             // error
+	             Log.e("Error.Response", error.toString());
+	       }
+	    };
+		
+		StringRequest request = new StringRequest(Request.Method.POST, url, succeedListener, errorListener); 
 		
 		requestQueue.add(request);
 	}

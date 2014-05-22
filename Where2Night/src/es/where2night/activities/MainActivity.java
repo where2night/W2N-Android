@@ -255,6 +255,7 @@ public class MainActivity extends FragmentActivity{
 	    if (index == 2) ((EventsFragment) toShow).fill();
 	    if (index == 3) ((FriendsFragment) toShow).fill();
 	    if (index == 5) ((MessagesFragment) toShow).fill();
+	    if (index == 6) ((JukeboxViewFragment) toShow).fill();
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
