@@ -280,18 +280,7 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	            	JSONObject respuesta2 = new JSONObject(response);
 	            	String error = "error";
 	            	if (respuesta2.getString("goToPub").equals(error)){
-	            		AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-	            		builder.setMessage("Has dicho que vas (no vas) a ir un día en el cual has señalado que ibas (no ibas).")
-	            		        .setTitle("Error")
-	            		        .setCancelable(false)
-	            		        .setNeutralButton("Aceptar",
-	            		                new DialogInterface.OnClickListener() {
-	            		                    public void onClick(DialogInterface dialog, int id) {
-	            		                        dialog.cancel();
-	            		                    }
-	            		                });
-	            		AlertDialog alert = builder.create();
-	            		alert.show();
+	            		muestraFallo();
 	            	}
             	}
 	            catch (Exception e) {
@@ -421,5 +410,20 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
  		alert.show();
 			
 		}
+	 
+	 public void muestraFallo(){
+		 AlertDialog.Builder builder = new AlertDialog.Builder(this);
+ 		builder.setMessage("Has dicho que vas (no vas) a ir un día en el cual has señalado que ibas (no ibas).")
+ 		        .setTitle("Error")
+ 		        .setCancelable(false)
+ 		        .setNeutralButton("Aceptar",
+ 		                new DialogInterface.OnClickListener() {
+ 		                    public void onClick(DialogInterface dialog, int id) {
+ 		                        dialog.cancel();
+ 		                    }
+ 		                });
+ 		AlertDialog alert = builder.create();
+ 		alert.show();
+	 }
 
 }

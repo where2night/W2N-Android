@@ -2,6 +2,7 @@ package es.where2night.fragments.localdetail;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.android.volley.Request;
@@ -84,10 +85,10 @@ public class LocalPhotographsFragment extends Fragment{
 	        	Log.e("Response", response);
 	            try {
 	            	
-	            	JSONObject root = new JSONObject(response);
+	            	JSONArray root = new JSONArray(response);
 	            	
 	            	for (int i = 0; i < root.length(); i++){
-		            	JSONObject aux = root.getJSONObject(String.valueOf(i));
+		            	JSONObject aux = root.getJSONObject(i);
 		            	String direccion = aux.getString("url");
 		            	ItemPhoto photo = new ItemPhoto(direccion);
 		            	arraydir.add(photo);
