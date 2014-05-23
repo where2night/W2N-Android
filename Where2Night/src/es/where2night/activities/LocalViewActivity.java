@@ -57,6 +57,8 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     public static Button btnIGo;
     public static Button btnIDontGo;
     public CalendarView calendar;
+    private String msg = "";
+    private String toastMsg = "";
     FrameLayout f;
     private int lastIndex = 0;
     private Bundle bundle;
@@ -270,7 +272,8 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		requestQueue = Volley.newRequestQueue(getApplicationContext());
 		String urlPost = Helper.getGoToLocalUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId;
 		Log.e("GoToPub", urlPost);
-		 
+		
+			
 		Response.Listener<String> succeedListener = new Response.Listener<String>(){
 	        @Override
 	        public void onResponse(String response) {
@@ -280,8 +283,10 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 	            	JSONObject respuesta2 = new JSONObject(response);
 	            	String error = "error";
 	            	if (respuesta2.getString("goToPub").equals(error)){
-	            		muestraFallo();
+	            		muestraFallo(msg);
 	            	}
+	            	Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+	            	
             	}
 	            catch (Exception e) {
 					e.printStackTrace();
@@ -304,6 +309,15 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		Date date = new Date(calendar.getDate());
     	Format format = new SimpleDateFormat("dd/MM/yyyy");
     	String dateString = format.format(date).toString();
+
+		if (notGoing){
+			msg = "No has dicho que fueras a ir el día " + dateString;
+			toastMsg = "Desapuntado!";
+		}else{
+			msg = "Ya has dicho que vas a ir el día " + dateString;
+			toastMsg = "Apuntado!";
+		}
+    	
 		String urlDelete = Helper.getGoToLocalUrl() + "/" + cred[0] + "/" + cred[1] + "/" + localId + "/" + dateString;
 		Log.e("NotGoing", urlDelete);
 		
@@ -411,9 +425,9 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 			
 		}
 	 
-	 public void muestraFallo(){
+	 public void muestraFallo(String msg){
 		 AlertDialog.Builder builder = new AlertDialog.Builder(this);
- 		builder.setMessage("Has dicho que vas (no vas) a ir un día en el cual has señalado que ibas (no ibas).")
+ 		builder.setMessage(msg)
  		        .setTitle("Error")
  		        .setCancelable(false)
  		        .setNeutralButton("Aceptar",
