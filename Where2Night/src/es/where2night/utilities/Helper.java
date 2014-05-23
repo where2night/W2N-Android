@@ -40,6 +40,10 @@ public class Helper {
 		return BASE_API_URL + "read/locals.php";
 	}
 	
+	public static String getFollowedLocalsUrl(){
+		return BASE_API_URL + "actions/myFavLocals.php";
+	}
+	
 	public static String getAllDjsUrl(){
 		return BASE_API_URL + "read/djs.php";
 	}

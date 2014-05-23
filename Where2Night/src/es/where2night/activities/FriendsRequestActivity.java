@@ -44,7 +44,8 @@ public class FriendsRequestActivity extends Activity {
         setContentView(R.layout.fragment_friends);
 		
 		connectionProgressDialog = new ProgressDialog(this);
-        connectionProgressDialog.setMessage("Cargando tu perfil...");
+        connectionProgressDialog.setMessage("Cargando...");
+        
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setIcon(R.drawable.logo7);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -95,6 +96,7 @@ public class FriendsRequestActivity extends Activity {
 	
 	
 	private void getNewMessages() {
+		 connectionProgressDialog.show();
 		final DataManager dm = new DataManager(getApplicationContext());
 		String[] cred = dm.getCred();
 		String url = Helper.getFriendsMessagesUrl() + "/" + cred[0] + "/" + cred[1];
@@ -105,32 +107,29 @@ public class FriendsRequestActivity extends Activity {
 			        @Override
 			        public void onResponse(String response) {
 			            // response
-			        	Log.e("Response", response);
+			        	Log.e("Response new message", response);
 			            try {
 			            		JSONArray root = new JSONArray(response);
-			            		int requests = 0;
 				            	for (int i = 0; i < root.length(); i++){
 				            		JSONObject aux = root.getJSONObject(i);
-				            		for (int j=0; j<aux.length();j++){
-				            			JSONObject aux2 = aux.getJSONObject(String.valueOf(j));
-				            			String mode = "1";
-				            			String modeRec = aux2.getString("mode");
-				            			if (modeRec.equals(mode)){
+				            		int num = Integer.valueOf(aux.getString("num"));
+				            		JSONObject aux2 = aux.getJSONObject(String.valueOf(num - 1));
+				            		String mode = "1";
+				            		String modeRec = aux2.getString("mode");
+				            		if (modeRec.equals(mode)){
 							            	long idProfile = Long.valueOf(aux.getString("idProfile"));
 							            	String picture = aux.getString("picture");
 							            	picture = picture.replace("\\", "");
 							            	String name = aux.getString("name") + " " +  aux.getString("surnames");
 							            	ItemFriend friend = new ItemFriend(picture,name,"0","0","0",idProfile);
 							            	arraydir2.add(friend);
-							            	requests++;
-							            	break;
-				            			}
 				            		}
 				            	}
 				            	connectionProgressDialog.dismiss();
 				            	adapter2.notifyDataSetChanged();
+				            	 connectionProgressDialog.dismiss();
 						} catch (Exception e) {
-							e.printStackTrace();
+							connectionProgressDialog.dismiss();
 						}
 			        }
 			    };

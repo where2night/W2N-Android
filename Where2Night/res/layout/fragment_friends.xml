@@ -8,10 +8,11 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
+        android:layout_weight="9"
         android:layout_height="wrap_content" >
 
         <RelativeLayout
-            android:id="@+id/RelativeLayout2"
+            android:id="@+id/RelativeLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
@@ -33,29 +34,44 @@
                 android:layout_below="@id/textPeticiones" >
             </ListView>
 
+             </RelativeLayout>
+    	</ScrollView>
+    	
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="5dp"
+                android:layout_weight="1"
                 android:background="@drawable/background2" />
-
-            <TextView
-                android:id="@+id/textMessages"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/friendList"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/NewMessages"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <ListView
-                android:id="@+id/listNewMessages"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_below="@+id/textMessages" >
-            </ListView>
+            
+		<ScrollView
+		        android:id="@+id/scrollView2"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="9" >
+	        <RelativeLayout
+	            android:id="@+id/RelativeLayout2"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+            
+	            <TextView
+	                android:id="@+id/textMessages"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentTop="true"
+	                android:layout_centerHorizontal="true"
+	                android:layout_margin="10dp"
+	                android:layout_marginTop="20dp"
+	                android:text="@string/NewMessages"
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	            <ListView
+	                android:id="@+id/listNewMessages"
+	                android:layout_width="match_parent"
+	                android:layout_height="220dp"
+	                android:layout_below="@+id/textMessages" >
+	            </ListView>
         </RelativeLayout>
-    </ScrollView>
+    	</ScrollView>
 
 </LinearLayout>

@@ -113,7 +113,8 @@ public class SearchResultsActivity extends Activity {
 				            	if (type == 0){
 				            		name = name + " " + aux.getString("surnames");
 				            	}
-				            	if (name.toUpperCase().contains(query)){
+				            	
+				            	if (query.equals("") || name.toUpperCase().contains(query)){
 				            		ItemSearch local = new ItemSearch(picture,name,idProfile,type);
 				            		arraydir.add(local);
 				            	}

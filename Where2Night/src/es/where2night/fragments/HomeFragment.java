@@ -301,7 +301,7 @@ public class HomeFragment extends Fragment{
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
 		String url = Helper.getWereUserGoesTodayUrl() + "/" + cred[0] + "/" + cred[1];
-		Log.e("CheckIn", url);
+		Log.e("going", url);
 		
 		
 		Response.Listener<String> succeedListener = new Response.Listener<String>() 
@@ -309,7 +309,7 @@ public class HomeFragment extends Fragment{
 	        @Override
 	        public void onResponse(String response) {
 	            // response
-	        	Log.e("Response", response);
+	        	Log.e("going Response", response);
 		            try {
 		            	JSONObject respuesta = new JSONObject(response);
 		            	String localName = respuesta.getString("localName");
@@ -322,7 +322,7 @@ public class HomeFragment extends Fragment{
 		            	
 		            	
 					} catch (JSONException e) {
-						e.printStackTrace();
+						Log.e("Error going","" );
 					}
 		           
 	        }
