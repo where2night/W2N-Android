@@ -62,7 +62,7 @@ public class PhotoViewActivity extends Activity {
 		final View controlsView = findViewById(R.id.fullscreen_content_controls);
 		final View contentView = findViewById(R.id.fullscreen_content);
 		
-		photo = (NetworkImageView)findViewById(R.id.LocalPhoto);
+		photo = (NetworkImageView)findViewById(R.id.LocalPhotoBig);
 
 		// Set up an instance of SystemUiHider to control the system UI for
 		// this activity.

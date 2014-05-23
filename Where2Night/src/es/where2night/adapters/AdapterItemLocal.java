@@ -61,7 +61,7 @@ public class AdapterItemLocal extends BaseAdapter{
         	holder = new ViewHolderLocal();
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inf.inflate(R.layout.itemlocallist, null);
-            holder.picture = (NetworkImageView) v.findViewById(R.id.LocalPhoto);
+            holder.picture = (NetworkImageView) v.findViewById(R.id.LocalPhotoBig);
             holder.txtname = (TextView) v.findViewById(R.id.txtLocalName);
             v.setTag(holder);
         } else {

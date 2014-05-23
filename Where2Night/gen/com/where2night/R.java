@@ -1564,7 +1564,7 @@ containing a value of this type.
         public static final int LinearLayout1=0x7f0700b5;
         public static final int ListFragment=0x7f0700c9;
         public static final int LocalInfoMap=0x7f0700d3;
-        public static final int LocalPhoto=0x7f070065;
+        public static final int LocalPhotoBig=0x7f070063;
         public static final int RelativeLayout1=0x7f0700bc;
         public static final int RelativeLayout2=0x7f0700b7;
         public static final int Space1=0x7f0700da;
@@ -1641,7 +1641,7 @@ containing a value of this type.
         public static final int disableHome=0x7f07000e;
         public static final int drawerLayout=0x7f07005b;
         public static final int dropdown=0x7f070015;
-        public static final int dummy_button=0x7f070064;
+        public static final int dummy_button=0x7f070065;
         public static final int editMessage=0x7f070060;
         public static final int edit_query=0x7f070035;
         public static final int end=0x7f070018;
@@ -1668,7 +1668,7 @@ containing a value of this type.
         public static final int expanded_menu=0x7f070031;
         public static final int friendList=0x7f0700b9;
         public static final int fullscreen_content=0x7f070062;
-        public static final int fullscreen_content_controls=0x7f070063;
+        public static final int fullscreen_content_controls=0x7f070064;
         public static final int gridViewPhotographs=0x7f0700de;
         public static final int home=0x7f070019;
         public static final int homeAsUp=0x7f07000b;

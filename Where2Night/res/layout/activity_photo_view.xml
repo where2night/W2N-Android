@@ -27,6 +27,15 @@
          android:fitsSystemWindows.
     -->
 
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/LocalPhotoBig"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:background="@drawable/profile"
+        android:cropToPadding="true"
+        android:scaleType="center" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -50,15 +59,6 @@
                 android:layout_weight="1"
                 android:text="@string/dummy_button" />
         </LinearLayout>
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/LocalPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:background="@drawable/profile"
-            android:cropToPadding="true"
-            android:scaleType="center" />
 
     </FrameLayout>
 

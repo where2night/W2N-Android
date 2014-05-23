@@ -55,7 +55,7 @@ public class AdapterItemPhoto extends BaseAdapter{
         	holder = new ViewHolderPhoto();
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inf.inflate(R.layout.itemphoto, null);
-            holder.photo = (NetworkImageView) v.findViewById(R.id.LocalPhoto);
+            holder.photo = (NetworkImageView) v.findViewById(R.id.LocalPhotoBig);
             v.setTag(holder);
         } else {
         	holder = (ViewHolderPhoto) convertView.getTag();

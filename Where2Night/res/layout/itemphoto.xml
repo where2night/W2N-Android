@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/LocalPhoto"
+        android:id="@+id/LocalPhotoBig"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:adjustViewBounds="true"
