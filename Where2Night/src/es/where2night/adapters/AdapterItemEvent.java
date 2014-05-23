@@ -137,7 +137,9 @@ public class AdapterItemEvent extends BaseAdapter implements OnClickListener{
       //Rellenamos el date
         holder.txtDate.setText(dir.getDate());
         holder.txtText.setText(dir.getText());
-        holder.txtTime.setText(dir.getStart() + " - " + dir.getClose());
+        String start = dir.getStart().substring(0, 5);
+        String end = dir.getClose().substring(0, 5);
+        holder.txtTime.setText(start + " - " + end);
         // Retornamos la vista
         return v;
     }

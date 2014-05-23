@@ -528,7 +528,7 @@ public class HomeFragment extends Fragment{
 	            	oldMode = modeString;
 	            }
 	            catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 	        }
 	    };
@@ -664,8 +664,10 @@ public class HomeFragment extends Fragment{
 						            	String text = aux.getString("text");
 						            	String[] dateArr = aux.getString("date").split("-");
 						            	String date = dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
+						            	
 						            	String start = aux.getString("startHour");
 						            	String close = aux.getString("closeHour");
+						            	
 						            	String idCreator = aux.getString("idProfileLocal");
 						            	long id = Long.valueOf(aux.getString("idEvent"));
 						            	String name = aux.getString("localName");
@@ -730,8 +732,10 @@ public class HomeFragment extends Fragment{
 						            	String textF = aux.getString("text");
 						            	String[] dateArrF = aux.getString("date").split("-");
 						            	String dateF = dateArrF[2] + "/" + dateArrF[1] + "/" + dateArrF[0];
+						            	
 						            	String startF = aux.getString("startHour");
 						            	String closeF = aux.getString("closeHour");
+						            	
 						            	String idCreatorF = aux.getString("idProfileLocal");
 						            	long idF = Long.valueOf(aux.getString("idEvent"));
 						            	String nameLoc = aux.getString("localName");

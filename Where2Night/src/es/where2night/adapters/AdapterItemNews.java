@@ -453,7 +453,9 @@ public class AdapterItemNews extends BaseAdapter{
           //Rellenamos el date
             holderEvent.txtDate.setText(eve.getDate());
             holderEvent.txtText.setText(eve.getText());
-            holderEvent.txtTime.setText(eve.getStart() + " - " + eve.getClose());
+            String start = eve.getStart().substring(0, 5);
+            String end = eve.getClose().substring(0, 5);
+            holderEvent.txtTime.setText(start + " - " + end);
             
         }
         else if(i.getClass() == ItemLocalNews.class){

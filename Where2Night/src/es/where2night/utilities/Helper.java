@@ -127,21 +127,21 @@ public class Helper {
 		return BASE_API_URL + "read/allusers.php";
 	}
 	public static String getFriendsMessagesUrl() {
-		return BASE_API_URL + "/read/messagesSorted.php";
+		return BASE_API_URL + "read/messagesSorted.php";
 	}
 	public static String getMessage() {
-		return BASE_API_URL + "/read/messagesFriend.php";
+		return BASE_API_URL + "read/messagesFriend.php";
 	}
 	
 	public static String getSendMessageUrl() {
-		return BASE_API_URL + "/actions/sendMessage.php";
+		return BASE_API_URL + "actions/sendMessage.php";
 	}
 	
 	public static String getWereUserGoesTodayUrl() {
-		return BASE_API_URL + "/read/eventsTodayUser.php";
+		return BASE_API_URL + "read/eventsTodayUser.php";
 	}
 	public static String getCheckInUrl() {
-		return BASE_API_URL + "/actions/checkIn.php";
+		return BASE_API_URL + "actions/checkIn.php";
 	}
 	
 	

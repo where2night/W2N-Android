@@ -105,12 +105,12 @@ public class FriendViewActivity extends FragmentActivity implements ActionBar.Ta
 		
 	}
 	
-	/*@Override
+	@Override
 	public Intent getParentActivityIntent() {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		return intent;
-	}*/
+	}
 
 /*	@Override
     public void onBackPressed()

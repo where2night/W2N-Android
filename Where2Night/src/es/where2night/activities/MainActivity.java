@@ -131,7 +131,10 @@ public class MainActivity extends FragmentActivity{
         		
             	invalidateOptionsMenu();
             	getActionBar().setIcon(R.drawable.logo7);
-            	getActionBar().setTitle(drawerOptions[lastIndex]);
+            	if (lastIndex == 0 || lastIndex == 6){
+            		getActionBar().setTitle("");
+            	}else
+            		getActionBar().setTitle(drawerOptions[lastIndex]);
             	getActionBar().setSubtitle("");
             }
 
@@ -220,20 +223,15 @@ public class MainActivity extends FragmentActivity{
 	    	txtNotifications.setText("0");
 	    	getFriendshipRequest();
 		    getNumMessages();
-		    ((HomeFragment)fragments[0]).fill(null);
+		    if (lastIndex == 0)
+		    	((HomeFragment)fragments[0]).fill(null);
+		    
+		    if (lastIndex == 6)
+		    	((JukeboxViewFragment)fragments[6]).fillData();
         }
 
         return super.onOptionsItemSelected(item);
     }
-    
-	 public void reload(){
-		 Intent intent = getIntent();
-		 overridePendingTransition(0, 0);
-		 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		 finish();
-		 overridePendingTransition(0, 0);
-		 startActivity(intent);
-	 }
     
     public void setContent(int index) {
 	    Fragment toHide = null;
@@ -259,6 +257,10 @@ public class MainActivity extends FragmentActivity{
 		actionBar.setTitle(drawerOptions[index]);
 		drawerList.setItemChecked(index, true);
 	    drawerLayout.closeDrawer(drawerList);	
+	   
+	    if (index == 0) {
+	    	actionBar.setTitle("");
+	    }
 	    
 	    if (index == 1) {
 	    	Intent i = new Intent(MainActivity.this, ProfileViewActivity.class);
@@ -272,7 +274,10 @@ public class MainActivity extends FragmentActivity{
 	    if (index == 2) ((EventsFragment) toShow).fill();
 	    if (index == 3) ((FriendsFragment) toShow).fill();
 	    if (index == 5) ((MessagesFragment) toShow).fill();
-	    if (index == 6) ((JukeboxViewFragment) toShow).fill();
+	    if (index == 6){
+	    	((JukeboxViewFragment) toShow).fill();
+	    	actionBar.setTitle("");
+	    }
     }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -308,6 +313,12 @@ public class MainActivity extends FragmentActivity{
 			}
 		});
 	    
+	    MenuItem item = actionBarMenu.findItem(R.id.action_refresh_main);
+		item.setVisible(false);
+		if (lastIndex == 0 || lastIndex == 6){
+		   	item.setVisible(true);
+		}
+	    
 	    
 	    TextView txtNotifications = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
     	txtNotifications.setText("0");
@@ -334,7 +345,7 @@ public class MainActivity extends FragmentActivity{
 			            		int requests = 0;
 				            	for (int i = 0; i < root.length(); i++){
 				            		JSONObject aux = root.getJSONObject(i);
-				            		for (int j=0; j<aux.length();j++){
+				            		for (int j=0; j<aux.length() - 5;j++){
 				            			JSONObject aux2 = aux.getJSONObject(String.valueOf(j));
 				            			String mode = "1";
 				            			String modeRec = aux2.getString("mode");
@@ -346,8 +357,14 @@ public class MainActivity extends FragmentActivity{
 				            	}
 				            	RelativeLayout badgeLayout = (RelativeLayout) actionBarMenu.findItem(R.id.action_notifications).getActionView();
 				            	TextView txtNotifications = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
-				            	int numNotifications = Integer.parseInt(txtNotifications.getText().toString());
-				            	numNotifications += requests;
+				            	int numNotifications = 0;
+				            	try{
+				            		numNotifications = Integer.parseInt(txtNotifications.getText().toString());
+					            	numNotifications += requests;
+				            	}catch (Exception e){
+				            		numNotifications = requests;
+				            	}
+				            	
 				            	txtNotifications.setText(((Integer)numNotifications).toString());
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -451,9 +468,18 @@ public class MainActivity extends FragmentActivity{
 	            		JSONObject root = new JSONObject(response);
 	            		RelativeLayout badgeLayout = (RelativeLayout) actionBarMenu.findItem(R.id.action_notifications).getActionView();
 	            	    TextView txtNotifications = (TextView) badgeLayout.findViewById(R.id.actionbar_notifcation_textview);
-	            		int not = Integer.parseInt(txtNotifications.getText().toString());
-	            		not += Integer.parseInt(root.getString("numPetitions"));
-	            	    txtNotifications.setText(((Integer)not).toString());
+	            	    int numNotifications = 0;
+	            	    int not = Integer.parseInt(root.getString("numPetitions"));
+	            	    
+		            	try{
+		            		numNotifications = Integer.parseInt(txtNotifications.getText().toString());
+			            	numNotifications += not;
+		            	}catch (Exception e){
+		            		numNotifications = not;
+		            	}
+	            		
+	            		
+	            	    txtNotifications.setText(((Integer)numNotifications).toString());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

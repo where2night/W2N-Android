@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,6 +36,7 @@ public class LocalDiscountListFragment extends Fragment {
 	AdapterItemDiscountList adapter;
 	ListView list;
 	private RequestQueue requestQueue;
+	private ProgressBar pgEventList;
 	ArrayList<ItemDiscountList> arraydir;
 	
 	@Override
@@ -44,6 +46,7 @@ public class LocalDiscountListFragment extends Fragment {
 		
 		localId = getArguments().getString(LocalViewActivity.ID);
 		
+		pgEventList = (ProgressBar) view.findViewById(R.id.pgEventList);
 		list = (ListView) view.findViewById(R.id.eventList);
 	    arraydir = new ArrayList<ItemDiscountList>();
 	        
@@ -56,6 +59,7 @@ public class LocalDiscountListFragment extends Fragment {
 	}
 	
 	private void fill() {
+		pgEventList.setVisibility(View.VISIBLE);
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
 		requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext()); 
@@ -92,8 +96,10 @@ public class LocalDiscountListFragment extends Fragment {
 			            	arraydir.add(event);
 		            	}
 		            adapter.notifyDataSetChanged();
+		            pgEventList.setVisibility(View.GONE);
 		    		
 				} catch (Exception e) {
+					pgEventList.setVisibility(View.GONE);
 					e.printStackTrace();
 				}
 	        }
@@ -103,6 +109,7 @@ public class LocalDiscountListFragment extends Fragment {
 	         @Override
 	         public void onErrorResponse(VolleyError error) {
 	             // error
+	        	 pgEventList.setVisibility(View.GONE);
 	             Log.e("Error.Response", error.toString());
 	       }
 	    };

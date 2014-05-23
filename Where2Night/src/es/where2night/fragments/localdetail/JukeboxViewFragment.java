@@ -136,7 +136,7 @@ public class JukeboxViewFragment extends Fragment {
 		requestQueue.add(request);
 	}
 
-	private void fillData() {
+	public void fillData() {
 		pgEventList.setVisibility(View.VISIBLE);
 		final DataManager dm = new DataManager(getActivity().getApplicationContext());
 		String[] cred = dm.getCred();
