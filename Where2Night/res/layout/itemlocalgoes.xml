@@ -14,7 +14,7 @@
         android:padding="5dp" >
 
         <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/LocalPhotoBig"
+            android:id="@+id/LocalPhoto"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_alignParentLeft="true"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/txtLocalName"
-            android:layout_alignTop="@+id/LocalPhotoBig"
+            android:layout_alignTop="@+id/LocalPhoto"
             android:maxWidth="200dp"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />

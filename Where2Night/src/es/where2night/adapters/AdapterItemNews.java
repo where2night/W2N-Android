@@ -179,7 +179,7 @@ public class AdapterItemNews extends BaseAdapter{
         		holderLocal = new ViewHolderLocalFollow();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inf.inflate(R.layout.itemlocalnews, null);
-                holderLocal.picture = (NetworkImageView) v.findViewById(R.id.LocalPhotoBig);
+                holderLocal.picture = (NetworkImageView) v.findViewById(R.id.LocalPhoto);
                 holderLocal.txtNameLocal = (TextView) v.findViewById(R.id.txtLocalName);
                 holderLocal.txtNameFriend = (TextView) v.findViewById(R.id.txtNameFriend);
                 v.setTag(holderLocal);
@@ -189,7 +189,7 @@ public class AdapterItemNews extends BaseAdapter{
         		holderLocalCheck = new ViewHolderLocalCheck();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inf.inflate(R.layout.itemlocalnews, null);
-                holderLocalCheck.picture = (NetworkImageView) v.findViewById(R.id.LocalPhotoBig);
+                holderLocalCheck.picture = (NetworkImageView) v.findViewById(R.id.LocalPhoto);
                 holderLocalCheck.txtNameLocal = (TextView) v.findViewById(R.id.txtLocalName);
                 holderLocalCheck.txtNameFriend = (TextView) v.findViewById(R.id.txtNameFriend);
                 v.setTag(holderLocalCheck);
@@ -199,7 +199,7 @@ public class AdapterItemNews extends BaseAdapter{
         		holderLocalGoes = new ViewHolderLocalGoes();
                 LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = inf.inflate(R.layout.itemlocalgoes, null);
-                holderLocalGoes.picture = (NetworkImageView) v.findViewById(R.id.LocalPhotoBig);
+                holderLocalGoes.picture = (NetworkImageView) v.findViewById(R.id.LocalPhoto);
                 holderLocalGoes.txtNameLocal = (TextView) v.findViewById(R.id.txtLocalName);
                 holderLocalGoes.txtNameFriend = (TextView) v.findViewById(R.id.txtNameFriend);
                 holderLocalGoes.txtDate = (TextView) v.findViewById(R.id.textDate);
