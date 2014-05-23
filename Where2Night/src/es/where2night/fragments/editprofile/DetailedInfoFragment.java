@@ -41,7 +41,7 @@ public class DetailedInfoFragment  extends Fragment {
 		etEditFB = (EditText) view.findViewById(R.id.etEditFB);
 		etEditTW = (EditText) view.findViewById(R.id.etEditTW);
 		etEditIG = (EditText) view.findViewById(R.id.etEditIG);
-		etEditAbout = (EditText) view.findViewById(R.id.etEditIG);
+		etEditAbout = (EditText) view.findViewById(R.id.etEditAbout);
 		
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -75,14 +75,6 @@ public class DetailedInfoFragment  extends Fragment {
 		return view;
 	}
 	
-	public void fill(){
-		
-		
-	}
-	
-	private void fillData() {
-	}
-
 	public void setData(JSONObject respuesta) {
 
 		 try {
