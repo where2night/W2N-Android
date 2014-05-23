@@ -1,8 +1,5 @@
 package es.where2night.activities;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,26 +7,22 @@ import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.CalendarView.OnDateChangeListener;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -51,20 +44,24 @@ import es.where2night.fragments.localdetail.LocalStatisticsFragment;
 import es.where2night.utilities.DataManager;
 import es.where2night.utilities.Helper;
 
-public class LocalViewActivity extends FragmentActivity implements OnClickListener, ActionBar.TabListener  {
+public class LocalViewActivity extends FragmentActivity implements  ActionBar.TabListener  {
    
     public static final String ID = "id";
     public static Button btnIGo;
     public static Button btnIDontGo;
-    public CalendarView calendar;
     private String msg = "";
     private String toastMsg = "";
     FrameLayout f;
     private int lastIndex = 0;
     private Bundle bundle;
     Long date;
+    DatePicker datePicker;
     private String localId = "";
     public Menu actionBarMenu;
+    
+    private Button accept;
+    private Button cancel;
+    String dateString = "";
     
     private Fragment[] fragments = new Fragment[]{ new LocalInfoFragment(),
     											   new LocalEventsFragment(),
@@ -95,31 +92,40 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
         
         btnIGo = (Button) findViewById(R.id.btnIGo);
         btnIDontGo = (Button) findViewById(R.id.btnIDontGo);
-        calendar = (CalendarView) findViewById(R.id.calendarEvent);
-        calendar.setDate(calendar.getDate()-86400000);
-        date = calendar.getDate();
-        f = (FrameLayout) findViewById(R.id.selectedTabFragment);
-        calendar.setVisibility(View.GONE);
+        
+         
+	//	 dialog.show();
         
         btnIGo.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				f.setVisibility(View.GONE);
-				 calendar.setVisibility(View.VISIBLE);
-				 calendar.setClickable(true);
-				 calendar.setAlpha(1);
+				final Dialog dialog = new Dialog(LocalViewActivity.this);
+				dialog.setContentView(R.layout.selectdate_dialog);
+				dialog.setTitle("Elige fecha");
+				datePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
+				accept = (Button) dialog.findViewById(R.id.btnSetDT);
+				cancel = (Button) dialog.findViewById(R.id.btnCancelDT);
 				
-				 calendar.setOnDateChangeListener(new OnDateChangeListener() {
+				accept.setOnClickListener(new OnClickListener() {
 					
 					@Override
-					public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-						calendar.setVisibility(View.GONE);
-						f.setVisibility(View.VISIBLE);
-						if(calendar.getDate() != date)
-							goingTo(false);
+					public void onClick(View v) {
+						dateString = datePicker.getDayOfMonth() + "/" + (datePicker.getMonth()+1) + "/" + datePicker.getYear();
+						goingTo(false);
+						dialog.dismiss();
 					}
-				 });
+				});
+					
+				cancel.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+			
+				dialog.show();
 				
 			}
 		});
@@ -128,22 +134,31 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 			
 			@Override
 			public void onClick(View v) {
-				f.setVisibility(View.GONE);
-				 calendar.setVisibility(View.VISIBLE);
-				 calendar.setAlpha(1);
+				final Dialog dialog = new Dialog(LocalViewActivity.this);
+				dialog.setContentView(R.layout.selectdate_dialog);
+				dialog.setTitle("Elige fecha");
+				datePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
+				accept = (Button) dialog.findViewById(R.id.btnSetDT);
+				cancel = (Button) dialog.findViewById(R.id.btnCancelDT);
 				
-				 calendar.setOnDateChangeListener(new OnDateChangeListener() {
+				accept.setOnClickListener(new OnClickListener() {
 					
 					@Override
-					public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-						calendar.setVisibility(View.GONE);
-						f.setVisibility(View.VISIBLE);
-						if(calendar.getDate() != date)
-							goingTo(true);
-						
+					public void onClick(View v) {
+						dateString = datePicker.getDayOfMonth() + "/" + (datePicker.getMonth()+1) + "/" + datePicker.getYear();
+						goingTo(true);	
+						dialog.dismiss();
 					}
-				 });
-				
+				});
+					
+				cancel.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+				dialog.show();
 			}
 		});
         
@@ -222,49 +237,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
     }
     
 
-    @Override
-	public void onClick(View v) {
-		 if (v.getId() == btnIGo.getId()){
-			 if (btnIGo.isSelected()){
-				 btnIGo.setSelected(false);
-				 btnIGo.setText(getResources().getString(R.string.IGo));
-				 f.setVisibility(View.GONE);
-				 calendar.setVisibility(View.VISIBLE);
-				 calendar.setAlpha(1);
-				
-				 calendar.setOnDateChangeListener(new OnDateChangeListener() {
-					
-					@Override
-					public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-						calendar.setVisibility(View.GONE);
-						f.setVisibility(View.VISIBLE);
-						if(calendar.getDate() != date)
-							goingTo(true);
-						
-					}
-				 });
-			 }else{
-				 btnIGo.setSelected(true);
-				 btnIGo.setText(getResources().getString(R.string.Going));
-				 f.setVisibility(View.GONE);
-				 calendar.setVisibility(View.VISIBLE);
-				 calendar.setClickable(true);
-				 calendar.setAlpha(1);
-				
-				 calendar.setOnDateChangeListener(new OnDateChangeListener() {
-					
-					@Override
-					public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-						calendar.setVisibility(View.GONE);
-						f.setVisibility(View.VISIBLE);
-						if(calendar.getDate() != date)
-							goingTo(false);
-					}
-				 });
-				 
-			 }
-		 }
-	}
 	
 	private void goingTo(boolean notGoing){
 		final DataManager dm = new DataManager(getApplicationContext());
@@ -306,9 +278,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 		
 		StringRequest request;
 		
-		Date date = new Date(calendar.getDate());
-    	Format format = new SimpleDateFormat("dd/MM/yyyy");
-    	String dateString = format.format(date).toString();
 
 		if (notGoing){
 			msg = "No has dicho que fueras a ir el día " + dateString;
@@ -330,9 +299,6 @@ public class LocalViewActivity extends FragmentActivity implements OnClickListen
 			    protected Map<String, String> getParams() 
 			    {  
 			    	Map<String, String> info = new HashMap<String, String>();
-			    	Date date = new Date(calendar.getDate());
-			    	Format format = new SimpleDateFormat("dd/MM/yyyy");
-			    	String dateString = format.format(date).toString();
 			    	info.put("date", dateString);
 			        return info;
 			    }

@@ -28,18 +28,12 @@
             android:background="@drawable/btn_igo_style"
             android:text="@string/IDontGo" />
 
-        <CalendarView
-            android:id="@+id/calendarEvent"
-            android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:layout_below="@+id/btnIGo"
-            android:alpha="1" />
         
        <FrameLayout
            android:id="@+id/selectedTabFragment"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:layout_below="@id/calendarEvent" />
+           android:layout_below="@id/btnIGo" />
         
 </RelativeLayout>
     
