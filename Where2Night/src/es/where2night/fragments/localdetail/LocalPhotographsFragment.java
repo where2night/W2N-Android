@@ -58,6 +58,7 @@ public class LocalPhotographsFragment extends Fragment{
 				String direccion = ((ItemPhoto)adapter.getItem(position)).getPhoto();
 				Intent intent = new Intent(getActivity(), PhotoViewActivity.class);
 				intent.putExtra(PhotoViewActivity.URL, direccion);
+				intent.putExtra(PhotoViewActivity.ID, localId);
 				startActivity(intent);
 				
 			}

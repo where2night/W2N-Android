@@ -27,7 +27,8 @@ import android.os.Build;
 public class PhotoViewActivity extends Activity {
 	
 	public static final String URL = "url";
-	private ImageLoader imageLoader;
+	public static final String ID = "id";
+	private String idPub;
 	private WebView photo;
 
 	@Override
@@ -35,14 +36,13 @@ public class PhotoViewActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_photo_view);
 
-		if (savedInstanceState == null) {
+		/*if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		}*/
 		
-		String direccion = getIntent().getStringExtra(URL);;
-		RequestQueue requestQueue = Volley.newRequestQueue(this);
-        this.imageLoader = new ImageLoader(requestQueue, new BitmapLRUCache());
+		String direccion = getIntent().getStringExtra(URL);
+		idPub = getIntent().getStringExtra(ID);
         photo = (WebView) findViewById(R.id.webViewPhoto);
         photo.loadUrl(direccion);
 	}
@@ -70,7 +70,7 @@ public class PhotoViewActivity extends Activity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	/*public static class PlaceholderFragment extends Fragment {
 
 		public PlaceholderFragment() {
 		}
@@ -78,10 +78,19 @@ public class PhotoViewActivity extends Activity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_photo_view,
+			View rootView = inflater.inflate(R.layout.activity_photo_view,
 					container, false);
 			return rootView;
 		}
-	}
+	}*/
 
+	public void onBackPressed()
+    {
+    	Intent intent = new Intent(getApplicationContext(), LocalViewActivity.class);
+    	intent.putExtra(LocalViewActivity.ID, idPub);
+        startActivity(intent);
+        
+        //super.onBackPressed();  // optional depending on your needs
+    }
+	
 }
