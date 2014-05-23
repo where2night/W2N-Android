@@ -17,11 +17,4 @@
         android:cropToPadding="true"
         android:scaleType="center" />
 
-    <WebView
-        android:id="@+id/webViewPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/LocalPhotoAlone"
-        android:layout_marginTop="110dp" />
-
 </RelativeLayout>
